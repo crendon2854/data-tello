@@ -504,10 +504,13 @@ Existing functions:
 | `toggleSignalProcessed(id, bool)` | Mark processed |
 | `getZones()` | List zones |
 | `upsertZone(zone)` | Create or update zone |
+| `getSources()` | List source registry entries |
+| `createSource(data)` | Insert new source |
+| `updateSource(id, data)` | Update source fields |
 
 Future query groups should be organized by module:
 
-- sources
+- raw signals (beyond MVP `signals`)
 - raw signals
 - problem zones
 - keyword sets

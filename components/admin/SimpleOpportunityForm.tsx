@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createOpportunity, updateOpportunity } from "@/lib/queries";
-import { supabase } from "@/lib/supabase";
+import { createOpportunity, getOpportunityById, updateOpportunity } from "@/lib/queries";
 
 type FormState = {
   title: string;
@@ -49,11 +48,7 @@ export default function OpportunityForm({
     if (!isEdit) return;
 
     async function load() {
-      const { data } = await supabase
-        .from("opportunities")
-        .select("*")
-        .eq("id", params.id)
-        .single();
+      const data = await getOpportunityById(params.id);
 
       if (data) {
         setForm({

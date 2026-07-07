@@ -57,6 +57,7 @@ These may exist during transition:
 - `/opportunity/[id]`
 - `/newsletter`
 - `/admin`
+- `/admin/sources`
 - `/admin/opportunities`
 - `/admin/opportunities/new`
 - `/admin/opportunities/[id]`
@@ -66,8 +67,7 @@ These may exist during transition:
 
 ### Next admin routes to add
 
-1. `/admin/sources`
-2. `/admin/problem-zones` replacing `/admin/zones`
+1. `/admin/problem-zones` replacing `/admin/zones`
 3. `/admin/keywords`
 4. `/admin/market-proof`
 5. `/admin/friction`

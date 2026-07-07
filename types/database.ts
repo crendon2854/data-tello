@@ -1,5 +1,27 @@
 export type OpportunityStatus = "draft" | "published" | "rejected";
 
+export type WorkflowLane =
+  | "pressure_discovery"
+  | "demand_validation"
+  | "market_wedge_validation"
+  | "workflow_friction";
+
+export type SourceType =
+  | "structural"
+  | "trigger"
+  | "market_proof"
+  | "friction";
+
+export type ApiStatus = "automated" | "semi_manual" | "manual";
+
+export type Cadence =
+  | "daily"
+  | "weekly"
+  | "monthly"
+  | "quarterly"
+  | "annual"
+  | "manual";
+
 export interface OpportunityRow {
   id: string;
   title: string;
@@ -54,6 +76,37 @@ export interface ZoneRow {
   created_at: string;
 }
 
+export interface SourceRow {
+  id: string;
+  name: string;
+  workflow_lane: WorkflowLane;
+  source_type: SourceType;
+  category: string | null;
+  api_status: ApiStatus;
+  cadence: Cadence | null;
+  geography_scope: string | null;
+  reliability_score: number | null;
+  freshness_window_days: number | null;
+  active: boolean;
+  last_sync_at: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type SourceInsert = Omit<
+  SourceRow,
+  "id" | "created_at" | "updated_at"
+> & {
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+};
+
+export type SourceUpdate = Partial<
+  Omit<SourceRow, "id" | "created_at" | "updated_at">
+>;
+
 export interface Database {
   public: {
     Tables: {
@@ -83,6 +136,12 @@ export interface Database {
           created_at?: string;
         };
         Update: Partial<ZoneRow>;
+        Relationships: [];
+      };
+      sources: {
+        Row: SourceRow;
+        Insert: SourceInsert;
+        Update: SourceUpdate;
         Relationships: [];
       };
     };

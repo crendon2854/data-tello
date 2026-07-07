@@ -2,11 +2,20 @@ import { getSupabase, isSupabaseConfigured } from "./supabase";
 import {
   mockOpportunities,
   mockSignals,
+  mockSources,
   mockZones,
 } from "./mock-data";
-import type { OpportunityRow, SignalRow, ZoneRow } from "@/types/database";
+import type {
+  OpportunityRow,
+  SignalRow,
+  SourceInsert,
+  SourceRow,
+  SourceUpdate,
+  ZoneRow,
+} from "@/types/database";
 
 let mockStore = [...mockOpportunities];
+let mockSourceStore = [...mockSources];
 
 export async function getOpportunities(): Promise<OpportunityRow[]> {
   const supabase = getSupabase();
@@ -274,6 +283,85 @@ export async function upsertZone(
   };
   mockZones.push(created);
   return created;
+}
+
+export async function getSources(): Promise<SourceRow[]> {
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("sources")
+      .select("*")
+      .order("name");
+
+    if (error) throw error;
+    return data ?? [];
+  }
+
+  return [...mockSourceStore];
+}
+
+export async function createSource(data: SourceInsert): Promise<SourceRow> {
+  const supabase = getSupabase();
+  const timestamp = new Date().toISOString();
+
+  if (supabase) {
+    const { data: result, error } = await supabase
+      .from("sources")
+      .insert([data])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return result;
+  }
+
+  const source: SourceRow = {
+    id: data.id ?? String(Date.now()),
+    name: data.name,
+    workflow_lane: data.workflow_lane,
+    source_type: data.source_type,
+    category: data.category ?? null,
+    api_status: data.api_status ?? "manual",
+    cadence: data.cadence ?? null,
+    geography_scope: data.geography_scope ?? null,
+    reliability_score: data.reliability_score ?? null,
+    freshness_window_days: data.freshness_window_days ?? null,
+    active: data.active ?? true,
+    last_sync_at: data.last_sync_at ?? null,
+    notes: data.notes ?? null,
+    created_at: data.created_at ?? timestamp,
+    updated_at: data.updated_at ?? timestamp,
+  };
+
+  mockSourceStore = [source, ...mockSourceStore];
+  return source;
+}
+
+export async function updateSource(
+  id: string,
+  data: SourceUpdate
+): Promise<SourceRow | null> {
+  const supabase = getSupabase();
+  const payload = { ...data, updated_at: new Date().toISOString() };
+
+  if (supabase) {
+    const { data: result, error } = await supabase
+      .from("sources")
+      .update(payload)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return result;
+  }
+
+  const index = mockSourceStore.findIndex((s) => s.id === id);
+  if (index === -1) return null;
+
+  mockSourceStore[index] = { ...mockSourceStore[index], ...payload };
+  return mockSourceStore[index];
 }
 
 export { isSupabaseConfigured };

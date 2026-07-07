@@ -6,8 +6,6 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 export const isSupabaseConfigured =
   Boolean(supabaseUrl) && Boolean(supabaseAnonKey);
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
 let client: SupabaseClient | null = null;
 
 export function getSupabase(): SupabaseClient | null {

@@ -93,6 +93,10 @@
     @apply badge border-accent-crimson/20 bg-accent-crimson/10 text-accent-crimson;
   }
 
+  .badge-muted {
+    @apply badge border-border bg-bg-elevated text-text-muted;
+  }
+
   .status-dot {
     @apply inline-block h-2 w-2 rounded-full;
   }
