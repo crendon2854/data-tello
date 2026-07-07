@@ -1,0 +1,171 @@
+import type { OpportunityRow, SignalRow, ZoneRow } from "@/types/database";
+
+const now = new Date().toISOString();
+
+export const mockOpportunities: OpportunityRow[] = [
+  {
+    id: "1",
+    title: "Contractor OSHA Documentation Tracker",
+    short_summary:
+      "Audit-ready safety logs for small contractors who still track OSHA compliance manually.",
+    overall_score: 78,
+    best_first_asset: "Spreadsheet / Template",
+    complexity: "Low",
+    tags: ["B2B", "Compliance"],
+    status: "published",
+    problem_summary:
+      "Small contractors struggle to maintain OSHA-compliant safety logs and documentation, often relying on manual processes that break during audits.",
+    evidence_summary:
+      "Recent compliance updates and recurring job postings for safety coordinators indicate ongoing documentation burden. Search demand shows consistent queries around OSHA logs and safety tracking.",
+    key_pain_drivers: [
+      "Manual tracking",
+      "Audit risk",
+      "Inconsistent reporting",
+      "Lack of simple tools",
+    ],
+    pressure_score: 7,
+    demand_score: 6,
+    wedge_score: 5,
+    buildability_score: 8,
+    asset_fit_score: 9,
+    asset_path_1: "Spreadsheet tracker",
+    asset_path_2: "n8n workflow automation",
+    asset_path_3: "Lightweight SaaS",
+    asset_reason:
+      "The workflow is structured and repeatable, making a template the fastest way to deliver value.",
+    expansion_ladder: "Template → Dashboard → Workflow automation → SaaS",
+    target_buyer: "Small contractors (5–50 employees)",
+    core_workflow: "Safety logging and compliance reporting",
+    initial_wedge: "Simple audit-ready log system",
+    time_to_value: "Fast",
+    underserved_segment:
+      "Small contractors underserved by enterprise EHS tools",
+    competitor_summary:
+      "Most tools are enterprise-focused, complex, and expensive",
+    avoid: "Do not compete on full feature parity with enterprise tools",
+    differentiation:
+      "Focus on simplicity, speed, and audit-ready outputs",
+    entry_strategy:
+      "Start with downloadable template, expand into automation",
+    strategic_importance:
+      "Compliance burden is increasing while tooling remains complex",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "2",
+    title: "Vendor Risk Portal for Healthcare Ops",
+    short_summary:
+      "Lightweight vendor onboarding and risk scoring for hospital procurement teams.",
+    overall_score: 74,
+    best_first_asset: "Vendor Intake Form + Scorecard",
+    complexity: "Low",
+    tags: ["healthcare", "procurement", "risk"],
+    status: "published",
+    problem_summary:
+      "Hospital ops teams lack a unified vendor risk intake process.",
+    evidence_summary:
+      "RFP language consistently references manual vendor questionnaires.",
+    key_pain_drivers: ["Slow onboarding", "Inconsistent risk scoring"],
+    pressure_score: 70,
+    demand_score: 72,
+    wedge_score: 68,
+    buildability_score: 85,
+    asset_fit_score: 75,
+    asset_path_1: "Intake form",
+    asset_path_2: "Risk scorecard",
+    asset_path_3: "Renewal tracking",
+    asset_reason: "Form-based wedge maps directly to existing procurement steps.",
+    expansion_ladder: "Intake → Scorecard → Vendor lifecycle",
+    target_buyer: "Director of Procurement",
+    core_workflow: "Intake → Score → Approve → Renew",
+    initial_wedge: "Standardized vendor questionnaire",
+    time_to_value: "1 week",
+    underserved_segment: "Regional hospital networks",
+    competitor_summary: "Enterprise VRM platforms priced for health systems.",
+    avoid: "Deep EHR integrations initially",
+    differentiation: "Healthcare-specific questionnaire templates",
+    entry_strategy: "Template library + export to existing tools",
+    strategic_importance:
+      "Vendor risk is a recurring compliance requirement with clear ROI.",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "3",
+    title: "AI Policy Toolkit for HR Teams",
+    short_summary:
+      "Draft and distribute internal AI usage policies with acknowledgment tracking.",
+    overall_score: 65,
+    best_first_asset: "Policy Template Pack",
+    complexity: "Low",
+    tags: ["hr", "ai", "policy"],
+    status: "draft",
+    problem_summary:
+      "HR teams need fast, compliant AI usage policies as adoption accelerates.",
+    evidence_summary:
+      "Rising volume of HR policy update requests tied to AI tool rollouts.",
+    key_pain_drivers: ["Policy lag", "Inconsistent employee guidance"],
+    pressure_score: 60,
+    demand_score: 68,
+    wedge_score: 62,
+    buildability_score: 90,
+    asset_fit_score: 70,
+    asset_path_1: "Template pack",
+    asset_path_2: "Acknowledgment tracker",
+    asset_path_3: "Policy version control",
+    asset_reason: "Templates are immediately usable without IT involvement.",
+    expansion_ladder: "Templates → Tracking → Governance hub",
+    target_buyer: "HR Operations Lead",
+    core_workflow: "Draft → Review → Publish → Track",
+    initial_wedge: "Pre-built AI policy templates",
+    time_to_value: "3 days",
+    underserved_segment: "Mid-size companies (200–2000 employees)",
+    competitor_summary: "Legal consultancies sell one-off policy docs.",
+    avoid: "Positioning as legal advice",
+    differentiation: "HR-ready templates with acknowledgment workflow",
+    entry_strategy: "Free template download → paid tracking",
+    strategic_importance:
+      "Every company adopting AI needs policy infrastructure.",
+    created_at: now,
+    updated_at: now,
+  },
+];
+
+export const mockSignals: SignalRow[] = [
+  {
+    id: "s1",
+    title: "SEC proposes new crypto custody rules",
+    source: "Federal Register",
+    type: "regulatory",
+    processed: true,
+    created_at: now,
+  },
+  {
+    id: "s2",
+    title: "Hospital vendor breach highlights third-party risk",
+    source: "Healthcare IT News",
+    type: "news",
+    processed: false,
+    created_at: now,
+  },
+];
+
+export const mockZones: ZoneRow[] = [
+  {
+    id: "z1",
+    title: "Fintech Compliance",
+    summary: "Regulatory monitoring and workflow tools for fintech compliance teams.",
+    industry: "Financial Services",
+    buyer: "Head of Compliance",
+    created_at: now,
+  },
+  {
+    id: "z2",
+    title: "Healthcare Procurement",
+    summary: "Vendor risk and procurement tooling for hospital networks.",
+    industry: "Healthcare",
+    buyer: "Director of Procurement",
+    created_at: now,
+  },
+];
