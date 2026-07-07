@@ -13,17 +13,18 @@ See [MED.md](./MED.md) for the engineering workflow.
 
 ---
 
-## Phase 6 — Supabase Integration
+## Phase 6 — Supabase Integration ✅
 
 - [x] Wire Source Registry to live Supabase (mock fallback preserved)
 - [x] Seed sources + raw_signals data
-- [x] MVP dev RLS for `sources` and `raw_signals`
+- [x] MVP dev RLS for wired tables (marked TEMPORARY)
 - [x] Evolve `/admin/signals` to Raw Signal Explorer with `source_id` linkage
 - [x] Build `/admin/problem-zones` Problem Zone Workspace with raw signal linkage
-- [ ] Connect remaining MVP tables to live Supabase
-- [ ] Tighten RLS policies (replace dev-open policies)
-- [ ] Confirm `opportunities`, `signals`, and `zones` tables match code
-- [ ] Migration plan: `zones` → `problem_zones`
+- [x] Connect all MVP tables to live Supabase
+- [x] Document production RLS plan (lock policies when auth exists)
+- [x] Confirm `opportunities`, `signals`, and `zones` match code
+- [x] Document legacy `zones` as compatibility only (prefer `problem_zones`)
+- [x] Add `supabase/README.md` + verification checklist
 
 ---
 

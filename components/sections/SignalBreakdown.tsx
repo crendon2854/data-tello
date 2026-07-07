@@ -10,6 +10,7 @@ interface SignalBreakdownProps {
     | "buildability_score"
     | "asset_fit_score"
   >;
+  helperText?: string;
 }
 
 const signals = [
@@ -29,13 +30,13 @@ function displayScore(score: number): string {
   return formatScore(score);
 }
 
-export function SignalBreakdown({ opportunity }: SignalBreakdownProps) {
+export function SignalBreakdown({
+  opportunity,
+  helperText = "Higher scores mean stronger signal. Use these to sanity-check whether the opportunity is worth building now.",
+}: SignalBreakdownProps) {
   return (
     <div className="space-y-4">
-      <p className="text-body text-text-secondary">
-        Higher scores mean stronger signal. Use these to sanity-check whether the
-        opportunity is worth building now.
-      </p>
+      <p className="text-body text-text-secondary">{helperText}</p>
 
       {signals.map(({ key, label, color }) => {
         const rawScore = opportunity[key] ?? 0;

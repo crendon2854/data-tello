@@ -8,6 +8,7 @@ See [MED.md](./MED.md) for documentation governance. Section components follow [
 |-----------|---------|
 | `Card` | Section wrapper — rounded, padding, shadow, optional title |
 | `FilterBar` | Asset type, min score, tag filters |
+| `PersonaSelector` | Execution lens picker (7 personas) |
 
 ## Layout (`/components/layout`)
 
@@ -37,6 +38,7 @@ One component per MED section. See [med-sections.md](./med-sections.md).
 | `CompetitiveAngle` | Detail page |
 | `WhyThisMatters` | Detail page |
 | `DashboardContent` | Dashboard page (client wrapper) |
+| `OpportunityDetailContent` | Detail page (client wrapper — persona lens, section order) |
 
 ## Admin (`/components/admin`)
 

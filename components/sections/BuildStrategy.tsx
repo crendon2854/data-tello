@@ -9,16 +9,18 @@ interface BuildStrategyProps {
     | "asset_reason"
     | "expansion_ladder"
   >;
+  assetPathLabels?: [string, string, string];
 }
 
-const paths = [
-  { label: "Start here", key: "asset_path_1" },
-  { label: "Next step", key: "asset_path_2" },
-  { label: "Long-term play", key: "asset_path_3" },
-] as const;
+const pathKeys = ["asset_path_1", "asset_path_2", "asset_path_3"] as const;
 
-export function BuildStrategy({ opportunity }: BuildStrategyProps) {
-  const activePaths = paths.filter(({ key }) => opportunity[key]);
+export function BuildStrategy({
+  opportunity,
+  assetPathLabels = ["Start here", "Next step", "Long-term play"],
+}: BuildStrategyProps) {
+  const activePaths = pathKeys
+    .map((key, index) => ({ label: assetPathLabels[index], key }))
+    .filter(({ key }) => opportunity[key]);
 
   return (
     <div className="space-y-5">

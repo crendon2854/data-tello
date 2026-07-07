@@ -458,6 +458,27 @@ create table if not exists outreach_runs (
 -- -----------------------------------------------------------------------------
 -- RLS
 -- -----------------------------------------------------------------------------
+--
+-- TEMPORARY MVP DEV-OPEN POLICIES (remove before production)
+-- ---------------------------------------------------------------------------
+-- These policies allow unrestricted anon access for local development and early
+-- admin UI testing. They MUST be dropped once Supabase Auth admin roles exist.
+--
+-- Tables with TEMPORARY dev-open policies (policy name → table):
+--   "MVP dev all opportunities"         → opportunities
+--   "MVP dev all signals"               → signals (legacy)
+--   "MVP dev all zones"                 → zones (legacy — compatibility only)
+--   "MVP dev all sources"               → sources
+--   "MVP dev all raw_signals"           → raw_signals
+--   "MVP dev all problem_zones"         → problem_zones
+--   "MVP dev all problem_zone_signals"  → problem_zone_signals
+--   "MVP dev all keyword_sets"          → keyword_sets
+--   "MVP dev all keyword_metrics"       → keyword_metrics
+--   "MVP dev all market_proof_records"  → market_proof_records
+--   "MVP dev all workflow_friction_signals" → workflow_friction_signals
+--
+-- Production RLS plan: see docs/database.md § Production RLS Plan
+-- ---------------------------------------------------------------------------
 
 alter table opportunities enable row level security;
 alter table signals enable row level security;
@@ -486,50 +507,54 @@ alter table system_health_events enable row level security;
 alter table growth_prospects enable row level security;
 alter table outreach_runs enable row level security;
 
--- Public app read: only published opportunities.
+-- Public app read: only published opportunities (KEEP for production).
 drop policy if exists "Public read published opportunities" on opportunities;
 create policy "Public read published opportunities"
   on opportunities for select
   using (status = 'published');
 
--- MVP admin/dev policies. Replace these with authenticated admin-only policies before production.
+-- TEMPORARY: MVP dev-open policy. Drop before production. See RLS header above.
 drop policy if exists "MVP dev all opportunities" on opportunities;
 create policy "MVP dev all opportunities" on opportunities for all using (true) with check (true);
 
+-- TEMPORARY: legacy signals table. Drop before production.
 drop policy if exists "MVP dev all signals" on signals;
 create policy "MVP dev all signals" on signals for all using (true) with check (true);
 
+-- TEMPORARY: legacy zones table (compatibility only — prefer problem_zones). Drop before production.
 drop policy if exists "MVP dev all zones" on zones;
 create policy "MVP dev all zones" on zones for all using (true) with check (true);
 
--- MVP admin/dev policy for sources. Replace with authenticated admin-only policy before production.
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all sources" on sources;
 create policy "MVP dev all sources" on sources for all using (true) with check (true);
 
--- MVP admin/dev policy for raw_signals. Replace with authenticated admin-only policy before production.
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all raw_signals" on raw_signals;
 create policy "MVP dev all raw_signals" on raw_signals for all using (true) with check (true);
 
--- MVP admin/dev policies for problem zones. Replace with authenticated admin-only policies before production.
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all problem_zones" on problem_zones;
 create policy "MVP dev all problem_zones" on problem_zones for all using (true) with check (true);
 
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all problem_zone_signals" on problem_zone_signals;
 create policy "MVP dev all problem_zone_signals" on problem_zone_signals for all using (true) with check (true);
 
--- MVP admin/dev policies for keyword intelligence. Replace with authenticated admin-only policies before production.
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all keyword_sets" on keyword_sets;
 create policy "MVP dev all keyword_sets" on keyword_sets for all using (true) with check (true);
 
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all keyword_metrics" on keyword_metrics;
 create policy "MVP dev all keyword_metrics" on keyword_metrics for all using (true) with check (true);
 
--- MVP admin/dev policy for market proof. Replace with authenticated admin-only policy before production.
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all market_proof_records" on market_proof_records;
 create policy "MVP dev all market_proof_records" on market_proof_records for all using (true) with check (true);
 
--- MVP admin/dev policy for workflow friction. Replace with authenticated admin-only policy before production.
+-- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all workflow_friction_signals" on workflow_friction_signals;
 create policy "MVP dev all workflow_friction_signals" on workflow_friction_signals for all using (true) with check (true);
 
--- Keep other target tables closed until their routes and auth model are implemented.
+-- Target tables: RLS enabled above but no policies yet. Keep closed until routes and auth exist.

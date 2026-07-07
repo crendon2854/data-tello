@@ -3,8 +3,10 @@
 import { Sidebar } from "@/components/layout/Sidebar";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { FilterBar } from "@/components/ui/FilterBar";
+import { PersonaSelector } from "@/components/ui/PersonaSelector";
 import { OpportunityCard } from "@/components/cards/OpportunityCard";
 import { useFilters } from "@/hooks/useFilters";
+import { usePersonaLens } from "@/hooks/usePersonaLens";
 import type { Opportunity } from "@/types/opportunity";
 
 interface DashboardContentProps {
@@ -14,6 +16,7 @@ interface DashboardContentProps {
 export function DashboardContent({ opportunities }: DashboardContentProps) {
   const { filters, filtered, updateFilter, resetFilters } =
     useFilters(opportunities);
+  const { personaId, lens, setPersonaId, ready } = usePersonaLens();
 
   return (
     <div className="flex min-h-[calc(100vh-3.5rem)]">
@@ -24,13 +27,17 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
             <span className="command-meta">Command Center</span>
             <span className="text-border-subtle">|</span>
             <span className="font-mono text-xs text-accent-blue">
-              OPPORTUNITY INTELLIGENCE
+              BUILD OPPORTUNITY INTELLIGENCE
             </span>
           </div>
           <h1 className="page-title">Opportunity Dashboard</h1>
-          <p className="mt-1 text-body text-text-muted">
-            Pick an opportunity — click through for the full build decision brief.
-          </p>
+          {ready && (
+            <p className="mt-1 text-body text-text-muted">{lens.dashboardSubtitle}</p>
+          )}
+        </div>
+
+        <div className="mb-6 max-w-md">
+          <PersonaSelector value={personaId} onChange={setPersonaId} compact />
         </div>
 
         <div className="mb-6">
@@ -52,6 +59,7 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
                 key={opportunity.id}
                 opportunity={opportunity}
                 index={index}
+                cardAssetLabel={lens.cardAssetLabel}
               />
             ))
           )}

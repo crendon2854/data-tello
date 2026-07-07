@@ -331,6 +331,7 @@ export async function toggleSignalProcessed(
 }
 
 export async function getZones(): Promise<ZoneRow[]> {
+  // Legacy compatibility only — prefer getProblemZones(). No admin UI uses this table.
   const supabase = getSupabase();
 
   if (supabase) {
@@ -347,6 +348,7 @@ export async function getZones(): Promise<ZoneRow[]> {
 }
 
 export async function upsertZone(
+  // Legacy compatibility only — prefer createProblemZone() / updateProblemZone().
   zone: Omit<ZoneRow, "created_at"> & { created_at?: string }
 ): Promise<ZoneRow> {
   const supabase = getSupabase();

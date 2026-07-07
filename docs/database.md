@@ -25,11 +25,19 @@ Status values:
 
 Key columns map to the paid Opportunity Dossier sections in [med-sections.md](./med-sections.md).
 
+Wired in `lib/queries.ts` (`getOpportunities`, `getOpportunityById`, `getAllOpportunities`, `getDraftOpportunities`, `createOpportunity`, `updateOpportunity`, `updateOpportunityStatus`) with mock fallback when Supabase env vars are unset.
+
+RLS: `Public read published opportunities` (keep for production) + `MVP dev all opportunities` (TEMPORARY dev-open; replace before production).
+
+Seed data: not included in `supabase/seed.sql` — create opportunities via `/admin/opportunities` when using live Supabase, or use mock mode for demo data.
+
 ### `signals`
 
 Legacy lightweight incoming signal table.
 
-Retained for backward compatibility. The admin Raw Signal Explorer reads from `raw_signals` instead.
+**Compatibility only — do not expand.** Retained for backward compatibility. The admin Raw Signal Explorer reads from `raw_signals` instead.
+
+RLS: `MVP dev all signals` (TEMPORARY dev-open; replace before production).
 
 ### `sources`
 
@@ -37,7 +45,7 @@ Source Registry — tracks ingestion sources with workflow lane, type, cadence, 
 
 Wired in `lib/queries.ts` (`getSources`, `createSource`, `updateSource`) with mock fallback when Supabase env vars are unset.
 
-RLS: `MVP dev all sources` (dev-open; replace before production).
+RLS: `MVP dev all sources` (TEMPORARY dev-open; replace before production).
 
 Seed data: `supabase/seed.sql`.
 
@@ -47,7 +55,7 @@ Normalized warehouse for ingested records, linked to `sources` via `source_id`.
 
 Wired in `lib/queries.ts` (`getRawSignals`, `toggleRawSignalNeedsReview`) with mock fallback.
 
-RLS: `MVP dev all raw_signals` (dev-open; replace before production).
+RLS: `MVP dev all raw_signals` (TEMPORARY dev-open; replace before production).
 
 Unique index on `dedup_hash` (where not null) for idempotent ingestion.
 
@@ -57,7 +65,11 @@ Seed data: `supabase/seed.sql` (references sources by name).
 
 Legacy lightweight market/problem zone table.
 
-Retained for backward compatibility. `/admin/zones` redirects to `/admin/problem-zones`.
+**Compatibility only — do not expand.** Retained for backward compatibility in `lib/queries.ts` (`getZones`, `upsertZone`). No admin UI reads this table; `/admin/zones` redirects to `/admin/problem-zones`. Prefer `problem_zones` for all new work.
+
+RLS: `MVP dev all zones` (TEMPORARY dev-open; replace before production).
+
+Migration note: legacy `zones` data is not auto-migrated to `problem_zones`. New zones belong in `problem_zones`.
 
 ### `problem_zones`
 
@@ -65,7 +77,7 @@ Grouped pain patterns before they become opportunities.
 
 Wired in `lib/queries.ts` (`getProblemZones`, `getProblemZoneById`, `createProblemZone`, `updateProblemZone`, `linkRawSignalToProblemZone`, `unlinkRawSignalFromProblemZone`) with mock fallback.
 
-RLS: `MVP dev all problem_zones` (dev-open; replace before production).
+RLS: `MVP dev all problem_zones` (TEMPORARY dev-open; replace before production).
 
 Unique constraint on `name` for idempotent seeding.
 
@@ -75,7 +87,7 @@ Seed data: `supabase/seed.sql`.
 
 Join table between `problem_zones` and `raw_signals`.
 
-RLS: `MVP dev all problem_zone_signals` (dev-open; replace before production).
+RLS: `MVP dev all problem_zone_signals` (TEMPORARY dev-open; replace before production).
 
 Link/unlink operations recalculate `source_count` and `source_diversity_count` on the parent zone.
 
@@ -85,7 +97,7 @@ Keyword families tied to problem zones for Demand Validation.
 
 Wired in `lib/queries.ts` (`getKeywordSets`, `getKeywordSetById`, `createKeywordSet`, `updateKeywordSet`) with mock fallback.
 
-RLS: `MVP dev all keyword_sets` (dev-open; replace before production).
+RLS: `MVP dev all keyword_sets` (TEMPORARY dev-open; replace before production).
 
 Seed data: `supabase/seed.sql` (linked to problem zones by name).
 
@@ -95,7 +107,7 @@ Child records for individual keyword demand metrics.
 
 Wired in `lib/queries.ts` (`createKeywordMetric`, `updateKeywordMetric`, `deleteKeywordMetric`) with mock fallback.
 
-RLS: `MVP dev all keyword_metrics` (dev-open; replace before production).
+RLS: `MVP dev all keyword_metrics` (TEMPORARY dev-open; replace before production).
 
 Seed data: `supabase/seed.sql`.
 
@@ -105,7 +117,7 @@ Market Wedge Validation records tied to problem zones.
 
 Wired in `lib/queries.ts` (`getMarketProofRecords`, `getMarketProofRecordById`, `createMarketProofRecord`, `updateMarketProofRecord`, `deleteMarketProofRecord`) with mock fallback.
 
-RLS: `MVP dev all market_proof_records` (dev-open; replace before production).
+RLS: `MVP dev all market_proof_records` (TEMPORARY dev-open; replace before production).
 
 Seed data: `supabase/seed.sql` (linked to problem zones by name).
 
@@ -115,9 +127,66 @@ Workflow Friction Signals tied to problem zones.
 
 Wired in `lib/queries.ts` (`getWorkflowFrictionSignals`, `getWorkflowFrictionSignalById`, `createWorkflowFrictionSignal`, `updateWorkflowFrictionSignal`, `deleteWorkflowFrictionSignal`) with mock fallback.
 
-RLS: `MVP dev all workflow_friction_signals` (dev-open; replace before production).
+RLS: `MVP dev all workflow_friction_signals` (TEMPORARY dev-open; replace before production).
 
 Seed data: `supabase/seed.sql` (linked to problem zones by name).
+
+## Live Table Support (Phase 6)
+
+All MVP tables below are wired in `lib/queries.ts` with Supabase + mock fallback via `getSupabase()` / `isSupabaseConfigured`.
+
+| Table | Live queries | Admin route | Seed in `seed.sql` |
+|-------|--------------|-------------|------------------|
+| `opportunities` | ✅ read/write | `/admin/opportunities` | ❌ create via admin |
+| `sources` | ✅ read/write | `/admin/sources` | ✅ |
+| `raw_signals` | ✅ read/update | `/admin/signals` | ✅ |
+| `problem_zones` | ✅ read/write | `/admin/problem-zones` | ✅ |
+| `problem_zone_signals` | ✅ link/unlink | `/admin/problem-zones` | ✅ |
+| `keyword_sets` | ✅ read/write | `/admin/keywords` | ✅ |
+| `keyword_metrics` | ✅ read/write/delete | `/admin/keywords` | ✅ |
+| `market_proof_records` | ✅ read/write/delete | `/admin/market-proof` | ✅ |
+| `workflow_friction_signals` | ✅ read/write/delete | `/admin/friction` | ✅ |
+| `signals` | ✅ legacy read/update | — (use `raw_signals`) | ❌ |
+| `zones` | ✅ legacy read/upsert | — (redirect only) | ❌ |
+
+Setup guide: [supabase/README.md](../supabase/README.md).
+
+## Production RLS Plan
+
+**Current state:** MVP dev-open policies allow unrestricted anon access on wired tables. This is intentional for development only. Do **not** deploy to production with these policies active.
+
+**Prerequisite:** Supabase Auth with an `admin` role (or equivalent JWT claim) before locking RLS.
+
+### Policies to keep
+
+| Policy | Table | Purpose |
+|--------|-------|---------|
+| `Public read published opportunities` | `opportunities` | Dashboard and detail pages read `status = 'published'` only |
+
+### Policies to drop (before production)
+
+All `MVP dev all *` policies listed in `supabase/schema.sql` RLS header.
+
+### Policies to add (when auth exists)
+
+| Role | Tables | Access |
+|------|--------|--------|
+| `anon` | `opportunities` | SELECT where `status = 'published'` |
+| `authenticated` (admin) | All wired MVP + Research OS tables | SELECT, INSERT, UPDATE, DELETE |
+| `service_role` (ingestion) | `sources`, `raw_signals`, join tables | INSERT/UPDATE for automated ingestion (future) |
+
+### Target tables (no policies yet)
+
+Tables with RLS enabled but no policies remain closed: `opportunity_scores`, `asset_strategy`, `review_queue`, `dossier_*`, `newsletter_*`, etc. Add policies when those routes ship.
+
+### Migration checklist (production RLS)
+
+1. Implement Supabase Auth + admin role assignment.
+2. Drop all `MVP dev all *` policies.
+3. Verify `Public read published opportunities` still works for dashboard.
+4. Add admin-only policies for Research OS tables.
+5. Test admin CRUD and public dashboard with anon key.
+6. Document service-role ingestion policies when ingestion automation ships.
 
 ## Target Tables
 

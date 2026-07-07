@@ -14,10 +14,25 @@ See [MED.md](./MED.md) for documentation governance.
 ## Product Identity
 
 - DataTello is **evidence-backed build-opportunity intelligence**, not a generic trend or SaaS idea finder.
+- A **Build Opportunity** is a validated way to create value in a market.
 - Output names are fixed: **Weekly Signal Brief**, **Opportunity Dossier**, **Dashboard Brief View**, **PDF Dossier**.
 - Every paid opportunity recommends a **best first asset** — not everything becomes SaaS first.
 
 Full positioning: [vision.md](./vision.md)
+
+---
+
+## Persona Execution Lens
+
+Same opportunity → same truth layer → different execution lens.
+
+**Truth layer (everyone sees):** signals, scores, problem, buyer, evidence, competitive reality, risks.
+
+**Persona lens (presentation only):** section emphasis, CTA wording, asset path ordering/labels, dashboard copy, labels and helper text.
+
+Supported personas: builder, agency, consultant, investor, operator, automation_builder, product_studio.
+
+Persona lens must **never** alter opportunity data, scores, signals, or evidence. See [med-sections.md](./med-sections.md).
 
 ---
 

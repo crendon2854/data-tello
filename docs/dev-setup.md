@@ -34,8 +34,12 @@ Without these, the app uses mock data — fine for UI development.
 
 1. Create a Supabase project
 2. Run `supabase/schema.sql` in the SQL editor
-3. Add env vars to `.env.local`
-4. Restart dev server
+3. Run `supabase/seed.sql` in the SQL editor
+4. Add env vars to `.env.local`
+5. Restart dev server
+6. Verify with checklist in [supabase/README.md](../supabase/README.md) or [project-state.md](./project-state.md)
+
+Full guide: [supabase/README.md](../supabase/README.md)
 
 ## Scripts
 

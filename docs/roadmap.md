@@ -50,17 +50,18 @@ See [MED.md](./MED.md) for the engineering workflow and Definition of Done.
 - [x] Add expanded database target schema
 - [x] Add expanded admin route map
 
-## Phase 6 — Supabase Integration
+## Phase 6 — Supabase Integration ✅
 
 - [x] Wire Source Registry to live Supabase (mock fallback preserved)
 - [x] Seed sources + raw_signals data
-- [x] MVP dev RLS for `sources` and `raw_signals`
+- [x] MVP dev RLS for wired tables (marked TEMPORARY in schema)
 - [x] Evolve `/admin/signals` to Raw Signal Explorer with `source_id` linkage
 - [x] Build `/admin/problem-zones` Problem Zone Workspace with raw signal linkage
-- [ ] Connect remaining MVP tables (`opportunities`, `zones`) to live Supabase
-- [ ] Tighten RLS policies (replace dev-open policies)
-- [ ] Confirm current `opportunities`, `signals`, and `zones` tables match code
-- [ ] Add migration plan from `zones` → `problem_zones`
+- [x] Connect all MVP tables to live Supabase (`opportunities` + Research OS tables)
+- [x] Document production RLS plan (dev-open policies remain until auth exists)
+- [x] Confirm `opportunities`, `signals`, and `zones` tables match code
+- [x] Document legacy `zones` → prefer `problem_zones` (compatibility only, no auto-migration)
+- [x] Add `supabase/README.md` and Supabase verification checklist
 
 ## Phase 7 — Research OS Data Foundation
 

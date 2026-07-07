@@ -13,37 +13,46 @@ For overall project status, see [project-state.md](./project-state.md). For work
 
 ## Current Phase
 
-Phase 6 — Supabase Integration (in progress)
+Phase 7 — Research OS Data Foundation (next)
 
 ## Current Objective
 
-Wire remaining MVP tables to live Supabase (`opportunities`, `zones`) and tighten RLS for production readiness.
+Build remaining Research OS decision-layer tables: `opportunity_scores`, `review_queue`, `watchlist_items`.
 
-## Files Expected to Change
+## Recently Completed
 
-- docs/project-state.md
-- docs/current-task.md
-- docs/changelog.md
-- lib/queries.ts (opportunities/zones confirmation)
-- supabase/schema.sql (production RLS)
+Phase 6 — Supabase Integration and RLS cleanup:
 
-## Success Criteria
+- Verified all MVP tables wired in `lib/queries.ts` with mock fallback
+- Documented legacy `zones` and `signals` as compatibility only
+- Marked all MVP dev-open RLS policies as TEMPORARY in `supabase/schema.sql`
+- Added production RLS plan to [database.md](./database.md)
+- Added [supabase/README.md](../supabase/README.md) with setup and verification steps
+- Added Supabase verification checklist to [project-state.md](./project-state.md)
 
-- All MVP tables read from Supabase when env vars are configured.
-- Mock fallback preserved when env vars are missing.
-- Migration notes documented for legacy `signals` and `zones` tables.
-- npm run build passes.
-- documentation is updated.
+## Files Expected to Change (Phase 7)
+
+- `supabase/schema.sql` (if schema adjustments needed)
+- `lib/queries.ts`
+- `types/database.ts`
+- `lib/mock-data.ts`
+- docs as needed
+
+## Success Criteria (Phase 7)
+
+- `opportunity_scores`, `review_queue`, `watchlist_items` queryable with mock fallback
+- npm run build passes
+- Documentation updated
 
 ## Dependencies
 
-- Supabase project configured.
-- Source Registry through Workflow Friction Workspace wired (complete).
+- Phase 6 complete (Supabase wiring + docs)
+- Supabase project configured for live testing
 
 ## Risks
 
-- RLS may block reads when policies are tightened.
-- Schema drift between SQL and TypeScript types.
+- RLS on new tables must follow production plan when wired
+- Schema drift between SQL and TypeScript types
 
 ## After Completion
 
@@ -57,4 +66,4 @@ Update:
 
 ## Next Recommended Task
 
-Wire `opportunities` and legacy `zones` to live Supabase, then tighten RLS for production readiness.
+Build `opportunity_scores`, `review_queue`, and `watchlist_items` query layer with mock fallback (Phase 7).

@@ -6,6 +6,52 @@ Source of truth for opportunity display, paid Opportunity Dossiers, and admin fo
 
 DataTello does not sell generic trend ideas. It sells **evidence-backed build opportunities**. Each opportunity should tell the user what problem is forming, who the buyer is, why it matters now, and what the best first asset is.
 
+## Build Opportunity Definition
+
+A **Build Opportunity** is a validated way to create value in a market.
+
+The same opportunity data is shown to every persona. Scores, signals, evidence, buyer context, competitive reality, and risks are the **truth layer** — they never change by persona.
+
+Personas change only the **execution lens**: section emphasis, CTA wording, asset path labels, dashboard copy, and section ordering.
+
+| Persona | Role label | Primary CTA |
+|---------|------------|-------------|
+| Builder | Build it | Start building |
+| Agency | Sell it | Package this offer |
+| Consultant | Advise it | Advise on this opportunity |
+| Investor | Fund or acquire | Evaluate this market |
+| Operator | Implement it | Implement this workflow |
+| Automation builder | Automate it | Automate this process |
+| Product studio | Prioritize it | Prioritize this bet |
+
+Implementation: `lib/persona-lens.ts`, `hooks/usePersonaLens.ts`, `components/ui/PersonaSelector.tsx`.
+
+### Persona Lens Rules
+
+1. **Do not** generate different opportunities by persona.
+2. **Do not** change scores by persona.
+3. **Do not** hide core evidence.
+4. **Do** reorder and spotlight sections based on persona.
+5. **Do** use persona-aware labels and helper text.
+6. **Do** relabel asset path steps without changing path data.
+
+### Truth Layer (unchanged by persona)
+
+- Signals and scores
+- Problem summary and evidence
+- Buyer and workflow context
+- Competitive reality
+- Risks
+
+### Execution Lens (varies by persona)
+
+- Primary CTA
+- Emphasized sections
+- Section titles where helpful
+- Asset path step labels
+- Dashboard and detail intro copy
+- Signal helper text tone
+
 ## Naming Rules
 
 Use these names consistently:

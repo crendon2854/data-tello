@@ -5,9 +5,14 @@ import { formatScore } from "@/lib/helpers";
 interface OpportunityCardProps {
   opportunity: Opportunity;
   index?: number;
+  cardAssetLabel?: string;
 }
 
-export function OpportunityCard({ opportunity, index = 0 }: OpportunityCardProps) {
+export function OpportunityCard({
+  opportunity,
+  index = 0,
+  cardAssetLabel = "Start with",
+}: OpportunityCardProps) {
   const staggerClass =
     index === 1 ? "stagger-1" : index === 2 ? "stagger-2" : index >= 3 ? "stagger-3" : "";
 
@@ -37,7 +42,7 @@ export function OpportunityCard({ opportunity, index = 0 }: OpportunityCardProps
 
           {opportunity.best_first_asset && (
             <p className="mb-2 text-body">
-              <span className="font-medium text-text-primary">Build first:</span>{" "}
+              <span className="font-medium text-text-primary">{cardAssetLabel}:</span>{" "}
               <span className="text-text-secondary">{opportunity.best_first_asset}</span>
             </p>
           )}

@@ -13,6 +13,26 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 ---
 
+## 2026-07-07 — Phase 6 Supabase Integration and RLS cleanup
+
+- Verified all MVP tables wired in `lib/queries.ts` with Supabase + mock fallback
+- Documented live-table support matrix and legacy table compatibility rules in [database.md](./database.md)
+- Marked all 11 `MVP dev all *` RLS policies as TEMPORARY in `supabase/schema.sql`
+- Added production RLS plan to [database.md](./database.md) (dev-open policies remain until auth exists)
+- Added [supabase/README.md](../supabase/README.md) with schema/seed order, env vars, mock mode, RLS warning, verification steps
+- Added Supabase verification checklist to [project-state.md](./project-state.md)
+- Legacy `zones` and `signals` documented as compatibility only; prefer `problem_zones` and `raw_signals`
+- Phase 6 marked complete in [roadmap.md](./roadmap.md) and [backlog.md](./backlog.md)
+
+## 2026-07-07 — Persona execution lens for Build Opportunities
+
+- Defined Build Opportunity as a validated way to create value in a market
+- Added persona execution lens model: same truth layer, different presentation by persona
+- Added `lib/persona-lens.ts` with 7 personas (builder, agency, consultant, investor, operator, automation_builder, product_studio)
+- Added `hooks/usePersonaLens.ts` and `components/ui/PersonaSelector.tsx`
+- Updated dashboard and opportunity detail with persona-aware CTAs, labels, section ordering, and emphasis
+- Persona lens does not alter opportunity data, scores, signals, or evidence
+
 ## 2026-07-07 — Workflow Friction Workspace with friction signals
 
 - Wired `workflow_friction_signals` to live Supabase with mock fallback

@@ -13,9 +13,15 @@ interface OpportunitySnapshotProps {
     | "initial_wedge"
     | "time_to_value"
   >;
+  snapshotAssetLabel?: string;
+  primaryCta?: string;
 }
 
-export function OpportunitySnapshot({ opportunity }: OpportunitySnapshotProps) {
+export function OpportunitySnapshot({
+  opportunity,
+  snapshotAssetLabel = "Start building",
+  primaryCta,
+}: OpportunitySnapshotProps) {
   return (
     <div className="space-y-5 text-text-primary">
       <div>
@@ -24,10 +30,13 @@ export function OpportunitySnapshot({ opportunity }: OpportunitySnapshotProps) {
       </div>
 
       <div className="rounded-lg border border-accent-blue/30 bg-accent-blue/10 px-4 py-3">
-        <p className="label-text mb-1">Build this first</p>
+        <p className="label-text mb-1">{snapshotAssetLabel}</p>
         <p className="text-base font-semibold text-text-primary">
           {opportunity.asset_path_1 ?? opportunity.best_first_asset}
         </p>
+        {primaryCta && (
+          <p className="mt-2 text-xs font-medium text-accent-blue">{primaryCta}</p>
+        )}
         {opportunity.initial_wedge && (
           <p className="mt-1 text-body text-text-secondary">
             Wedge: {opportunity.initial_wedge}

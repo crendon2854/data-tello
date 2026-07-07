@@ -54,6 +54,7 @@ Route spec: [routes.md](./routes.md)
 |-----------|------|
 | Card | `components/ui/Card.tsx` |
 | FilterBar | `components/ui/FilterBar.tsx` |
+| PersonaSelector | `components/ui/PersonaSelector.tsx` |
 
 ### Cards
 
@@ -73,6 +74,7 @@ Route spec: [routes.md](./routes.md)
 | CompetitiveAngle | `components/sections/CompetitiveAngle.tsx` |
 | WhyThisMatters | `components/sections/WhyThisMatters.tsx` |
 | DashboardContent | `components/sections/DashboardContent.tsx` |
+| OpportunityDetailContent | `components/sections/OpportunityDetailContent.tsx` |
 
 Section spec: [med-sections.md](./med-sections.md)
 
@@ -96,10 +98,12 @@ Full inventory: [components.md](./components.md)
 | Queries + mock fallback | `lib/queries.ts` |
 | Mock data | `lib/mock-data.ts` |
 | Helpers | `lib/helpers.ts` |
+| Persona execution lens | `lib/persona-lens.ts` |
 | DB types | `types/database.ts` |
 | Opportunity types | `types/opportunity.ts` |
 | Schema | `supabase/schema.sql` |
 | Seed data | `supabase/seed.sql` |
+| Supabase setup guide | `supabase/README.md` |
 
 ---
 
@@ -109,6 +113,7 @@ Full inventory: [components.md](./components.md)
 |------|------|
 | useOpportunities | `hooks/useOpportunities.ts` |
 | useFilters | `hooks/useFilters.ts` |
+| usePersonaLens | `hooks/usePersonaLens.ts` |
 
 ---
 
