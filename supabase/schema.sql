@@ -499,4 +499,8 @@ create policy "MVP dev all signals" on signals for all using (true) with check (
 drop policy if exists "MVP dev all zones" on zones;
 create policy "MVP dev all zones" on zones for all using (true) with check (true);
 
--- Keep target tables closed until their routes and auth model are implemented.
+-- MVP admin/dev policy for sources. Replace with authenticated admin-only policy before production.
+drop policy if exists "MVP dev all sources" on sources;
+create policy "MVP dev all sources" on sources for all using (true) with check (true);
+
+-- Keep other target tables closed until their routes and auth model are implemented.

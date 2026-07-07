@@ -94,10 +94,19 @@ export interface SourceRow {
   updated_at: string;
 }
 
-export type SourceInsert = Omit<
-  SourceRow,
-  "id" | "created_at" | "updated_at"
-> & {
+export type SourceInsert = {
+  name: string;
+  workflow_lane: WorkflowLane;
+  source_type: SourceType;
+  category?: string | null;
+  api_status?: ApiStatus;
+  cadence?: Cadence | null;
+  geography_scope?: string | null;
+  reliability_score?: number | null;
+  freshness_window_days?: number | null;
+  active?: boolean;
+  last_sync_at?: string | null;
+  notes?: string | null;
   id?: string;
   created_at?: string;
   updated_at?: string;
