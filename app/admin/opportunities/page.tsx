@@ -3,6 +3,8 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { getAllOpportunities } from "@/lib/queries";
 import { formatScore } from "@/lib/helpers";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminOpportunitiesPage() {
   const opportunities = await getAllOpportunities();
 

@@ -63,7 +63,10 @@ export async function getOpportunities(): Promise<OpportunityRow[]> {
       .eq("status", "published")
       .order("overall_score", { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase getOpportunities failed, using mock fallback:", error.message);
+      return mockStore.filter((o) => o.status === "published");
+    }
     return data ?? [];
   }
 
@@ -98,7 +101,10 @@ export async function getAllOpportunities(): Promise<OpportunityRow[]> {
       .select("*")
       .order("updated_at", { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase getAllOpportunities failed, using mock fallback:", error.message);
+      return [...mockStore];
+    }
     return data ?? [];
   }
 
@@ -115,7 +121,10 @@ export async function getDraftOpportunities(): Promise<OpportunityRow[]> {
       .eq("status", "draft")
       .order("updated_at", { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error("Supabase getDraftOpportunities failed, using mock fallback:", error.message);
+      return mockStore.filter((o) => o.status === "draft");
+    }
     return data ?? [];
   }
 

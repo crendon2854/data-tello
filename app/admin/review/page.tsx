@@ -2,6 +2,8 @@ import { PageContainer } from "@/components/layout/PageContainer";
 import { getDraftOpportunities } from "@/lib/queries";
 import { ReviewActions } from "@/components/admin/ReviewActions";
 
+export const dynamic = "force-dynamic";
+
 export default async function ReviewPage() {
   const drafts = await getDraftOpportunities();
 
