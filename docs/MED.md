@@ -1,8 +1,42 @@
 # MED — Master Engineering Document
 
+Documentation Version: 1.0  
+Last Updated: 2026-07-07  
+Status: Active  
+Owner: DataTello Engineering
+
 **Canonical entry point for the DataTello project.**
 
 Every feature is planned in the docs first, implemented second, verified third, and documented again if implementation differs. This document defines how the documentation system works and how engineering work flows through it.
+
+---
+
+## Documentation Structure
+
+```text
+docs/
+│
+├── MED.md                        ← Master engineering document (you are here)
+├── ai-rules.md                   ← AI development playbook
+├── context.md                    ← Long-term architectural truths
+├── project-state.md              ← Current project snapshot
+├── current-task.md               ← Active implementation task
+├── implementation-index.md       ← Feature → file map
+├── backlog.md                    ← Remaining work
+├── changelog.md                  ← Project history
+│
+├── vision.md
+├── architecture.md
+├── database.md
+├── admin-workflow.md
+├── routes.md
+├── components.md
+├── design-system.md
+├── roadmap.md
+├── med-sections.md
+├── decisions.md
+└── dev-setup.md
+```
 
 ---
 
@@ -13,6 +47,8 @@ DataTello is **evidence-backed build-opportunity intelligence**. It finds public
 For product positioning, principles, and constraints, see [vision.md](./vision.md).
 
 For stack, system boundaries, signal lanes, and folder structure, see [architecture.md](./architecture.md).
+
+For stable truths that rarely change, see [context.md](./context.md).
 
 ---
 
@@ -30,17 +66,32 @@ Core output names and dossier structure live in [med-sections.md](./med-sections
 
 ## Documentation Map
 
+### Governance layer
+
+| Document | What belongs here |
+|----------|-------------------|
+| [MED.md](./MED.md) | Governance, workflow, DoD, ADR policy (this file) |
+| [ai-rules.md](./ai-rules.md) | AI/Cursor development playbook, mandatory startup procedure |
+| [context.md](./context.md) | Long-term architectural truths that rarely change |
+| [project-state.md](./project-state.md) | Current snapshot: phase, routes built, tables active, known gaps |
+| [current-task.md](./current-task.md) | **Single source of truth for what is being built right now** |
+| [implementation-index.md](./implementation-index.md) | Feature → file map for shipped code |
+| [backlog.md](./backlog.md) | Actionable remaining work items |
+| [changelog.md](./changelog.md) | Project history and milestones |
+
+### Topic docs
+
 | Document | What belongs here |
 |----------|-------------------|
 | [vision.md](./vision.md) | Product goal, core principles, constraints, success criteria |
-| [architecture.md](./architecture.md) | Stack, system boundaries, signal lanes, data flow, folder structure, non-negotiable rules |
-| [database.md](./database.md) | Supabase schema, current and target tables, column definitions, query layer |
+| [architecture.md](./architecture.md) | Stack, system boundaries, signal lanes, data flow, folder structure |
+| [database.md](./database.md) | Supabase schema, current and target tables, column definitions |
 | [admin-workflow.md](./admin-workflow.md) | Research OS workflow: source → signal → zone → score → review → publish |
-| [routes.md](./routes.md) | Public, dashboard, and admin route responsibilities and build priority |
+| [routes.md](./routes.md) | Public, dashboard, and admin route responsibilities |
 | [components.md](./components.md) | Component inventory, reuse rules, section-to-component mapping |
 | [design-system.md](./design-system.md) | Visual theme, colors, typography, component classes |
 | [med-sections.md](./med-sections.md) | Opportunity Dossier section spec — fields, order, admin form parity |
-| [roadmap.md](./roadmap.md) | Build order, phase status, what ships next |
+| [roadmap.md](./roadmap.md) | Strategic build phases and phase-level status |
 | [decisions.md](./decisions.md) | Architecture Decision Records (ADRs) and freeze/revisit rules |
 | [dev-setup.md](./dev-setup.md) | Local dev, env vars, port config, Supabase setup |
 
@@ -50,36 +101,64 @@ Core output names and dossier structure live in [med-sections.md](./med-sections
 
 ## How to Use the Documentation
 
+### Recommended read order (AI and humans)
+
+Before starting work, read in order:
+
+1. [ai-rules.md](./ai-rules.md)
+2. [context.md](./context.md)
+3. [project-state.md](./project-state.md)
+4. [current-task.md](./current-task.md)
+5. [implementation-index.md](./implementation-index.md)
+6. [MED.md](./MED.md) (this file)
+
+Then read only the feature-specific topic docs that apply.
+
+**[current-task.md](./current-task.md)** is the single source of truth for the active implementation task — objective, expected files, success criteria, risks, and dependencies. **[project-state.md](./project-state.md)** describes overall project status; **current-task.md** describes the task in flight.
+
 ### Starting a new feature
 
-1. Read [MED.md](./MED.md) (this file) and the relevant topic docs.
-2. Update docs in **Phase 1 — Plan** before writing code.
-3. Implement in **Phase 2 — Build**.
-4. Verify in **Phase 3 — Verify**.
-5. Sync docs in **Phase 4 — Sync** if implementation diverged from the plan.
+1. Complete the recommended read order above.
+2. Confirm the feature is in [backlog.md](./backlog.md) or [roadmap.md](./roadmap.md).
+3. Update [current-task.md](./current-task.md) with the new objective before coding.
+4. Update docs in **Phase 1 — Plan** before writing code.
+5. Implement in **Phase 2 — Build**.
+6. Verify in **Phase 3 — Verify**.
+7. Sync in **Phase 4 — Sync** if implementation diverged from the plan.
 
 ### Finding information
 
 | I need to know… | Read |
 |-----------------|------|
 | What we're building and why | [vision.md](./vision.md) |
+| Architectural truths that never change | [context.md](./context.md) |
 | How systems connect | [architecture.md](./architecture.md) |
+| Where we are right now | [project-state.md](./project-state.md) |
+| What is being built right now | [current-task.md](./current-task.md) |
+| Where code lives | [implementation-index.md](./implementation-index.md) |
+| What's left to build | [backlog.md](./backlog.md) |
 | Table/column definitions | [database.md](./database.md) |
 | Admin research workflow | [admin-workflow.md](./admin-workflow.md) |
 | URL structure | [routes.md](./routes.md) |
 | React component inventory | [components.md](./components.md) |
 | Colors, typography, UI classes | [design-system.md](./design-system.md) |
 | Dossier section fields and order | [med-sections.md](./med-sections.md) |
-| What's done and what's next | [roadmap.md](./roadmap.md) |
+| Strategic build phases | [roadmap.md](./roadmap.md) |
 | Why we chose X over Y | [decisions.md](./decisions.md) |
+| What shipped when | [changelog.md](./changelog.md) |
+| AI development rules | [ai-rules.md](./ai-rules.md) |
 | Running the app locally | [dev-setup.md](./dev-setup.md) |
 
 ### Updating documentation
 
 - Change the **topic doc** first (the single source of truth for that subject).
+- Update [current-task.md](./current-task.md) when starting or completing a task.
+- Update [project-state.md](./project-state.md) when status changes.
+- Update [implementation-index.md](./implementation-index.md) when files are added or moved.
+- Update [backlog.md](./backlog.md) and [roadmap.md](./roadmap.md) when work ships.
+- Add an entry to [changelog.md](./changelog.md) for milestones.
 - Add cross-links from related docs; do not copy content.
 - If the decision is architectural, add an ADR to [decisions.md](./decisions.md).
-- Update [roadmap.md](./roadmap.md) when a phase item ships or scope changes.
 
 ---
 
@@ -91,12 +170,13 @@ Every feature must follow all four phases. Skipping Phase 1 or Phase 3 is not al
 
 Update documentation before writing code:
 
-- [ ] Relevant topic docs updated (vision, MED sections, etc.)
+- [ ] Relevant topic docs updated
 - [ ] [architecture.md](./architecture.md) updated if boundaries or patterns change
 - [ ] [database.md](./database.md) updated if schema or queries change
 - [ ] [routes.md](./routes.md) updated if URLs or route responsibilities change
 - [ ] [components.md](./components.md) updated if new shared components are introduced
-- [ ] ADR added to [decisions.md](./decisions.md) if the change is architectural (see ADR policy below)
+- [ ] [backlog.md](./backlog.md) item scoped and confirmed
+- [ ] ADR added to [decisions.md](./decisions.md) if architectural (see ADR policy below)
 
 ### Phase 2 — Build
 
@@ -107,6 +187,8 @@ Implement in this order:
 3. **Queries** — `lib/queries.ts` (preserve mock fallback)
 4. **UI** — pages and layouts per [routes.md](./routes.md)
 5. **Components** — section components per [med-sections.md](./med-sections.md) and [components.md](./components.md)
+
+See [ai-rules.md](./ai-rules.md) for AI-assisted development rules.
 
 ### Phase 3 — Verify
 
@@ -121,8 +203,11 @@ Before marking a feature complete:
 
 If implementation differed from the plan:
 
-- [ ] Update the relevant topic docs to match shipped behavior
-- [ ] Update [roadmap.md](./roadmap.md) checkboxes
+- [ ] Update relevant topic docs to match shipped behavior
+- [ ] Update [project-state.md](./project-state.md)
+- [ ] Update [implementation-index.md](./implementation-index.md)
+- [ ] Check off [backlog.md](./backlog.md) and [roadmap.md](./roadmap.md)
+- [ ] Add entry to [changelog.md](./changelog.md)
 - [ ] Add or amend ADR in [decisions.md](./decisions.md) if the divergence was intentional
 
 ---
@@ -133,10 +218,11 @@ If implementation differed from the plan:
 2. **Plan before build** — no feature code without updated docs in Phase 1.
 3. **Sync after divergence** — if code and docs disagree, fix the docs (or revert the code).
 4. **ADRs for architectural choices** — significant decisions get a dated record in [decisions.md](./decisions.md).
-5. **Roadmap reflects reality** — [roadmap.md](./roadmap.md) tracks what shipped and what's next.
-6. **MED sections drive UI** — dossier and admin form structure follow [med-sections.md](./med-sections.md).
-7. **Preserve mock mode** — `lib/queries.ts` must fall back to mock data when env vars are unset.
-8. **Build must pass** — `npm run build` is required before any feature is considered done.
+5. **Roadmap + backlog stay current** — [roadmap.md](./roadmap.md) for phases, [backlog.md](./backlog.md) for tasks.
+6. **Project state reflects reality** — [project-state.md](./project-state.md) updated when status changes.
+7. **MED sections drive UI** — dossier and admin form structure follow [med-sections.md](./med-sections.md).
+8. **Preserve mock mode** — `lib/queries.ts` must fall back to mock data when env vars are unset.
+9. **Build must pass** — `npm run build` is required before any feature is considered done.
 
 ---
 
@@ -146,7 +232,7 @@ If implementation differed from the plan:
 Plan (docs) → Build (schema → types → queries → UI → components) → Verify (build + mock mode) → Sync (docs if needed)
 ```
 
-A feature enters the lifecycle when it appears on [roadmap.md](./roadmap.md). It exits when the Definition of Done checklist is complete.
+A feature enters the lifecycle when it appears in [backlog.md](./backlog.md). It exits when the Definition of Done checklist is complete.
 
 ---
 
@@ -161,8 +247,12 @@ A feature is **not complete** until all of the following are true:
 - [ ] UI implemented (pages per [routes.md](./routes.md))
 - [ ] Build passes (`npm run build`)
 - [ ] Mock mode works (no Supabase env vars required for dev)
-- [ ] Roadmap updated if necessary ([roadmap.md](./roadmap.md))
-- [ ] Decisions updated if architecture changed ([decisions.md](./decisions.md))
+- [ ] [current-task.md](./current-task.md) updated
+- [ ] [project-state.md](./project-state.md) updated
+- [ ] [implementation-index.md](./implementation-index.md) updated if files changed
+- [ ] [backlog.md](./backlog.md) and [roadmap.md](./roadmap.md) updated
+- [ ] [changelog.md](./changelog.md) updated for milestones
+- [ ] [decisions.md](./decisions.md) updated if architecture changed
 
 ---
 
@@ -179,33 +269,15 @@ Architecture Decision Records live in [decisions.md](./decisions.md). See that f
 - Making a major UX or information-architecture change
 - Changing security, auth, or data-access patterns
 
-**Each ADR must contain:**
+**Each ADR must contain:** Context, Decision, Alternatives, Consequences, Date.
 
-| Field | Purpose |
-|-------|---------|
-| **Context** | Why the decision came up |
-| **Decision** | What was chosen |
-| **Alternatives** | What was rejected and why |
-| **Consequences** | Trade-offs, follow-up work, things to watch |
-| **Date** | When the decision was made |
-
-Do not log trivial choices (naming a variable, fixing a typo). Do log anything that would surprise a future contributor or change how features are built.
+Long-term truths distilled from ADRs live in [context.md](./context.md).
 
 ---
 
-## Cursor Development Rules
+## AI Development
 
-When using Cursor (or any AI-assisted editor) on this project:
-
-1. **Never implement before planning** — update docs in Phase 1 first.
-2. **Never duplicate documentation** — link to the topic doc; edit the source of truth.
-3. **Never invent database fields** without updating [database.md](./database.md).
-4. **Never add routes** without updating [routes.md](./routes.md).
-5. **Never change architecture** without updating [architecture.md](./architecture.md).
-6. **Never modify business logic** without documenting it in the appropriate topic doc.
-7. **Always preserve mock mode** — queries must work without Supabase env vars.
-8. **Always run `npm run build`** before marking work complete.
-9. **Always summarize files changed** at the end of each task.
+All AI/Cursor rules live in [ai-rules.md](./ai-rules.md). Do not duplicate them here.
 
 ---
 
@@ -213,13 +285,15 @@ When using Cursor (or any AI-assisted editor) on this project:
 
 | Document | Notes |
 |----------|-------|
-| [missing-med-implementation-plan.md](./missing-med-implementation-plan.md) | Historical gap plan used to merge missing MED concepts into the docs; reference only |
+| [missing-med-implementation-plan.md](./missing-med-implementation-plan.md) | Historical gap plan; reference only |
 | [README.md](./README.md) | Lightweight docs folder index; points here |
 
 ---
 
 ## Quick Links
 
+- [Project state](./project-state.md) — where we are now
+- [Current task](./current-task.md) — what is being built now
+- [Backlog](./backlog.md) — what's next
+- [AI rules](./ai-rules.md) — development playbook
 - [Dev setup](./dev-setup.md) — `npm install && npm run dev` → http://localhost:3001
-- [Roadmap](./roadmap.md) — current build status
-- [Decision log](./decisions.md) — ADRs and freeze rules

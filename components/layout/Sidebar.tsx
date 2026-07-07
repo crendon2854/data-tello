@@ -17,8 +17,11 @@ const adminItems = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/sources", label: "Sources" },
   { href: "/admin/opportunities", label: "Opportunities" },
-  { href: "/admin/signals", label: "Signals" },
-  { href: "/admin/zones", label: "Zones" },
+  { href: "/admin/signals", label: "Raw Signals" },
+  { href: "/admin/problem-zones", label: "Problem Zones" },
+  { href: "/admin/keywords", label: "Keywords" },
+  { href: "/admin/market-proof", label: "Market Proof" },
+  { href: "/admin/friction", label: "Friction" },
   { href: "/admin/review", label: "Review" },
 ];
 

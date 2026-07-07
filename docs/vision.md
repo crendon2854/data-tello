@@ -1,6 +1,6 @@
 # Vision
 
-See [MED.md](./MED.md) for documentation governance and engineering workflow.
+See [MED.md](./MED.md) for documentation governance. Current status: [project-state.md](./project-state.md).
 
 ## What DataTello Is
 

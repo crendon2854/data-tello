@@ -27,15 +27,97 @@ Key columns map to the paid Opportunity Dossier sections in [med-sections.md](./
 
 ### `signals`
 
-Current lightweight incoming signal table.
+Legacy lightweight incoming signal table.
 
-Should evolve into `raw_signals` or be renamed when the ingestion layer becomes real.
+Retained for backward compatibility. The admin Raw Signal Explorer reads from `raw_signals` instead.
+
+### `sources`
+
+Source Registry — tracks ingestion sources with workflow lane, type, cadence, and reliability metadata.
+
+Wired in `lib/queries.ts` (`getSources`, `createSource`, `updateSource`) with mock fallback when Supabase env vars are unset.
+
+RLS: `MVP dev all sources` (dev-open; replace before production).
+
+Seed data: `supabase/seed.sql`.
+
+### `raw_signals`
+
+Normalized warehouse for ingested records, linked to `sources` via `source_id`.
+
+Wired in `lib/queries.ts` (`getRawSignals`, `toggleRawSignalNeedsReview`) with mock fallback.
+
+RLS: `MVP dev all raw_signals` (dev-open; replace before production).
+
+Unique index on `dedup_hash` (where not null) for idempotent ingestion.
+
+Seed data: `supabase/seed.sql` (references sources by name).
 
 ### `zones`
 
-Current lightweight market/problem zone table.
+Legacy lightweight market/problem zone table.
 
-Should evolve into `problem_zones`.
+Retained for backward compatibility. `/admin/zones` redirects to `/admin/problem-zones`.
+
+### `problem_zones`
+
+Grouped pain patterns before they become opportunities.
+
+Wired in `lib/queries.ts` (`getProblemZones`, `getProblemZoneById`, `createProblemZone`, `updateProblemZone`, `linkRawSignalToProblemZone`, `unlinkRawSignalFromProblemZone`) with mock fallback.
+
+RLS: `MVP dev all problem_zones` (dev-open; replace before production).
+
+Unique constraint on `name` for idempotent seeding.
+
+Seed data: `supabase/seed.sql`.
+
+### `problem_zone_signals`
+
+Join table between `problem_zones` and `raw_signals`.
+
+RLS: `MVP dev all problem_zone_signals` (dev-open; replace before production).
+
+Link/unlink operations recalculate `source_count` and `source_diversity_count` on the parent zone.
+
+### `keyword_sets`
+
+Keyword families tied to problem zones for Demand Validation.
+
+Wired in `lib/queries.ts` (`getKeywordSets`, `getKeywordSetById`, `createKeywordSet`, `updateKeywordSet`) with mock fallback.
+
+RLS: `MVP dev all keyword_sets` (dev-open; replace before production).
+
+Seed data: `supabase/seed.sql` (linked to problem zones by name).
+
+### `keyword_metrics`
+
+Child records for individual keyword demand metrics.
+
+Wired in `lib/queries.ts` (`createKeywordMetric`, `updateKeywordMetric`, `deleteKeywordMetric`) with mock fallback.
+
+RLS: `MVP dev all keyword_metrics` (dev-open; replace before production).
+
+Seed data: `supabase/seed.sql`.
+
+### `market_proof_records`
+
+Market Wedge Validation records tied to problem zones.
+
+Wired in `lib/queries.ts` (`getMarketProofRecords`, `getMarketProofRecordById`, `createMarketProofRecord`, `updateMarketProofRecord`, `deleteMarketProofRecord`) with mock fallback.
+
+RLS: `MVP dev all market_proof_records` (dev-open; replace before production).
+
+Seed data: `supabase/seed.sql` (linked to problem zones by name).
+
+### `workflow_friction_signals`
+
+Workflow Friction Signals tied to problem zones.
+
+Wired in `lib/queries.ts` (`getWorkflowFrictionSignals`, `getWorkflowFrictionSignalById`, `createWorkflowFrictionSignal`, `updateWorkflowFrictionSignal`, `deleteWorkflowFrictionSignal`) with mock fallback.
+
+RLS: `MVP dev all workflow_friction_signals` (dev-open; replace before production).
+
+Seed data: `supabase/seed.sql` (linked to problem zones by name).
 
 ## Target Tables
 
@@ -121,6 +203,12 @@ Fields:
 #### `problem_zone_signals`
 
 Join table between `problem_zones` and `raw_signals`.
+
+Fields:
+
+- `problem_zone_id`
+- `raw_signal_id`
+- `created_at`
 
 ### Demand Validation
 
@@ -509,11 +597,34 @@ Existing functions:
 | `getSources()` | List source registry entries |
 | `createSource(data)` | Insert new source |
 | `updateSource(id, data)` | Update source fields |
+| `getRawSignals()` | List raw signals with source name join |
+| `toggleRawSignalNeedsReview(id, bool)` | Flag signal for triage |
+| `getProblemZones()` | List problem zones with linked raw signals |
+| `getProblemZoneById(id)` | Single problem zone with linked signals |
+| `createProblemZone(data)` | Insert new problem zone |
+| `updateProblemZone(id, data)` | Update problem zone fields |
+| `linkRawSignalToProblemZone(zoneId, signalId)` | Link raw signal; recalculates counts |
+| `unlinkRawSignalFromProblemZone(zoneId, signalId)` | Unlink raw signal; recalculates counts |
+| `getKeywordSets()` | List keyword sets with problem zone name and metrics |
+| `getKeywordSetById(id)` | Single keyword set with metrics |
+| `createKeywordSet(data)` | Insert new keyword set |
+| `updateKeywordSet(id, data)` | Update keyword set fields |
+| `createKeywordMetric(data)` | Insert keyword metric row |
+| `updateKeywordMetric(id, data)` | Update keyword metric row |
+| `deleteKeywordMetric(id)` | Delete keyword metric row |
+| `getMarketProofRecords()` | List market proof records with problem zone name |
+| `getMarketProofRecordById(id)` | Single market proof record |
+| `createMarketProofRecord(data)` | Insert market proof record |
+| `updateMarketProofRecord(id, data)` | Update market proof record |
+| `deleteMarketProofRecord(id)` | Delete market proof record |
+| `getWorkflowFrictionSignals()` | List friction signals with problem zone name |
+| `getWorkflowFrictionSignalById(id)` | Single friction signal |
+| `createWorkflowFrictionSignal(data)` | Insert friction signal |
+| `updateWorkflowFrictionSignal(id, data)` | Update friction signal |
+| `deleteWorkflowFrictionSignal(id)` | Delete friction signal |
 
 Future query groups should be organized by module:
 
-- raw signals (beyond MVP `signals`)
-- raw signals
 - problem zones
 - keyword sets
 - market proof

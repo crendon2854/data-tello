@@ -65,12 +65,12 @@ These may exist during transition:
 - `/admin/opportunities/[id]`
 - `/admin/review`
 - `/admin/signals`
-- `/admin/zones`
+- `/admin/problem-zones`
+- `/admin/zones` (redirect alias)
 
 ### Next admin routes to add
 
-1. `/admin/problem-zones` replacing `/admin/zones`
-3. `/admin/keywords`
+1. `/admin/keywords`
 4. `/admin/market-proof`
 5. `/admin/friction`
 6. `/admin/dossiers`

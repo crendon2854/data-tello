@@ -1,6 +1,6 @@
 # Roadmap
 
-Build order and status. Update checkboxes as work ships.
+Strategic build phases and phase-level status. For actionable tasks, see [backlog.md](./backlog.md). For current snapshot, see [project-state.md](./project-state.md).
 
 See [MED.md](./MED.md) for the engineering workflow and Definition of Done.
 
@@ -12,6 +12,7 @@ See [MED.md](./MED.md) for the engineering workflow and Definition of Done.
 - [x] Define Definition of Done checklist
 - [x] Add ADR policy to [decisions.md](./decisions.md)
 - [x] De-duplicate docs and improve cross-links
+- [x] Add governance layer: [ai-rules.md](./ai-rules.md), [context.md](./context.md), [project-state.md](./project-state.md), [implementation-index.md](./implementation-index.md), [backlog.md](./backlog.md), [changelog.md](./changelog.md)
 
 ## Phase 2 — Foundation ✅
 
@@ -51,35 +52,38 @@ See [MED.md](./MED.md) for the engineering workflow and Definition of Done.
 
 ## Phase 6 — Supabase Integration
 
-- [ ] Connect live Supabase project
-- [ ] Seed production data
+- [x] Wire Source Registry to live Supabase (mock fallback preserved)
+- [x] Seed sources + raw_signals data
+- [x] MVP dev RLS for `sources` and `raw_signals`
+- [x] Evolve `/admin/signals` to Raw Signal Explorer with `source_id` linkage
+- [x] Build `/admin/problem-zones` Problem Zone Workspace with raw signal linkage
+- [ ] Connect remaining MVP tables (`opportunities`, `zones`) to live Supabase
 - [ ] Tighten RLS policies (replace dev-open policies)
 - [ ] Confirm current `opportunities`, `signals`, and `zones` tables match code
-- [ ] Add migration plan from `signals` → `raw_signals`
 - [ ] Add migration plan from `zones` → `problem_zones`
 
 ## Phase 7 — Research OS Data Foundation
 
-- [ ] Build `sources`
-- [ ] Build `raw_signals`
-- [ ] Build `problem_zones`
-- [ ] Build `problem_zone_signals`
-- [ ] Build `keyword_sets`
-- [ ] Build `keyword_metrics`
-- [ ] Build `market_proof_records`
-- [ ] Build `workflow_friction_signals`
+- [x] Build `sources` (wired)
+- [x] Build `raw_signals` (wired)
+- [x] Build `problem_zones` (wired)
+- [x] Build `problem_zone_signals` (wired)
+- [x] Build `keyword_sets` (wired)
+- [x] Build `keyword_metrics` (wired)
+- [x] Build `market_proof_records` (wired)
+- [x] Build `workflow_friction_signals` (wired)
 - [ ] Build `opportunity_scores`
 - [ ] Build `review_queue`
 - [ ] Build `watchlist_items`
 
 ## Phase 8 — Admin Research OS UI
 
-- [ ] `/admin/sources`
-- [ ] `/admin/signals` as Raw Signal Explorer
-- [ ] `/admin/problem-zones`
-- [ ] `/admin/keywords`
-- [ ] `/admin/market-proof`
-- [ ] `/admin/friction`
+- [x] `/admin/sources`
+- [x] `/admin/signals` as Raw Signal Explorer
+- [x] `/admin/problem-zones`
+- [x] `/admin/keywords`
+- [x] `/admin/market-proof`
+- [x] `/admin/friction`
 - [ ] `/admin/review` upgraded with full human checklist
 - [ ] `/admin/watchlist`
 - [ ] `/admin/settings`

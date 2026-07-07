@@ -124,9 +124,12 @@ create table if not exists raw_signals (
   created_at timestamptz not null default now()
 );
 
+create unique index if not exists raw_signals_dedup_hash_idx on raw_signals (dedup_hash)
+  where dedup_hash is not null;
+
 create table if not exists problem_zones (
   id uuid primary key default gen_random_uuid(),
-  name text not null,
+  name text not null unique,
   summary text,
   primary_industry text,
   sub_industry text,
@@ -502,5 +505,31 @@ create policy "MVP dev all zones" on zones for all using (true) with check (true
 -- MVP admin/dev policy for sources. Replace with authenticated admin-only policy before production.
 drop policy if exists "MVP dev all sources" on sources;
 create policy "MVP dev all sources" on sources for all using (true) with check (true);
+
+-- MVP admin/dev policy for raw_signals. Replace with authenticated admin-only policy before production.
+drop policy if exists "MVP dev all raw_signals" on raw_signals;
+create policy "MVP dev all raw_signals" on raw_signals for all using (true) with check (true);
+
+-- MVP admin/dev policies for problem zones. Replace with authenticated admin-only policies before production.
+drop policy if exists "MVP dev all problem_zones" on problem_zones;
+create policy "MVP dev all problem_zones" on problem_zones for all using (true) with check (true);
+
+drop policy if exists "MVP dev all problem_zone_signals" on problem_zone_signals;
+create policy "MVP dev all problem_zone_signals" on problem_zone_signals for all using (true) with check (true);
+
+-- MVP admin/dev policies for keyword intelligence. Replace with authenticated admin-only policies before production.
+drop policy if exists "MVP dev all keyword_sets" on keyword_sets;
+create policy "MVP dev all keyword_sets" on keyword_sets for all using (true) with check (true);
+
+drop policy if exists "MVP dev all keyword_metrics" on keyword_metrics;
+create policy "MVP dev all keyword_metrics" on keyword_metrics for all using (true) with check (true);
+
+-- MVP admin/dev policy for market proof. Replace with authenticated admin-only policy before production.
+drop policy if exists "MVP dev all market_proof_records" on market_proof_records;
+create policy "MVP dev all market_proof_records" on market_proof_records for all using (true) with check (true);
+
+-- MVP admin/dev policy for workflow friction. Replace with authenticated admin-only policy before production.
+drop policy if exists "MVP dev all workflow_friction_signals" on workflow_friction_signals;
+create policy "MVP dev all workflow_friction_signals" on workflow_friction_signals for all using (true) with check (true);
 
 -- Keep other target tables closed until their routes and auth model are implemented.

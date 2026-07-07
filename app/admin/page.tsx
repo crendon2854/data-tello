@@ -4,8 +4,9 @@ import { PageContainer } from "@/components/layout/PageContainer";
 const adminLinks = [
   { href: "/admin/opportunities", label: "Opportunities", desc: "Create and edit opportunities" },
   { href: "/admin/review", label: "Review", desc: "Approve, reject, or publish drafts" },
-  { href: "/admin/signals", label: "Signals", desc: "Manage incoming signals" },
-  { href: "/admin/zones", label: "Zones", desc: "Define market zones" },
+  { href: "/admin/sources", label: "Sources", desc: "Source Registry for ingestion" },
+  { href: "/admin/signals", label: "Raw Signals", desc: "Explore ingested raw signals" },
+  { href: "/admin/problem-zones", label: "Problem Zones", desc: "Group pain patterns and link signals" },
 ];
 
 export default function AdminPage() {
@@ -13,7 +14,7 @@ export default function AdminPage() {
     <PageContainer>
       <h1 className="page-title mb-2">Admin</h1>
       <p className="mb-8 text-body text-text-secondary">
-        Manage opportunities, signals, and zones.
+        Manage opportunities, sources, signals, and problem zones.
       </p>
 
       <div className="grid gap-4 sm:grid-cols-2">

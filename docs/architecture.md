@@ -1,6 +1,6 @@
 # Architecture
 
-See [MED.md](./MED.md) for documentation governance. System boundaries and signal lanes defined here are authoritative — do not duplicate them in other docs.
+See [MED.md](./MED.md) for documentation governance. Long-term truths: [context.md](./context.md).
 
 ## Stack
 

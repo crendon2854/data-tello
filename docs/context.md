@@ -1,0 +1,101 @@
+# Context — Long-Term Architectural Truths
+
+Documentation Version: 1.0  
+Last Updated: 2026-07-07  
+Status: Active  
+Owner: DataTello Engineering
+
+Stable facts about DataTello that rarely change. If one of these changes, update this file, add an ADR to [decisions.md](./decisions.md), and update [architecture.md](./architecture.md).
+
+See [MED.md](./MED.md) for documentation governance.
+
+---
+
+## Product Identity
+
+- DataTello is **evidence-backed build-opportunity intelligence**, not a generic trend or SaaS idea finder.
+- Output names are fixed: **Weekly Signal Brief**, **Opportunity Dossier**, **Dashboard Brief View**, **PDF Dossier**.
+- Every paid opportunity recommends a **best first asset** — not everything becomes SaaS first.
+
+Full positioning: [vision.md](./vision.md)
+
+---
+
+## System Boundaries
+
+Four separate systems. Do not merge responsibilities.
+
+| System | Owns | Does not own |
+|--------|------|--------------|
+| **DataTello Core** | Ingestion, scoring, review, dashboard publishing | Newsletter sends, PDF templates, outbound prospecting |
+| **Newsletter Engine** | Free subscribers, Weekly Signal Brief, autoresponder | Full paid dossiers, PDF generation |
+| **Dossier Builder** | Paid dossiers, PDF export, templates | Newsletter subscriber management |
+| **Growth Automation Stack** | n8n, AI agents, outbound prospecting | Core ingestion, clustering, scoring |
+
+Full boundaries: [architecture.md](./architecture.md)
+
+---
+
+## Signal Lanes
+
+DataTello Core uses four lanes:
+
+1. **Pressure Discovery** — real-world operational pressure
+2. **Demand Validation** — search behavior, buyer language, CPC (DataForSEO)
+3. **Market Wedge Validation** — category gaps, competition, spend
+4. **Workflow Friction Signals** — repeated execution pain (GitHub, Stack Exchange, job postings)
+
+Friction is an **internal modifier** — it boosts pressure, wedge, and buildability; it is not a standalone public score.
+
+---
+
+## Non-Negotiable Rules
+
+1. Core intelligence stays in **Next.js + Supabase**.
+2. **n8n is for marketing automation only** — never core ingestion or scoring.
+3. **Human review** controls final buyer, asset fit, competitive entry, and publish approval.
+4. **AI assists; AI does not autopublish.**
+5. **Section-driven, card-based UI** — one component per MED section.
+6. **Mock mode must always work** — dev without Supabase env vars.
+7. **Docs before code** — plan in docs, implement second.
+
+---
+
+## Scoring Model (V1)
+
+- Public scores: pressure, demand, wedge, buildability, asset fit.
+- **Buildability + Asset Fit** replaced software-likelihood.
+- **Asset Strategy**, **Builder Fit Strategy**, and **Competitive Differentiator Strategy** are required dossier sections.
+- Competitor count alone is insufficient — qualitative differentiation required.
+
+Full spec: [med-sections.md](./med-sections.md)
+
+---
+
+## Data Flow
+
+```text
+Source Sync → Raw Signals → Normalize/Classify → Problem Zones → Keyword Enrichment → Market/Friction Proof → Candidate Opportunity → Guardrails → Human Review → Publish → PDF Dossier
+```
+
+Full flow and freshness rules: [architecture.md](./architecture.md)
+
+---
+
+## Freeze / Revisit (V1)
+
+**Frozen for V1:**
+
+- Product positioning as build-opportunity intelligence
+- Newsletter Engine and Dossier Builder separation
+- Core app in Next.js + Supabase
+- n8n only for Growth Automation Stack
+- Asset Strategy and Builder Fit Strategy
+- Human review before publishing
+
+**Revisit after V1:**
+
+- Deeper personalization, full workflow builder, social-listening sources
+- Affiliate marketplace, advanced BI, multi-admin permissions
+
+Full ADR list: [decisions.md](./decisions.md)
