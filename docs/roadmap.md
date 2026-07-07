@@ -2,7 +2,18 @@
 
 Build order and status. Update checkboxes as work ships.
 
-## Phase 1 — Foundation ✅
+See [MED.md](./MED.md) for the engineering workflow and Definition of Done.
+
+## Phase 1 — Documentation Governance ✅
+
+- [x] Create `docs/MED.md` as canonical entry point
+- [x] Define documentation map and single-source-of-truth rules
+- [x] Define four-phase engineering workflow (Plan → Build → Verify → Sync)
+- [x] Define Definition of Done checklist
+- [x] Add ADR policy to [decisions.md](./decisions.md)
+- [x] De-duplicate docs and improve cross-links
+
+## Phase 2 — Foundation ✅
 
 - [x] Next.js + TypeScript + Tailwind scaffold
 - [x] Layout (Navbar, Sidebar, PageContainer)
@@ -10,14 +21,14 @@ Build order and status. Update checkboxes as work ships.
 - [x] Supabase client + query layer
 - [x] Docs structure
 
-## Phase 2 — Core UX ✅
+## Phase 3 — Core UX ✅
 
 - [x] Landing page
 - [x] Dashboard + FilterBar + OpportunityCard
 - [x] Opportunity detail with V1 sections
 - [x] Newsletter page UI
 
-## Phase 3 — Basic Admin ✅
+## Phase 4 — Basic Admin ✅
 
 - [x] Admin layout + hub
 - [x] Opportunity list + create/edit form
@@ -25,7 +36,7 @@ Build order and status. Update checkboxes as work ships.
 - [x] Signals table
 - [x] Zones CRUD
 
-## Phase 4 — Documentation Alignment ✅
+## Phase 5 — Documentation Alignment ✅
 
 - [x] Define DataTello as evidence-backed build-opportunity intelligence
 - [x] Lock output names: Weekly Signal Brief, Opportunity Dossier, Dashboard Brief View, PDF Dossier
@@ -38,7 +49,7 @@ Build order and status. Update checkboxes as work ships.
 - [x] Add expanded database target schema
 - [x] Add expanded admin route map
 
-## Phase 5 — Supabase Integration
+## Phase 6 — Supabase Integration
 
 - [ ] Connect live Supabase project
 - [ ] Seed production data
@@ -47,7 +58,7 @@ Build order and status. Update checkboxes as work ships.
 - [ ] Add migration plan from `signals` → `raw_signals`
 - [ ] Add migration plan from `zones` → `problem_zones`
 
-## Phase 6 — Research OS Data Foundation
+## Phase 7 — Research OS Data Foundation
 
 - [ ] Build `sources`
 - [ ] Build `raw_signals`
@@ -61,7 +72,7 @@ Build order and status. Update checkboxes as work ships.
 - [ ] Build `review_queue`
 - [ ] Build `watchlist_items`
 
-## Phase 7 — Admin Research OS UI
+## Phase 8 — Admin Research OS UI
 
 - [ ] `/admin/sources`
 - [ ] `/admin/signals` as Raw Signal Explorer
@@ -73,7 +84,7 @@ Build order and status. Update checkboxes as work ships.
 - [ ] `/admin/watchlist`
 - [ ] `/admin/settings`
 
-## Phase 8 — Opportunity Dossier Upgrade
+## Phase 9 — Opportunity Dossier Upgrade
 
 - [ ] Expand `opportunities` schema to full dossier fields
 - [ ] Add `asset_strategy`
@@ -85,7 +96,7 @@ Build order and status. Update checkboxes as work ships.
 - [ ] Update detail page to render new sections
 - [ ] Update admin form to edit new sections
 
-## Phase 9 — Dossier Builder
+## Phase 10 — Dossier Builder
 
 - [ ] Build `dossier_templates`
 - [ ] Build `dossier_exports`
@@ -97,7 +108,7 @@ Build order and status. Update checkboxes as work ships.
 - [ ] Add branding controls
 - [ ] Add PDF export history
 
-## Phase 10 — Newsletter Engine
+## Phase 11 — Newsletter Engine
 
 - [ ] Build `newsletter_subscribers`
 - [ ] Build `newsletter_events`
@@ -107,7 +118,7 @@ Build order and status. Update checkboxes as work ships.
 - [ ] Add open/click/CTA tracking
 - [ ] Keep free brief watered down and separate from paid dossiers
 
-## Phase 11 — System Health
+## Phase 12 — System Health
 
 - [ ] Add source connector adapter model
 - [ ] Build `/admin/system-health`
@@ -118,7 +129,7 @@ Build order and status. Update checkboxes as work ships.
 - [ ] Add human approval queue for repair decisions
 - [ ] Add source reliability dashboard
 
-## Phase 12 — Growth Automation Stack
+## Phase 13 — Growth Automation Stack
 
 This is separate from DataTello Core.
 

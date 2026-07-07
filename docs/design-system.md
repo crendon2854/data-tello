@@ -1,5 +1,7 @@
 # Design System
 
+See [MED.md](./MED.md) for documentation governance. Component inventory lives in [components.md](./components.md).
+
 Command-center dark theme. Source of truth for colors, typography, and UI patterns.
 
 ## Theme Character

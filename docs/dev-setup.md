@@ -1,5 +1,7 @@
 # Dev Setup
 
+See [MED.md](./MED.md) for engineering workflow and Definition of Done.
+
 ## Prerequisites
 
 - Node.js 18+

@@ -13,7 +13,7 @@ Open [http://localhost:3001](http://localhost:3001)
 
 ## Documentation
 
-See [`docs/README.md`](./docs/README.md) for the full doc index — architecture, MED sections, routes, admin workflow, and roadmap.
+See [`docs/MED.md`](./docs/MED.md) — the Master Engineering Document and canonical entry point for architecture, workflow, and governance.
 
 ## Stack
 

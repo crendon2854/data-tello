@@ -1,5 +1,7 @@
 # Database
 
+See [MED.md](./MED.md) for documentation governance. **This file is the single source of truth for schema and table definitions** — do not invent fields elsewhere.
+
 ## Provider
 
 Supabase (Postgres). Schema lives in `supabase/schema.sql`.

@@ -1,17 +1,50 @@
 # Decision Log
 
-Record significant choices so the team stays aligned.
+Record significant choices so the team stays aligned. This file is the home for all Architecture Decision Records (ADRs).
 
-## Format
+See [MED.md](./MED.md) for documentation governance and when ADRs are required.
+
+## ADR Policy
+
+### When to add an ADR
+
+Add a new record when a decision affects how the system is built, operated, or understood long-term. Examples:
+
+- **New workflow** — e.g. a new review stage, publish gate, or admin tool
+- **New scoring logic** — guardrails, lane weights, friction modifiers
+- **New database pattern** — table design, naming convention, migration strategy
+- **New external dependency** — API, service, or infrastructure integration
+- **Major UX change** — information architecture, dossier structure, admin layout
+- **Security change** — auth, RLS, data access, or secrets handling
+
+Do **not** add an ADR for routine implementation details (bug fixes, copy tweaks, refactors that preserve behavior).
+
+### Required fields
+
+Every ADR must include all five fields:
+
+| Field | Description |
+|-------|-------------|
+| **Context** | Why this came up; what problem or constraint triggered the decision |
+| **Decision** | What was chosen |
+| **Alternatives** | What was rejected and why |
+| **Consequences** | Trade-offs, follow-up work, risks, and things future contributors should watch |
+| **Date** | When the decision was made (`YYYY-MM-DD`) |
+
+### Format
 
 ```text
-### [DATE] Title
+### YYYY-MM-DD Title
+
 **Context:** Why this came up
 **Decision:** What we chose
 **Alternatives:** What we rejected
+**Consequences:** Trade-offs and follow-up implications
 ```
 
 ---
+
+> **Note:** ADRs recorded before documentation governance (2026-07-07) may omit the **Consequences** field. New ADRs must include all five required fields per the ADR policy above.
 
 ### 2026-07-07 Port 3001 for local dev
 

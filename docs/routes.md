@@ -1,5 +1,7 @@
 # Routes
 
+See [MED.md](./MED.md) for documentation governance. **This file is the single source of truth for URL structure** — update it before adding routes.
+
 ## Public / App Routes
 
 | Route | Type | Purpose |

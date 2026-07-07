@@ -1,5 +1,7 @@
 # MED Sections
 
+See [MED.md](./MED.md) for documentation governance. **This file is the single source of truth for dossier section structure** — detail pages and admin forms must match it.
+
 Source of truth for opportunity display, paid Opportunity Dossiers, and admin form structure.
 
 DataTello does not sell generic trend ideas. It sells **evidence-backed build opportunities**. Each opportunity should tell the user what problem is forming, who the buyer is, why it matters now, and what the best first asset is.

@@ -1,5 +1,7 @@
 # Vision
 
+See [MED.md](./MED.md) for documentation governance and engineering workflow.
+
 ## What DataTello Is
 
 Market opportunity intelligence — scored opportunities with build strategy, signal breakdown, and execution angles. Users move from insight to action.

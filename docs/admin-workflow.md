@@ -1,5 +1,7 @@
 # Admin Workflow
 
+See [MED.md](./MED.md) for documentation governance. For route URLs, see [routes.md](./routes.md). For schema backing each step, see [database.md](./database.md).
+
 The admin backend is the internal research operating system for DataTello.
 
 It should behave like a Notion-style research CMS: linked records, filters, statuses, review queues, source traceability, and one-click movement from raw signal to paid Opportunity Dossier.

@@ -1,5 +1,7 @@
 # Architecture
 
+See [MED.md](./MED.md) for documentation governance. System boundaries and signal lanes defined here are authoritative — do not duplicate them in other docs.
+
 ## Stack
 
 - Next.js 14+ (App Router)

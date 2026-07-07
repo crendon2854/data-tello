@@ -1,5 +1,7 @@
 # Components
 
+See [MED.md](./MED.md) for documentation governance. Section components follow [med-sections.md](./med-sections.md). Visual patterns follow [design-system.md](./design-system.md).
+
 ## UI (`/components/ui`)
 
 | Component | Purpose |
@@ -45,8 +47,7 @@ One component per MED section. See [med-sections.md](./med-sections.md).
 
 ## Typography & Spacing
 
-- Title: `text-xl font-semibold`
-- Section: `text-lg font-medium`
-- Body: `text-sm text-muted`
+See [design-system.md](./design-system.md) for typography classes and visual rules. Component layout defaults:
+
 - Section gap: 24px (`gap-6`)
 - Card padding: 16–20px (`p-5`)
