@@ -16,8 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DataTello — Market Opportunity Intelligence",
-  description: "Discover, evaluate, and act on market opportunities.",
+  title: "DataTello — Evidence-Backed Build Opportunities",
+  description:
+    "Discover evidence-backed build opportunities from real market signals. SaaS, automations, templates, dashboards, and workflow tools.",
 };
 
 export default function RootLayout({
