@@ -49,3 +49,27 @@ Full guide: [supabase/README.md](../supabase/README.md)
 | `npm run build` | Production build |
 | `npm run start` | Production server on :3001 |
 | `npm run lint` | ESLint |
+
+## Troubleshooting
+
+### Styles missing (white page, black text)
+
+Usually a stale dev server or corrupted `.next` cache — Tailwind CSS never loads, so custom classes like `bg-bg-primary` do nothing.
+
+**Fix (PowerShell):**
+
+```powershell
+# Find and kill whatever is holding port 3001
+netstat -ano | findstr :3001
+taskkill /PID <pid_from_above> /F
+
+# Clear Next cache and restart
+Remove-Item -Recurse -Force .next
+npm run dev
+```
+
+Then hard-refresh the browser (`Ctrl+Shift+R`).
+
+### `EADDRINUSE` on port 3001
+
+`npm run dev` failed but something is still listening on 3001. Kill the old process with `taskkill` (see above) before restarting.

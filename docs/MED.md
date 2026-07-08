@@ -1,6 +1,6 @@
 # MED — Master Engineering Document
 
-Documentation Version: 1.1  
+Documentation Version: 1.2  
 Last Updated: 2026-07-08  
 Status: Active  
 Owner: DataTello Engineering
@@ -44,7 +44,7 @@ docs/
 
 DataTello delivers **evidence-backed build opportunities** using structured signals, scoring, and guardrails.
 
-It is a premium opportunity intelligence product for agencies, consultants, and investors. DataTello finds operational pain, market wedge, and source-backed evidence, turns them into scored build opportunities, and recommends the best first asset to create.
+It is a premium opportunity intelligence platform and decision-support system for agencies, consultants, and investors. DataTello applies four core signal lanes — Pressure Discovery, Demand Validation, Market Wedge Validation, and Workflow Friction Signals — plus structured scoring, guardrails, and human review to produce evidence-backed build opportunities with Asset Strategy and Competitive Differentiator Strategy in every dossier.
 
 Product structure:
 
@@ -53,6 +53,8 @@ Product structure:
 3. **Emerging Digital Infrastructure Signals** — four analytical sub-modules (secondary expansion)
 
 Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.
+
+Paid dossiers follow seven sections: Opportunity Snapshot, Why This Exists, Signal Breakdown, Asset Strategy, Execution Angle, Competitive Differentiator Strategy, Why This Matters.
 
 For product positioning, principles, and constraints, see [vision.md](./vision.md).
 

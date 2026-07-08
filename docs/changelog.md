@@ -13,6 +13,15 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 ---
 
+## 2026-07-08 — Dossier structure and scoring model alignment
+
+- Canonical seven-section Opportunity Dossier output locked
+- Asset Strategy and Competitive Differentiator Strategy defined as required sections
+- Workflow Friction rule clarified: modifies Pain, Market Wedge, Buildability; not standalone decision engine
+- Buildability Score + Asset Fit Decision replace Software Likelihood in docs
+- ICP questions updated for agencies, consultants, investors
+- Builder Fit demoted to internal admin only (not in primary dossier output)
+
 ## 2026-07-08 — Strategic repositioning and signal layer expansion
 
 - Reframed ICP: agencies, consultants, investors

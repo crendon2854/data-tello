@@ -19,7 +19,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "DataTello — Evidence-Backed Build Opportunities",
   description:
-    "Premium opportunity intelligence for agencies, consultants, and investors. Source-backed signals, structured scoring, and guardrails.",
+    "Premium opportunity intelligence platform for agencies, consultants, and investors. Evidence-backed build opportunities with structured signals, scoring, and guardrails.",
 };
 
 export default function RootLayout({

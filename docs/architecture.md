@@ -80,11 +80,20 @@ DataTello intelligence is organized in three layers:
 
 ### 1. Core Engine
 
-The scoring and decision backbone. Unchanged.
+The scoring and decision backbone. Four required signal lanes:
+
+1. **Pressure Discovery** — real-world operational pressure
+2. **Demand Validation** — search behavior, buyer language, commercial intent
+3. **Market Wedge Validation** — category gaps, competition, spend proof
+4. **Workflow Friction Signals** — repeated execution failure where people struggle to operationalize workflows
+
+Plus Buildability Score, Asset Fit Decision, guardrails, and human review.
+
+Workflow Friction modifies Pain/Pressure, Market Wedge, and Buildability. It does not act as a standalone decision engine.
 
 ### 2. Complaint & Incident Signals (core expansion)
 
-**Where real users repeatedly experience failure.**
+**Where real-world failures repeatedly occur.**
 
 - Detects repeated real-world failures across operational and regulated industries
 - Reveals operational pain before demand spikes
@@ -172,7 +181,7 @@ Sources/checks:
 
 ### Workflow Friction Signals
 
-Detects repeated execution pain where people visibly struggle to operationalize the workflow.
+Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows.
 
 MVP sources:
 
@@ -181,7 +190,12 @@ MVP sources:
 - Greenhouse job postings
 - Lever job postings
 
-Friction is an internal modifier. It can boost pressure, wedge, and buildability when repeated workflow failure is visible.
+**Friction rule:**
+
+- Modifies scoring: Pain/Pressure, Market Wedge, and Buildability
+- Internal modifier only — not a standalone public score
+- Does **not** act as a standalone decision engine
+- Does not bypass guardrails, scoring, or human review
 
 ---
 

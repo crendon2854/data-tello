@@ -26,25 +26,27 @@ See [MED.md](./MED.md) for documentation governance. Section components follow [
 
 ## Sections (`/components/sections`)
 
-One component per MED section. See [med-sections.md](./med-sections.md).
+One component per MED section. See [med-sections.md](./med-sections.md) for the seven-section dossier order.
 
-| Component | Used On |
-|-----------|---------|
-| `OpportunitySnapshot` | Detail page |
-| `WhyThisExists` | Detail page |
-| `SignalBreakdown` | Detail page |
-| `BuildStrategy` | Detail page |
-| `ExecutionAngle` | Detail page |
-| `CompetitiveAngle` | Detail page |
-| `WhyThisMatters` | Detail page |
-| `DashboardContent` | Dashboard page (client wrapper) |
-| `OpportunityDetailContent` | Detail page (client wrapper — persona lens, section order) |
+| Component | MED Section | Used On |
+|-----------|-------------|---------|
+| `OpportunitySnapshot` | 1. Opportunity Snapshot | Detail page |
+| `WhyThisExists` | 2. Why This Exists | Detail page |
+| `SignalBreakdown` | 3. Signal Breakdown | Detail page |
+| `BuildStrategy` | 4. Asset Strategy | Detail page |
+| `ExecutionAngle` | 5. Execution Angle | Detail page |
+| `CompetitiveAngle` | 6. Competitive Differentiator Strategy | Detail page |
+| `WhyThisMatters` | 7. Why This Matters | Detail page |
+| `DashboardContent` | — | Dashboard page (client wrapper) |
+| `OpportunityDetailContent` | — | Detail page (client wrapper — persona lens, section order) |
+
+Component names (`BuildStrategy`, `CompetitiveAngle`) predate the canonical MED section names. Docs use **Asset Strategy** and **Competitive Differentiator Strategy**.
 
 ## Admin (`/components/admin`)
 
 | Component | Purpose |
 |-----------|---------|
-| `OpportunityForm` | Create/edit — 6 section groups |
+| `OpportunityForm` | Create/edit — mirrors seven-section dossier groups |
 | `ReviewActions` | Approve / reject / publish buttons |
 
 ## Typography & Spacing

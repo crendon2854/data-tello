@@ -2,7 +2,7 @@
 
 **Start here:** [MED.md](./MED.md) — Master Engineering Document (canonical entry point)
 
-## AI Startup Read Order
+## Implementation Read Order
 
 Before implementing any feature, read in order:
 
@@ -36,7 +36,7 @@ Then read only the feature-specific topic docs that apply.
 |-----|---------|
 | [vision.md](./vision.md) | Product goal, principles, constraints |
 | [architecture.md](./architecture.md) | System boundaries, signal lanes, app structure |
-| [med-sections.md](./med-sections.md) | Opportunity Dossier section spec |
+| [med-sections.md](./med-sections.md) | Seven-section Opportunity Dossier spec (Asset Strategy, Competitive Differentiator Strategy) |
 | [database.md](./database.md) | Supabase schema, target tables, query layer |
 | [routes.md](./routes.md) | Public, dashboard, and admin routes |
 | [components.md](./components.md) | Component inventory and reuse rules |

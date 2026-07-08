@@ -1,6 +1,6 @@
 # Context — Long-Term Architectural Truths
 
-Documentation Version: 1.1  
+Documentation Version: 1.2  
 Last Updated: 2026-07-08  
 Status: Active  
 Owner: DataTello Engineering
@@ -17,8 +17,8 @@ See [MED.md](./MED.md) for documentation governance.
 - DataTello is **not** a trend idea finder, startup idea list, or generic market scanner.
 - A **Build Opportunity** is a validated way to create value in a market, backed by source-backed evidence and operational pain.
 - Output names are fixed: **Weekly Signal Brief**, **Opportunity Dossier**, **Dashboard Brief View**, **PDF Dossier**.
-- Every paid opportunity recommends a **best first asset** — software is one path among several, not the default assumption.
-- DataTello is a **premium intelligence product** and **decision-support tool** for higher-value users.
+- **Not all opportunities should start as software.** Every paid opportunity includes Asset Strategy with a best first asset.
+- DataTello is a **premium intelligence product**, **decision-support system**, and **opportunity intelligence platform**.
 
 Full positioning: [vision.md](./vision.md)
 
@@ -26,13 +26,11 @@ Full positioning: [vision.md](./vision.md)
 
 ## Target ICP
 
-Primary users:
-
 | Persona | Core question |
 |---------|---------------|
-| **Agencies** | What new services or offers can we sell? |
+| **Agencies** | What services or products can we offer clients? |
 | **Consultants** | What should we advise clients to do? |
-| **Investors** | Where are new markets and opportunities forming? |
+| **Investors** | Where are new opportunities forming? |
 
 All product messaging, dossier framing, and dashboard copy should answer these questions.
 
@@ -67,42 +65,62 @@ Full boundaries: [architecture.md](./architecture.md)
 
 ---
 
-## Product Structure
+## Core Signal Layers
 
-### 1. Core Engine (unchanged)
-
-Four scoring lanes:
+All four lanes are required in the Core Engine:
 
 1. **Pressure Discovery** — real-world operational pressure
 2. **Demand Validation** — search behavior, buyer language, CPC (DataForSEO)
 3. **Market Wedge Validation** — category gaps, competition, spend
-4. **Workflow Friction Signals** — repeated execution pain (GitHub, Stack Exchange, job postings)
+4. **Workflow Friction Signals** — repeated execution failure where people struggle to operationalize workflows
 
-Friction is an **internal modifier** — it boosts pressure, wedge, and buildability; it is not a standalone public score.
+### Workflow Friction Rule
 
-### 2. Complaint & Incident Signals (core expansion)
+Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows.
 
-Where real users repeatedly experience failure.
+- Modifies scoring: **Pain/Pressure**, **Market Wedge**, **Buildability**
+- Internal modifier only — not a standalone public score
+- Does **not** act as a standalone decision engine
+- Does not bypass guardrails, scoring, or human review
 
-- Detects repeated real-world failures
-- Reveals operational pain before demand spikes
-- Used for regulated and operational industries
-- Visual and analytical in the dashboard; does not alone determine final opportunities
+### Expansion Layers
 
-### 3. Emerging Digital Infrastructure Signals (secondary expansion)
+**Complaint & Incident Signals** — where real-world failures repeatedly occur. Core expansion. Feeds review and analytical panels.
 
-Analytical views of infrastructure shifts. Four sub-modules only:
-
-- Agent Commerce Signals
-- Stablecoin Workflow Signals
-- Onchain Developer Tool Friction
-- Tokenized Data / Pay-Per-Use Data Signals
-
-Visual and analytical only — charts, patterns, trends. Does not determine final opportunities.
-
-### Scoring Rule
+**Emerging Digital Infrastructure Signals** — four sub-modules only: Agent Commerce, Stablecoin Workflow, Onchain Developer Tool Friction, Tokenized Data / Pay-Per-Use Data. Visual signal layers only.
 
 **Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
+
+---
+
+## Scoring Model (V1)
+
+Software Likelihood is replaced by:
+
+- **Buildability Score**
+- **Asset Fit Decision**
+
+Public scores: pressure, demand, wedge, buildability, asset fit.
+
+**Asset Strategy** and **Competitive Differentiator Strategy** are required dossier sections.
+
+Competitor count alone is insufficient — qualitative differentiation required.
+
+Full spec: [med-sections.md](./med-sections.md)
+
+---
+
+## Opportunity Dossier Structure (V1)
+
+Seven sections, in order:
+
+1. Opportunity Snapshot
+2. Why This Exists
+3. Signal Breakdown
+4. Asset Strategy
+5. Execution Angle
+6. Competitive Differentiator Strategy
+7. Why This Matters
 
 ---
 
@@ -115,18 +133,8 @@ Visual and analytical only — charts, patterns, trends. Does not determine fina
 5. **Section-driven, card-based UI** — one component per MED section.
 6. **Mock mode must always work** — dev without Supabase env vars.
 7. **Docs before code** — plan in docs, implement second.
-8. **Expansion signal layers are analytical** — they inform review; they do not override scoring.
-
----
-
-## Scoring Model (V1)
-
-- Public scores: pressure, demand, wedge, buildability, asset fit.
-- **Buildability + Asset Fit** replaced software-likelihood.
-- **Asset Strategy**, **Builder Fit Strategy**, and **Competitive Differentiator Strategy** are required dossier sections.
-- Competitor count alone is insufficient — qualitative differentiation required.
-
-Full spec: [med-sections.md](./med-sections.md)
+8. **Expansion signal layers are visual** — they inform review; they do not override scoring.
+9. **Friction modifies scoring** — it does not decide opportunities alone.
 
 ---
 
@@ -147,13 +155,13 @@ Full flow and freshness rules: [architecture.md](./architecture.md)
 **Frozen for V1:**
 
 - Product positioning as evidence-backed opportunity intelligence for agencies, consultants, and investors
-- Core Engine signal lanes and scoring model
-- Complaint & Incident Signals as core expansion layer (documented; implementation phased)
-- Emerging Digital Infrastructure Signals as secondary expansion (four sub-modules only)
+- Four Core Engine signal lanes and scoring model (Buildability + Asset Fit)
+- Seven-section Opportunity Dossier output structure
+- Complaint & Incident Signals as core expansion layer
+- Emerging Digital Infrastructure Signals (four sub-modules only)
 - Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
-- Asset Strategy and Builder Fit Strategy
 - Human review before publishing
 
 **Revisit after V1:**

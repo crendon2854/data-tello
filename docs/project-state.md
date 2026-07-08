@@ -138,20 +138,21 @@ Production RLS plan: [database.md](./database.md) § Production RLS Plan
 
 ## MED Sections — Rendered vs Planned
 
-### Rendered on detail page (V1)
+### Rendered on detail page (V1 — seven-section dossier)
 
-- OpportunitySnapshot (persona-aware labels)
-- WhyThisExists
-- SignalBreakdown (persona-aware helper text)
-- BuildStrategy (persona-aware asset path labels)
-- ExecutionAngle
-- CompetitiveAngle
-- WhyThisMatters
-- Persona selector + section reorder/emphasis via `OpportunityDetailContent`
+1. Opportunity Snapshot (persona-aware labels)
+2. Why This Exists
+3. Signal Breakdown (persona-aware helper text; Buildability + Asset Fit scores)
+4. Asset Strategy — via `BuildStrategy` component (persona-aware asset path labels)
+5. Execution Angle
+6. Competitive Differentiator Strategy — via `CompetitiveAngle` component
+7. Why This Matters
 
-### Documented but not yet rendered
+Persona selector + section reorder/emphasis via `OpportunityDetailContent`
 
-Asset Strategy, Builder Fit Strategy, Competitive Differentiator Strategy (full), monetization paths, opportunity risks — see [med-sections.md](./med-sections.md) and Phase 9 in [roadmap.md](./roadmap.md).
+### Documented but not yet fully rendered
+
+Full Asset Strategy fields (expansion path, zip-ready fit, revenue ceiling), full Competitive Differentiator Strategy fields, monetization paths, opportunity risks — see [med-sections.md](./med-sections.md) and Phase 9 in [roadmap.md](./roadmap.md).
 
 ---
 

@@ -19,7 +19,7 @@ See [MED.md](./MED.md) for workflow. See [project-state.md](./project-state.md) 
 | Dashboard | `app/dashboard/page.tsx` |
 | Opportunity detail | `app/opportunity/[id]/page.tsx` |
 | Newsletter capture | `app/newsletter/page.tsx` |
-| Root layout | `app/layout.tsx`, `app/globals.css` |
+| Root layout | `app/layout.tsx`, `styles/globals.css`, `styles/landing.css` |
 | Admin layout | `app/admin/layout.tsx` |
 | Admin hub | `app/admin/page.tsx` |
 | Source registry | `app/admin/sources/page.tsx` |
@@ -64,17 +64,17 @@ Route spec: [routes.md](./routes.md)
 
 ### MED Sections
 
-| Section | File |
-|---------|------|
-| OpportunitySnapshot | `components/sections/OpportunitySnapshot.tsx` |
-| WhyThisExists | `components/sections/WhyThisExists.tsx` |
-| SignalBreakdown | `components/sections/SignalBreakdown.tsx` |
-| BuildStrategy | `components/sections/BuildStrategy.tsx` |
-| ExecutionAngle | `components/sections/ExecutionAngle.tsx` |
-| CompetitiveAngle | `components/sections/CompetitiveAngle.tsx` |
-| WhyThisMatters | `components/sections/WhyThisMatters.tsx` |
-| DashboardContent | `components/sections/DashboardContent.tsx` |
-| OpportunityDetailContent | `components/sections/OpportunityDetailContent.tsx` |
+| Section | MED Name | File |
+|---------|----------|------|
+| OpportunitySnapshot | 1. Opportunity Snapshot | `components/sections/OpportunitySnapshot.tsx` |
+| WhyThisExists | 2. Why This Exists | `components/sections/WhyThisExists.tsx` |
+| SignalBreakdown | 3. Signal Breakdown | `components/sections/SignalBreakdown.tsx` |
+| BuildStrategy | 4. Asset Strategy | `components/sections/BuildStrategy.tsx` |
+| ExecutionAngle | 5. Execution Angle | `components/sections/ExecutionAngle.tsx` |
+| CompetitiveAngle | 6. Competitive Differentiator Strategy | `components/sections/CompetitiveAngle.tsx` |
+| WhyThisMatters | 7. Why This Matters | `components/sections/WhyThisMatters.tsx` |
+| DashboardContent | — | `components/sections/DashboardContent.tsx` |
+| OpportunityDetailContent | — | `components/sections/OpportunityDetailContent.tsx` |
 
 Section spec: [med-sections.md](./med-sections.md)
 
@@ -122,7 +122,7 @@ Full inventory: [components.md](./components.md)
 | Concern | Files |
 |---------|-------|
 | Tailwind config | `tailwind.config.ts` |
-| Global styles + component classes | `app/globals.css` |
+| Global styles + component classes | `styles/globals.css`, `styles/landing.css` |
 | Fonts | `app/layout.tsx` |
 
 Design tokens: [design-system.md](./design-system.md)

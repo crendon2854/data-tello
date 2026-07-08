@@ -4,7 +4,7 @@ See [MED.md](./MED.md) for documentation governance. **This file is the single s
 
 Source of truth for opportunity display, paid Opportunity Dossiers, and admin form structure.
 
-DataTello delivers evidence-backed build opportunities using structured signals, scoring, and guardrails. Each opportunity should tell the user what operational pain is forming, who the buyer is, why it matters now, what the market wedge is, and what the best first asset is.
+DataTello delivers evidence-backed build opportunities using structured signals, scoring, and guardrails. Each opportunity answers: what operational pain exists, who the buyer is, why it matters now, what the market wedge is, and what the best first asset is.
 
 ## Build Opportunity Definition
 
@@ -16,9 +16,9 @@ Personas change only the **execution lens**: section emphasis, CTA wording, asse
 
 | Persona | Role label | Primary CTA | Core question |
 |---------|------------|-------------|---------------|
-| Agency | Sell it | Package this offer | What new services or offers can we sell? |
+| Agency | Sell it | Package this offer | What services or products can we offer clients? |
 | Consultant | Advise it | Advise on this opportunity | What should we advise clients to do? |
-| Investor | Fund or acquire | Evaluate this market | Where are new markets and opportunities forming? |
+| Investor | Fund or acquire | Evaluate this market | Where are new opportunities forming? |
 
 Implementation: `lib/persona-lens.ts`, `hooks/usePersonaLens.ts`, `components/ui/PersonaSelector.tsx`.
 
@@ -31,47 +31,60 @@ Implementation: `lib/persona-lens.ts`, `hooks/usePersonaLens.ts`, `components/ui
 5. **Do** use persona-aware labels and helper text.
 6. **Do** relabel asset path steps without changing path data.
 
-### Truth Layer (unchanged by persona)
+## Core Signal Layers
 
-- Signals and scores
-- Problem summary and evidence
-- Buyer and workflow context
-- Competitive reality
-- Risks
+DataTello Core uses four signal lanes. All four are required in every scored opportunity:
 
-### Execution Lens (varies by persona)
+1. **Pressure Discovery** — real-world operational pressure
+2. **Demand Validation** — search behavior, buyer language, commercial intent
+3. **Market Wedge Validation** — category gaps, competition, spend proof
+4. **Workflow Friction Signals** — repeated execution failure where people struggle to operationalize workflows
 
-- Primary CTA
-- Emphasized sections
-- Section titles where helpful
-- Asset path step labels
-- Dashboard and detail intro copy
-- Signal helper text tone
+### Workflow Friction Rule
 
-## Signal Layers in Dossiers
+Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows.
 
-### Core Engine (scoring)
+- Friction **modifies scoring**: Pain/Pressure, Market Wedge, and Buildability
+- Friction is an **internal modifier** — not a standalone public score
+- Friction does **not** act as a standalone decision engine
+- Friction does not bypass guardrails, scoring, or human review
 
-Pressure Discovery, Demand Validation, Market Wedge Validation, Workflow Friction Signals — these feed the structured scoring engine.
+### Expansion Signal Layers
 
-### Complaint & Incident Signals (analytical panel)
+**Complaint & Incident Signals** (core expansion)
 
-Where real users repeatedly experience failure. Shown as charts, incident patterns, and complaint clusters. Reveals operational pain before demand spikes. Strong in regulated and operational industries.
+Where real-world failures repeatedly occur. Detects repeated failures, reveals operational pain before demand spikes. Strong in regulated and operational industries.
 
-**Rule:** Visual and analytical only. Does not determine final opportunity scores.
+**Emerging Digital Infrastructure Signals** (secondary expansion)
 
-### Emerging Digital Infrastructure Signals (analytical panel)
-
-Secondary expansion. Four sub-modules only:
+Four sub-modules only:
 
 - Agent Commerce Signals
 - Stablecoin Workflow Signals
 - Onchain Developer Tool Friction
 - Tokenized Data / Pay-Per-Use Data Signals
 
-**Rule:** Visual and analytical only — patterns and trends. Does not determine final opportunity scores.
+Both expansion layers are **visual signal layers** — charts, patterns, trends. They are not final decision drivers.
 
 **Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
+
+## Scoring Model
+
+Software Likelihood is replaced by:
+
+- **Buildability Score** — can something useful be created and delivered?
+- **Asset Fit Decision** — what is the best first asset for this opportunity?
+
+Public score buckets in Signal Breakdown:
+
+- `pressure_score`
+- `demand_score`
+- `wedge_score`
+- `freshness_score`
+- `buildability_score`
+- `asset_fit_score`
+
+Internal modifier: `friction_score` (not shown as a main public score)
 
 ## Naming Rules
 
@@ -86,11 +99,11 @@ Avoid using `report` as the primary user-facing term.
 
 ## V1 Paid Opportunity Dossier Structure
 
-Render in this order, each inside a `Card`.
+Render in this exact order, each inside a `Card`. This is the canonical output structure for all paid opportunities.
 
-### 1. OpportunitySnapshot
+### 1. Opportunity Snapshot
 
-Purpose: fast scan, like the top of a premium opportunity card.
+Purpose: fast scan — premium opportunity card summary.
 
 Fields:
 
@@ -103,7 +116,7 @@ Fields:
 - `tags`
 - `short_summary`
 
-### 2. WhyThisExists
+### 2. Why This Exists
 
 Purpose: explain the real-world reason this opportunity exists.
 
@@ -117,48 +130,42 @@ Fields:
 
 Keep this tight. No essays.
 
-### 3. SignalBreakdown
+### 3. Signal Breakdown
 
-Purpose: show the system's judgment without exposing too much internal machinery.
+Purpose: show structured scoring judgment without exposing internal machinery.
 
-Visible fields:
+Visible scores:
 
-- `pressure_score`
-- `demand_score`
-- `wedge_score`
+- `pressure_score` (Pressure Discovery)
+- `demand_score` (Demand Validation)
+- `wedge_score` (Market Wedge Validation)
 - `freshness_score`
-- `buildability_score`
-- `asset_fit_score`
+- `buildability_score` (Buildability Score)
+- `asset_fit_score` (Asset Fit Decision)
 
 Internal modifier:
 
-- `friction_score`
+- `friction_score` (Workflow Friction Signals — modifies Pain, Market Wedge, Buildability; not a standalone public score)
 
-Friction should not appear as a main public score. It modifies Pain/Pressure, Wedge, and Buildability when repeated workflow failure is visible.
-
-Analytical panels (non-scoring):
+Analytical panels (non-scoring, when in scope):
 
 - Complaint & Incident Signals summary
-- Emerging Digital Infrastructure Signals summary (when in scope)
+- Emerging Digital Infrastructure Signals summary
 
-### 4. BuildStrategy
+### 4. Asset Strategy
 
-Purpose: this is DataTello's core edge — asset strategy for the opportunity.
+Purpose: define what to create first and how to expand. **Not all opportunities should start as software.**
 
-Fields:
+Required fields:
 
-- `best_first_asset`
-- `top_asset_path_1`
-- `top_asset_path_2`
-- `top_asset_path_3`
-- `why_this_format_wins_first`
-- `expansion_ladder`
-- `zip_ready_fit`
-- `build_difficulty`
-- `revenue_ceiling`
-- `recommended_ai_build_stack`
-- `why_not_full_software_yet`
-- `when_to_upgrade_to_full_product`
+- `best_first_asset` — Best First Asset
+- `top_asset_path_1` — Top 3 Asset Paths (path 1)
+- `top_asset_path_2` — Top 3 Asset Paths (path 2)
+- `top_asset_path_3` — Top 3 Asset Paths (path 3)
+- `why_this_format_wins_first` — Why This Format Wins First
+- `expansion_ladder` — Expansion Path (Template → Tool → SaaS)
+- `zip_ready_fit` — Zip-Ready Fit
+- `revenue_ceiling` — Revenue Ceiling
 
 Supported asset types:
 
@@ -171,37 +178,11 @@ Supported asset types:
 - Workflow pack
 - Service + tool hybrid
 
-### 5. BuilderFitStrategy
+Component mapping: `BuildStrategy` (`components/sections/BuildStrategy.tsx`) renders this section until renamed in code.
 
-Purpose: recommend the right delivery path by organization type — who can best execute or monetize this opportunity.
+### 5. Execution Angle
 
-Organization types:
-
-- Agency / service firm
-- Advisory practice
-- Investment firm
-- Operations leader
-- Product organization
-- Implementation partner
-
-Fields:
-
-- `primary_builder_type`
-- `secondary_builder_types`
-- `recommended_tool_stack`
-- `tool_fit_by_user_type`
-- `avoid_first`
-- `skill_fit`
-- `build_speed`
-- `setup_complexity`
-- `maintenance_burden`
-- `packaging_ease`
-- `support_risk`
-- `upgrade_potential`
-
-### 6. ExecutionAngle
-
-Purpose: tell the user exactly how to act on this opportunity.
+Purpose: how to act on this opportunity — buyer, wedge, and entry path.
 
 Fields:
 
@@ -213,68 +194,43 @@ Fields:
 - `time_to_value`
 - `first_distribution_angle`
 
-### 7. CompetitiveAngle
+### 6. Competitive Differentiator Strategy
 
-Purpose: show the realistic entry path.
+Purpose: qualitative competitive entry analysis. Not a fake precision score.
 
-Fields:
+Required fields:
 
-- `competitor_landscape`
+- `competitor_landscape` — Competitor Landscape
+- `review_complaint_themes` — Review Complaint Patterns
+- `underserved_segment` — Underserved Segment
+- `differentiation_angle` — Differentiation Angle
+- `what_not_to_compete_on` — What NOT to Build
+- `competitive_entry_path` — Competitive Entry Path
+
+Additional fields (admin/detail):
+
 - `visible_competitor_count`
 - `competitor_type`
-- `review_complaint_themes`
-- `underserved_segment`
 - `best_vertical_entry_point`
 - `avoided_verticals`
-- `differentiation_angle`
-- `what_not_to_compete_on`
-- `competitive_entry_path`
 - `feature_gap`
 - `pricing_gap`
 - `ux_gap`
 - `distribution_gap`
 - `service_gap`
-- `small_operator_right_to_win`
 
-This section is qualitative. Do not reduce it to a fake precision score.
+Component mapping: `CompetitiveAngle` (`components/sections/CompetitiveAngle.tsx`) renders this section until renamed in code.
 
-### 8. MonetizationPath
+### 7. Why This Matters
 
-Purpose: compact commercial path, not a full business plan.
-
-Fields:
-
-- `first_paid_asset`
-- `likely_price_band`
-- `upgrade_path`
-- `service_package_option`
-- `recurring_revenue_potential`
-- `affiliate_tool_monetization_option`
-
-### 9. Risks
-
-Purpose: keep the dossier honest.
-
-Fields:
-
-- `false_positive_risk`
-- `competition_risk`
-- `data_lag_risk`
-- `buyer_uncertainty`
-- `service_vs_software_risk`
-- `regulatory_dependency_risk`
-- `maintenance_support_burden`
-
-### 10. WhyThisMatters
-
-Purpose: short close.
+Purpose: short strategic close.
 
 Fields:
 
 - `strategic_importance`
 - `final_verdict`
 
-Keep this to 2-3 lines.
+Keep this to 2–3 lines.
 
 ## Dashboard Card (`OpportunityCard`)
 
@@ -290,18 +246,23 @@ Keep this to 2-3 lines.
 
 ## Admin Form Sections
 
-Mirror the dossier structure. Group as:
+Mirror the seven-section dossier structure. Group as:
 
 1. **Basic** — title, score, best_first_asset, complexity, tags, status, short_summary
 2. **Why This Exists** — problem, evidence, key pain drivers, why now
 3. **Scores** — pressure, demand, wedge, freshness, buildability, asset fit, internal friction
-4. **Build Strategy** — asset paths, format rationale, expansion ladder, revenue ceiling
-5. **Delivery Fit** — organization types, tool stack, avoid-first guidance, support burden
-6. **Execution** — buyer, workflow, wedge, MVP, time to value
-7. **Competition** — segment, competitors, complaints, differentiation, avoid, entry strategy
-8. **Monetization** — first asset, pricing, upgrade path, recurring potential
-9. **Risks** — false positives, lag, buyer uncertainty, competition, maintenance
-10. **Final Verdict** — publish/watch/reject and reasoning
+4. **Asset Strategy** — best first asset, top 3 paths, why format wins, expansion path, zip-ready fit, revenue ceiling
+5. **Execution** — buyer, workflow, wedge, MVP, time to value, distribution
+6. **Competitive Differentiator** — landscape, complaint patterns, underserved segment, differentiation, what not to build, entry path
+7. **Final Verdict** — strategic importance, publish/watch/reject reasoning
+
+## Internal Admin Fields (not in primary dossier output)
+
+These exist in the database and admin tooling but are not part of the seven-section paid dossier:
+
+- Monetization paths (`monetization_paths`)
+- Opportunity risks (`opportunity_risks`)
+- Builder fit / delivery fit (`builder_fit_strategy`) — internal admin only
 
 ## Free Weekly Signal Brief Structure
 
@@ -309,7 +270,7 @@ Free newsletter output is not the full dossier.
 
 Include only:
 
-- 1-3 short signals
+- 1–3 short signals
 - compressed explanation
 - light evidence
 - teaser of best first asset

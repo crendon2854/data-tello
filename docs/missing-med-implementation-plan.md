@@ -6,137 +6,50 @@ Historical reference document. For current product structure, see [architecture.
 
 DataTello delivers evidence-backed build opportunities using structured signals, scoring, and guardrails.
 
-It is a premium opportunity intelligence product for agencies, consultants, and investors. DataTello finds operational pain, market wedge, and source-backed evidence, turns them into scored build opportunities, and recommends the best first asset to create.
+Premium opportunity intelligence platform and decision-support system for agencies, consultants, and investors.
 
 ## Target ICP
 
 | Persona | Core question |
 |---------|---------------|
-| Agencies | What new services or offers can we sell? |
+| Agencies | What services or products can we offer clients? |
 | Consultants | What should we advise clients to do? |
-| Investors | Where are new markets and opportunities forming? |
+| Investors | Where are new opportunities forming? |
 
-## Product Structure
-
-1. **Core Engine** — Pressure Discovery, Demand Validation, Market Wedge Validation, Workflow Friction Signals, scoring, guardrails, human review
-2. **Complaint & Incident Signals** — where real users repeatedly experience failure (core expansion)
-3. **Emerging Digital Infrastructure Signals** — four analytical sub-modules (secondary expansion)
-
-Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.
-
-## Core Workflow
+## Core Signal Layers (all four required)
 
 1. Pressure Discovery
 2. Demand Validation
 3. Market Wedge Validation
-4. Workflow Friction Signals
-5. Complaint & Incident Signals (analytical context)
-6. Emerging Digital Infrastructure Signals (analytical context)
-7. Buildability Check
-8. Asset Fit Decision
-9. Human Review
-10. Dashboard Publishing
-11. PDF Dossier Generation
+4. Workflow Friction Signals — detects repeated execution failure where people struggle to operationalize workflows; modifies Pain, Market Wedge, Buildability; not a standalone decision engine
 
-## Product Output Names
+## Expansion Layers
 
-Use these names consistently:
-
-- Weekly Signal Brief = free newsletter email
-- Opportunity Dossier = full paid dashboard/PDF asset
-- Dashboard Brief View = in-app readable dossier view
-- PDF Dossier = downloadable PDF generated from selected/default template
-
-Avoid using `report` as the main user-facing word unless the context requires it.
-
-## System Boundaries
-
-### DataTello Core
-
-Handles source ingestion, signal processing, clustering, scoring, guardrails, human review, and dashboard publishing.
-
-Built with Next.js and Supabase.
-
-### Newsletter Engine
-
-Handles subscribers, weekly free Signal Briefs, autoresponder basics, unsubscribe handling, and free-to-paid CTA tracking.
-
-This is separate from the Dossier Builder.
-
-### Dossier Builder
-
-Handles full paid Opportunity Dossier generation and downloadable PDFs.
-
-It uses structured opportunity data, default templates, section toggles, evidence tables, suggested charts, affiliate links, branding, versioning, and export history.
-
-It does not create newsletters or manage subscribers.
-
-### Growth Automation Stack
-
-Handles outbound prospecting and marketing automations using AI agents, n8n, and Oracle VPS/cloud infrastructure.
-
-Hard rule: core app ingestion, clustering, scoring, and dashboard logic stay in Next.js + Supabase. n8n is only for marketing and growth automation.
-
-## Signal Layer Architecture Rule
-
-Complaint & Incident Signals and Emerging Digital Infrastructure Signals are visual and analytical only. They show charts, patterns, and trends.
+- **Complaint & Incident Signals** — where real-world failures repeatedly occur
+- **Emerging Digital Infrastructure Signals** — Agent Commerce, Stablecoin Workflow, Onchain Developer Tool Friction, Tokenized Data / Pay-Per-Use Data (visual only)
 
 Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.
 
-## Emerging Digital Infrastructure Sub-Modules (only these four)
+## Scoring
 
-- Agent Commerce Signals
-- Stablecoin Workflow Signals
-- Onchain Developer Tool Friction
-- Tokenized Data / Pay-Per-Use Data Signals
+Software Likelihood replaced by:
 
-Do not add DAO signals, compliance signals, grants, or other sub-modules.
+- Buildability Score
+- Asset Fit Decision
 
-## Modules Merged Into Existing Docs
+## V1 Opportunity Dossier Output (seven sections)
 
-See [architecture.md](./architecture.md), [admin-workflow.md](./admin-workflow.md), [database.md](./database.md), [med-sections.md](./med-sections.md), and [roadmap.md](./roadmap.md) for full specifications of:
+1. Opportunity Snapshot
+2. Why This Exists
+3. Signal Breakdown
+4. Asset Strategy — Best First Asset, Top 3 Asset Paths, Why This Format Wins First, Expansion Path (Template → Tool → SaaS), Zip-Ready Fit, Revenue Ceiling. Not all opportunities should start as software.
+5. Execution Angle
+6. Competitive Differentiator Strategy — Competitor Landscape, Review Complaint Patterns, Underserved Segment, Differentiation Angle, What NOT to Build, Competitive Entry Path
+7. Why This Matters
 
-- Growth & Outreach Automation
-- Newsletter Engine
-- Dossier Builder / PDF Dossier Builder
-- System Health / Connector Repair
-- Asset Strategy
-- Builder Fit Strategy (delivery fit by organization type)
-- Competitive Differentiator Strategy
-- Workflow Friction Signals
-- Complaint & Incident Signals
-- Emerging Digital Infrastructure Signals
-- Risk Section
-- Monetization Path
+## System Boundaries
 
-## Admin Tool Map
-
-See [admin-workflow.md](./admin-workflow.md) for the complete admin map including Complaint & Incident Signals Workspace and Emerging Digital Infrastructure Signals Workspace.
-
-## Database Tables to Add or Confirm
-
-- sources
-- raw_signals
-- problem_zones
-- keyword_sets
-- market_proof_records
-- workflow_friction_signals
-- complaint_incident_signals
-- emerging_digital_infrastructure_signals
-- opportunities
-- opportunity_scores
-- asset_strategy
-- builder_fit_strategy
-- competitive_strategy
-- watchlist_items
-- review_queue
-- dossier_templates
-- dossier_exports
-- newsletter_subscribers
-- newsletter_events
-- system_health_events
-- growth_prospects
-- outreach_runs
+See [architecture.md](./architecture.md) for DataTello Core, Newsletter Engine, Dossier Builder, and Growth Automation Stack.
 
 ## Non-Negotiable Rules
 
@@ -145,7 +58,5 @@ See [admin-workflow.md](./admin-workflow.md) for the complete admin map includin
 3. Do not show detailed internal scoring machinery as the main user value.
 4. Do not force every opportunity into software.
 5. Do not let AI auto-publish opportunities without human review.
-6. Do not let AI auto-fix business logic or source meaning changes.
-7. Do not add social-listening noise to V1.
-8. Do not build a full visual workflow builder in V1.
-9. Expansion signal layers are analytical — they do not determine final opportunities.
+6. Friction modifies scoring — it does not decide opportunities alone.
+7. Expansion signal layers are visual — they do not determine final opportunities.

@@ -70,6 +70,16 @@ Every ADR must include all five fields:
 **Decision:** Living markdown docs indexed from `docs/README.md`.
 **Alternatives:** Wiki or Notion — rejected for co-location with code.
 
+### 2026-07-08 Canonical seven-section Opportunity Dossier
+
+**Context:** Dossier output needed a single canonical structure aligned with premium ICP positioning and Asset Strategy emphasis.
+
+**Decision:** Lock paid dossier to seven sections: Opportunity Snapshot, Why This Exists, Signal Breakdown, Asset Strategy, Execution Angle, Competitive Differentiator Strategy, Why This Matters. Asset Strategy requires best first asset, top 3 paths, why format wins, expansion path, zip-ready fit, revenue ceiling. Workflow Friction modifies Pain, Market Wedge, Buildability — not a standalone decision engine.
+
+**Alternatives:** Keep Builder Fit in primary dossier output — rejected for ICP focus.
+
+**Consequences:** `med-sections.md` is canonical. Component names (`BuildStrategy`, `CompetitiveAngle`) map to Asset Strategy and Competitive Differentiator Strategy until renamed in code.
+
 ### 2026-07-08 Strategic repositioning and signal layer expansion
 
 **Context:** DataTello repositioned from builder-focused messaging to premium opportunity intelligence for agencies, consultants, and investors. Two expansion signal layers were added to the product architecture.
@@ -78,7 +88,7 @@ Every ADR must include all five fields:
 
 **Alternatives:** Continue builder/indie-hacker positioning — rejected. Add DAO/compliance/grants sub-modules — rejected.
 
-**Consequences:** Landing copy, docs, and dossier framing updated. Implementation of new signal workspaces phased in roadmap Phases 14–15. Builder Fit Strategy retained as dossier section but reframed for organization/delivery fit.
+**Consequences:** Landing copy, docs, and dossier framing updated. Implementation of new signal workspaces phased in roadmap Phases 14–15. Builder Fit Strategy retained as internal admin only.
 
 ### 2026-07-07 Positioning: build opportunities, not trend ideas
 
@@ -142,8 +152,8 @@ Every ADR must include all five fields:
 
 ### 2026-07-07 Add Builder Fit Strategy
 
-**Context:** Agencies, advisory practices, and investment firms need different delivery recommendations for the same opportunity.
-**Decision:** Add Builder Fit Strategy by organization type and tool stack.
+**Context:** Different organization types need different delivery recommendations for the same opportunity.
+**Decision:** Add Builder Fit Strategy by organization type and tool stack. Retained as internal admin only — not in seven-section paid dossier output.
 **Alternatives:** One universal tech stack — rejected.
 
 ### 2026-07-07 Add Competitive Differentiator Strategy
@@ -175,7 +185,7 @@ Freeze for V1:
 - Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
-- Asset Strategy and Builder Fit Strategy
+- Asset Strategy and Competitive Differentiator Strategy (seven-section dossier)
 - Human review before publishing
 - Expansion signal layers are analytical only
 

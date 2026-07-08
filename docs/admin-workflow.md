@@ -26,14 +26,15 @@ The human makes the final calls on buyer, buildability, asset fit, differentiati
 10. Guardrail Engine
 11. Human Review Queue
 12. Asset Strategy Admin
-13. Builder Fit Strategy Admin
-14. Competitive Differentiator Admin
-15. Watchlist Admin
-16. Paid Dashboard Publishing
-17. Dossier Builder
-18. Newsletter Engine
-19. System Health
-20. Settings / Rules
+13. Competitive Differentiator Admin
+14. Watchlist Admin
+15. Paid Dashboard Publishing
+16. Dossier Builder
+17. Newsletter Engine
+18. System Health
+19. Settings / Rules
+
+Internal admin only (not in seven-section dossier output): Builder Fit Strategy Admin, Monetization Admin, Risks Admin
 
 ## Opportunity Lifecycle
 
@@ -133,7 +134,7 @@ Human review is required before deciding that competition is weak or a wedge is 
 
 ## Step 6 — Workflow Friction Workspace
 
-Used to detect repeated execution pain.
+Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows.
 
 MVP sources:
 
@@ -150,13 +151,17 @@ Track:
 - friction sources
 - manual workaround detected
 
-Friction is internal. It modifies pressure, wedge, and buildability. It is not the main public score.
+**Friction rule:**
+
+- Modifies scoring: Pain/Pressure, Market Wedge, Buildability
+- Internal modifier only — not a standalone public score
+- Does **not** act as a standalone decision engine
 
 Reject friction records that are hobby/dev-only, vague complaints, consumer frustration, or one-off feature requests.
 
 ## Step 7 — Complaint & Incident Signals Workspace
 
-**Where real users repeatedly experience failure.**
+**Where real-world failures repeatedly occur.**
 
 Purpose:
 
@@ -259,50 +264,31 @@ Statuses:
 
 ## Step 12 — Asset Strategy Admin
 
+Required for every published opportunity. **Not all opportunities should start as software.**
+
 Admin defines:
 
 - Best First Asset
 - Top 3 Asset Paths
-- Expansion Ladder
+- Why This Format Wins First
+- Expansion Path (Template → Tool → SaaS)
 - Zip-Ready Fit
 - Revenue Ceiling
-- Build Difficulty
-- Recommended AI Build Stack
-- Why Not Full Software Yet
-- When to Upgrade to Full Product
-- Maintenance Burden
-- Support Burden
 
-## Step 13 — Builder Fit Strategy Admin
+## Step 13 — Competitive Differentiator Admin
 
-Admin maps the opportunity to organization types:
-
-- agency / service firm
-- advisory practice
-- investment firm
-- operations leader
-- product organization
-- implementation partner
-
-Output should recommend the best delivery path for the target ICP, not the most complex tooling.
-
-## Step 14 — Competitive Differentiator Admin
+Required for every published opportunity. Qualitative — not a fake precision score.
 
 Admin defines:
 
-- competitor landscape
-- review complaint themes
-- underserved segment
-- best vertical entry point
-- avoided verticals
-- differentiation angle
-- what not to compete on
-- competitive entry path
-- small operator right-to-win
+- Competitor Landscape
+- Review Complaint Patterns
+- Underserved Segment
+- Differentiation Angle
+- What NOT to Build
+- Competitive Entry Path
 
-This is qualitative, not a score.
-
-## Step 15 — Watchlist Admin
+## Step 14 — Watchlist Admin
 
 Use watchlist for promising but incomplete opportunities.
 
@@ -318,9 +304,19 @@ Reasons:
 
 Track next review date and recheck trigger.
 
-## Step 16 — Dossier Builder
+## Step 15 — Dossier Builder
 
 The Dossier Builder creates full paid Opportunity Dossiers and PDF Dossiers from structured opportunity data.
+
+Seven-section output:
+
+1. Opportunity Snapshot
+2. Why This Exists
+3. Signal Breakdown
+4. Asset Strategy
+5. Execution Angle
+6. Competitive Differentiator Strategy
+7. Why This Matters
 
 It handles:
 
@@ -336,7 +332,7 @@ It handles:
 
 It does not create newsletters or manage subscribers.
 
-## Step 17 — Newsletter Engine
+## Step 16 — Newsletter Engine
 
 Newsletter Engine is separate.
 
@@ -351,7 +347,7 @@ It handles:
 
 The Weekly Signal Brief is watered down and should not include the full paid dossier.
 
-## Step 18 — System Health
+## Step 17 — System Health
 
 Admin monitors:
 

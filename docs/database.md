@@ -473,6 +473,8 @@ Fields:
 
 #### `asset_strategy`
 
+Required dossier section. Maps to MED **Asset Strategy** (component: `BuildStrategy`).
+
 Fields:
 
 - `id`
@@ -482,17 +484,15 @@ Fields:
 - `top_asset_path_2`
 - `top_asset_path_3`
 - `why_this_format_wins_first`
-- `expansion_ladder`
+- `expansion_ladder` — Expansion Path (Template → Tool → SaaS)
 - `zip_ready_fit`
-- `build_difficulty`
 - `revenue_ceiling`
-- `recommended_ai_build_stack`
-- `why_not_full_software_yet`
-- `when_to_upgrade_to_saas`
-- `maintenance_burden`
-- `support_burden`
+
+Not all opportunities should start as software.
 
 #### `builder_fit_strategy`
+
+Internal admin only — not part of the seven-section paid dossier output.
 
 Fields:
 
@@ -514,26 +514,24 @@ Fields:
 
 #### `competitive_strategy`
 
+Required dossier section. Maps to MED **Competitive Differentiator Strategy** (component: `CompetitiveAngle`).
+
 Fields:
 
 - `id`
 - `opportunity_id`
 - `competitor_landscape`
-- `visible_competitor_count`
-- `competitor_type`
-- `review_complaint_themes`
+- `review_complaint_themes` — Review Complaint Patterns
 - `underserved_segment`
-- `best_vertical_entry_point`
-- `avoided_verticals`
 - `differentiation_angle`
-- `what_not_to_compete_on`
+- `what_not_to_compete_on` — What NOT to Build
 - `competitive_entry_path`
 - `feature_gap`
 - `pricing_gap`
 - `ux_gap`
 - `distribution_gap`
 - `service_gap`
-- `small_builder_right_to_win`
+- `small_operator_right_to_win`
 
 #### `monetization_paths`
 

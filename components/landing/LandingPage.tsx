@@ -103,7 +103,7 @@ export function LandingPage() {
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-base">
               DataTello focuses on markets where operational, regulatory, demand, and workflow
-              signals are easier to detect—and more useful to build from.
+              signals are easier to detect — and more useful for evidence-backed opportunity decisions.
             </p>
           </div>
 
@@ -169,7 +169,7 @@ export function LandingPage() {
             <SectionLabel>Product output</SectionLabel>
             <SectionHeading>See what an opportunity looks like</SectionHeading>
             <SectionSubheading className="mx-auto">
-              Every opportunity becomes a source-backed dossier — not a generic idea list.
+              Every opportunity becomes a source-backed dossier — not a generic opportunity list.
             </SectionSubheading>
           </div>
 
@@ -292,9 +292,9 @@ export function LandingPage() {
             <SectionLabel>Differentiation</SectionLabel>
             <SectionHeading>Built on real-world signals—not AI guesswork</SectionHeading>
             <SectionSubheading className="mx-auto">
-              DataTello doesn&apos;t generate ideas from generic internet noise. It detects
-              opportunities from structured signals across markets, demand patterns, competitive
-              gaps, and real workflow pain.
+              DataTello does not surface recycled lists from generic internet noise. It produces
+              evidence-backed build opportunities from structured signals — operational pain,
+              demand patterns, competitive gaps, and workflow friction.
             </SectionSubheading>
           </div>
 
@@ -373,8 +373,8 @@ export function LandingPage() {
             <SectionHeading>Focused on markets where signal is clearer</SectionHeading>
             <SectionSubheading className="mx-auto">
               Some industries generate cleaner operational and workflow signals than noisy
-              trend-driven categories. That makes them better environments for finding real build
-              opportunities.
+              trend-driven categories. That makes them better environments for evidence-backed
+              build opportunities.
             </SectionSubheading>
           </div>
 
@@ -460,7 +460,7 @@ export function LandingPage() {
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Why DataTello</SectionLabel>
             <SectionHeading>
-              Why decision-makers use DataTello instead of random idea lists
+              Why decision-makers use DataTello instead of generic opportunity lists
             </SectionHeading>
             <SectionSubheading className="mx-auto">
               Most research tools stop at attention. DataTello goes further — operational pain, a
@@ -749,7 +749,7 @@ export function LandingPage() {
             Opportunity intelligence with real signal behind it
           </SectionHeading>
           <SectionSubheading className="mx-auto">
-            Stop relying on idea lists. Start with operational pain, source-backed evidence, a
+            Stop relying on generic lists. Start with operational pain, source-backed evidence, a
             scored market wedge, and a defensible path to action.
           </SectionSubheading>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">

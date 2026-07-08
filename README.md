@@ -2,7 +2,7 @@
 
 Evidence-backed build opportunities using structured signals, scoring, and guardrails.
 
-Decision-support intelligence for agencies, consultants, and investors — scored opportunities with source-backed evidence, market wedge analysis, and asset strategy.
+Premium opportunity intelligence platform and decision-support system for agencies, consultants, and investors.
 
 ## Quick Start
 

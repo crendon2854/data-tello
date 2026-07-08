@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 
 export const heroBullets = [
-  "Source-backed signals, not recycled idea lists",
+  "Source-backed signals, not recycled opportunity lists",
   "Operational pain, market wedge, and evidence in every dossier",
   "Built for agencies, consultants, and investors",
 ];
@@ -133,7 +133,7 @@ export const engineSteps = [
   {
     step: 4,
     title: "Workflow Friction Signals",
-    caption: "Where execution still breaks down",
+    caption: "Where execution failure repeats in operational workflows",
     icon: Workflow,
   },
 ];
@@ -142,7 +142,7 @@ export const expansionSignalLayers = [
   {
     step: 5,
     title: "Complaint & Incident Signals",
-    caption: "Where real users repeatedly experience failure",
+    caption: "Where real-world failures repeatedly occur",
     icon: Shield,
   },
   {
@@ -197,7 +197,7 @@ export const signalSources = [
   {
     title: "Complaint & Incident Signals",
     bullets: [
-      "Repeated real-world failures",
+      "Where real-world failures repeatedly occur",
       "Operational pain before demand spikes",
       "Incident and complaint clusters",
       "Regulated industry patterns",
@@ -239,7 +239,7 @@ export const builtForCards = [
   },
   {
     title: "Investors",
-    body: "Evaluate where new markets and opportunities are forming. Use structured scoring, guardrails, and evidence stacks for diligence.",
+    body: "Where are new opportunities forming? Structured scoring, guardrails, and source-backed evidence stacks for market diligence.",
     icon: TrendingUp,
     accent: "green" as const,
   },
@@ -255,7 +255,7 @@ export const buildPaths = [
 
 export const comparisonCards = [
   {
-    title: "Generic idea lists",
+    title: "Generic opportunity lists",
     body: "Broad, recycled, and rarely tied to operational pain or source evidence.",
     highlight: false,
   },
@@ -265,7 +265,7 @@ export const comparisonCards = [
     highlight: false,
   },
   {
-    title: "Asking AI for ideas",
+    title: "Asking AI for opportunities",
     body: "Strong for exploration. Weak for structured scoring, guardrails, and source traceability.",
     highlight: false,
   },
@@ -368,7 +368,7 @@ export const faqs = [
   },
   {
     q: "How do Complaint & Incident Signals work?",
-    a: "They detect where real users repeatedly experience failure — revealing operational pain before demand spikes. They appear as analytical panels and inform review; final opportunities are determined by the scoring engine and human review.",
+    a: "Where real-world failures repeatedly occur. They appear as analytical panels and inform review; final opportunities are determined by the scoring engine, guardrails, and human review.",
   },
   {
     q: "Can I download dossiers as PDFs?",
@@ -376,7 +376,7 @@ export const faqs = [
   },
   {
     q: "Can I just use AI instead?",
-    a: "AI is useful for exploration. DataTello is built to apply structured signals, scoring, guardrails, and source traceability — producing decision-ready intelligence, not idea lists.",
+    a: "AI is useful for exploration. DataTello applies structured signals, scoring, guardrails, and source traceability — producing decision-ready intelligence, not recycled lists.",
   },
 ];
 

@@ -59,11 +59,11 @@ See [MED.md](./MED.md) for the engineering workflow.
 ## Phase 9 — Opportunity Dossier Upgrade
 
 - [ ] Expand `opportunities` schema to full dossier fields
-- [ ] Add asset_strategy, builder_fit_strategy, competitive_strategy
-- [ ] Add monetization_paths, opportunity_risks
+- [ ] Add asset_strategy, competitive_strategy (seven-section dossier)
+- [ ] Add monetization_paths, opportunity_risks (internal admin)
 - [ ] Update mock data for all dossier sections
-- [ ] Render new sections on detail page
-- [ ] Update admin form for new sections
+- [ ] Render full Asset Strategy and Competitive Differentiator on detail page
+- [ ] Update admin form for seven-section dossier structure
 
 ---
 
