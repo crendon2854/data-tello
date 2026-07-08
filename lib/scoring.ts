@@ -7,6 +7,8 @@ import {
   type SignalScores,
 } from "@/lib/persona-lens";
 import { getPersonaAngle } from "@/lib/persona-angles";
+import { applyProcurementBoosts } from "@/lib/procurement/integration";
+import type { ProcurementEvidenceFields } from "@/types/procurement";
 
 export type { PersonaScoreResult };
 
@@ -84,9 +86,30 @@ export function applySignalPreferenceWeights(
   return adjusted;
 }
 
+function getProcurementFields(opportunity: Opportunity): ProcurementEvidenceFields {
+  return {
+    procurement_score: opportunity.procurement_score,
+    procurement_signal_count: opportunity.procurement_signal_count,
+    procurement_evidence: opportunity.procurement_evidence,
+    procurement_buyer_types: opportunity.procurement_buyer_types,
+    procurement_workflow_tags: opportunity.procurement_workflow_tags,
+  };
+}
+
+function hasStrongNonProcurementSignals(
+  scores: ReturnType<typeof getNormalizedSignalScores>
+): boolean {
+  return (
+    scores.pain >= 50 ||
+    scores.friction >= 50 ||
+    scores.market >= 50
+  );
+}
+
 function applyEvidenceModifiers(
   scores: ReturnType<typeof getNormalizedSignalScores>,
-  signalPreferences: SignalPreferences
+  signalPreferences: SignalPreferences,
+  opportunity?: Opportunity
 ): SignalScores & { reasons: string[] } {
   const reasons: string[] = [];
   const frictionEnabled = signalPreferences.friction;
@@ -130,7 +153,21 @@ function applyEvidenceModifiers(
     reasons.push("Complaint signal deprioritized in your preferences");
   }
 
-  return { pain, demand, market, buildability, assetFit, reasons };
+  let result: SignalScores = { pain, demand, market, buildability, assetFit };
+
+  if (opportunity) {
+    const procurementResult = applyProcurementBoosts(
+      result,
+      getProcurementFields(opportunity),
+      {
+        hasStrongNonProcurementSignals: hasStrongNonProcurementSignals(scores),
+      }
+    );
+    result = procurementResult.scores;
+    reasons.push(...procurementResult.reasons);
+  }
+
+  return { ...result, reasons };
 }
 
 function weightedPersonaScore(
@@ -164,7 +201,11 @@ function computeICPPersonaScore(
   signalPreferences: SignalPreferences
 ): { score: number; reasons: string[] } {
   const normalized = getNormalizedSignalScores(opportunity);
-  const modified = applyEvidenceModifiers(normalized, signalPreferences);
+  const modified = applyEvidenceModifiers(
+    normalized,
+    signalPreferences,
+    opportunity
+  );
   const config = getPersonaConfig(role);
   const weights = applySignalPreferenceWeights(
     config.scoringWeights,

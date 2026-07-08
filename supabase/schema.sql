@@ -61,6 +61,13 @@ create table if not exists opportunities (
   -- Close
   strategic_importance text,
 
+  -- Procurement validation (supporting evidence only; not a scoring category)
+  procurement_score integer check (procurement_score between 0 and 10),
+  procurement_signal_count integer default 0,
+  procurement_evidence text,
+  procurement_buyer_types text[] default '{}',
+  procurement_workflow_tags text[] default '{}',
+
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -176,6 +183,11 @@ create table if not exists problem_zones (
   status text not null default 'new' check (status in ('new', 'reviewing', 'enriching', 'ready_for_market_proof', 'ready_for_scoring', 'watchlist', 'rejected', 'promoted')),
   owner text,
   notes text,
+  procurement_score integer check (procurement_score between 0 and 10),
+  procurement_signal_count integer default 0,
+  procurement_evidence text,
+  procurement_buyer_types text[] default '{}',
+  procurement_workflow_tags text[] default '{}',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

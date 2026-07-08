@@ -62,6 +62,14 @@ export interface OpportunityRow {
   differentiation: string | null;
   entry_strategy: string | null;
   strategic_importance: string | null;
+
+  -- Procurement validation (supporting evidence only)
+  procurement_score: number | null;
+  procurement_signal_count: number | null;
+  procurement_evidence: string | null;
+  procurement_buyer_types: string[] | null;
+  procurement_workflow_tags: string[] | null;
+
   created_at: string;
   updated_at: string;
 }
@@ -139,6 +147,11 @@ export interface ProblemZoneRow {
   status: ProblemZoneStatus;
   owner: string | null;
   notes: string | null;
+  procurement_score: number | null;
+  procurement_signal_count: number | null;
+  procurement_evidence: string | null;
+  procurement_buyer_types: string[] | null;
+  procurement_workflow_tags: string[] | null;
   created_at: string;
   updated_at: string;
 }
@@ -173,6 +186,11 @@ export type ProblemZoneInsert = {
   status?: ProblemZoneStatus;
   owner?: string | null;
   notes?: string | null;
+  procurement_score?: number | null;
+  procurement_signal_count?: number | null;
+  procurement_evidence?: string | null;
+  procurement_buyer_types?: string[] | null;
+  procurement_workflow_tags?: string[] | null;
   id?: string;
   created_at?: string;
   updated_at?: string;

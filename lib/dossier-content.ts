@@ -18,6 +18,7 @@ export type DossierContentMap = Record<SectionId, SectionContentConfig>;
 const DEFAULT_WHY_FIELDS: SectionFieldConfig[] = [
   { key: "problem_summary", label: "Problem" },
   { key: "evidence_summary", label: "Evidence" },
+  { key: "procurement_evidence_display", label: "Procurement Evidence" },
   { key: "key_pain_drivers", label: "Key Pain Drivers" },
 ];
 

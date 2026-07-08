@@ -8,6 +8,11 @@ function opp(seed: OpportunitySeed): OpportunityRow {
   return {
     ...seed,
     primary_buyer: seed.primary_buyer ?? seed.target_buyer,
+    procurement_score: seed.procurement_score ?? null,
+    procurement_signal_count: seed.procurement_signal_count ?? null,
+    procurement_evidence: seed.procurement_evidence ?? null,
+    procurement_buyer_types: seed.procurement_buyer_types ?? null,
+    procurement_workflow_tags: seed.procurement_workflow_tags ?? null,
     created_at: now,
     updated_at: now,
   };
@@ -99,6 +104,15 @@ export const mockOpportunities: OpportunityRow[] = [
     differentiation: "Healthcare-specific questionnaire templates",
     entry_strategy: "Template library + export to existing tools",
     strategic_importance: "Vendor risk is a recurring compliance requirement with clear ROI.",
+    procurement_score: 8,
+    procurement_signal_count: 2,
+    procurement_evidence:
+      "2 SAM.gov signal(s), avg score 7.5 | Department of Health and Human Services: Vendor Risk Management Platform | VA: Third-Party Risk Tracking System",
+    procurement_buyer_types: [
+      "Department of Health and Human Services",
+      "Department of Veterans Affairs",
+    ],
+    procurement_workflow_tags: ["compliance_reporting", "case_management"],
   }),
   opp({
     id: "3",

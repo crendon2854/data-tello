@@ -750,6 +750,11 @@ export async function createProblemZone(
     status: data.status ?? "new",
     owner: data.owner ?? null,
     notes: data.notes ?? null,
+    procurement_score: data.procurement_score ?? null,
+    procurement_signal_count: data.procurement_signal_count ?? null,
+    procurement_evidence: data.procurement_evidence ?? null,
+    procurement_buyer_types: data.procurement_buyer_types ?? null,
+    procurement_workflow_tags: data.procurement_workflow_tags ?? null,
     created_at: data.created_at ?? timestamp,
     updated_at: data.updated_at ?? timestamp,
   };
