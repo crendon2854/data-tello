@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply font-sans antialiased;
+    @apply bg-bg-primary font-sans text-text-primary antialiased;
   }
 
   ::-webkit-scrollbar {

@@ -30,13 +30,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`}
+        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-bg-primary font-sans text-text-primary antialiased`}
       >
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.body.dataset.theme=location.pathname==='/'?'landing':'app'`,
-          }}
-        />
         <ThemeShell>{children}</ThemeShell>
       </body>
     </html>
