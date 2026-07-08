@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { LandingNavbar } from "@/components/landing/LandingNavbar";
-import { MainShell } from "@/components/layout/MainShell";
+import { ThemeShell } from "@/components/layout/ThemeShell";
 import "@/styles/globals.css";
+import "@/styles/landing.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,13 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-bg-primary font-sans antialiased`}
+        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`}
       >
-        <div className="pointer-events-none fixed inset-0 grid-bg" aria-hidden />
-        <div className="relative z-10">
-          <LandingNavbar />
-          <MainShell>{children}</MainShell>
-        </div>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.body.dataset.theme=location.pathname==='/'?'landing':'app'`,
+          }}
+        />
+        <ThemeShell>{children}</ThemeShell>
       </body>
     </html>
   );

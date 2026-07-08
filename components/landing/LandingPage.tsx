@@ -26,6 +26,7 @@ import {
 import { FaqSection } from "./FaqSection";
 import { HeroDashboard } from "./HeroDashboard";
 import {
+  IconBox,
   GlowOrb,
   GridPattern,
   LandingCard,
@@ -40,28 +41,26 @@ import {
 
 export function LandingPage() {
   return (
-    <div className="relative min-h-screen bg-[#f8fafc] text-slate-900">
+    <div className="landing-page">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-slate-200/60 pb-20 pt-28 sm:pb-28 sm:pt-32">
+      <section className="landing-hero">
         <GridPattern />
-        <GlowOrb className="-left-20 top-20 h-72 w-72" color="blue" />
-        <GlowOrb className="-right-10 top-40 h-64 w-64" color="cyan" />
+        <GlowOrb className="-left-20 top-20 h-80 w-80" color="blue" />
+        <GlowOrb className="-right-10 top-32 h-72 w-72" color="cyan" />
 
         <LandingContainer>
-          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
-            <div className="animate-fade-up text-center lg:text-left">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5">
-                <Radar className="h-3.5 w-3.5 text-blue-600" />
-                <span className="text-xs font-semibold text-blue-700">
-                  Evidence-backed build intelligence
-                </span>
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+            <div className="landing-fade-up text-center lg:text-left">
+              <div className="landing-badge">
+                <Radar className="h-3.5 w-3.5" />
+                Evidence-backed build intelligence
               </div>
 
-              <h1 className="text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.25rem]">
+              <h1 className="landing-h1 mt-6">
                 Discover evidence-backed build opportunities before everyone else does.
               </h1>
 
-              <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg lg:mx-0">
+              <p className="landing-lead mx-auto mt-5 max-w-xl lg:mx-0">
                 DataTello turns real-world market signals into clear opportunities to build SaaS,
                 automations, templates, dashboards, and workflow tools.
               </p>
@@ -78,8 +77,8 @@ export function LandingPage() {
                   "Built for builders, agencies, consultants, and product teams",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100">
-                      <Check className="h-3 w-3 text-emerald-600" />
+                    <span className="landing-check mt-0.5">
+                      <Check className="h-3 w-3" />
                     </span>
                     {item}
                   </li>
@@ -87,7 +86,7 @@ export function LandingPage() {
               </ul>
             </div>
 
-            <div className="animate-fade-up animation-delay-200">
+            <div className="landing-fade-up" style={{ animationDelay: "0.15s" }}>
               <HeroDashboard />
             </div>
           </div>
@@ -95,7 +94,7 @@ export function LandingPage() {
       </section>
 
       {/* Credibility strip */}
-      <section className="border-b border-slate-200/60 bg-white py-12 sm:py-14">
+      <section className="landing-section-white py-14 sm:py-16">
         <LandingContainer>
           <div className="text-center">
             <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">
@@ -124,9 +123,7 @@ export function LandingPage() {
           <div className="mt-10 grid grid-cols-2 gap-6 border-t border-slate-100 pt-10 sm:grid-cols-4">
             {credibilityStats.map((stat) => (
               <div key={stat.label} className="text-center">
-                <p className="font-mono text-2xl font-bold text-slate-900 sm:text-3xl">
-                  {stat.value}
-                </p>
+                <p className="landing-stat-value">{stat.value}</p>
                 <p className="mt-1 text-xs text-slate-500 sm:text-sm">{stat.label}</p>
               </div>
             ))}
@@ -135,7 +132,7 @@ export function LandingPage() {
       </section>
 
       {/* What DataTello gives you */}
-      <section className="py-20 sm:py-24">
+      <section className="landing-section-muted py-20 sm:py-24">
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Clarity first</SectionLabel>
@@ -153,10 +150,10 @@ export function LandingPage() {
               const styles = accentStyles[accent];
               return (
                 <LandingCard key={title}>
-                  <div className={`mb-4 inline-flex rounded-xl p-3 ${styles.icon}`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mb-2 text-lg font-semibold text-slate-900">{title}</h3>
+                  <IconBox className={styles.icon}>
+                    <Icon className="h-6 w-6" />
+                  </IconBox>
+                  <h3 className="mb-2 text-lg font-bold text-slate-900">{title}</h3>
                   <p className="text-sm leading-relaxed text-slate-600">{body}</p>
                 </LandingCard>
               );
@@ -166,15 +163,15 @@ export function LandingPage() {
       </section>
 
       {/* Example opportunity */}
-      <section id="examples" className="relative overflow-hidden bg-slate-900 py-20 text-white sm:py-24">
-        <GridPattern className="opacity-[0.08]" />
-        <GlowOrb className="right-0 top-0 h-96 w-96 opacity-40" color="blue" />
+      <section id="examples" className="landing-section-dark py-20 sm:py-24">
+        <GridPattern className="opacity-[0.06]" />
+        <GlowOrb className="right-0 top-0 h-96 w-96 opacity-30" color="blue" />
 
         <LandingContainer className="relative">
           <div className="mx-auto max-w-3xl text-center">
-            <SectionLabel>Product output</SectionLabel>
-            <SectionHeading className="text-white">See what an opportunity looks like</SectionHeading>
-            <SectionSubheading className="mx-auto text-slate-400">
+            <SectionLabel dark>Product output</SectionLabel>
+            <SectionHeading dark>See what an opportunity looks like</SectionHeading>
+            <SectionSubheading dark className="mx-auto">
               Every opportunity is turned into a clear, actionable brief—not just an idea.
             </SectionSubheading>
           </div>
@@ -194,9 +191,9 @@ export function LandingPage() {
                       {sampleOpportunity.summary}
                     </p>
                   </div>
-                  <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/30">
-                    <span className="font-mono text-2xl font-bold">{sampleOpportunity.score}</span>
-                    <span className="text-[9px] uppercase tracking-wider text-blue-100">/100</span>
+                  <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/40">
+                    <span className="font-mono text-2xl font-bold text-white">{sampleOpportunity.score}</span>
+                    <span className="text-[9px] font-semibold uppercase tracking-wider text-blue-100">/100</span>
                   </div>
                 </div>
               </div>
@@ -246,6 +243,7 @@ export function LandingPage() {
                       label={s.label}
                       score={s.score}
                       colorClass={s.color}
+                      dark
                     />
                   ))}
                 </div>
@@ -295,7 +293,7 @@ export function LandingPage() {
       </section>
 
       {/* Signal sources */}
-      <section className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+      <section className="landing-section-white py-20 sm:py-24">
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Differentiation</SectionLabel>
@@ -402,7 +400,7 @@ export function LandingPage() {
       </section>
 
       {/* Built for */}
-      <section id="built-for" className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+      <section id="built-for" className="landing-section-muted py-20 sm:py-24">
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Audience</SectionLabel>
@@ -463,14 +461,14 @@ export function LandingPage() {
       </section>
 
       {/* Comparison */}
-      <section className="border-y border-slate-200/60 bg-slate-900 py-20 text-white sm:py-24">
+      <section className="landing-section-dark py-20 sm:py-24">
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
-            <SectionLabel>Why DataTello</SectionLabel>
-            <SectionHeading className="text-white">
+            <SectionLabel dark>Why DataTello</SectionLabel>
+            <SectionHeading dark>
               Why builders use DataTello instead of random idea lists
             </SectionHeading>
-            <SectionSubheading className="mx-auto text-slate-400">
+            <SectionSubheading dark className="mx-auto">
               Most idea tools stop at attention. DataTello goes further—showing whether there&apos;s
               a real problem, a real buyer, a realistic wedge, and a better starting point.
             </SectionSubheading>
@@ -482,8 +480,8 @@ export function LandingPage() {
                 key={title}
                 className={`rounded-2xl border p-6 transition-all ${
                   highlight
-                    ? "border-blue-400/50 bg-gradient-to-br from-blue-600/20 to-cyan-500/10 shadow-lg shadow-blue-500/10"
-                    : "border-slate-700/60 bg-slate-800/40 opacity-80"
+                    ? "landing-highlight-card"
+                    : "border-slate-700/60 bg-slate-800/40 opacity-85"
                 }`}
               >
                 <h3
@@ -573,7 +571,7 @@ export function LandingPage() {
       </section>
 
       {/* Monitoring */}
-      <section className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+      <section className="landing-section-white py-20 sm:py-24">
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Retention</SectionLabel>
@@ -686,7 +684,7 @@ export function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+      <section id="pricing" className="landing-section-muted py-20 sm:py-24">
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Pricing</SectionLabel>
@@ -701,10 +699,8 @@ export function LandingPage() {
             {pricingPlans.map((plan) => (
               <div
                 key={plan.name}
-                className={`relative flex flex-col rounded-2xl border p-6 transition-all hover:-translate-y-1 hover:shadow-lg ${
-                  plan.popular
-                    ? "border-blue-300 bg-gradient-to-b from-blue-50 to-white shadow-md shadow-blue-500/10"
-                    : "border-slate-200 bg-white shadow-sm"
+                className={`relative flex flex-col rounded-2xl border p-6 ${
+                  plan.popular ? "landing-pricing-popular landing-card" : "landing-card"
                 }`}
               >
                 {plan.popular && (

@@ -16,28 +16,23 @@ export function LandingContainer({
   );
 }
 
-export function SectionLabel({ children }: { children: ReactNode }) {
+export function SectionLabel({ children, dark }: { children: ReactNode; dark?: boolean }) {
   return (
-    <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-blue-600">
-      {children}
-    </p>
+    <p className={cn("landing-section-label", dark && "!text-blue-300")}>{children}</p>
   );
 }
 
 export function SectionHeading({
   children,
   className,
+  dark,
 }: {
   children: ReactNode;
   className?: string;
+  dark?: boolean;
 }) {
   return (
-    <h2
-      className={cn(
-        "text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl sm:leading-[1.15]",
-        className
-      )}
-    >
+    <h2 className={cn("landing-section-title", dark && "!text-white", className)}>
       {children}
     </h2>
   );
@@ -46,12 +41,20 @@ export function SectionHeading({
 export function SectionSubheading({
   children,
   className,
+  dark,
 }: {
   children: ReactNode;
   className?: string;
+  dark?: boolean;
 }) {
   return (
-    <p className={cn("mt-4 max-w-2xl text-base leading-relaxed text-slate-600", className)}>
+    <p
+      className={cn(
+        "mt-4 max-w-2xl text-base leading-relaxed",
+        dark ? "text-slate-400" : "text-slate-600",
+        className
+      )}
+    >
       {children}
     </p>
   );
@@ -67,13 +70,7 @@ export function PrimaryButton({
   className?: string;
 }) {
   return (
-    <Link
-      href={href}
-      className={cn(
-        "inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/30",
-        className
-      )}
-    >
+    <Link href={href} className={cn("landing-btn-primary", className)}>
       {children}
     </Link>
   );
@@ -89,13 +86,7 @@ export function SecondaryButton({
   className?: string;
 }) {
   return (
-    <Link
-      href={href}
-      className={cn(
-        "inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50",
-        className
-      )}
-    >
+    <Link href={href} className={cn("landing-btn-secondary", className)}>
       {children}
     </Link>
   );
@@ -109,7 +100,7 @@ export function GlowOrb({
   color?: "blue" | "cyan" | "green";
 }) {
   const colors = {
-    blue: "bg-blue-400/20",
+    blue: "bg-blue-500/25",
     cyan: "bg-cyan-400/20",
     green: "bg-emerald-400/15",
   };
@@ -122,42 +113,33 @@ export function GlowOrb({
 }
 
 export function GridPattern({ className }: { className?: string }) {
-  return (
-    <div
-      className={cn(
-        "pointer-events-none absolute inset-0 opacity-[0.35]",
-        className
-      )}
-      style={{
-        backgroundImage: `
-          linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px)
-        `,
-        backgroundSize: "48px 48px",
-      }}
-      aria-hidden
-    />
-  );
+  return <div className={cn("landing-hero-grid", className)} aria-hidden />;
 }
 
 export function ScoreBar({
   label,
   score,
   colorClass,
+  dark,
 }: {
   label: string;
   score: number;
   colorClass: string;
+  dark?: boolean;
 }) {
   return (
     <div>
       <div className="mb-1.5 flex items-center justify-between text-xs">
-        <span className="font-medium text-slate-700">{label}</span>
-        <span className="font-mono font-semibold text-slate-500">{score}</span>
+        <span className={cn("font-semibold", dark ? "text-slate-300" : "text-slate-700")}>
+          {label}
+        </span>
+        <span className={cn("font-mono font-bold", dark ? "text-slate-400" : "text-slate-500")}>
+          {score}
+        </span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+      <div className={cn("h-2.5 overflow-hidden rounded-full", dark ? "bg-slate-700" : "bg-slate-100")}>
         <div
-          className={cn("h-full rounded-full transition-all", colorClass)}
+          className={cn("h-full rounded-full", colorClass)}
           style={{ width: `${score}%` }}
         />
       </div>
@@ -175,10 +157,23 @@ export function LandingCard({
   hover?: boolean;
 }) {
   return (
+    <div className={cn("landing-card", !hover && "hover:transform-none hover:shadow-none", className)}>
+      {children}
+    </div>
+  );
+}
+
+export function IconBox({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
     <div
       className={cn(
-        "rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm",
-        hover && "transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md",
+        "mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl",
         className
       )}
     >
