@@ -17,48 +17,48 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #0b0b0f;
+    background: #171717;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #1e1e2a;
+    background: #2e2e2e;
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #2a2a3a;
+    background: #363636;
   }
 }
 
 @layer components {
   .grid-bg {
     background-image:
-      linear-gradient(rgba(30, 30, 42, 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(30, 30, 42, 0.3) 1px, transparent 1px);
+      linear-gradient(rgba(46, 46, 46, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46, 46, 46, 0.4) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
   .glass-card {
     @apply relative overflow-hidden rounded-xl border p-5 backdrop-blur-xl;
-    background: rgba(26, 26, 36, 0.6);
-    border-color: rgba(30, 30, 42, 0.8);
+    background: rgba(41, 41, 41, 0.84);
+    border-color: #2e2e2e;
   }
 
   .glass-nav {
     @apply fixed top-0 left-0 right-0 z-50 border-b border-border backdrop-blur-xl;
-    background: rgba(11, 11, 15, 0.8);
+    background: rgba(23, 23, 23, 0.9);
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-accent-blue px-4 py-2 text-xs font-medium text-white shadow-glow-blue transition-all hover:bg-accent-blue-glow;
+    @apply inline-flex items-center justify-center rounded-lg bg-accent-brand px-4 py-2 text-xs font-medium text-[#0f0f0f] transition-all hover:bg-accent-brand-glow;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-border-subtle bg-bg-elevated px-4 py-2 text-xs font-medium text-text-secondary transition-all hover:border-accent-blue/30 hover:text-text-primary;
+    @apply inline-flex items-center justify-center rounded-lg border border-border-subtle bg-bg-elevated px-4 py-2 text-xs font-medium text-text-secondary transition-all hover:border-border-hover hover:text-text-primary;
   }
 
   .input-field {
-    @apply w-full rounded-lg border border-border-subtle bg-bg-elevated px-3 py-2 text-xs text-text-primary placeholder:text-text-dim transition-colors focus:border-accent-blue/30 focus:bg-bg-surface focus:outline-none focus:ring-1 focus:ring-accent-blue/20;
+    @apply w-full rounded-lg border border-border-subtle bg-bg-elevated px-3 py-2 text-xs text-text-primary placeholder:text-text-dim transition-colors focus:border-border-hover focus:bg-bg-surface focus:outline-none focus:ring-1 focus:ring-accent-brand/20;
   }
 
   .label-text {
@@ -82,7 +82,7 @@
   }
 
   .badge-blue {
-    @apply badge border-accent-blue/20 bg-accent-blue/10 text-accent-blue;
+    @apply badge border-accent-brand/20 bg-accent-brand/10 text-accent-brand;
   }
 
   .badge-orange {
@@ -115,8 +115,8 @@
 
   .status-live::before {
     content: "";
-    @apply absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent-green;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+    @apply absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent-success;
+    box-shadow: 0 0 6px rgba(0, 197, 115, 0.4);
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
@@ -136,19 +136,19 @@
   }
 
   .table-row-hover:hover {
-    background: rgba(59, 130, 246, 0.05);
-    border-left: 2px solid #3b82f6;
+    background: rgba(62, 207, 142, 0.04);
+    border-left: 2px solid #3ecf8e;
   }
 
   .shimmer-bar {
     @apply h-full rounded-full;
-    background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%);
+    background: linear-gradient(90deg, #3ecf8e 0%, #5eead4 50%, #3ecf8e 100%);
     background-size: 200% 100%;
     animation: shimmer 3s ease-in-out infinite;
   }
 
   .nav-link-active {
-    @apply rounded-md border border-accent-blue/20 bg-accent-blue/10 text-accent-blue;
+    @apply rounded-md border border-accent-brand/20 bg-accent-brand/10 text-accent-brand;
   }
 
   .nav-link {
@@ -164,7 +164,7 @@
   }
 
   .icon-box-blue {
-    @apply icon-box bg-accent-blue/10 text-accent-blue;
+    @apply icon-box bg-accent-brand/10 text-accent-brand;
   }
 }
 
@@ -178,7 +178,8 @@
   }
 
   .ambient-glow-blue {
-    @apply pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-accent-blue/5 blur-3xl;
+    @apply pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full blur-3xl;
+    background: rgba(62, 207, 142, 0.03);
   }
 
   .ambient-glow-orange {
@@ -194,7 +195,7 @@
   }
 
   .progress-bar-fill {
-    @apply h-full rounded-full bg-gradient-to-r from-accent-blue to-accent-blue-glow;
+    @apply h-full rounded-full bg-gradient-to-r from-accent-brand to-accent-brand-glow;
   }
 
   .stagger-1 {
@@ -242,7 +243,7 @@
   }
 
   .data-table tbody tr:hover {
-    background: rgba(59, 130, 246, 0.05);
+    background: rgba(62, 207, 142, 0.04);
   }
 }
 

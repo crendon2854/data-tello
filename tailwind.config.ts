@@ -10,31 +10,37 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          primary: "#0b0b0f",
-          secondary: "#111118",
-          tertiary: "#16161e",
-          elevated: "#1a1a24",
-          surface: "#1e1e2a",
+          primary: "#171717",
+          secondary: "#0f0f0f",
+          tertiary: "#1a1a1a",
+          elevated: "#292929",
+          surface: "#333333",
+          glass: "rgba(41, 41, 41, 0.84)",
         },
         accent: {
-          blue: "#3b82f6",
-          "blue-glow": "#2563eb",
-          "blue-dim": "rgba(59, 130, 246, 0.15)",
+          brand: "#3ecf8e",
+          "brand-glow": "#2eb574",
+          "brand-dim": "rgba(62, 207, 142, 0.15)",
+          // Legacy aliases — existing components use accent-blue
+          blue: "#3ecf8e",
+          "blue-glow": "#2eb574",
+          "blue-dim": "rgba(62, 207, 142, 0.15)",
+          success: "#00c573",
           crimson: "#ef4444",
           orange: "#f97316",
           "orange-glow": "rgba(249, 115, 22, 0.2)",
-          green: "#22c55e",
+          green: "#00c573",
         },
         text: {
-          primary: "#f8fafc",
-          secondary: "#94a3b8",
-          muted: "#64748b",
-          dim: "#475569",
+          primary: "#fafafa",
+          secondary: "#b4b4b4",
+          muted: "#898989",
+          dim: "#6b6b6b",
         },
         border: {
-          DEFAULT: "#1e1e2a",
-          subtle: "#252532",
-          hover: "#2a2a3a",
+          DEFAULT: "#2e2e2e",
+          subtle: "#262626",
+          hover: "#363636",
         },
       },
       fontFamily: {
@@ -42,12 +48,11 @@ const config: Config = {
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        "glow-blue":
-          "0 0 20px rgba(59,130,246,0.3), 0 0 60px rgba(59,130,246,0.1)",
-        "glow-orange":
-          "0 0 20px rgba(249,115,22,0.3), 0 0 60px rgba(249,115,22,0.1)",
-        "glow-crimson": "0 0 20px rgba(239,68,68,0.3)",
-        "glow-green": "0 0 8px rgba(34,197,94,0.6)",
+        "glow-brand": "0 0 0 1px rgba(62, 207, 142, 0.25)",
+        "glow-blue": "0 0 0 1px rgba(62, 207, 142, 0.25)",
+        "glow-orange": "0 0 0 1px rgba(249, 115, 22, 0.25)",
+        "glow-crimson": "0 0 0 1px rgba(239, 68, 68, 0.25)",
+        "glow-green": "0 0 6px rgba(0, 197, 115, 0.4)",
       },
       animation: {
         "slide-in": "slide-in 0.4s ease-out forwards",
@@ -89,13 +94,15 @@ const config: Config = {
         },
       },
       backgroundImage: {
+        "gradient-brand-area":
+          "linear-gradient(180deg, rgba(62,207,142,0.08) 0%, rgba(62,207,142,0) 100%)",
         "gradient-blue-area":
-          "linear-gradient(180deg, rgba(59,130,246,0.3) 0%, rgba(59,130,246,0) 100%)",
+          "linear-gradient(180deg, rgba(62,207,142,0.08) 0%, rgba(62,207,142,0) 100%)",
         "gradient-orange-area":
-          "linear-gradient(180deg, rgba(249,115,22,0.3) 0%, rgba(249,115,22,0) 100%)",
-        "gradient-logo": "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+          "linear-gradient(180deg, rgba(249,115,22,0.12) 0%, rgba(249,115,22,0) 100%)",
+        "gradient-logo": "linear-gradient(135deg, #3ecf8e 0%, #2eb574 100%)",
         "gradient-shimmer":
-          "linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%)",
+          "linear-gradient(90deg, #3ecf8e 0%, #5eead4 50%, #3ecf8e 100%)",
       },
     },
   },

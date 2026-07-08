@@ -2,14 +2,14 @@
 
 .landing-page {
   min-height: 100vh;
-  background-color: #0b0b0f;
-  color: #f8fafc;
+  background-color: #171717;
+  color: #fafafa;
 }
 
 .landing-hero {
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid #1e1e2a;
+  border-bottom: 1px solid #2e2e2e;
   padding-top: 7rem;
   padding-bottom: 5rem;
 }
@@ -27,27 +27,27 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(59, 130, 246, 0.22) 0%,
-    rgba(59, 130, 246, 0) 55%
+    rgba(62, 207, 142, 0.06) 0%,
+    rgba(62, 207, 142, 0) 55%
   );
   pointer-events: none;
 }
 
 .landing-section-alt {
-  background: rgba(17, 17, 24, 0.65);
-  border-top: 1px solid #1e1e2a;
-  border-bottom: 1px solid #1e1e2a;
+  background: rgba(15, 15, 15, 0.65);
+  border-top: 1px solid #2e2e2e;
+  border-bottom: 1px solid #2e2e2e;
 }
 
 .landing-section-emphasis {
   background: linear-gradient(
     165deg,
-    rgba(17, 17, 24, 0.95) 0%,
-    rgba(22, 22, 30, 0.9) 50%,
-    rgba(11, 11, 15, 1) 100%
+    rgba(15, 15, 15, 0.95) 0%,
+    rgba(26, 26, 26, 0.9) 50%,
+    rgba(23, 23, 23, 1) 100%
   );
-  border-top: 1px solid #1e1e2a;
-  border-bottom: 1px solid #1e1e2a;
+  border-top: 1px solid #2e2e2e;
+  border-bottom: 1px solid #2e2e2e;
 }
 
 .landing-h1 {
@@ -55,44 +55,42 @@
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.03em;
-  color: #f8fafc;
+  color: #fafafa;
 }
 
 .landing-lead {
   font-size: clamp(1rem, 2vw, 1.125rem);
   line-height: 1.65;
-  color: #94a3b8;
+  color: #b4b4b4;
 }
 
 .landing-stat-value {
   font-family: var(--font-jetbrains), ui-monospace, monospace;
   font-size: 2rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: #fafafa;
   line-height: 1;
 }
 
 .landing-dashboard {
   border-radius: 0.75rem;
-  border: 1px solid rgba(30, 30, 42, 0.8);
-  background: rgba(26, 26, 36, 0.6);
+  border: 1px solid #2e2e2e;
+  background: rgba(41, 41, 41, 0.84);
   backdrop-filter: blur(12px);
-  box-shadow:
-    0 0 20px rgba(59, 130, 246, 0.15),
-    0 24px 48px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
   overflow: hidden;
 }
 
 .landing-highlight-card {
-  border: 1px solid rgba(59, 130, 246, 0.35) !important;
-  background: rgba(59, 130, 246, 0.08) !important;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15) !important;
+  border: 1px solid rgba(62, 207, 142, 0.35) !important;
+  background: rgba(62, 207, 142, 0.08) !important;
+  box-shadow: 0 0 0 1px rgba(62, 207, 142, 0.15) !important;
 }
 
 .landing-pricing-popular {
-  border-color: rgba(59, 130, 246, 0.4) !important;
-  background: rgba(59, 130, 246, 0.06) !important;
-  box-shadow: 0 0 24px rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(62, 207, 142, 0.4) !important;
+  background: rgba(62, 207, 142, 0.06) !important;
+  box-shadow: 0 0 0 1px rgba(62, 207, 142, 0.2) !important;
 }
 
 @keyframes landing-float {
