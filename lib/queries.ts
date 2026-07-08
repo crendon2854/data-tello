@@ -296,6 +296,11 @@ export async function createOpportunity(
     avoid: null,
     entry_strategy: null,
     strategic_importance: null,
+    procurement_score: null,
+    procurement_signal_count: null,
+    procurement_evidence: null,
+    procurement_buyer_types: null,
+    procurement_workflow_tags: null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   };

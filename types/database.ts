@@ -63,7 +63,7 @@ export interface OpportunityRow {
   entry_strategy: string | null;
   strategic_importance: string | null;
 
-  -- Procurement validation (supporting evidence only)
+  /** Procurement validation (supporting evidence only). */
   procurement_score: number | null;
   procurement_signal_count: number | null;
   procurement_evidence: string | null;

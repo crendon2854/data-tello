@@ -770,7 +770,7 @@ export function LandingPage() {
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <Link href="/" className="mb-4 flex items-center gap-2.5">
-                <LogoMark />
+                <LogoMark size="md" />
                 <span className="text-base font-bold text-text-primary">DataTello</span>
               </Link>
               <p className="text-sm leading-relaxed">

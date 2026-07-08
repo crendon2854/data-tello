@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Cinzel, Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeShell } from "@/components/layout/ThemeShell";
 import "@/styles/globals.css";
 import "@/styles/landing.css";
@@ -16,6 +16,12 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+  weight: ["600", "700", "800", "900"],
+});
+
 export const metadata: Metadata = {
   title: "DataTello — Evidence-Backed Build Opportunities",
   description:
@@ -30,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-bg-primary font-sans text-text-primary antialiased`}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${cinzel.variable} min-h-screen bg-bg-primary font-sans text-text-primary antialiased`}
         style={{
           backgroundColor: "var(--dt-bg-primary)",
           color: "var(--dt-text-primary)",
