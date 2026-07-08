@@ -75,6 +75,26 @@ create table if not exists zones (
   created_at timestamptz not null default now()
 );
 
+create table if not exists user_preferences (
+  user_id text primary key,
+  role text not null default 'general' check (
+    role in ('agency', 'consultant', 'investor', 'venture_studio', 'general')
+  ),
+  industries jsonb not null default '[]'::jsonb,
+  buyer_types jsonb not null default '[]'::jsonb,
+  signal_preferences jsonb not null default '{
+    "pressure": true,
+    "demand": true,
+    "wedge": true,
+    "friction": true,
+    "complaints": true,
+    "digital_infrastructure": true
+  }'::jsonb,
+  onboarding_completed boolean not null default false,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 -- -----------------------------------------------------------------------------
 -- Research OS target tables. These can be wired incrementally.
 -- -----------------------------------------------------------------------------
@@ -506,6 +526,7 @@ alter table newsletter_events enable row level security;
 alter table system_health_events enable row level security;
 alter table growth_prospects enable row level security;
 alter table outreach_runs enable row level security;
+alter table user_preferences enable row level security;
 
 -- Public app read: only published opportunities (KEEP for production).
 drop policy if exists "Public read published opportunities" on opportunities;
@@ -556,5 +577,10 @@ create policy "MVP dev all market_proof_records" on market_proof_records for all
 -- TEMPORARY: MVP dev-open policy. Drop before production.
 drop policy if exists "MVP dev all workflow_friction_signals" on workflow_friction_signals;
 create policy "MVP dev all workflow_friction_signals" on workflow_friction_signals for all using (true) with check (true);
+
+-- TEMPORARY: MVP dev-open policy. Drop before production.
+drop policy if exists "MVP dev all user_preferences" on user_preferences;
+create policy "MVP dev all user_preferences"
+  on user_preferences for all using (true) with check (true);
 
 -- Target tables: RLS enabled above but no policies yet. Keep closed until routes and auth exist.

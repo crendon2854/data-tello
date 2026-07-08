@@ -1,8 +1,9 @@
-export type PersonaId =
-  | "agency"
-  | "consultant"
-  | "investor"
-  | "venture_studio";
+import type { Role } from "@/types/user-preferences";
+import type { OpportunityFilters } from "@/types/opportunity";
+import { DEFAULT_FILTERS } from "@/types/opportunity";
+
+export type { Role };
+export type PersonaId = Role;
 
 export type SectionId =
   | "snapshot"
@@ -13,8 +14,22 @@ export type SectionId =
   | "competitiveAngle"
   | "whyThisMatters";
 
+export type PersonaConfig = {
+  id: Role;
+  label: string;
+  description: string;
+  scoringWeights: {
+    pain: number;
+    demand: number;
+    market: number;
+    buildability: number;
+    assetFit: number;
+  };
+  emphasis: string[];
+};
+
 export interface PersonaLens {
-  id: PersonaId;
+  id: Role;
   label: string;
   roleLabel: string;
   description: string;
@@ -30,6 +45,14 @@ export interface PersonaLens {
   assetPathLabels: [string, string, string];
 }
 
+export type SignalScores = {
+  pain: number;
+  demand: number;
+  market: number;
+  buildability: number;
+  assetFit: number;
+};
+
 const DEFAULT_SECTION_TITLES: Record<SectionId, string> = {
   snapshot: "Opportunity",
   whyThisExists: "Is this real?",
@@ -40,16 +63,94 @@ const DEFAULT_SECTION_TITLES: Record<SectionId, string> = {
   whyThisMatters: "Why Now",
 };
 
-export const DEFAULT_PERSONA_ID: PersonaId = "agency";
+export const DEFAULT_PERSONA_ID: Role = "general";
 
-const LEGACY_PERSONA_ALIASES: Record<string, PersonaId> = {
+const LEGACY_ROLE_ALIASES: Record<string, Role> = {
   product_studio: "venture_studio",
-  builder: "agency",
-  operator: "agency",
-  automation_builder: "agency",
+  builder: "general",
+  operator: "general",
+  automation_builder: "general",
 };
 
-export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
+const BALANCED_WEIGHTS = {
+  pain: 1,
+  demand: 1,
+  market: 1,
+  buildability: 1,
+  assetFit: 1,
+};
+
+export const PERSONA_CONFIGS: Record<Role, PersonaConfig> = {
+  agency: {
+    id: "agency",
+    label: "Agency",
+    description:
+      "Execution, selling, and delivery — asset strategy, workflow friction, and client complaints.",
+    scoringWeights: {
+      pain: 0.8,
+      demand: 1,
+      market: 0.7,
+      buildability: 1.2,
+      assetFit: 1.3,
+    },
+    emphasis: [
+      "asset strategy",
+      "execution angle",
+      "workflow + complaints",
+    ],
+  },
+  consultant: {
+    id: "consultant",
+    label: "Consultant",
+    description:
+      "Advising and recommending — full dossier, reasoning, and buyer clarity.",
+    scoringWeights: {
+      pain: 1.1,
+      demand: 1,
+      market: 1.1,
+      buildability: 0.8,
+      assetFit: 0.9,
+    },
+    emphasis: ["full dossier", "reasoning", "buyer clarity"],
+  },
+  investor: {
+    id: "investor",
+    label: "Investor",
+    description:
+      "Capital allocation — wedge, confidence, scoring, and why this matters.",
+    scoringWeights: {
+      pain: 0.9,
+      demand: 1,
+      market: 1.3,
+      buildability: 0.7,
+      assetFit: 0.8,
+    },
+    emphasis: ["wedge", "confidence", "scoring", "why this matters"],
+  },
+  venture_studio: {
+    id: "venture_studio",
+    label: "Venture Studio",
+    description:
+      "Repeated bets and operator matching — validation, comparison, portfolio thinking.",
+    scoringWeights: {
+      pain: 1,
+      demand: 1.1,
+      market: 1.1,
+      buildability: 1.1,
+      assetFit: 1,
+    },
+    emphasis: ["validation", "comparison", "portfolio thinking"],
+  },
+  general: {
+    id: "general",
+    label: "General",
+    description: "Neutral mode — balanced scoring and mixed feed.",
+    scoringWeights: BALANCED_WEIGHTS,
+    emphasis: ["balanced view", "mixed signals"],
+  },
+};
+
+export const PERSONA_LENSES: Record<Role, PersonaLens> = {
   agency: {
     id: "agency",
     label: "Agency",
@@ -158,7 +259,7 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     label: "Venture Studio",
     roleLabel: "Validate it",
     description:
-      "Validate concepts, match operators, and prioritize repeated venture bets — distinct from investor deal evaluation.",
+      "Validate concepts, match operators, and prioritize repeated venture bets.",
     primaryCta: "Prioritize this bet",
     snapshotAssetLabel: "Prioritize this bet",
     cardAssetLabel: "Venture bet",
@@ -187,9 +288,36 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     },
     assetPathLabels: ["Validate first", "Operator match", "Scale venture"],
   },
+  general: {
+    id: "general",
+    label: "General",
+    roleLabel: "Explore",
+    description: "Balanced view — same evidence, no heavy emphasis.",
+    primaryCta: "View opportunity",
+    snapshotAssetLabel: "View opportunity",
+    cardAssetLabel: "Opportunity",
+    dashboardSubtitle:
+      "Browse evidence-backed opportunities across industries and buyer types.",
+    detailIntro:
+      "Opportunity brief — full evidence with balanced emphasis across all sections.",
+    signalHelperText:
+      "Scores reflect layered validation across pressure, demand, wedge, friction, and fit.",
+    sectionOrder: [
+      "snapshot",
+      "whyThisExists",
+      "signalBreakdown",
+      "buildStrategy",
+      "executionAngle",
+      "competitiveAngle",
+      "whyThisMatters",
+    ],
+    emphasizedSections: [],
+    sectionTitles: DEFAULT_SECTION_TITLES,
+    assetPathLabels: ["First asset", "Expand", "Scale"],
+  },
 };
 
-export const ICP_PERSONA_IDS: PersonaId[] = [
+export const ICP_PERSONA_IDS: Role[] = [
   "agency",
   "consultant",
   "investor",
@@ -201,31 +329,81 @@ export const PERSONA_LIST = ICP_PERSONA_IDS.map((id) => PERSONA_LENSES[id]);
 /** @deprecated Use PERSONA_LIST */
 export const ICP_PERSONA_LIST = PERSONA_LIST;
 
-export function normalizePersonaId(
-  value: string | null | undefined
-): PersonaId {
+export function normalizeRole(value: string | null | undefined): Role {
   if (!value) {
     return DEFAULT_PERSONA_ID;
   }
 
-  if (value in PERSONA_LENSES) {
-    return value as PersonaId;
+  if (value in PERSONA_CONFIGS) {
+    return value as Role;
   }
 
-  return LEGACY_PERSONA_ALIASES[value] ?? DEFAULT_PERSONA_ID;
+  return LEGACY_ROLE_ALIASES[value] ?? DEFAULT_PERSONA_ID;
 }
 
-export function getPersonaLens(id: PersonaId): PersonaLens {
-  return PERSONA_LENSES[id] ?? PERSONA_LENSES[DEFAULT_PERSONA_ID];
+/** @deprecated Use normalizeRole */
+export const normalizePersonaId = normalizeRole;
+
+export function getPersonaConfig(role: Role): PersonaConfig {
+  return PERSONA_CONFIGS[role] ?? PERSONA_CONFIGS.general;
 }
 
-export function isPersonaId(value: string): value is PersonaId {
-  return value in PERSONA_LENSES;
+export function getPersonaLens(id: Role): PersonaLens {
+  return PERSONA_LENSES[id] ?? PERSONA_LENSES.general;
 }
+
+export function isRole(value: string): value is Role {
+  return value in PERSONA_CONFIGS;
+}
+
+/** @deprecated Use isRole */
+export const isPersonaId = isRole;
 
 export function isSectionEmphasized(
   lens: PersonaLens,
   sectionId: SectionId
 ): boolean {
   return lens.emphasizedSections.includes(sectionId);
+}
+
+function weightedScore(scores: SignalScores, weights: PersonaConfig["scoringWeights"]): number {
+  const total =
+    weights.pain +
+    weights.demand +
+    weights.market +
+    weights.buildability +
+    weights.assetFit;
+
+  return Math.round(
+    (scores.pain * weights.pain +
+      scores.demand * weights.demand +
+      scores.market * weights.market +
+      scores.buildability * weights.buildability +
+      scores.assetFit * weights.assetFit) /
+      total
+  );
+}
+
+export function applyPersonaScoring(
+  baseScore: number,
+  role: Role,
+  scores?: SignalScores
+): number {
+  if (role === "general") {
+    return baseScore;
+  }
+
+  if (scores) {
+    return weightedScore(scores, getPersonaConfig(role).scoringWeights);
+  }
+
+  return baseScore;
+}
+
+export function getDefaultFilters(role: Role): OpportunityFilters {
+  if (role === "general") {
+    return { ...DEFAULT_FILTERS };
+  }
+
+  return { ...DEFAULT_FILTERS };
 }

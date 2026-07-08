@@ -360,6 +360,45 @@ export interface ZoneRow {
   created_at: string;
 }
 
+export type UserPreferenceRole =
+  | "agency"
+  | "consultant"
+  | "investor"
+  | "venture_studio"
+  | "general";
+
+export interface UserPreferenceSignalPreferences {
+  pressure: boolean;
+  demand: boolean;
+  wedge: boolean;
+  friction: boolean;
+  complaints: boolean;
+  digital_infrastructure: boolean;
+}
+
+export interface UserPreferencesRow {
+  user_id: string;
+  role: UserPreferenceRole;
+  industries: string[];
+  buyer_types: string[];
+  signal_preferences: UserPreferenceSignalPreferences;
+  onboarding_completed: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export type UserPreferencesInsert = Omit<
+  UserPreferencesRow,
+  "created_at" | "updated_at"
+> & {
+  created_at?: string;
+  updated_at?: string;
+};
+
+export type UserPreferencesUpdate = Partial<
+  Omit<UserPreferencesRow, "user_id" | "created_at">
+>;
+
 export interface SourceRow {
   id: string;
   name: string;
@@ -483,6 +522,12 @@ export interface Database {
         Row: WorkflowFrictionSignalRow;
         Insert: WorkflowFrictionSignalInsert;
         Update: WorkflowFrictionSignalUpdate;
+        Relationships: [];
+      };
+      user_preferences: {
+        Row: UserPreferencesRow;
+        Insert: UserPreferencesInsert;
+        Update: UserPreferencesUpdate;
         Relationships: [];
       };
     };
