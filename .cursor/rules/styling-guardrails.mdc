@@ -1,0 +1,42 @@
+---
+description: Prevent Tailwind/theme regressions (white page, lost styling)
+alwaysApply: true
+---
+
+# Styling Guardrails
+
+DataTello uses **Tailwind + custom tokens** in `styles/globals.css`. If CSS fails to load, the site shows white background / black text.
+
+## Never break these
+
+1. **`app/layout.tsx` must import** `@/styles/globals.css` and `@/styles/landing.css`
+2. **Canonical CSS lives in** `styles/globals.css` — do NOT create `app/globals.css`
+3. **`styles/globals.css` must keep** all three `@tailwind` directives at the top
+4. **Keep `:root` fallbacks** (`--dt-bg-primary`, `--dt-text-primary`) — they protect the dark theme when Tailwind hiccups
+5. **Do NOT `@apply` custom component classes** (e.g. `@apply sidebar-link`) inside other `@layer components` rules — inline Tailwind utilities instead; nested `@apply` breaks dev/HMR
+6. **`tailwind.config.ts` content** must include `./app/**` and `./components/**`
+
+## After changing styles or layout
+
+```bash
+npm run check:styles:config   # static wiring check
+npm run build                 # includes post-build CSS marker check
+```
+
+If dev looks unstyled:
+
+```bash
+npm run dev:clean             # clears .next + restarts
+```
+
+Then hard-refresh the browser (`Ctrl+Shift+R`).
+
+## Token reference
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `bg-bg-primary` | `#020704` | Page canvas |
+| `text-text-primary` | `#fafafa` | Body text |
+| `accent-brand` / `accent-blue` | `#3ecf8e` | Brand green |
+
+Use existing tokens (`bg-bg-*`, `text-text-*`, `glass-card`, `shadow-subtle-glow`) — do not introduce one-off hex colors in components when a token exists.

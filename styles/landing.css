@@ -2,14 +2,14 @@
 
 .landing-page {
   min-height: 100vh;
-  background-color: #171717;
+  background-color: #020704;
   color: #fafafa;
 }
 
 .landing-hero {
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid #2e2e2e;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.08);
   padding-top: 7rem;
   padding-bottom: 5rem;
 }
@@ -27,27 +27,27 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(62, 207, 142, 0.06) 0%,
-    rgba(62, 207, 142, 0) 55%
+    rgba(16, 185, 129, 0.05) 0%,
+    rgba(16, 185, 129, 0) 55%
   );
   pointer-events: none;
 }
 
 .landing-section-alt {
-  background: rgba(15, 15, 15, 0.65);
-  border-top: 1px solid #2e2e2e;
-  border-bottom: 1px solid #2e2e2e;
+  background: rgba(3, 10, 6, 0.65);
+  border-top: 1px solid rgba(16, 185, 129, 0.08);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.08);
 }
 
 .landing-section-emphasis {
   background: linear-gradient(
     165deg,
-    rgba(15, 15, 15, 0.95) 0%,
-    rgba(26, 26, 26, 0.9) 50%,
-    rgba(23, 23, 23, 1) 100%
+    rgba(3, 10, 6, 0.95) 0%,
+    rgba(4, 15, 9, 0.9) 50%,
+    rgba(2, 7, 4, 1) 100%
   );
-  border-top: 1px solid #2e2e2e;
-  border-bottom: 1px solid #2e2e2e;
+  border-top: 1px solid rgba(16, 185, 129, 0.08);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.08);
 }
 
 .landing-h1 {
@@ -74,23 +74,23 @@
 
 .landing-dashboard {
   border-radius: 0.75rem;
-  border: 1px solid #2e2e2e;
-  background: rgba(41, 41, 41, 0.84);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  background: rgba(4, 15, 9, 0.84);
   backdrop-filter: blur(12px);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.06);
   overflow: hidden;
 }
 
 .landing-highlight-card {
-  border: 1px solid rgba(62, 207, 142, 0.35) !important;
-  background: rgba(62, 207, 142, 0.08) !important;
-  box-shadow: 0 0 0 1px rgba(62, 207, 142, 0.15) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  background: rgba(16, 185, 129, 0.06) !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.08) !important;
 }
 
 .landing-pricing-popular {
-  border-color: rgba(62, 207, 142, 0.4) !important;
-  background: rgba(62, 207, 142, 0.06) !important;
-  box-shadow: 0 0 0 1px rgba(62, 207, 142, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+  background: rgba(16, 185, 129, 0.05) !important;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.12) !important;
 }
 
 @keyframes landing-float {

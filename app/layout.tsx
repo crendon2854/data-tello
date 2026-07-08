@@ -31,6 +31,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-bg-primary font-sans text-text-primary antialiased`}
+        style={{
+          backgroundColor: "var(--dt-bg-primary)",
+          color: "var(--dt-text-primary)",
+        }}
       >
         <ThemeShell>{children}</ThemeShell>
       </body>

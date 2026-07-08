@@ -151,7 +151,7 @@ export function LandingCard({
   return (
     <div
       className={cn(
-        "glass-card group transition-all hover:border-accent-blue/30 hover:shadow-glow-blue",
+        "glass-card group",
         className
       )}
     >

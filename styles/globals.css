@@ -3,12 +3,25 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --dt-bg-primary: #020704;
+    --dt-bg-secondary: #030a06;
+    --dt-bg-elevated: #040f09;
+    --dt-text-primary: #fafafa;
+    --dt-text-secondary: #b4b4b4;
+    --dt-accent-brand: #3ecf8e;
+  }
+
   html {
     scroll-behavior: smooth;
+    background-color: var(--dt-bg-primary);
+    color: var(--dt-text-primary);
   }
 
   body {
-    @apply bg-bg-primary font-sans text-text-primary antialiased;
+    background-color: var(--dt-bg-primary);
+    color: var(--dt-text-primary);
+    @apply font-sans antialiased;
   }
 
   ::-webkit-scrollbar {
@@ -17,40 +30,43 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #171717;
+    background: #020704;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2e2e2e;
+    background: rgba(16, 185, 129, 0.12);
     border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #363636;
+    background: rgba(16, 185, 129, 0.2);
   }
 }
 
 @layer components {
   .grid-bg {
     background-image:
-      linear-gradient(rgba(46, 46, 46, 0.4) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(46, 46, 46, 0.4) 1px, transparent 1px);
+      linear-gradient(rgba(16, 185, 129, 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.35) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
   .glass-card {
-    @apply relative overflow-hidden rounded-xl border p-5 backdrop-blur-xl;
-    background: rgba(41, 41, 41, 0.84);
-    border-color: #2e2e2e;
+    @apply relative overflow-hidden rounded-xl border border-emerald-500/10 p-5 shadow-subtle-glow ring-1 ring-emerald-500/5 backdrop-blur-xl transition-all duration-300;
+    background: rgba(4, 15, 9, 0.84);
+  }
+
+  .glass-card:hover {
+    @apply border-emerald-500/20 shadow-active-glow;
   }
 
   .glass-nav {
-    @apply fixed top-0 left-0 right-0 z-50 border-b border-border backdrop-blur-xl;
-    background: rgba(23, 23, 23, 0.9);
+    @apply fixed top-0 left-0 right-0 z-50 border-b border-emerald-500/10 shadow-subtle-glow backdrop-blur-xl;
+    background: rgba(2, 7, 4, 0.92);
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-accent-brand px-4 py-2 text-xs font-medium text-[#0f0f0f] transition-all hover:bg-accent-brand-glow;
+    @apply inline-flex items-center justify-center rounded-lg bg-accent-brand px-4 py-2 text-xs font-medium text-[#020704] transition-all hover:bg-accent-brand-glow hover:shadow-active-glow;
   }
 
   .btn-secondary {
@@ -148,11 +164,42 @@
   }
 
   .nav-link-active {
-    @apply rounded-md border border-accent-brand/20 bg-accent-brand/10 text-accent-brand;
+    @apply rounded-md border border-emerald-500/10 bg-emerald-500/5 text-accent-brand shadow-subtle-glow ring-1 ring-emerald-500/5;
   }
 
   .nav-link {
-    @apply rounded-md px-4 py-1.5 text-xs font-medium text-text-secondary transition-all hover:bg-bg-elevated hover:text-text-primary;
+    @apply rounded-md px-4 py-1.5 text-xs font-medium text-text-secondary transition-all duration-300 hover:border-emerald-500/10 hover:bg-bg-elevated hover:text-text-primary hover:shadow-subtle-glow;
+  }
+
+  .sidebar-rail {
+    @apply sticky top-[calc(3.5rem+1rem)] m-4 mr-0 flex h-[calc(100vh-3.5rem-2rem)] w-60 shrink-0 flex-col overflow-hidden rounded-xl border border-emerald-500/10 shadow-subtle-glow ring-1 ring-emerald-500/5 backdrop-blur-xl;
+    background: rgba(4, 15, 9, 0.72);
+  }
+
+  .sidebar-link {
+    @apply relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-text-secondary transition-all duration-300 hover:bg-bg-elevated/70 hover:text-text-primary;
+  }
+
+  .sidebar-link-active {
+    @apply relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-300 bg-emerald-500/[0.07] text-accent-brand shadow-subtle-glow;
+  }
+
+  .sidebar-link-active::before {
+    content: "";
+    @apply absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-accent-brand;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
+  }
+
+  .sidebar-link-icon {
+    @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-transparent bg-bg-elevated/50 text-text-muted transition-all duration-300;
+  }
+
+  .sidebar-link:hover .sidebar-link-icon {
+    @apply border-emerald-500/10 text-text-secondary;
+  }
+
+  .sidebar-link-active .sidebar-link-icon {
+    @apply border-emerald-500/20 bg-emerald-500/10 text-accent-brand;
   }
 
   .command-meta {
@@ -179,7 +226,7 @@
 
   .ambient-glow-blue {
     @apply pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full blur-3xl;
-    background: rgba(62, 207, 142, 0.03);
+    background: rgba(16, 185, 129, 0.04);
   }
 
   .ambient-glow-orange {

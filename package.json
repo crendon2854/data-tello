@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build",
+    "dev:clean": "node scripts/dev-clean.mjs",
+    "build": "npm run check:styles:config && next build && npm run check:styles",
+    "check:styles:config": "node scripts/check-styles-config.mjs",
+    "check:styles": "node scripts/check-styles.mjs",
     "start": "next start -p 3001",
     "lint": "next lint"
   },

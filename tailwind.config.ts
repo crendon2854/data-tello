@@ -9,13 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        background: {
+          DEFAULT: "#020704",
+          card: "#040f09",
+        },
         bg: {
-          primary: "#171717",
-          secondary: "#0f0f0f",
-          tertiary: "#1a1a1a",
-          elevated: "#292929",
-          surface: "#333333",
-          glass: "rgba(41, 41, 41, 0.84)",
+          primary: "#020704",
+          secondary: "#030a06",
+          tertiary: "#040a07",
+          elevated: "#040f09",
+          surface: "#061810",
+          glass: "rgba(4, 15, 9, 0.84)",
         },
         accent: {
           brand: "#3ecf8e",
@@ -38,9 +42,9 @@ const config: Config = {
           dim: "#6b6b6b",
         },
         border: {
-          DEFAULT: "#2e2e2e",
-          subtle: "#262626",
-          hover: "#363636",
+          DEFAULT: "rgba(16, 185, 129, 0.08)",
+          subtle: "rgba(16, 185, 129, 0.05)",
+          hover: "rgba(16, 185, 129, 0.15)",
         },
       },
       fontFamily: {
@@ -48,8 +52,12 @@ const config: Config = {
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        "glow-brand": "0 0 0 1px rgba(62, 207, 142, 0.25)",
-        "glow-blue": "0 0 0 1px rgba(62, 207, 142, 0.25)",
+        "subtle-glow": "0 0 25px rgba(16, 185, 129, 0.06)",
+        "active-glow": "0 0 30px rgba(16, 185, 129, 0.15)",
+        "glow-brand":
+          "0 0 25px rgba(16, 185, 129, 0.06), 0 0 0 1px rgba(16, 185, 129, 0.08)",
+        "glow-blue":
+          "0 0 25px rgba(16, 185, 129, 0.06), 0 0 0 1px rgba(16, 185, 129, 0.08)",
         "glow-orange": "0 0 0 1px rgba(249, 115, 22, 0.25)",
         "glow-crimson": "0 0 0 1px rgba(239, 68, 68, 0.25)",
         "glow-green": "0 0 6px rgba(0, 197, 115, 0.4)",

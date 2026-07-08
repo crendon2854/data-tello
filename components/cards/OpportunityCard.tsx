@@ -21,7 +21,7 @@ export function OpportunityCard({
   return (
     <Link
       href={`/opportunity/${opportunity.id}`}
-      className={`glass-card group block animate-slide-in opacity-0 transition-all hover:border-accent-blue/30 hover:shadow-glow-blue ${staggerClass}`}
+      className={`glass-card group block animate-slide-in opacity-0 ${staggerClass}`}
     >
       <div className="ambient-glow-blue opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
 
