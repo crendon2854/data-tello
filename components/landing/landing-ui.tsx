@@ -10,29 +10,30 @@ export function LandingContainer({
   className?: string;
 }) {
   return (
-    <div className={cn("mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8", className)}>
+    <div className={cn("relative mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8", className)}>
       {children}
     </div>
   );
 }
 
-export function SectionLabel({ children, dark }: { children: ReactNode; dark?: boolean }) {
-  return (
-    <p className={cn("landing-section-label", dark && "!text-blue-300")}>{children}</p>
-  );
+export function SectionLabel({ children }: { children: ReactNode }) {
+  return <p className="label-text mb-3">{children}</p>;
 }
 
 export function SectionHeading({
   children,
   className,
-  dark,
 }: {
   children: ReactNode;
   className?: string;
-  dark?: boolean;
 }) {
   return (
-    <h2 className={cn("landing-section-title", dark && "!text-white", className)}>
+    <h2
+      className={cn(
+        "text-2xl font-bold tracking-tight text-text-primary sm:text-3xl sm:leading-[1.15]",
+        className
+      )}
+    >
       {children}
     </h2>
   );
@@ -41,20 +42,12 @@ export function SectionHeading({
 export function SectionSubheading({
   children,
   className,
-  dark,
 }: {
   children: ReactNode;
   className?: string;
-  dark?: boolean;
 }) {
   return (
-    <p
-      className={cn(
-        "mt-4 max-w-2xl text-base leading-relaxed",
-        dark ? "text-slate-400" : "text-slate-600",
-        className
-      )}
-    >
+    <p className={cn("mt-4 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-base", className)}>
       {children}
     </p>
   );
@@ -70,7 +63,7 @@ export function PrimaryButton({
   className?: string;
 }) {
   return (
-    <Link href={href} className={cn("landing-btn-primary", className)}>
+    <Link href={href} className={cn("btn-primary px-6 py-3 text-sm", className)}>
       {children}
     </Link>
   );
@@ -86,7 +79,7 @@ export function SecondaryButton({
   className?: string;
 }) {
   return (
-    <Link href={href} className={cn("landing-btn-secondary", className)}>
+    <Link href={href} className={cn("btn-secondary px-6 py-3 text-sm", className)}>
       {children}
     </Link>
   );
@@ -97,12 +90,12 @@ export function GlowOrb({
   color = "blue",
 }: {
   className?: string;
-  color?: "blue" | "cyan" | "green";
+  color?: "blue" | "orange" | "crimson";
 }) {
   const colors = {
-    blue: "bg-blue-500/25",
-    cyan: "bg-cyan-400/20",
-    green: "bg-emerald-400/15",
+    blue: "bg-accent-blue/10",
+    orange: "bg-accent-orange/10",
+    crimson: "bg-accent-crimson/10",
   };
   return (
     <div
@@ -112,34 +105,24 @@ export function GlowOrb({
   );
 }
 
-export function GridPattern({ className }: { className?: string }) {
-  return <div className={cn("landing-hero-grid", className)} aria-hidden />;
-}
-
 export function ScoreBar({
   label,
   score,
-  colorClass,
-  dark,
+  gradient,
 }: {
   label: string;
   score: number;
-  colorClass: string;
-  dark?: boolean;
+  gradient: string;
 }) {
   return (
     <div>
       <div className="mb-1.5 flex items-center justify-between text-xs">
-        <span className={cn("font-semibold", dark ? "text-slate-300" : "text-slate-700")}>
-          {label}
-        </span>
-        <span className={cn("font-mono font-bold", dark ? "text-slate-400" : "text-slate-500")}>
-          {score}
-        </span>
+        <span className="font-medium text-text-primary">{label}</span>
+        <span className="font-mono font-semibold text-text-secondary">{score}</span>
       </div>
-      <div className={cn("h-2.5 overflow-hidden rounded-full", dark ? "bg-slate-700" : "bg-slate-100")}>
+      <div className="progress-bar">
         <div
-          className={cn("h-full rounded-full", colorClass)}
+          className={cn("h-full rounded-full bg-gradient-to-r", gradient)}
           style={{ width: `${score}%` }}
         />
       </div>
@@ -150,34 +133,48 @@ export function ScoreBar({
 export function LandingCard({
   children,
   className,
-  hover = true,
+  glow = "blue",
 }: {
   children: ReactNode;
   className?: string;
-  hover?: boolean;
+  glow?: "blue" | "orange" | "crimson" | "none";
 }) {
+  const glowClass =
+    glow === "blue"
+      ? "ambient-glow-blue"
+      : glow === "orange"
+        ? "ambient-glow-orange"
+        : glow === "crimson"
+          ? "ambient-glow-crimson"
+          : null;
+
   return (
-    <div className={cn("landing-card", !hover && "hover:transform-none hover:shadow-none", className)}>
-      {children}
+    <div
+      className={cn(
+        "glass-card group transition-all hover:border-accent-blue/30 hover:shadow-glow-blue",
+        className
+      )}
+    >
+      {glowClass && (
+        <div className={cn(glowClass, "opacity-0 transition-opacity group-hover:opacity-100")} aria-hidden />
+      )}
+      <div className="relative">{children}</div>
     </div>
   );
 }
 
 export function IconBox({
   children,
-  className,
+  variant = "blue",
 }: {
   children: ReactNode;
-  className?: string;
+  variant?: "blue" | "orange" | "crimson" | "green";
 }) {
-  return (
-    <div
-      className={cn(
-        "mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
+  const variants = {
+    blue: "icon-box-blue",
+    orange: "bg-accent-orange/10 text-accent-orange icon-box",
+    crimson: "bg-accent-crimson/10 text-accent-crimson icon-box",
+    green: "bg-accent-green/10 text-accent-green icon-box",
+  };
+  return <div className={cn("mb-4", variants[variant], "h-11 w-11")}>{children}</div>;
 }

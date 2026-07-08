@@ -79,11 +79,11 @@ export const sampleOpportunity = {
   summary:
     "Small contractors face recurring safety documentation pressure, but most existing tools are too complex for their needs. DataTello highlights a simpler entry wedge: audit-ready documentation templates, lightweight tracking, and workflow automation.",
   signals: [
-    { label: "Pressure", score: 82, color: "bg-blue-500" },
-    { label: "Demand", score: 71, color: "bg-cyan-500" },
-    { label: "Wedge", score: 78, color: "bg-emerald-500" },
-    { label: "Buildability", score: 88, color: "bg-blue-400" },
-    { label: "Asset Fit", score: 85, color: "bg-teal-500" },
+    { label: "Pressure", score: 82, gradient: "from-accent-blue to-accent-blue-glow" },
+    { label: "Demand", score: 71, gradient: "from-accent-orange to-orange-400" },
+    { label: "Wedge", score: 78, gradient: "from-accent-blue to-accent-blue-glow" },
+    { label: "Buildability", score: 88, gradient: "from-accent-green to-green-400" },
+    { label: "Asset Fit", score: 85, gradient: "from-accent-blue to-cyan-400" },
   ],
   whyNow:
     "Rising compliance burden, repeated workflow friction, and a gap between enterprise tools and small-operator needs.",
@@ -368,32 +368,12 @@ export type AccentColor = "blue" | "cyan" | "green" | "amber";
 
 export const accentStyles: Record<
   AccentColor,
-  { bg: string; border: string; text: string; icon: string }
+  { icon: string }
 > = {
-  blue: {
-    bg: "bg-blue-50",
-    border: "border-blue-100",
-    text: "text-blue-700",
-    icon: "bg-blue-100 text-blue-600",
-  },
-  cyan: {
-    bg: "bg-cyan-50",
-    border: "border-cyan-100",
-    text: "text-cyan-700",
-    icon: "bg-cyan-100 text-cyan-600",
-  },
-  green: {
-    bg: "bg-emerald-50",
-    border: "border-emerald-100",
-    text: "text-emerald-700",
-    icon: "bg-emerald-100 text-emerald-600",
-  },
-  amber: {
-    bg: "bg-amber-50",
-    border: "border-amber-100",
-    text: "text-amber-700",
-    icon: "bg-amber-100 text-amber-600",
-  },
+  blue: { icon: "icon-box-blue" },
+  cyan: { icon: "icon-box-blue" },
+  green: { icon: "bg-accent-green/10 text-accent-green icon-box" },
+  amber: { icon: "bg-accent-orange/10 text-accent-orange icon-box" },
 };
 
 export { BookOpen, ChevronRight, Bell };

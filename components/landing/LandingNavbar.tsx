@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/helpers";
 import { PrimaryButton } from "./landing-ui";
 
@@ -63,42 +63,36 @@ export function LandingNavbar() {
   }
 
   return (
-    <header className="landing-nav">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5 sm:px-6 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-sm font-bold text-white shadow-lg shadow-blue-500/25">
+    <header className="glass-nav">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-5 sm:px-6 lg:px-8">
+        <Link href="/" className="flex shrink-0 items-center gap-3">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-blue-600 text-sm font-bold text-white shadow-glow-blue">
             D
           </span>
-          <span className="text-base font-bold tracking-tight text-slate-900">DataTello</span>
+          <div>
+            <span className="text-sm font-bold tracking-wide text-text-primary">DataTello</span>
+            <span className="ml-1 font-mono text-xs text-text-muted">INTELLIGENCE</span>
+          </div>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
           {landingLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-            >
+            <a key={link.href} href={link.href} className="nav-link">
               {link.label}
             </a>
           ))}
         </nav>
 
         <div className="hidden items-center gap-3 sm:flex">
-          <Link
-            href="/dashboard"
-            className="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
-          >
+          <Link href="/dashboard" className="nav-link">
             Log In
           </Link>
-          <PrimaryButton href="/dashboard" className="px-5 py-2.5">
-            Get Access
-          </PrimaryButton>
+          <PrimaryButton href="/dashboard">Get Access</PrimaryButton>
         </div>
 
         <button
           type="button"
-          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 lg:hidden"
+          className="rounded-lg p-2 text-text-secondary hover:bg-bg-elevated lg:hidden"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -107,22 +101,22 @@ export function LandingNavbar() {
       </div>
 
       {open && (
-        <div className="border-t border-slate-100 bg-white px-5 py-4 lg:hidden">
+        <div className="border-t border-border bg-bg-secondary px-5 py-4 lg:hidden">
           <nav className="flex flex-col gap-1">
             {landingLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                className="nav-link"
                 onClick={() => setOpen(false)}
               >
                 {link.label}
               </a>
             ))}
-            <Link href="/dashboard" className="mt-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+            <Link href="/dashboard" className="nav-link mt-2">
               Log In
             </Link>
-            <PrimaryButton href="/dashboard" className="mt-2 w-full">
+            <PrimaryButton href="/dashboard" className="mt-2 w-full justify-center">
               Get Access
             </PrimaryButton>
           </nav>
