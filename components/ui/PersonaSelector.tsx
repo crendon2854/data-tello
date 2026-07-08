@@ -1,6 +1,6 @@
 "use client";
 
-import { ICP_PERSONA_LIST, type PersonaId } from "@/lib/persona-lens";
+import { PERSONA_LIST, type PersonaId } from "@/lib/persona-lens";
 import { cn } from "@/lib/helpers";
 
 interface PersonaSelectorProps {
@@ -33,7 +33,7 @@ export function PersonaSelector({
         )}
         aria-label="Select execution lens"
       >
-        {ICP_PERSONA_LIST.map((persona) => (
+        {PERSONA_LIST.map((persona) => (
           <option key={persona.id} value={persona.id}>
             {persona.label} — {persona.roleLabel}
           </option>
@@ -41,7 +41,7 @@ export function PersonaSelector({
       </select>
       {!compact && (
         <p className="text-xs text-text-muted">
-          {ICP_PERSONA_LIST.find((persona) => persona.id === value)?.description}
+          {PERSONA_LIST.find((persona) => persona.id === value)?.description}
         </p>
       )}
     </div>

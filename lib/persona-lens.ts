@@ -1,11 +1,7 @@
 export type PersonaId =
-  | "builder"
   | "agency"
   | "consultant"
   | "investor"
-  | "operator"
-  | "automation_builder"
-  | "product_studio"
   | "venture_studio";
 
 export type SectionId =
@@ -34,16 +30,6 @@ export interface PersonaLens {
   assetPathLabels: [string, string, string];
 }
 
-const DEFAULT_SECTION_ORDER: SectionId[] = [
-  "snapshot",
-  "whyThisExists",
-  "signalBreakdown",
-  "buildStrategy",
-  "executionAngle",
-  "competitiveAngle",
-  "whyThisMatters",
-];
-
 const DEFAULT_SECTION_TITLES: Record<SectionId, string> = {
   snapshot: "Opportunity",
   whyThisExists: "Is this real?",
@@ -54,28 +40,16 @@ const DEFAULT_SECTION_TITLES: Record<SectionId, string> = {
   whyThisMatters: "Why Now",
 };
 
-export const DEFAULT_PERSONA_ID: PersonaId = "builder";
+export const DEFAULT_PERSONA_ID: PersonaId = "agency";
+
+const LEGACY_PERSONA_ALIASES: Record<string, PersonaId> = {
+  product_studio: "venture_studio",
+  builder: "agency",
+  operator: "agency",
+  automation_builder: "agency",
+};
 
 export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
-  builder: {
-    id: "builder",
-    label: "Builder",
-    roleLabel: "Build it",
-    description: "Ship the best first asset and iterate from there.",
-    primaryCta: "Start building",
-    snapshotAssetLabel: "Start building",
-    cardAssetLabel: "Start with",
-    dashboardSubtitle:
-      "Pick an opportunity — click through for the full build decision brief.",
-    detailIntro:
-      "Decision brief — everything you need to decide what to build and how to enter.",
-    signalHelperText:
-      "Higher scores mean stronger signal. Use these to sanity-check whether the opportunity is worth building now.",
-    sectionOrder: DEFAULT_SECTION_ORDER,
-    emphasizedSections: ["buildStrategy", "executionAngle"],
-    sectionTitles: DEFAULT_SECTION_TITLES,
-    assetPathLabels: ["Start here", "Next step", "Long-term play"],
-  },
   agency: {
     id: "agency",
     label: "Agency",
@@ -89,22 +63,23 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     detailIntro:
       "Offer brief — same evidence, framed for packaging, positioning, and client delivery.",
     signalHelperText:
-      "Higher scores mean stronger market pull. Use these to validate demand before pitching.",
+      "Higher scores mean stronger market pull and workflow friction. Use these to validate demand and asset fit before pitching.",
     sectionOrder: [
       "snapshot",
       "executionAngle",
       "buildStrategy",
-      "competitiveAngle",
       "signalBreakdown",
+      "competitiveAngle",
       "whyThisExists",
       "whyThisMatters",
     ],
-    emphasizedSections: ["executionAngle", "buildStrategy", "competitiveAngle"],
+    emphasizedSections: ["executionAngle", "buildStrategy", "signalBreakdown"],
     sectionTitles: {
       ...DEFAULT_SECTION_TITLES,
       buildStrategy: "What to Package",
       executionAngle: "Who to Sell",
       competitiveAngle: "How to Position",
+      signalBreakdown: "Friction & Signals",
     },
     assetPathLabels: ["Lead offer", "Upsell path", "Retainer play"],
   },
@@ -121,22 +96,28 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     detailIntro:
       "Advisory brief — same evidence, organized for diagnosis, recommendation, and client narrative.",
     signalHelperText:
-      "Higher scores mean stronger underlying pressure. Use these to support your recommendation.",
+      "Higher scores mean stronger underlying pressure. Use the full dossier to support your recommendation and buyer framing.",
     sectionOrder: [
       "snapshot",
       "whyThisExists",
+      "signalBreakdown",
       "competitiveAngle",
       "executionAngle",
-      "signalBreakdown",
       "buildStrategy",
       "whyThisMatters",
     ],
-    emphasizedSections: ["whyThisExists", "competitiveAngle", "executionAngle"],
+    emphasizedSections: [
+      "whyThisExists",
+      "signalBreakdown",
+      "competitiveAngle",
+      "executionAngle",
+    ],
     sectionTitles: {
       ...DEFAULT_SECTION_TITLES,
       whyThisExists: "What's Happening",
       competitiveAngle: "Market Context",
       executionAngle: "Client Entry Point",
+      signalBreakdown: "Evidence & Reasoning",
     },
     assetPathLabels: ["Assess first", "Advisory scope", "Implementation handoff"],
   },
@@ -153,7 +134,7 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     detailIntro:
       "Market brief — same evidence, organized for timing, wedge, and competitive reality.",
     signalHelperText:
-      "Higher scores mean stronger market signal. Use these alongside competitive and risk context.",
+      "Higher scores mean stronger market signal and wedge confidence. Use these alongside competitive and risk context.",
     sectionOrder: [
       "snapshot",
       "signalBreakdown",
@@ -172,102 +153,6 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     },
     assetPathLabels: ["Market entry", "Scale thesis", "Exit angle"],
   },
-  operator: {
-    id: "operator",
-    label: "Operator",
-    roleLabel: "Implement it",
-    description: "Focus on workflow deployment, rollout, and operational execution.",
-    primaryCta: "Implement this workflow",
-    snapshotAssetLabel: "Implement this workflow",
-    cardAssetLabel: "Deploy first",
-    dashboardSubtitle:
-      "Pick an opportunity — each dossier highlights workflow deployment and rollout paths.",
-    detailIntro:
-      "Execution brief — same evidence, organized for rollout, workflow, and time-to-value.",
-    signalHelperText:
-      "Higher scores mean stronger operational pull. Use these to prioritize implementation effort.",
-    sectionOrder: [
-      "snapshot",
-      "buildStrategy",
-      "executionAngle",
-      "signalBreakdown",
-      "whyThisExists",
-      "competitiveAngle",
-      "whyThisMatters",
-    ],
-    emphasizedSections: ["buildStrategy", "executionAngle"],
-    sectionTitles: {
-      ...DEFAULT_SECTION_TITLES,
-      buildStrategy: "What to Deploy",
-      executionAngle: "Rollout Plan",
-    },
-    assetPathLabels: ["Deploy first", "Standardize", "Scale ops"],
-  },
-  automation_builder: {
-    id: "automation_builder",
-    label: "Automation Builder",
-    roleLabel: "Automate it",
-    description: "Prioritize workflow automation, integrations, and repeatable systems.",
-    primaryCta: "Automate this process",
-    snapshotAssetLabel: "Automate this process",
-    cardAssetLabel: "Automate first",
-    dashboardSubtitle:
-      "Pick an opportunity — each dossier highlights automation and integration paths.",
-    detailIntro:
-      "Automation brief — same evidence, organized for workflow design and system leverage.",
-    signalHelperText:
-      "Higher scores mean stronger friction signal. Use these to prioritize automatable workflows.",
-    sectionOrder: [
-      "snapshot",
-      "buildStrategy",
-      "executionAngle",
-      "signalBreakdown",
-      "whyThisExists",
-      "competitiveAngle",
-      "whyThisMatters",
-    ],
-    emphasizedSections: ["buildStrategy", "executionAngle", "signalBreakdown"],
-    sectionTitles: {
-      ...DEFAULT_SECTION_TITLES,
-      buildStrategy: "What to Automate",
-      executionAngle: "Workflow Entry",
-    },
-    assetPathLabels: ["Automate first", "Integrate", "Orchestrate"],
-  },
-  product_studio: {
-    id: "product_studio",
-    label: "Product Studio",
-    roleLabel: "Prioritize it",
-    description:
-      "Legacy alias — use Venture Studio lens. Compare bets, operator fit, and repeated venture prioritization.",
-    primaryCta: "Prioritize this bet",
-    snapshotAssetLabel: "Prioritize this bet",
-    cardAssetLabel: "Venture bet",
-    dashboardSubtitle:
-      "Pick an opportunity — each dossier supports venture validation and operator matching.",
-    detailIntro:
-      "Venture brief — same evidence, organized for validation, operator fit, and repeated-bet prioritization.",
-    signalHelperText:
-      "Higher scores mean stronger underlying validation. Use these to rank bets against your studio portfolio.",
-    sectionOrder: [
-      "snapshot",
-      "whyThisExists",
-      "executionAngle",
-      "buildStrategy",
-      "competitiveAngle",
-      "signalBreakdown",
-      "whyThisMatters",
-    ],
-    emphasizedSections: ["whyThisExists", "executionAngle", "buildStrategy"],
-    sectionTitles: {
-      ...DEFAULT_SECTION_TITLES,
-      whyThisExists: "Validation Case",
-      executionAngle: "Operator / Venture Fit",
-      buildStrategy: "Asset Bet Paths",
-      competitiveAngle: "Right to Win",
-    },
-    assetPathLabels: ["Validate first", "Operator match", "Scale venture"],
-  },
   venture_studio: {
     id: "venture_studio",
     label: "Venture Studio",
@@ -278,35 +163,32 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     snapshotAssetLabel: "Prioritize this bet",
     cardAssetLabel: "Venture bet",
     dashboardSubtitle:
-      "Pick an opportunity — each dossier supports venture validation and operator matching.",
+      "Pick an opportunity — each dossier supports venture validation and repeated-bet prioritization.",
     detailIntro:
-      "Venture brief — same evidence, organized for validation, operator fit, and repeated-bet prioritization.",
+      "Venture brief — same evidence, organized for validation, operator fit, and bet comparison.",
     signalHelperText:
-      "Higher scores mean stronger underlying validation. Use these to rank bets against your studio portfolio.",
+      "Higher scores mean stronger underlying validation. Use these to compare and rank bets across your studio portfolio.",
     sectionOrder: [
       "snapshot",
       "whyThisExists",
+      "competitiveAngle",
       "executionAngle",
       "buildStrategy",
-      "competitiveAngle",
       "signalBreakdown",
       "whyThisMatters",
     ],
-    emphasizedSections: ["whyThisExists", "executionAngle", "buildStrategy"],
+    emphasizedSections: ["whyThisExists", "competitiveAngle", "buildStrategy"],
     sectionTitles: {
       ...DEFAULT_SECTION_TITLES,
       whyThisExists: "Validation Case",
       executionAngle: "Operator / Venture Fit",
       buildStrategy: "Asset Bet Paths",
-      competitiveAngle: "Right to Win",
+      competitiveAngle: "Bet Comparison",
     },
     assetPathLabels: ["Validate first", "Operator match", "Scale venture"],
   },
 };
 
-export const PERSONA_LIST = Object.values(PERSONA_LENSES);
-
-/** ICP execution lenses shown in product UI (excludes legacy builder/operator personas). */
 export const ICP_PERSONA_IDS: PersonaId[] = [
   "agency",
   "consultant",
@@ -314,7 +196,24 @@ export const ICP_PERSONA_IDS: PersonaId[] = [
   "venture_studio",
 ];
 
-export const ICP_PERSONA_LIST = ICP_PERSONA_IDS.map((id) => PERSONA_LENSES[id]);
+export const PERSONA_LIST = ICP_PERSONA_IDS.map((id) => PERSONA_LENSES[id]);
+
+/** @deprecated Use PERSONA_LIST */
+export const ICP_PERSONA_LIST = PERSONA_LIST;
+
+export function normalizePersonaId(
+  value: string | null | undefined
+): PersonaId {
+  if (!value) {
+    return DEFAULT_PERSONA_ID;
+  }
+
+  if (value in PERSONA_LENSES) {
+    return value as PersonaId;
+  }
+
+  return LEGACY_PERSONA_ALIASES[value] ?? DEFAULT_PERSONA_ID;
+}
 
 export function getPersonaLens(id: PersonaId): PersonaLens {
   return PERSONA_LENSES[id] ?? PERSONA_LENSES[DEFAULT_PERSONA_ID];

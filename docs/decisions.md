@@ -104,6 +104,8 @@ Every ADR must include all five fields:
 
 ### 2026-07-07 Positioning: build opportunities, not trend ideas
 
+> **Note:** The 2026-07-07 3-ICP model was superseded by the 2026-07-08 update adding Venture Studios as a distinct ICP.
+
 **Context:** DataTello could be misread as a generic trend or idea finder.
 **Decision:** Position the product as evidence-backed build-opportunity intelligence for agencies, consultants, and investors.
 **Alternatives:** Trend ideas, startup ideas, or software-only ideas — rejected because they are either too broad or too narrow.
