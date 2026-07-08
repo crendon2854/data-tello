@@ -2,71 +2,45 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/helpers";
-
-const faqs = [
-  {
-    q: "What makes DataTello different from trend tools?",
-    a: "Trend tools show attention spikes. DataTello validates pressure, demand, wedge, and friction — then recommends the best first asset to build, not just a category to chase.",
-  },
-  {
-    q: "Are these only SaaS ideas?",
-    a: "No. Opportunities may start as templates, automations, dashboards, internal tools, or service + tool hybrids. We recommend the fastest path to value for each market.",
-  },
-  {
-    q: "Who is this for?",
-    a: "Indie hackers, technical founders, agencies, consultants, and product studios who want evidence-backed build opportunities — not recycled startup lists.",
-  },
-  {
-    q: "How often are opportunities updated?",
-    a: "Signals are monitored continuously. New briefs and dossier updates roll out on a regular cadence as market conditions shift.",
-  },
-  {
-    q: "Can I download dossiers as PDFs?",
-    a: "Yes. Full opportunity dossiers can be exported as PDFs for sharing, client work, or internal review.",
-  },
-  {
-    q: "Do I need to be technical?",
-    a: "Not necessarily. Dossiers are written for builders and operators alike. Technical depth varies by opportunity and recommended asset path.",
-  },
-  {
-    q: "Can agencies use this for clients?",
-    a: "Absolutely. Many agencies use dossiers to productize offers, build client dashboards, and spot emerging markets before competitors do.",
-  },
-];
+import { faqs } from "./landing-data";
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-2">
+    <div className="mx-auto max-w-3xl space-y-3">
       {faqs.map((faq, i) => {
         const isOpen = openIndex === i;
         return (
           <div
             key={faq.q}
             className={cn(
-              "overflow-hidden rounded-xl border transition-all",
-              isOpen ? "border-accent-blue/30 bg-accent-blue/5" : "border-border-subtle bg-bg-elevated/40"
+              "overflow-hidden rounded-2xl border transition-all duration-300",
+              isOpen
+                ? "border-blue-200 bg-blue-50/40 shadow-sm"
+                : "border-slate-200 bg-white hover:border-slate-300"
             )}
           >
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : i)}
-              className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+              className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
             >
-              <span className="text-sm font-medium text-text-primary">{faq.q}</span>
+              <span className="text-sm font-semibold text-slate-900 sm:text-base">{faq.q}</span>
               <span
                 className={cn(
-                  "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-border-subtle text-text-muted transition-transform",
-                  isOpen && "rotate-45 border-accent-blue/30 text-accent-blue"
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border text-lg leading-none transition-all",
+                  isOpen
+                    ? "rotate-45 border-blue-200 bg-blue-100 text-blue-600"
+                    : "border-slate-200 bg-slate-50 text-slate-500"
                 )}
               >
                 +
               </span>
             </button>
             {isOpen && (
-              <div className="border-t border-border-subtle/50 px-5 pb-4 pt-3">
-                <p className="text-sm leading-relaxed text-text-secondary">{faq.a}</p>
+              <div className="border-t border-blue-100/80 px-5 pb-5 pt-3 sm:px-6">
+                <p className="text-sm leading-relaxed text-slate-600">{faq.a}</p>
               </div>
             )}
           </div>

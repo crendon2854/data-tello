@@ -1,822 +1,841 @@
 import Link from "next/link";
-import type { Opportunity } from "@/types/opportunity";
-import { PageContainer } from "@/components/layout/PageContainer";
-import { formatScore } from "@/lib/helpers";
-import { HeroMockup } from "./HeroMockup";
+import {
+  Check,
+  ChevronRight,
+  BookOpen,
+  Sparkles,
+  Radar,
+} from "lucide-react";
+import {
+  accentStyles,
+  buildPaths,
+  builtForCards,
+  comparisonCards,
+  credibilitySignals,
+  credibilityStats,
+  engineSteps,
+  focusedMarkets,
+  footerLinks,
+  monitoringUpdates,
+  platformFeatures,
+  pricingPlans,
+  sampleOpportunity,
+  signalSources,
+  valueProps,
+} from "./landing-data";
 import { FaqSection } from "./FaqSection";
+import { HeroDashboard } from "./HeroDashboard";
+import {
+  GlowOrb,
+  GridPattern,
+  LandingCard,
+  LandingContainer,
+  PrimaryButton,
+  ScoreBar,
+  SecondaryButton,
+  SectionHeading,
+  SectionLabel,
+  SectionSubheading,
+} from "./landing-ui";
 
-interface LandingPageProps {
-  sampleOpportunity: Opportunity | null;
-  opportunities: Opportunity[];
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="label-text mb-3">{children}</p>;
-}
-
-function SectionHeading({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+export function LandingPage() {
   return (
-    <h2
-      className={`mb-4 text-2xl font-bold tracking-tight text-text-primary sm:text-3xl ${className ?? ""}`}
-    >
-      {children}
-    </h2>
-  );
-}
-
-function ScoreBar({
-  label,
-  score,
-  color,
-}: {
-  label: string;
-  score: number;
-  color: string;
-}) {
-  const width = score <= 10 ? score * 10 : score;
-  return (
-    <div>
-      <div className="mb-1.5 flex items-center justify-between text-xs">
-        <span className="font-medium text-text-primary">{label}</span>
-        <span className="font-mono font-semibold text-text-secondary">
-          {score <= 10 ? `${formatScore(score)}/10` : formatScore(score)}
-        </span>
-      </div>
-      <div className="progress-bar">
-        <div
-          className={`h-full rounded-full bg-gradient-to-r ${color}`}
-          style={{ width: `${Math.min(width, 100)}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-const credibilityItems = [
-  "Built from public, market, and workflow signals",
-  "Tracks pressure, demand, wedge, and friction",
-  "Designed for boring but valuable markets",
-];
-
-const engineSteps = [
-  {
-    step: "01",
-    title: "Pressure Discovery",
-    description: "Where real-world pain is increasing",
-    icon: "◉",
-  },
-  {
-    step: "02",
-    title: "Demand Validation",
-    description: "Whether buyers are actively searching for solutions",
-    icon: "◎",
-  },
-  {
-    step: "03",
-    title: "Market Wedge Validation",
-    description: "Whether there is an underserved product opening",
-    icon: "◈",
-  },
-  {
-    step: "04",
-    title: "Workflow Friction Signals",
-    description: "Where people still struggle to execute manually or with bad tools",
-    icon: "◇",
-  },
-];
-
-const builtForCards = [
-  {
-    title: "Builders",
-    description:
-      "Find SaaS, internal tools, templates, and lightweight products to ship fast.",
-    note: "Indie hackers, technical founders, and vibe coders",
-    accent: "blue",
-  },
-  {
-    title: "Agencies",
-    description:
-      "Turn opportunities into repeatable client offers, dashboards, and productized services.",
-    accent: "orange",
-  },
-  {
-    title: "Consultants",
-    description:
-      "Use dossiers and source-backed insights to advise clients and spot emerging markets.",
-    accent: "green",
-  },
-  {
-    title: "Product Studios / Investors",
-    description:
-      "Track markets early, compare opportunities, and monitor underserved niches.",
-    accent: "blue",
-  },
-];
-
-const buildPaths = [
-  { title: "SaaS", description: "Full product when the wedge supports recurring value" },
-  { title: "Automation Workflow", description: "n8n, Zapier, or custom pipelines" },
-  { title: "Template / ZIP Product", description: "Spreadsheets, Notion, or downloadable kits" },
-  { title: "Dashboard / Internal Tool", description: "Ops visibility without full product scope" },
-  { title: "Service + Tool Hybrid", description: "Productized service backed by lightweight tooling" },
-];
-
-const comparisonCards = [
-  {
-    title: "Generic idea lists",
-    description: "Broad, recycled, and not tied to real market signals",
-    negative: true,
-  },
-  {
-    title: "Trend tools",
-    description: "Show attention, but not whether there's a real wedge",
-    negative: true,
-  },
-  {
-    title: "Competitor directories",
-    description: "Show who exists, but not where you can enter",
-    negative: true,
-  },
-  {
-    title: "DataTello",
-    description:
-      "Shows the problem, buyer, wedge, best first asset, and realistic entry path",
-    negative: false,
-  },
-];
-
-const platformFeatures = [
-  "Opportunity snapshots",
-  "Full opportunity dossiers",
-  "Asset strategy",
-  "Builder fit strategy",
-  "Competitive differentiator strategy",
-  "PDF dossier export",
-  "Watchlists and monitoring",
-  "Saved opportunities",
-];
-
-const monitoringTriggers = [
-  "Demand moves",
-  "New signals appear",
-  "Competitors shift",
-  "Friction increases",
-  "The market changes",
-];
-
-const pricingTiers = [
-  {
-    name: "Builder",
-    audience: "For solo builders and indie makers",
-    highlight: false,
-  },
-  {
-    name: "Consultant",
-    audience: "For advisors and specialists",
-    highlight: false,
-  },
-  {
-    name: "Agency / Automation",
-    audience: "For service businesses and workflow operators",
-    highlight: true,
-  },
-  {
-    name: "Product Studio",
-    audience: "For teams evaluating multiple bets",
-    highlight: false,
-  },
-];
-
-export function LandingPage({ sampleOpportunity, opportunities }: LandingPageProps) {
-  const sample = sampleOpportunity;
-
-  return (
-    <>
+    <div className="relative min-h-screen bg-[#f8fafc] text-slate-900">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-blue-area opacity-50" aria-hidden />
-        <div
-          className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-accent-blue/5 blur-3xl"
-          aria-hidden
-        />
-        <PageContainer className="relative py-16 sm:py-24 lg:py-28">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div className="text-center lg:text-left">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-bg-elevated/80 px-3 py-1 backdrop-blur-sm">
-                <span className="status-dot-live" />
-                <span className="font-mono text-xs text-text-muted">SIGNAL-DRIVEN</span>
+      <section className="relative overflow-hidden border-b border-slate-200/60 pb-20 pt-28 sm:pb-28 sm:pt-32">
+        <GridPattern />
+        <GlowOrb className="-left-20 top-20 h-72 w-72" color="blue" />
+        <GlowOrb className="-right-10 top-40 h-64 w-64" color="cyan" />
+
+        <LandingContainer>
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
+            <div className="animate-fade-up text-center lg:text-left">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5">
+                <Radar className="h-3.5 w-3.5 text-blue-600" />
+                <span className="text-xs font-semibold text-blue-700">
+                  Evidence-backed build intelligence
+                </span>
               </div>
-              <h1 className="mb-5 text-4xl font-bold leading-[1.1] tracking-tight text-text-primary sm:text-5xl lg:text-[3.25rem]">
+
+              <h1 className="text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.25rem]">
                 Discover evidence-backed build opportunities before everyone else does.
               </h1>
-              <p className="mx-auto mb-8 max-w-xl text-base leading-relaxed text-text-secondary lg:mx-0">
-                DataTello turns hidden market signals into clear opportunities to build SaaS,
+
+              <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg lg:mx-0">
+                DataTello turns real-world market signals into clear opportunities to build SaaS,
                 automations, templates, dashboards, and workflow tools.
               </p>
-              <div className="mb-10 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
-                <Link href="/dashboard" className="btn-primary px-8 py-3 text-sm">
-                  Get Access
-                </Link>
-                <Link
-                  href={sample ? `/opportunity/${sample.id}` : "#examples"}
-                  className="btn-secondary px-8 py-3 text-sm"
-                >
-                  View Sample Opportunity
-                </Link>
+
+              <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
+                <PrimaryButton href="/dashboard">Get Access</PrimaryButton>
+                <SecondaryButton href="#examples">View Sample Opportunity</SecondaryButton>
               </div>
-              <ul className="mx-auto max-w-lg space-y-2.5 text-left lg:mx-0">
+
+              <ul className="mx-auto mt-10 max-w-lg space-y-3 text-left lg:mx-0">
                 {[
-                  "Real-world signals, not recycled startup ideas",
+                  "Real-world signals, not recycled idea lists",
                   "Clear buyer, wedge, and best first asset",
                   "Built for builders, agencies, consultants, and product teams",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-green/10 text-xs text-accent-green">
-                      ✓
+                  <li key={item} className="flex items-start gap-3 text-sm text-slate-600">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100">
+                      <Check className="h-3 w-3 text-emerald-600" />
                     </span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <HeroMockup featured={sample} opportunities={opportunities} />
+
+            <div className="animate-fade-up animation-delay-200">
+              <HeroDashboard />
+            </div>
           </div>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* Credibility strip */}
-      <section className="border-b border-border bg-bg-secondary/50">
-        <PageContainer className="py-8">
-          <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 md:justify-start">
-              {credibilityItems.map((item) => (
-                <span key={item} className="flex items-center gap-2 text-sm text-text-secondary">
-                  <span className="h-1 w-1 rounded-full bg-accent-blue" />
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex gap-8 border-t border-border-subtle pt-6 md:border-t-0 md:pt-0">
-              {[
-                { label: "Signal lanes", value: "4" },
-                { label: "Score dimensions", value: "5" },
-                { label: "Asset paths", value: "5+" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="font-mono text-2xl font-bold text-accent-blue">{stat.value}</p>
-                  <p className="text-xs text-text-muted">{stat.label}</p>
-                </div>
-              ))}
-            </div>
+      <section className="border-b border-slate-200/60 bg-white py-12 sm:py-14">
+        <LandingContainer>
+          <div className="text-center">
+            <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">
+              Built for higher-signal markets
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+              DataTello focuses on markets where operational, regulatory, demand, and workflow
+              signals are easier to detect—and more useful to build from.
+            </p>
           </div>
-        </PageContainer>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {credibilitySignals.map(({ label, icon: Icon }) => (
+              <div
+                key={label}
+                className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/80 px-4 py-3.5"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white shadow-sm">
+                  <Icon className="h-4 w-4 text-blue-600" />
+                </div>
+                <span className="text-sm font-medium text-slate-700">{label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 gap-6 border-t border-slate-100 pt-10 sm:grid-cols-4">
+            {credibilityStats.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p className="font-mono text-2xl font-bold text-slate-900 sm:text-3xl">
+                  {stat.value}
+                </p>
+                <p className="mt-1 text-xs text-slate-500 sm:text-sm">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </LandingContainer>
       </section>
 
       {/* What DataTello gives you */}
-      <section className="border-b border-border py-20 sm:py-24">
-        <PageContainer>
+      <section className="py-20 sm:py-24">
+        <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Clarity first</SectionLabel>
             <SectionHeading>
-              Not trends. Not guesswork. Actual opportunities worth building for.
+              Not trends. Not guesswork. Real opportunities worth building for.
             </SectionHeading>
+            <SectionSubheading className="mx-auto">
+              DataTello helps you move from raw market signal to clear build direction—so
+              you&apos;re not guessing what to make next.
+            </SectionSubheading>
           </div>
+
           <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {[
-              {
-                title: "Spot the problem",
-                description: "We detect real pressure in the market.",
-                icon: "▲",
-              },
-              {
-                title: "Validate the opportunity",
-                description: "We check demand, competition, and workflow friction.",
-                icon: "◆",
-              },
-              {
-                title: "Know what to build first",
-                description: 'We recommend the best first asset, not just "build SaaS."',
-                icon: "●",
-              },
-            ].map((item) => (
-              <div key={item.title} className="glass-card group text-center transition-all hover:border-accent-blue/30">
-                <div className="ambient-glow-blue opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
-                <div className="relative">
-                  <div className="icon-box-blue mx-auto mb-4 h-12 w-12 text-lg">{item.icon}</div>
-                  <h3 className="mb-2 text-base font-semibold text-text-primary">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-text-secondary">{item.description}</p>
-                </div>
-              </div>
-            ))}
+            {valueProps.map(({ title, body, icon: Icon, accent }) => {
+              const styles = accentStyles[accent];
+              return (
+                <LandingCard key={title}>
+                  <div className={`mb-4 inline-flex rounded-xl p-3 ${styles.icon}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold text-slate-900">{title}</h3>
+                  <p className="text-sm leading-relaxed text-slate-600">{body}</p>
+                </LandingCard>
+              );
+            })}
           </div>
-          <p className="mt-10 text-center text-sm text-text-muted">
-            Every opportunity comes with a clear buyer, wedge, and recommended path to execution.
-          </p>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
-      {/* Example opportunity snapshot */}
-      <section id="examples" className="relative border-b border-border bg-bg-secondary/30 py-20 sm:py-24">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-orange-area opacity-20" aria-hidden />
-        <PageContainer className="relative">
-          <div className="mb-12 text-center">
-            <SectionLabel>See it in action</SectionLabel>
-            <SectionHeading>Example opportunity snapshot</SectionHeading>
-            <p className="mx-auto max-w-2xl text-sm text-text-secondary">
-              Every dossier includes scores, buyer context, and a recommended first move — not just a
-              headline idea.
-            </p>
+      {/* Example opportunity */}
+      <section id="examples" className="relative overflow-hidden bg-slate-900 py-20 text-white sm:py-24">
+        <GridPattern className="opacity-[0.08]" />
+        <GlowOrb className="right-0 top-0 h-96 w-96 opacity-40" color="blue" />
+
+        <LandingContainer className="relative">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionLabel>Product output</SectionLabel>
+            <SectionHeading className="text-white">See what an opportunity looks like</SectionHeading>
+            <SectionSubheading className="mx-auto text-slate-400">
+              Every opportunity is turned into a clear, actionable brief—not just an idea.
+            </SectionSubheading>
           </div>
 
-          {sample ? (
-            <div className="mx-auto max-w-4xl">
-              <div className="glass-card overflow-hidden p-0">
-                <div className="border-b border-border-subtle bg-bg-elevated/60 px-6 py-5 sm:px-8">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <p className="label-text mb-2">Opportunity</p>
-                      <h3 className="text-xl font-bold text-text-primary">{sample.title}</h3>
-                      {sample.short_summary && (
-                        <p className="mt-2 max-w-2xl text-sm text-text-secondary">
-                          {sample.short_summary}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-blue-600 shadow-glow-blue">
-                      <span className="font-mono text-2xl font-bold text-white">
-                        {formatScore(sample.overall_score)}
+          <div className="mx-auto mt-14 max-w-4xl">
+            <div className="overflow-hidden rounded-2xl border border-slate-700/60 bg-slate-800/50 shadow-2xl backdrop-blur-sm">
+              <div className="border-b border-slate-700/60 bg-slate-800/80 px-6 py-6 sm:px-8">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                      Opportunity snapshot
+                    </p>
+                    <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">
+                      {sampleOpportunity.title}
+                    </h3>
+                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
+                      {sampleOpportunity.summary}
+                    </p>
+                  </div>
+                  <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/30">
+                    <span className="font-mono text-2xl font-bold">{sampleOpportunity.score}</span>
+                    <span className="text-[9px] uppercase tracking-wider text-blue-100">/100</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-0 lg:grid-cols-2">
+                <div className="space-y-5 border-slate-700/60 p-6 sm:p-8 lg:border-r">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Buyer</p>
+                    <p className="mt-1 text-sm font-medium text-slate-200">{sampleOpportunity.buyer}</p>
+                  </div>
+                  <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-blue-300">
+                      Best first asset
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-white">
+                      {sampleOpportunity.bestFirstAsset}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
+                      Timing: {sampleOpportunity.timing}
+                    </span>
+                    {sampleOpportunity.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-slate-600 bg-slate-700/50 px-3 py-1 text-xs text-slate-300"
+                      >
+                        {tag}
                       </span>
-                    </div>
+                    ))}
+                  </div>
+                  <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+                    <p className="text-xs font-semibold text-amber-300">Why now</p>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-300">
+                      {sampleOpportunity.whyNow}
+                    </p>
                   </div>
                 </div>
 
-                <div className="grid gap-0 lg:grid-cols-2">
-                  <div className="space-y-5 border-border-subtle p-6 sm:p-8 lg:border-r">
-                    <div>
-                      <p className="label-text mb-1">Buyer</p>
-                      <p className="text-sm font-medium text-text-primary">
-                        {sample.target_buyer ?? "—"}
-                      </p>
-                    </div>
-                    <div className="rounded-lg border border-accent-blue/20 bg-accent-blue/5 p-4">
-                      <p className="label-text mb-1">Best First Asset</p>
-                      <p className="text-sm font-semibold text-text-primary">
-                        {sample.best_first_asset}
-                      </p>
-                      {sample.initial_wedge && (
-                        <p className="mt-2 text-xs text-text-secondary">
-                          Wedge: {sample.initial_wedge}
-                        </p>
-                      )}
-                    </div>
-                    {sample.strategic_importance && (
-                      <div>
-                        <p className="label-text mb-1">Why now</p>
-                        <p className="text-sm leading-relaxed text-text-secondary">
-                          {sample.strategic_importance}
-                        </p>
-                      </div>
-                    )}
-                    {sample.differentiation && (
-                      <div>
-                        <p className="label-text mb-1">Differentiation angle</p>
-                        <p className="text-sm leading-relaxed text-text-secondary">
-                          {sample.differentiation}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="space-y-4 p-6 sm:p-8">
-                    <p className="label-text">Signal breakdown</p>
+                <div className="space-y-4 p-6 sm:p-8">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Signal breakdown
+                  </p>
+                  {sampleOpportunity.signals.map((s) => (
                     <ScoreBar
-                      label="Pressure"
-                      score={sample.pressure_score ?? 0}
-                      color="from-accent-blue to-blue-400"
+                      key={s.label}
+                      label={s.label}
+                      score={s.score}
+                      colorClass={s.color}
                     />
-                    <ScoreBar
-                      label="Demand"
-                      score={sample.demand_score ?? 0}
-                      color="from-accent-orange to-orange-400"
-                    />
-                    <ScoreBar
-                      label="Wedge"
-                      score={sample.wedge_score ?? 0}
-                      color="from-accent-blue to-blue-400"
-                    />
-                    <ScoreBar
-                      label="Buildability"
-                      score={sample.buildability_score ?? 0}
-                      color="from-accent-green to-green-400"
-                    />
-                    <ScoreBar
-                      label="Asset Strategy"
-                      score={sample.asset_fit_score ?? 0}
-                      color="from-accent-blue to-blue-400"
-                    />
-                    {(sample.tags ?? []).length > 0 && (
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {(sample.tags ?? []).map((tag) => (
-                          <span key={tag} className="badge-blue">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="border-t border-border-subtle bg-bg-elevated/40 px-6 py-4 sm:px-8">
-                  <Link
-                    href={`/opportunity/${sample.id}`}
-                    className="text-sm font-medium text-accent-blue hover:underline"
-                  >
-                    View full opportunity dossier →
-                  </Link>
+                  ))}
                 </div>
               </div>
             </div>
-          ) : (
-            <p className="text-center text-sm text-text-muted">Sample opportunity coming soon.</p>
-          )}
-        </PageContainer>
+          </div>
+        </LandingContainer>
       </section>
 
       {/* How the engine works */}
-      <section id="how-it-works" className="border-b border-border py-20 sm:py-24">
-        <PageContainer>
+      <section id="how-it-works" className="py-20 sm:py-24">
+        <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>The engine</SectionLabel>
             <SectionHeading>How DataTello finds opportunities others miss</SectionHeading>
+            <SectionSubheading className="mx-auto">
+              We don&apos;t rely on a single signal. We combine multiple evidence layers before
+              surfacing a build opportunity.
+            </SectionSubheading>
           </div>
-          <div className="relative mt-14">
-            <div className="absolute left-0 right-0 top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-border-subtle to-transparent lg:block" aria-hidden />
+
+          <div className="relative mt-16">
+            <div
+              className="absolute left-[12.5%] right-[12.5%] top-12 hidden h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent lg:block"
+              aria-hidden
+            />
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {engineSteps.map((step, i) => (
-                <div
-                  key={step.title}
-                  className="glass-card relative text-center transition-all hover:border-accent-blue/30"
-                  style={{ animationDelay: `${i * 0.1}s` }}
-                >
-                  <span className="mb-3 block font-mono text-xs text-accent-blue">{step.step}</span>
-                  <div className="icon-box-blue mx-auto mb-3 h-10 w-10">{step.icon}</div>
-                  <h3 className="mb-2 text-sm font-semibold text-text-primary">{step.title}</h3>
-                  <p className="text-xs leading-relaxed text-text-secondary">{step.description}</p>
+              {engineSteps.map(({ step, title, caption, icon: Icon }) => (
+                <div key={title} className="relative text-center">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white shadow-sm">
+                    <Icon className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <span className="font-mono text-xs font-semibold text-blue-600">
+                    Step {step}
+                  </span>
+                  <h3 className="mt-2 text-sm font-semibold text-slate-900">{title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{caption}</p>
                 </div>
               ))}
             </div>
           </div>
-          <p className="mt-10 text-center text-sm text-text-muted">
-            The result is a build opportunity with a clear entry angle, not just another idea list.
+
+          <p className="mt-12 text-center text-sm text-slate-500">
+            The result is a build opportunity with a clear entry angle—not just another idea list.
           </p>
-        </PageContainer>
+        </LandingContainer>
+      </section>
+
+      {/* Signal sources */}
+      <section className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+        <LandingContainer>
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionLabel>Differentiation</SectionLabel>
+            <SectionHeading>Built on real-world signals—not AI guesswork</SectionHeading>
+            <SectionSubheading className="mx-auto">
+              DataTello doesn&apos;t generate ideas from generic internet noise. It detects
+              opportunities from structured signals across markets, demand patterns, competitive
+              gaps, and real workflow pain.
+            </SectionSubheading>
+          </div>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {signalSources.map(({ title, bullets, icon: Icon }) => (
+              <LandingCard key={title} className="flex flex-col">
+                <div className="mb-4 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mb-3 text-sm font-semibold text-slate-900">{title}</h3>
+                <ul className="space-y-2">
+                  {bullets.map((b) => (
+                    <li key={b} className="flex items-start gap-2 text-xs leading-relaxed text-slate-600">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-cyan-500" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </LandingCard>
+            ))}
+          </div>
+
+          <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-cyan-50/50 p-6 text-center sm:p-8">
+            <p className="text-base font-semibold text-slate-900">
+              Most tools show trends. DataTello shows where problems, demand, gaps, and execution
+              friction overlap.
+            </p>
+            <p className="mt-3 text-sm text-slate-600">
+              That&apos;s why the output is more actionable than a generic AI search or a noisy
+              trend feed.
+            </p>
+          </div>
+
+          {/* Noise vs signal mini visual */}
+          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-4">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 opacity-70">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Noise</p>
+              <div className="mt-3 flex flex-wrap gap-1">
+                {[0.4, 0.6, 0.35, 0.7, 0.45, 0.55, 0.5, 0.65, 0.38, 0.72, 0.42, 0.58].map(
+                  (opacity, i) => (
+                    <span
+                      key={i}
+                      className="h-1.5 w-1.5 rounded-full bg-slate-300"
+                      style={{ opacity }}
+                    />
+                  )
+                )}
+              </div>
+              <p className="mt-3 text-[11px] text-slate-500">Broad chatter, weak structure</p>
+            </div>
+            <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">Signal</p>
+              <div className="mt-3 flex items-center justify-center">
+                <div className="relative flex h-16 w-16 items-center justify-center">
+                  <span className="absolute h-16 w-16 animate-pulse rounded-full border border-blue-200" />
+                  <span className="absolute h-10 w-10 rounded-full border border-blue-300" />
+                  <span className="relative h-3 w-3 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50" />
+                </div>
+              </div>
+              <p className="mt-3 text-center text-[11px] text-blue-700">Structured, layered evidence</p>
+            </div>
+          </div>
+        </LandingContainer>
+      </section>
+
+      {/* Focused markets */}
+      <section className="py-20 sm:py-24">
+        <LandingContainer>
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionLabel>Market focus</SectionLabel>
+            <SectionHeading>Focused on markets where signal is clearer</SectionHeading>
+            <SectionSubheading className="mx-auto">
+              Some industries generate cleaner operational and workflow signals than noisy
+              trend-driven categories. That makes them better environments for finding real build
+              opportunities.
+            </SectionSubheading>
+          </div>
+
+          <div className="mt-12 flex flex-wrap justify-center gap-3">
+            {focusedMarkets.map(({ name, icon: Icon }) => (
+              <div
+                key={name}
+                className="flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-5 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
+              >
+                <Icon className="h-4 w-4 text-blue-600" />
+                <span className="text-sm font-medium text-slate-700">{name}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-slate-500">
+            These markets tend to produce clearer pressure, demand, and workflow signals than
+            fast-moving consumer trend categories.
+          </p>
+        </LandingContainer>
       </section>
 
       {/* Built for */}
-      <section id="built-for" className="border-b border-border bg-bg-secondary/30 py-20 sm:py-24">
-        <PageContainer>
-          <div className="mb-12 text-center">
+      <section id="built-for" className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+        <LandingContainer>
+          <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Audience</SectionLabel>
             <SectionHeading>Built for different types of builders</SectionHeading>
+            <SectionSubheading className="mx-auto">
+              The same opportunity can lead to different execution paths depending on who you are
+              and what you want to build.
+            </SectionSubheading>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {builtForCards.map((card) => (
-              <div
-                key={card.title}
-                className="glass-card group flex flex-col transition-all hover:border-accent-blue/30 hover:shadow-glow-blue"
-              >
-                <h3 className="mb-2 text-base font-semibold text-text-primary">{card.title}</h3>
-                <p className="flex-1 text-sm leading-relaxed text-text-secondary">
-                  {card.description}
-                </p>
-                {card.note && (
-                  <p className="mt-3 border-t border-border-subtle pt-3 text-xs text-text-muted">
-                    {card.note}
-                  </p>
-                )}
-              </div>
-            ))}
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {builtForCards.map(({ title, body, icon: Icon, accent }) => {
+              const styles = accentStyles[accent];
+              return (
+                <LandingCard key={title} className={`${styles.bg} ${styles.border}`}>
+                  <div className={`mb-4 inline-flex rounded-xl p-3 ${styles.icon}`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mb-2 font-semibold text-slate-900">{title}</h3>
+                  <p className="text-sm leading-relaxed text-slate-600">{body}</p>
+                </LandingCard>
+              );
+            })}
           </div>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* Build paths */}
-      <section className="border-b border-border py-20 sm:py-24">
-        <PageContainer>
+      <section className="py-20 sm:py-24">
+        <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Asset strategy</SectionLabel>
             <SectionHeading>Not every opportunity should start as software</SectionHeading>
-            <p className="mt-3 text-sm text-text-secondary">
-              DataTello recommends the best first asset based on the market, the workflow, and the
-              fastest path to value.
-            </p>
+            <SectionSubheading className="mx-auto">
+              DataTello recommends the best first asset based on the market, workflow, and fastest
+              path to value.
+            </SectionSubheading>
           </div>
+
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {buildPaths.map((path) => (
-              <div
-                key={path.title}
-                className="rounded-xl border border-border-subtle bg-bg-elevated/50 p-5 transition-all hover:border-accent-blue/30 hover:bg-bg-elevated"
-              >
-                <h3 className="mb-2 text-sm font-semibold text-text-primary">{path.title}</h3>
-                <p className="text-xs leading-relaxed text-text-muted">{path.description}</p>
-              </div>
+            {buildPaths.map(({ title, description, icon: Icon }) => (
+              <LandingCard key={title} className="text-center">
+                <div className="mx-auto mb-3 inline-flex rounded-xl bg-slate-100 p-3 text-slate-700">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mb-1.5 text-sm font-semibold text-slate-900">{title}</h3>
+                <p className="text-xs leading-relaxed text-slate-500">{description}</p>
+              </LandingCard>
             ))}
           </div>
-        </PageContainer>
+
+          <p className="mx-auto mt-10 max-w-3xl text-center text-sm leading-relaxed text-slate-600">
+            Some opportunities deserve a full product. Others are better as lightweight tools,
+            workflow automations, templates, or repeatable service-assisted assets. DataTello helps
+            you choose the smartest starting point.
+          </p>
+        </LandingContainer>
       </section>
 
-      {/* Why it's better */}
-      <section className="border-b border-border bg-bg-secondary/30 py-20 sm:py-24">
-        <PageContainer>
-          <div className="mb-12 text-center">
-            <SectionLabel>Competitive edge</SectionLabel>
-            <SectionHeading>
+      {/* Comparison */}
+      <section className="border-y border-slate-200/60 bg-slate-900 py-20 text-white sm:py-24">
+        <LandingContainer>
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionLabel>Why DataTello</SectionLabel>
+            <SectionHeading className="text-white">
               Why builders use DataTello instead of random idea lists
             </SectionHeading>
+            <SectionSubheading className="mx-auto text-slate-400">
+              Most idea tools stop at attention. DataTello goes further—showing whether there&apos;s
+              a real problem, a real buyer, a realistic wedge, and a better starting point.
+            </SectionSubheading>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {comparisonCards.map((card) => (
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {comparisonCards.map(({ title, body, highlight }) => (
               <div
-                key={card.title}
-                className={`rounded-xl border p-6 transition-all ${
-                  card.negative
-                    ? "border-border-subtle bg-bg-elevated/30 opacity-80"
-                    : "border-accent-blue/40 bg-accent-blue/5 shadow-glow-blue"
+                key={title}
+                className={`rounded-2xl border p-6 transition-all ${
+                  highlight
+                    ? "border-blue-400/50 bg-gradient-to-br from-blue-600/20 to-cyan-500/10 shadow-lg shadow-blue-500/10"
+                    : "border-slate-700/60 bg-slate-800/40 opacity-80"
                 }`}
               >
                 <h3
                   className={`mb-2 text-sm font-semibold ${
-                    card.negative ? "text-text-secondary" : "text-accent-blue"
+                    highlight ? "text-blue-300" : "text-slate-300"
                   }`}
                 >
-                  {card.title}
+                  {title}
                 </h3>
-                <p className="text-xs leading-relaxed text-text-secondary">{card.description}</p>
+                <p className="text-xs leading-relaxed text-slate-400">{body}</p>
               </div>
             ))}
           </div>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* Inside the platform */}
-      <section className="border-b border-border py-20 sm:py-24">
-        <PageContainer>
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+      <section className="py-20 sm:py-24">
+        <LandingContainer>
+          <div className="grid items-center gap-14 lg:grid-cols-2">
             <div>
               <SectionLabel>Platform</SectionLabel>
               <SectionHeading>Inside the platform</SectionHeading>
-              <p className="mb-8 text-sm text-text-secondary">
-                Everything you need to evaluate, compare, and act on build opportunities — from quick
-                snapshots to full dossiers.
-              </p>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <SectionSubheading>
+                From quick snapshots to full dossiers, DataTello helps you evaluate, monitor, and
+                act on better opportunities.
+              </SectionSubheading>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 {platformFeatures.map((feature) => (
-                  <div key={feature} className="flex items-center gap-2.5 text-sm text-text-secondary">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-accent-blue/10 text-[10px] text-accent-blue">
-                      ✓
+                  <div key={feature} className="flex items-center gap-2.5 text-sm text-slate-600">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-blue-100">
+                      <Check className="h-3 w-3 text-blue-600" />
                     </span>
                     {feature}
                   </div>
                 ))}
               </div>
-              <Link href="/dashboard" className="btn-primary mt-8 inline-flex px-6 py-2.5 text-sm">
+
+              <PrimaryButton href="/dashboard" className="mt-8">
                 Explore the platform
-              </Link>
+              </PrimaryButton>
             </div>
+
             <div className="grid grid-cols-2 gap-3">
-              {["Snapshots", "Dossiers", "Watchlists", "Exports"].map((label, i) => (
+              {[
+                { label: "Saved opportunities", bars: 3, accent: "blue" },
+                { label: "Watchlist", bars: 4, accent: "cyan" },
+                { label: "Dossier preview", bars: 5, accent: "green" },
+                { label: "Signal movement", bars: 2, accent: "amber", sparkline: true },
+              ].map((panel) => (
                 <div
-                  key={label}
-                  className={`rounded-xl border border-border-subtle bg-bg-elevated/60 p-6 ${
-                    i === 1 ? "col-span-2 sm:col-span-1" : ""
+                  key={panel.label}
+                  className={`rounded-xl border border-slate-200 bg-white p-4 shadow-sm ${
+                    panel.sparkline ? "col-span-2" : ""
                   }`}
                 >
-                  <div className="mb-3 h-2 w-12 rounded bg-accent-blue/30" />
-                  <div className="mb-2 h-1.5 w-full rounded bg-border-subtle" />
-                  <div className="mb-2 h-1.5 w-4/5 rounded bg-border-subtle" />
-                  <div className="h-1.5 w-3/5 rounded bg-border-subtle" />
-                  <p className="mt-4 font-mono text-[10px] uppercase tracking-wider text-text-muted">
-                    {label}
+                  {panel.sparkline ? (
+                    <div className="flex h-12 items-end gap-1">
+                      {[40, 55, 45, 70, 60, 85, 75].map((h, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 rounded-sm bg-gradient-to-t from-blue-500 to-cyan-400 opacity-80"
+                          style={{ height: `${h}%` }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <>
+                      {Array.from({ length: panel.bars }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="mb-2 h-1.5 rounded-full bg-slate-100"
+                          style={{ width: `${100 - i * 12}%` }}
+                        />
+                      ))}
+                    </>
+                  )}
+                  <p className="mt-3 font-mono text-[10px] uppercase tracking-wider text-slate-400">
+                    {panel.label}
                   </p>
                 </div>
               ))}
             </div>
           </div>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* Monitoring */}
-      <section className="border-b border-border bg-bg-secondary/30 py-20 sm:py-24">
-        <PageContainer>
+      <section className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+        <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Retention</SectionLabel>
             <SectionHeading>Don&apos;t just find opportunities. Track them.</SectionHeading>
-            <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-              Watch any opportunity and get updates when:
-            </p>
+            <SectionSubheading className="mx-auto">
+              Watch opportunities over time and get notified when the market changes.
+            </SectionSubheading>
           </div>
+
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            {monitoringTriggers.map((trigger) => (
-              <span
-                key={trigger}
-                className="rounded-full border border-border-subtle bg-bg-elevated px-4 py-2 text-sm text-text-secondary"
+            {monitoringUpdates.map((item) => (
+              <div
+                key={item}
+                className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-700"
               >
-                {trigger}
-              </span>
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-50" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                {item}
+              </div>
             ))}
           </div>
-        </PageContainer>
+
+          <p className="mx-auto mt-8 max-w-xl text-center text-sm text-slate-500">
+            This helps turn one-time discovery into ongoing opportunity intelligence.
+          </p>
+        </LandingContainer>
       </section>
 
-      {/* Sample dossier preview */}
-      <section id="sample-dossier" className="border-b border-border py-20 sm:py-24">
-        <PageContainer>
-          <div className="mb-12 text-center">
+      {/* Sample dossier */}
+      <section id="sample-dossier" className="py-20 sm:py-24">
+        <LandingContainer>
+          <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Premium deliverable</SectionLabel>
             <SectionHeading>See what a full Opportunity Dossier looks like</SectionHeading>
+            <SectionSubheading className="mx-auto">
+              Paid users get deeper insight, clearer strategy, and downloadable dossier-style
+              outputs built from structured opportunity data.
+            </SectionSubheading>
           </div>
-          <div className="mx-auto max-w-4xl">
-            <div className="relative overflow-hidden rounded-2xl border border-border-subtle bg-bg-secondary shadow-2xl">
-              <div className="border-b border-border-subtle bg-bg-elevated px-8 py-10 text-center">
-                <p className="label-text mb-2">Opportunity Dossier</p>
-                <h3 className="text-2xl font-bold text-text-primary">
-                  {sample?.title ?? "Sample Opportunity"}
-                </h3>
-                <p className="mt-2 text-sm text-text-muted">DataTello Intelligence Report</p>
+
+          <div className="relative mx-auto mt-14 max-w-4xl">
+            <div className="absolute -left-4 top-8 hidden h-[calc(100%-2rem)] w-full rotate-[-2deg] rounded-2xl border border-slate-200 bg-white shadow-lg sm:block" aria-hidden />
+            <div className="absolute -right-4 top-4 hidden h-[calc(100%-1rem)] w-full rotate-[1.5deg] rounded-2xl border border-slate-200 bg-white shadow-md sm:block" aria-hidden />
+
+            <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+              <div className="border-b border-slate-100 bg-gradient-to-r from-slate-50 to-blue-50/50 px-8 py-10 text-center">
+                <BookOpen className="mx-auto mb-3 h-8 w-8 text-blue-600" />
+                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  Opportunity Dossier
+                </p>
+                <h3 className="mt-2 text-2xl font-bold text-slate-900">{sampleOpportunity.title}</h3>
+                <p className="mt-1 text-sm text-slate-500">DataTello Intelligence Report</p>
               </div>
+
               <div className="grid gap-0 md:grid-cols-3">
-                <div className="border-border-subtle p-6 md:border-r">
-                  <p className="label-text mb-2">Score summary</p>
-                  <p className="font-mono text-4xl font-bold text-accent-blue">
-                    {sample ? formatScore(sample.overall_score) : "—"}
+                <div className="border-slate-100 p-6 md:border-r">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Executive summary
                   </p>
-                  <div className="mt-4 space-y-2">
-                    {["Pressure", "Demand", "Wedge"].map((label) => (
-                      <div key={label} className="h-1.5 rounded-full bg-bg-elevated">
-                        <div className="h-full w-3/4 rounded-full bg-accent-blue/60" />
-                      </div>
-                    ))}
-                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                    {sampleOpportunity.summary.slice(0, 120)}…
+                  </p>
+                  <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Score breakdown
+                  </p>
+                  <p className="mt-1 font-mono text-3xl font-bold text-blue-600">
+                    {sampleOpportunity.score}
+                    <span className="text-base text-slate-400">/100</span>
+                  </p>
                 </div>
-                <div className="border-border-subtle p-6 md:border-r">
-                  <p className="label-text mb-2">Buyer + wedge</p>
-                  <p className="text-sm text-text-secondary">
-                    {sample?.target_buyer ?? "Target buyer profile"}
+                <div className="border-slate-100 p-6 md:border-r">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Buyer + wedge
                   </p>
-                  <p className="mt-3 text-xs text-text-muted">
-                    {sample?.initial_wedge ?? "Initial market wedge"}
+                  <p className="mt-2 text-sm text-slate-700">{sampleOpportunity.buyer}</p>
+                  <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Best first asset
+                  </p>
+                  <p className="mt-1 text-sm font-medium text-slate-900">
+                    {sampleOpportunity.bestFirstAsset}
                   </p>
                 </div>
                 <div className="p-6">
-                  <p className="label-text mb-2">Best first asset</p>
-                  <p className="text-sm font-medium text-text-primary">
-                    {sample?.best_first_asset ?? "Recommended starting point"}
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Competitive angle
                   </p>
-                  <p className="label-text mb-2 mt-4">Competitive angle</p>
-                  <p className="text-xs text-text-secondary">
-                    {sample?.differentiation ?? "Differentiation strategy"}
+                  <p className="mt-2 text-sm text-slate-600">
+                    Enterprise tools are too complex. Entry via simplicity, audit-ready outputs,
+                    and fast time-to-value.
                   </p>
+                  <div className="mt-4 space-y-2">
+                    {sampleOpportunity.signals.slice(0, 3).map((s) => (
+                      <ScoreBar key={s.label} label={s.label} score={s.score} colorClass={s.color} />
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="border-t border-border-subtle bg-bg-elevated/50 px-8 py-6 text-center">
-                <Link
-                  href={sample ? `/opportunity/${sample.id}` : "/dashboard"}
-                  className="btn-primary px-8 py-3 text-sm"
-                >
+
+              <div className="border-t border-slate-100 bg-slate-50 px-8 py-6 text-center">
+                <PrimaryButton href="#examples">
                   View Sample Dossier
-                </Link>
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </PrimaryButton>
               </div>
             </div>
           </div>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="border-b border-border bg-bg-secondary/30 py-20 sm:py-24">
-        <PageContainer>
-          <div className="mb-12 text-center">
+      <section id="pricing" className="border-y border-slate-200/60 bg-white py-20 sm:py-24">
+        <LandingContainer>
+          <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Pricing</SectionLabel>
-            <SectionHeading>Choose the plan that fits how you build</SectionHeading>
-            <p className="mt-3 text-sm text-text-secondary">
-              Focused on outcomes — not feature checklists.
-            </p>
+            <SectionHeading>Choose the right plan for how you build</SectionHeading>
+            <SectionSubheading className="mx-auto">
+              From solo builders to teams, DataTello gives you the opportunity intelligence depth
+              that fits your workflow.
+            </SectionSubheading>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {pricingTiers.map((tier) => (
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {pricingPlans.map((plan) => (
               <div
-                key={tier.name}
-                className={`flex flex-col rounded-xl border p-6 transition-all ${
-                  tier.highlight
-                    ? "border-accent-blue/40 bg-accent-blue/5 shadow-glow-blue"
-                    : "border-border-subtle bg-bg-elevated/50 hover:border-accent-blue/20"
+                key={plan.name}
+                className={`relative flex flex-col rounded-2xl border p-6 transition-all hover:-translate-y-1 hover:shadow-lg ${
+                  plan.popular
+                    ? "border-blue-300 bg-gradient-to-b from-blue-50 to-white shadow-md shadow-blue-500/10"
+                    : "border-slate-200 bg-white shadow-sm"
                 }`}
               >
-                <h3 className="mb-1 text-base font-semibold text-text-primary">{tier.name}</h3>
-                <p className="mb-6 flex-1 text-xs leading-relaxed text-text-muted">
-                  {tier.audience}
-                </p>
-                <Link
+                {plan.popular && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                    Most Popular
+                  </span>
+                )}
+                <h3 className="text-lg font-semibold text-slate-900">{plan.name}</h3>
+                <p className="mt-1 text-xs text-slate-500">{plan.description}</p>
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span className="font-mono text-4xl font-bold text-slate-900">${plan.price}</span>
+                  <span className="text-sm text-slate-500">/mo</span>
+                </div>
+                <ul className="mt-6 flex-1 space-y-2.5">
+                  {plan.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-xs text-slate-600">
+                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <PrimaryButton
                   href="/dashboard"
-                  className={tier.highlight ? "btn-primary text-center text-sm" : "btn-secondary text-center text-sm"}
+                  className={`mt-6 w-full ${plan.popular ? "" : "!bg-slate-900 !from-slate-800 !to-slate-900 !shadow-slate-900/20"}`}
                 >
                   Get Access
-                </Link>
+                </PrimaryButton>
               </div>
             ))}
           </div>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* FAQ */}
-      <section className="border-b border-border py-20 sm:py-24">
-        <PageContainer>
+      <section id="faq" className="py-20 sm:py-24">
+        <LandingContainer>
           <div className="mb-12 text-center">
             <SectionLabel>FAQ</SectionLabel>
-            <SectionHeading>Common questions</SectionHeading>
+            <SectionHeading>Frequently asked questions</SectionHeading>
           </div>
           <FaqSection />
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* Final CTA */}
-      <section className="relative overflow-hidden py-20 sm:py-28">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-blue-area opacity-40" aria-hidden />
-        <PageContainer className="relative text-center">
-          <h2 className="mx-auto mb-4 max-w-2xl text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
+      <section className="relative overflow-hidden border-t border-slate-200/60 py-20 sm:py-28">
+        <GridPattern />
+        <GlowOrb className="left-1/2 top-0 h-80 w-80 -translate-x-1/2" color="blue" />
+        <LandingContainer className="relative text-center">
+          <Sparkles className="mx-auto mb-4 h-8 w-8 text-blue-600" />
+          <SectionHeading className="mx-auto max-w-2xl">
             Find your next build opportunity with real signal behind it
-          </h2>
-          <p className="mx-auto mb-10 max-w-xl text-sm leading-relaxed text-text-secondary">
-            Stop guessing what to build. Start with a market that already shows pressure, demand, and
-            a real wedge.
-          </p>
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/dashboard" className="btn-primary px-10 py-3.5 text-sm">
+          </SectionHeading>
+          <SectionSubheading className="mx-auto">
+            Stop guessing what to build. Start with a market showing pressure, demand, a real wedge,
+            and a smarter path to execution.
+          </SectionSubheading>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <PrimaryButton href="/dashboard" className="px-10 py-3.5">
               Get Access
-            </Link>
-            <Link
-              href={sample ? `/opportunity/${sample.id}` : "#examples"}
-              className="btn-secondary px-10 py-3.5 text-sm"
-            >
+            </PrimaryButton>
+            <SecondaryButton href="#examples" className="px-10 py-3.5">
               View Sample Opportunity
-            </Link>
+            </SecondaryButton>
           </div>
-        </PageContainer>
+        </LandingContainer>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-bg-secondary/50 py-12">
-        <PageContainer>
+      <footer className="border-t border-slate-200 bg-slate-900 py-14 text-slate-400">
+        <LandingContainer>
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <Link href="/" className="mb-4 flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-blue-600 text-sm font-bold text-white">
+              <Link href="/" className="mb-4 flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 text-sm font-bold text-white">
                   D
                 </span>
-                <span className="text-sm font-bold text-text-primary">DataTello</span>
+                <span className="text-base font-bold text-white">DataTello</span>
               </Link>
-              <p className="text-xs leading-relaxed text-text-muted">
-                Evidence-backed build opportunities from real market signals.
+              <p className="text-sm leading-relaxed">
+                Evidence-backed build opportunities for builders, agencies, and product teams.
               </p>
             </div>
             <div>
-              <p className="label-text mb-3">Product</p>
-              <ul className="space-y-2 text-sm text-text-secondary">
-                <li><Link href="#how-it-works" className="hover:text-text-primary">How It Works</Link></li>
-                <li><Link href="#examples" className="hover:text-text-primary">Examples</Link></li>
-                <li><Link href="#sample-dossier" className="hover:text-text-primary">Sample Dossier</Link></li>
-                <li><Link href="/dashboard" className="hover:text-text-primary">Dashboard</Link></li>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Product
+              </p>
+              <ul className="space-y-2 text-sm">
+                {footerLinks.product.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="transition-colors hover:text-white">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
-              <p className="label-text mb-3">Account</p>
-              <ul className="space-y-2 text-sm text-text-secondary">
-                <li><Link href="#pricing" className="hover:text-text-primary">Pricing</Link></li>
-                <li><Link href="/dashboard" className="hover:text-text-primary">Login</Link></li>
-                <li><Link href="/dashboard" className="hover:text-text-primary">Get Access</Link></li>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Account
+              </p>
+              <ul className="space-y-2 text-sm">
+                {footerLinks.account.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} className="transition-colors hover:text-white">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
-              <p className="label-text mb-3">Legal</p>
-              <ul className="space-y-2 text-sm text-text-secondary">
-                <li><span className="text-text-muted">Terms</span></li>
-                <li><span className="text-text-muted">Privacy</span></li>
-                <li><span className="text-text-muted">Contact</span></li>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Legal
+              </p>
+              <ul className="space-y-2 text-sm">
+                {footerLinks.legal.map((link) => (
+                  <li key={link.label}>
+                    <a href={link.href} className="transition-colors hover:text-white">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
-          <div className="mt-10 border-t border-border-subtle pt-8 text-center">
-            <p className="text-meta">
-              &copy; {new Date().getFullYear()} DataTello. All rights reserved.
-            </p>
+          <div className="mt-10 border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
+            &copy; {new Date().getFullYear()} DataTello. All rights reserved.
           </div>
-        </PageContainer>
+        </LandingContainer>
       </footer>
-    </>
+    </div>
   );
 }

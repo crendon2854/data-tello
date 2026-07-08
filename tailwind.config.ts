@@ -51,6 +51,8 @@ const config: Config = {
       },
       animation: {
         "slide-in": "slide-in 0.4s ease-out forwards",
+        "fade-up": "fade-up 0.7s ease-out forwards",
+        float: "float 6s ease-in-out infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         "pulse-glow-fast": "pulse-glow-fast 1.5s ease-in-out infinite",
         shimmer: "shimmer 3s ease-in-out infinite",
@@ -60,6 +62,14 @@ const config: Config = {
         "slide-in": {
           from: { opacity: "0", transform: "translateY(8px)" },
           to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(16px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
         },
         "pulse-glow": {
           "0%, 100%": { opacity: "1" },

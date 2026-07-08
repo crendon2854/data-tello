@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { Navbar } from "@/components/layout/Navbar";
+import { LandingNavbar } from "@/components/landing/LandingNavbar";
+import { MainShell } from "@/components/layout/MainShell";
 import "@/styles/globals.css";
 
 const inter = Inter({
@@ -33,8 +34,8 @@ export default function RootLayout({
       >
         <div className="pointer-events-none fixed inset-0 grid-bg" aria-hidden />
         <div className="relative z-10">
-          <Navbar />
-          <main className="pt-14">{children}</main>
+          <LandingNavbar />
+          <MainShell>{children}</MainShell>
         </div>
       </body>
     </html>

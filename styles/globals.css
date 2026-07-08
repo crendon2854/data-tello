@@ -213,6 +213,14 @@
     animation-delay: 0.4s;
   }
 
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animate-fade-up {
+    animation: fade-up 0.7s ease-out forwards;
+  }
+
   .data-table {
     @apply overflow-hidden rounded-xl border border-border;
   }
@@ -255,5 +263,16 @@
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
