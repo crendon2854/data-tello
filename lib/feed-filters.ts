@@ -10,6 +10,14 @@ import { getSignalPreferenceStrength } from "@/lib/scoring";
 
 const SIGNAL_SCORE_THRESHOLD = 50;
 
+export type ExploreMode = "focus" | "adjacent" | "all";
+
+export type FeedFilterOptions = {
+  exploreMode?: ExploreMode;
+  /** @deprecated Use exploreMode instead */
+  exploreOutsideFocus?: boolean;
+};
+
 const BUYER_KEYWORDS: Record<string, string[]> = {
   smb: ["smb", "small business", "local", "contractor", "startup"],
   mid_market: ["mid-market", "mid market", "regional", "growing"],
@@ -28,8 +36,16 @@ const INDUSTRY_KEYWORDS: Record<string, string[]> = {
   public_sector: ["government", "public sector", "municipal", "federal"],
 };
 
-export type FeedFilterOptions = {
-  exploreOutsideFocus?: boolean;
+/** Industries loosely related to each focus industry */
+const ADJACENT_INDUSTRIES: Record<string, string[]> = {
+  healthcare: ["compliance", "hr", "public_sector"],
+  financial_services: ["compliance", "developer_tools", "logistics"],
+  compliance: ["healthcare", "financial_services", "public_sector", "hr"],
+  hr: ["healthcare", "compliance", "construction"],
+  construction: ["logistics", "compliance", "public_sector"],
+  developer_tools: ["financial_services", "logistics"],
+  logistics: ["construction", "developer_tools", "financial_services"],
+  public_sector: ["healthcare", "compliance", "construction"],
 };
 
 export function getEffectivePreferences(
@@ -59,6 +75,16 @@ export function getEffectivePreferences(
   return preferences;
 }
 
+function resolveExploreMode(options: FeedFilterOptions): ExploreMode {
+  if (options.exploreMode) {
+    return options.exploreMode;
+  }
+  if (options.exploreOutsideFocus) {
+    return "all";
+  }
+  return "focus";
+}
+
 function buyerHaystack(opportunity: Opportunity): string {
   return [
     opportunity.primary_buyer,
@@ -85,12 +111,23 @@ function industryHaystack(opportunity: Opportunity): string {
     .toLowerCase();
 }
 
+function industryMatchesKeywords(
+  haystack: string,
+  industryIds: string[]
+): boolean {
+  return industryIds.some((industry) => {
+    const keywords =
+      INDUSTRY_KEYWORDS[industry] ?? [industry.replace(/_/g, " ")];
+    return keywords.some((keyword) => haystack.includes(keyword));
+  });
+}
+
 export function matchesIndustry(
   opportunity: Opportunity,
   industries: string[],
-  exploreOutsideFocus: boolean
+  exploreMode: ExploreMode
 ): boolean {
-  if (exploreOutsideFocus || industries.length === 0) {
+  if (exploreMode === "all" || industries.length === 0) {
     return true;
   }
 
@@ -99,11 +136,18 @@ export function matchesIndustry(
   }
 
   const haystack = industryHaystack(opportunity);
+  const matchesFocus = industryMatchesKeywords(haystack, industries);
 
-  return industries.some((industry) => {
-    const keywords = INDUSTRY_KEYWORDS[industry] ?? [industry.replace(/_/g, " ")];
-    return keywords.some((keyword) => haystack.includes(keyword));
-  });
+  if (exploreMode === "focus") {
+    return matchesFocus;
+  }
+
+  const adjacentIds = Array.from(
+    new Set(industries.flatMap((ind) => ADJACENT_INDUSTRIES[ind] ?? []))
+  ).filter((id) => !industries.includes(id));
+
+  const matchesAdjacent = industryMatchesKeywords(haystack, adjacentIds);
+  return matchesFocus || matchesAdjacent;
 }
 
 export function matchesBuyerType(
@@ -150,11 +194,11 @@ export function filterOpportunitiesByPreferences(
   options: FeedFilterOptions = {}
 ): OpportunityFeedItem[] {
   const effective = getEffectivePreferences(preferences);
-  const exploreOutsideFocus = options.exploreOutsideFocus ?? false;
+  const exploreMode = resolveExploreMode(options);
 
   return opportunities
     .filter((opportunity) =>
-      matchesIndustry(opportunity, effective.industries, exploreOutsideFocus)
+      matchesIndustry(opportunity, effective.industries, exploreMode)
     )
     .filter((opportunity) =>
       matchesBuyerType(opportunity, effective.buyer_types)
@@ -164,7 +208,11 @@ export function filterOpportunitiesByPreferences(
     )
     .map((opportunity) => ({
       ...opportunity,
-      ...computePersonaScore(opportunity, effective.role),
+      ...computePersonaScore(
+        opportunity,
+        effective.role,
+        effective.signal_preferences
+      ),
     }))
     .sort((a, b) => b.persona_score - a.persona_score);
 }

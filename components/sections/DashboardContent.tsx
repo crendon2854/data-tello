@@ -10,27 +10,34 @@ import { useFilters } from "@/hooks/useFilters";
 import { usePersonaLens } from "@/hooks/usePersonaLens";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import { getPersonaConfig } from "@/lib/persona-lens";
+import type { ExploreMode } from "@/lib/feed-filters";
 import type { Opportunity } from "@/types/opportunity";
 
 interface DashboardContentProps {
   opportunities: Opportunity[];
 }
 
+const EXPLORE_MODE_OPTIONS: Array<{ value: ExploreMode; label: string }> = [
+  { value: "focus", label: "My industries" },
+  { value: "adjacent", label: "Adjacent industries" },
+  { value: "all", label: "All industries" },
+];
+
 export function DashboardContent({ opportunities }: DashboardContentProps) {
   const { preferences, ready: prefsReady } = useUserPreferences();
-  const [exploreOutsideFocus, setExploreOutsideFocus] = useState(false);
+  const [exploreMode, setExploreMode] = useState<ExploreMode>("focus");
   const { filters, filtered, updateFilter, resetFilters } = useFilters(
     opportunities,
     {
       preferences: prefsReady ? preferences : null,
-      exploreOutsideFocus,
+      exploreMode,
     }
   );
   const { personaId, lens, setPersonaId, ready } = usePersonaLens();
 
   const personaConfig = getPersonaConfig(personaId);
 
-  const showExploreToggle =
+  const showExploreSelector =
     prefsReady &&
     preferences?.onboarding_completed &&
     preferences.industries.length > 0 &&
@@ -68,16 +75,28 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
           />
         </div>
 
-        {showExploreToggle && (
-          <label className="mb-4 flex cursor-pointer items-center gap-2 text-sm text-text-muted">
-            <input
-              type="checkbox"
-              checked={exploreOutsideFocus}
-              onChange={(event) => setExploreOutsideFocus(event.target.checked)}
-              className="h-4 w-4 accent-accent-blue"
-            />
-            Explore outside my focus
-          </label>
+        {showExploreSelector && (
+          <div className="mb-4">
+            <p className="mb-2 text-xs font-medium uppercase tracking-wide text-text-muted">
+              Explore mode
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {EXPLORE_MODE_OPTIONS.map(({ value, label }) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setExploreMode(value)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                    exploreMode === value
+                      ? "border-accent-blue bg-accent-blue/15 text-accent-blue"
+                      : "border-border-subtle text-text-muted hover:border-accent-blue/40 hover:text-text-primary"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
         )}
 
         <div className="mb-6">
@@ -92,10 +111,10 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
           {filtered.length === 0 ? (
             <p className="text-body text-text-muted">
               No opportunities match your filters.
-              {showExploreToggle && !exploreOutsideFocus && (
+              {showExploreSelector && exploreMode === "focus" && (
                 <>
                   {" "}
-                  Try enabling &ldquo;Explore outside my focus&rdquo;.
+                  Try expanding to adjacent or all industries.
                 </>
               )}
             </p>

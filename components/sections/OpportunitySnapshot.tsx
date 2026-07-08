@@ -1,5 +1,6 @@
 import type { Opportunity } from "@/types/opportunity";
 import { formatScore } from "@/lib/helpers";
+import type { SectionContentConfig } from "@/lib/dossier-content";
 
 interface OpportunitySnapshotProps {
   opportunity: Pick<
@@ -12,18 +13,35 @@ interface OpportunitySnapshotProps {
     | "asset_path_1"
     | "initial_wedge"
     | "time_to_value"
+    | "wedge_score"
   >;
   snapshotAssetLabel?: string;
   primaryCta?: string;
+  content?: SectionContentConfig;
+  personaScore?: number;
+  personaScoreDelta?: number;
 }
 
 export function OpportunitySnapshot({
   opportunity,
   snapshotAssetLabel = "Start building",
   primaryCta,
+  content,
+  personaScore,
+  personaScoreDelta,
 }: OpportunitySnapshotProps) {
+  const scoreLabel = content?.fieldLabels?.overall_score ?? "Overall Score";
+  const assetLabel = content?.fieldLabels?.best_first_asset ?? "Best First Asset";
+  const ttvLabel = content?.fieldLabels?.time_to_value ?? "Time to Value";
+  const complexityLabel = content?.fieldLabels?.complexity ?? "Complexity";
+  const displayScore = personaScore ?? opportunity.overall_score;
+
   return (
     <div className="space-y-5 text-text-primary">
+      {content?.intro && (
+        <p className="text-body text-text-muted">{content.intro}</p>
+      )}
+
       <div>
         <p className="label-text mb-2">Opportunity</p>
         <h1 className="page-title">{opportunity.title}</h1>
@@ -46,21 +64,25 @@ export function OpportunitySnapshot({
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
-          <p className="label-text mb-1">Overall Score</p>
-          <p className="kpi-value text-accent-blue">
-            {formatScore(opportunity.overall_score)}
-          </p>
+          <p className="label-text mb-1">{scoreLabel}</p>
+          <p className="kpi-value text-accent-blue">{formatScore(displayScore)}</p>
+          {personaScoreDelta != null && personaScoreDelta !== 0 && (
+            <p className="mt-1 text-xs text-text-muted">
+              Lens adjustment: {personaScoreDelta > 0 ? "+" : ""}
+              {personaScoreDelta}
+            </p>
+          )}
         </div>
 
         <div>
-          <p className="label-text mb-1">Complexity</p>
+          <p className="label-text mb-1">{complexityLabel}</p>
           <p className="font-mono text-lg font-semibold text-text-primary">
             {opportunity.complexity ?? "—"}
           </p>
         </div>
 
         <div>
-          <p className="label-text mb-1">Time to Value</p>
+          <p className="label-text mb-1">{ttvLabel}</p>
           <p className="font-mono text-lg font-semibold text-accent-green">
             {opportunity.time_to_value ?? "—"}
           </p>
@@ -69,7 +91,7 @@ export function OpportunitySnapshot({
 
       {opportunity.best_first_asset && (
         <div>
-          <p className="label-text mb-1">Best First Asset</p>
+          <p className="label-text mb-1">{assetLabel}</p>
           <p className="text-sm font-medium text-text-primary">
             {opportunity.best_first_asset}
           </p>

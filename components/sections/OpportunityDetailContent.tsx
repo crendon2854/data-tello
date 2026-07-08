@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo } from "react";
 import { Card } from "@/components/ui/Card";
 import { PersonaSelector } from "@/components/ui/PersonaSelector";
 import { OpportunitySnapshot } from "@/components/sections/OpportunitySnapshot";
@@ -10,11 +11,15 @@ import { BuildStrategy } from "@/components/sections/BuildStrategy";
 import { ExecutionAngle } from "@/components/sections/ExecutionAngle";
 import { CompetitiveAngle } from "@/components/sections/CompetitiveAngle";
 import { WhyThisMatters } from "@/components/sections/WhyThisMatters";
+import { GeneralMultiLens } from "@/components/sections/GeneralMultiLens";
 import { usePersonaLens } from "@/hooks/usePersonaLens";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import {
   isSectionEmphasized,
   type SectionId,
 } from "@/lib/persona-lens";
+import { getSectionContent } from "@/lib/dossier-content";
+import { computePersonaScore } from "@/lib/scoring";
 import type { Opportunity } from "@/types/opportunity";
 import { cn } from "@/lib/helpers";
 
@@ -26,10 +31,21 @@ export function OpportunityDetailContent({
   opportunity,
 }: OpportunityDetailContentProps) {
   const { personaId, lens, setPersonaId, ready } = usePersonaLens();
+  const { preferences, ready: prefsReady } = useUserPreferences();
+
+  const scoreResult = useMemo(() => {
+    if (!prefsReady) return null;
+    return computePersonaScore(
+      opportunity,
+      personaId,
+      preferences?.signal_preferences
+    );
+  }, [opportunity, personaId, preferences, prefsReady]);
 
   const renderSection = (sectionId: SectionId) => {
     const emphasized = isSectionEmphasized(lens, sectionId);
     const title = lens.sectionTitles[sectionId];
+    const content = getSectionContent(personaId, sectionId);
 
     switch (sectionId) {
       case "snapshot":
@@ -39,6 +55,9 @@ export function OpportunityDetailContent({
               opportunity={opportunity}
               snapshotAssetLabel={lens.snapshotAssetLabel}
               primaryCta={lens.primaryCta}
+              content={content}
+              personaScore={scoreResult?.persona_score}
+              personaScoreDelta={scoreResult?.persona_score_delta}
             />
           </Card>
         );
@@ -50,7 +69,7 @@ export function OpportunityDetailContent({
             glow="none"
             className={cn(emphasized && "ring-1 ring-accent-blue/20")}
           >
-            <WhyThisExists opportunity={opportunity} />
+            <WhyThisExists opportunity={opportunity} content={content} />
           </Card>
         );
       case "signalBreakdown":
@@ -64,6 +83,9 @@ export function OpportunityDetailContent({
             <SignalBreakdown
               opportunity={opportunity}
               helperText={lens.signalHelperText}
+              content={content}
+              personaId={personaId}
+              signalPreferences={preferences?.signal_preferences}
             />
           </Card>
         );
@@ -78,6 +100,7 @@ export function OpportunityDetailContent({
             <BuildStrategy
               opportunity={opportunity}
               assetPathLabels={lens.assetPathLabels}
+              content={content}
             />
           </Card>
         );
@@ -89,7 +112,7 @@ export function OpportunityDetailContent({
             glow="none"
             className={cn(emphasized && "ring-1 ring-accent-blue/20")}
           >
-            <ExecutionAngle opportunity={opportunity} />
+            <ExecutionAngle opportunity={opportunity} content={content} />
           </Card>
         );
       case "competitiveAngle":
@@ -100,13 +123,13 @@ export function OpportunityDetailContent({
             glow="none"
             className={cn(emphasized && "ring-1 ring-accent-blue/20")}
           >
-            <CompetitiveAngle opportunity={opportunity} />
+            <CompetitiveAngle opportunity={opportunity} content={content} />
           </Card>
         );
       case "whyThisMatters":
         return (
           <Card key={sectionId} title={title} glow="none">
-            <WhyThisMatters opportunity={opportunity} />
+            <WhyThisMatters opportunity={opportunity} content={content} />
           </Card>
         );
       default:
@@ -129,6 +152,12 @@ export function OpportunityDetailContent({
 
       {ready && (
         <p className="mb-5 text-body text-text-secondary">{lens.detailIntro}</p>
+      )}
+
+      {ready && personaId === "general" && scoreResult?.persona_angles && (
+        <Card title="Multi-perspective read" glow="blue" className="mb-5">
+          <GeneralMultiLens angles={scoreResult.persona_angles} />
+        </Card>
       )}
 
       <div className="flex flex-col gap-5">

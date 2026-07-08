@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { filterOpportunitiesByPreferences } from "@/lib/feed-filters";
+import { filterOpportunitiesByPreferences, type ExploreMode } from "@/lib/feed-filters";
 import { getDefaultFilters } from "@/lib/persona-lens";
 import type { Opportunity, OpportunityFeedItem } from "@/types/opportunity";
 import {
@@ -12,14 +12,14 @@ import type { UserPreferences } from "@/types/user-preferences";
 
 type UseFiltersOptions = {
   preferences?: UserPreferences | null;
-  exploreOutsideFocus?: boolean;
+  exploreMode?: ExploreMode;
 };
 
 export function useFilters(
   opportunities: Opportunity[],
   options: UseFiltersOptions = {}
 ) {
-  const { preferences = null, exploreOutsideFocus = false } = options;
+  const { preferences = null, exploreMode = "focus" } = options;
 
   const initialFilters = useMemo(() => {
     if (preferences?.onboarding_completed) {
@@ -32,9 +32,9 @@ export function useFilters(
 
   const preferenceFiltered = useMemo(() => {
     return filterOpportunitiesByPreferences(opportunities, preferences, {
-      exploreOutsideFocus,
+      exploreMode,
     });
-  }, [opportunities, preferences, exploreOutsideFocus]);
+  }, [opportunities, preferences, exploreMode]);
 
   const filtered = useMemo(() => {
     return preferenceFiltered.filter((opportunity: OpportunityFeedItem) => {
@@ -47,7 +47,7 @@ export function useFilters(
         return false;
       }
 
-      if (filters.minScore > 0 && opportunity.overall_score < filters.minScore) {
+      if (filters.minScore > 0 && opportunity.persona_score < filters.minScore) {
         return false;
       }
 

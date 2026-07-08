@@ -144,9 +144,9 @@ export const PERSONA_CONFIGS: Record<Role, PersonaConfig> = {
   general: {
     id: "general",
     label: "General",
-    description: "Neutral mode — balanced scoring and mixed feed.",
+    description: "Multi-lens view — see agency, consultant, investor, and venture studio angles.",
     scoringWeights: BALANCED_WEIGHTS,
-    emphasis: ["balanced view", "mixed signals"],
+    emphasis: ["multi-perspective", "all decision angles"],
   },
 };
 
@@ -291,15 +291,15 @@ export const PERSONA_LENSES: Record<Role, PersonaLens> = {
   general: {
     id: "general",
     label: "General",
-    roleLabel: "Explore",
-    description: "Balanced view — same evidence, no heavy emphasis.",
+    roleLabel: "Multi-lens",
+    description: "See all four decision angles — agency, consultant, investor, venture studio.",
     primaryCta: "View opportunity",
     snapshotAssetLabel: "View opportunity",
     cardAssetLabel: "Opportunity",
     dashboardSubtitle:
-      "Browse evidence-backed opportunities across industries and buyer types.",
+      "Browse evidence-backed opportunities — each dossier shows how every role would read it.",
     detailIntro:
-      "Opportunity brief — full evidence with balanced emphasis across all sections.",
+      "Multi-lens brief — same evidence, interpreted through agency, consultant, investor, and venture studio angles.",
     signalHelperText:
       "Scores reflect layered validation across pressure, demand, wedge, friction, and fit.",
     sectionOrder: [

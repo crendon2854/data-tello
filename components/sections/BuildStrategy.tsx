@@ -1,4 +1,5 @@
 import type { Opportunity } from "@/types/opportunity";
+import type { SectionContentConfig } from "@/lib/dossier-content";
 
 interface BuildStrategyProps {
   opportunity: Pick<
@@ -10,6 +11,7 @@ interface BuildStrategyProps {
     | "expansion_ladder"
   >;
   assetPathLabels?: [string, string, string];
+  content?: SectionContentConfig;
 }
 
 const pathKeys = ["asset_path_1", "asset_path_2", "asset_path_3"] as const;
@@ -17,13 +19,21 @@ const pathKeys = ["asset_path_1", "asset_path_2", "asset_path_3"] as const;
 export function BuildStrategy({
   opportunity,
   assetPathLabels = ["Start here", "Next step", "Long-term play"],
+  content,
 }: BuildStrategyProps) {
   const activePaths = pathKeys
     .map((key, index) => ({ label: assetPathLabels[index], key }))
     .filter(({ key }) => opportunity[key]);
 
+  const reasonLabel = content?.fieldLabels?.asset_reason ?? "Why this path";
+  const ladderLabel = content?.fieldLabels?.expansion_ladder ?? "Expansion ladder";
+
   return (
     <div className="space-y-5">
+      {content?.intro && (
+        <p className="text-body text-text-muted">{content.intro}</p>
+      )}
+
       {activePaths.length > 0 && (
         <ol className="space-y-3">
           {activePaths.map(({ label, key }, index) => (
@@ -46,14 +56,14 @@ export function BuildStrategy({
 
       {opportunity.asset_reason && (
         <div className="rounded-lg border border-border-subtle bg-bg-elevated/50 px-4 py-3">
-          <p className="label-text mb-1">Why this path</p>
+          <p className="label-text mb-1">{reasonLabel}</p>
           <p className="text-body text-text-secondary">{opportunity.asset_reason}</p>
         </div>
       )}
 
       {opportunity.expansion_ladder && (
         <div>
-          <p className="label-text mb-1">Expansion ladder</p>
+          <p className="label-text mb-1">{ladderLabel}</p>
           <p className="font-mono text-sm text-text-primary">
             {opportunity.expansion_ladder}
           </p>

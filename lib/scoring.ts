@@ -1,6 +1,12 @@
 import type { Opportunity, PersonaScoreResult } from "@/types/opportunity";
-import type { Role } from "@/types/user-preferences";
-import { getPersonaConfig, type SignalScores } from "@/lib/persona-lens";
+import type { Role, SignalPreferences } from "@/types/user-preferences";
+import { DEFAULT_SIGNAL_PREFERENCES } from "@/types/user-preferences";
+import {
+  getPersonaConfig,
+  ICP_PERSONA_IDS,
+  type SignalScores,
+} from "@/lib/persona-lens";
+import { getPersonaAngle } from "@/lib/persona-angles";
 
 export type { PersonaScoreResult };
 
@@ -39,12 +45,55 @@ export function getNormalizedSignalScores(
   };
 }
 
+const DISABLED_SIGNAL_WEIGHT_FACTOR = 0.35;
+
+const SIGNAL_DIMENSION_IMPACT: Record<
+  keyof SignalPreferences,
+  Partial<Record<keyof SignalScores, number>>
+> = {
+  pressure: { pain: 1 },
+  demand: { demand: 1 },
+  wedge: { market: 1 },
+  friction: { pain: 0.4, market: 0.3, buildability: 0.5 },
+  complaints: { pain: 0.5, demand: 0.3, assetFit: 0.4 },
+  digital_infrastructure: { assetFit: 1, buildability: 0.3 },
+};
+
+export function applySignalPreferenceWeights(
+  baseWeights: ReturnType<typeof getPersonaConfig>["scoringWeights"],
+  signalPreferences: SignalPreferences
+): ReturnType<typeof getPersonaConfig>["scoringWeights"] {
+  const adjusted = { ...baseWeights };
+
+  for (const [signal, enabled] of Object.entries(signalPreferences) as Array<
+    [keyof SignalPreferences, boolean]
+  >) {
+    if (enabled) continue;
+
+    const impacts = SIGNAL_DIMENSION_IMPACT[signal];
+    for (const [dimension, impact] of Object.entries(impacts) as Array<
+      [keyof SignalScores, number]
+    >) {
+      if (dimension in adjusted) {
+        const key = dimension as keyof typeof adjusted;
+        adjusted[key] *= 1 - impact * (1 - DISABLED_SIGNAL_WEIGHT_FACTOR);
+      }
+    }
+  }
+
+  return adjusted;
+}
+
 function applyEvidenceModifiers(
-  scores: ReturnType<typeof getNormalizedSignalScores>
+  scores: ReturnType<typeof getNormalizedSignalScores>,
+  signalPreferences: SignalPreferences
 ): SignalScores & { reasons: string[] } {
   const reasons: string[] = [];
-  const frictionBoost = scores.friction / 100;
-  const complaintBoost = scores.complaints / 100;
+  const frictionEnabled = signalPreferences.friction;
+  const complaintsEnabled = signalPreferences.complaints;
+
+  const frictionBoost = frictionEnabled ? scores.friction / 100 : 0;
+  const complaintBoost = complaintsEnabled ? scores.complaints / 100 : 0;
 
   const pain = Math.min(
     100,
@@ -64,13 +113,21 @@ function applyEvidenceModifiers(
     Math.round(scores.demand + complaintBoost * 5)
   );
 
-  if (scores.friction >= 50) {
-    reasons.push(`Friction evidence (+${scores.friction}) boosts pressure, wedge, buildability`);
+  if (frictionEnabled && scores.friction >= 50) {
+    reasons.push(
+      `Friction evidence (+${scores.friction}) boosts pressure, wedge, buildability`
+    );
   }
-  if (scores.complaints >= 50) {
+  if (!frictionEnabled) {
+    reasons.push("Friction signal deprioritized in your preferences");
+  }
+  if (complaintsEnabled && scores.complaints >= 50) {
     reasons.push(
       `Complaint/incident evidence (+${scores.complaints}) boosts pain, buyer specificity, urgency`
     );
+  }
+  if (!complaintsEnabled) {
+    reasons.push("Complaint signal deprioritized in your preferences");
   }
 
   return { pain, demand, market, buildability, assetFit, reasons };
@@ -87,6 +144,10 @@ function weightedPersonaScore(
     weights.buildability +
     weights.assetFit;
 
+  if (total === 0) {
+    return 0;
+  }
+
   return Math.round(
     (scores.pain * weights.pain +
       scores.demand * weights.demand +
@@ -97,24 +158,19 @@ function weightedPersonaScore(
   );
 }
 
-export function computePersonaScore(
+function computeICPPersonaScore(
   opportunity: Opportunity,
-  role: Role
-): PersonaScoreResult {
-  const truthScore = opportunity.overall_score;
-
-  if (role === "general") {
-    return {
-      persona_score: truthScore,
-      persona_score_delta: 0,
-      persona_score_reasons: ["Balanced lens — truth-layer overall score used for ranking"],
-    };
-  }
-
+  role: Role,
+  signalPreferences: SignalPreferences
+): { score: number; reasons: string[] } {
   const normalized = getNormalizedSignalScores(opportunity);
-  const modified = applyEvidenceModifiers(normalized);
+  const modified = applyEvidenceModifiers(normalized, signalPreferences);
   const config = getPersonaConfig(role);
-  const personaScore = weightedPersonaScore(modified, config.scoringWeights);
+  const weights = applySignalPreferenceWeights(
+    config.scoringWeights,
+    signalPreferences
+  );
+  const personaScore = weightedPersonaScore(modified, weights);
 
   const reasons = [
     `${config.label} lens weights pain, demand, market, buildability, and asset fit`,
@@ -122,16 +178,78 @@ export function computePersonaScore(
     ...config.emphasis.map((item) => `Emphasis: ${item}`),
   ];
 
+  return { score: personaScore, reasons };
+}
+
+function signalPreferenceReasons(
+  signalPreferences: SignalPreferences
+): string[] {
+  const disabled = (
+    Object.entries(signalPreferences) as Array<[keyof SignalPreferences, boolean]>
+  )
+    .filter(([, enabled]) => !enabled)
+    .map(([signal]) => signal.replace(/_/g, " "));
+
+  if (disabled.length === 0) {
+    return [];
+  }
+
+  return [`Deprioritized signals: ${disabled.join(", ")}`];
+}
+
+export function computePersonaScore(
+  opportunity: Opportunity,
+  role: Role,
+  signalPreferences: SignalPreferences = DEFAULT_SIGNAL_PREFERENCES
+): PersonaScoreResult {
+  const truthScore = opportunity.overall_score;
+
+  if (role === "general") {
+    const icpResults = ICP_PERSONA_IDS.map((icpRole) =>
+      computeICPPersonaScore(opportunity, icpRole, signalPreferences)
+    );
+    const blendedScore = Math.round(
+      icpResults.reduce((sum, result) => sum + result.score, 0) /
+        icpResults.length
+    );
+    const personaAngles = ICP_PERSONA_IDS.map((icpRole) => ({
+      role: icpRole,
+      label: getPersonaConfig(icpRole).label,
+      angle: getPersonaAngle(opportunity, icpRole),
+      score: computeICPPersonaScore(opportunity, icpRole, signalPreferences)
+        .score,
+    }));
+
+    return {
+      persona_score: blendedScore,
+      persona_score_delta: blendedScore - truthScore,
+      persona_score_reasons: [
+        "Multi-lens blend across agency, consultant, investor, and venture studio",
+        ...signalPreferenceReasons(signalPreferences),
+      ],
+      persona_angles: personaAngles,
+    };
+  }
+
+  const { score: personaScore, reasons } = computeICPPersonaScore(
+    opportunity,
+    role,
+    signalPreferences
+  );
+
   return {
     persona_score: personaScore,
     persona_score_delta: personaScore - truthScore,
-    persona_score_reasons: reasons,
+    persona_score_reasons: [
+      ...reasons,
+      ...signalPreferenceReasons(signalPreferences),
+    ],
   };
 }
 
 export function getSignalPreferenceStrength(
   opportunity: Opportunity,
-  signal: keyof import("@/types/user-preferences").SignalPreferences
+  signal: keyof SignalPreferences
 ): number {
   const scores = getNormalizedSignalScores(opportunity);
 

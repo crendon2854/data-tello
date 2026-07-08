@@ -2,10 +2,18 @@ import type { OpportunityRow } from "./database";
 
 export type Opportunity = OpportunityRow;
 
+export type PersonaAngleResult = {
+  role: string;
+  label: string;
+  angle: string;
+  score: number;
+};
+
 export type PersonaScoreResult = {
   persona_score: number;
   persona_score_delta: number;
   persona_score_reasons: string[];
+  persona_angles?: PersonaAngleResult[];
 };
 
 export type OpportunityFeedItem = Opportunity & PersonaScoreResult;
