@@ -64,7 +64,7 @@ function detectAssetHints(text: string): string[] {
     if (lower.includes(term)) hints.add(hint);
   }
 
-  return [...hints];
+  return Array.from(hints);
 }
 
 function summarizeProblem(opp: SamRawOpportunity, coreWorkflow: string): string {
@@ -256,8 +256,8 @@ export function aggregateProcurementCluster(
 
   const procurement_score = Math.min(10, Math.round(avgScore + clusterBonus));
 
-  const buyerTypes = [...new Set(signals.map((s) => s.buyer))];
-  const workflowTags = [...new Set(signals.map((s) => s.workflow_type))];
+  const buyerTypes = Array.from(new Set(signals.map((s) => s.buyer)));
+  const workflowTags = Array.from(new Set(signals.map((s) => s.workflow_type)));
 
   const topExamples = signals
     .sort((a, b) => b.procurement_score - a.procurement_score)

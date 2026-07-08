@@ -121,7 +121,9 @@ export function upgradeBuyerConfidence(
 
   const normalized = (current ?? "").toLowerCase();
 
-  if (buyers.length >= 2 || procurement.procurement_signal_count >= 2) {
+  const signalCount = procurement.procurement_signal_count ?? 0;
+
+  if (buyers.length >= 2 || signalCount >= 2) {
     if (normalized.includes("high")) return null;
     return "high";
   }

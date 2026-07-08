@@ -2,7 +2,26 @@ import type { OpportunityRow } from "@/types/database";
 
 const now = new Date().toISOString();
 
-type OpportunitySeed = Omit<OpportunityRow, "created_at" | "updated_at">;
+type OpportunitySeed = Omit<
+  OpportunityRow,
+  | "created_at"
+  | "updated_at"
+  | "procurement_score"
+  | "procurement_signal_count"
+  | "procurement_evidence"
+  | "procurement_buyer_types"
+  | "procurement_workflow_tags"
+> &
+  Partial<
+    Pick<
+      OpportunityRow,
+      | "procurement_score"
+      | "procurement_signal_count"
+      | "procurement_evidence"
+      | "procurement_buyer_types"
+      | "procurement_workflow_tags"
+    >
+  >;
 
 function opp(seed: OpportunitySeed): OpportunityRow {
   return {

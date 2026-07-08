@@ -186,7 +186,7 @@ function extractNaicsCodes(raw: SamApiOpportunity): string[] {
     }
   }
 
-  return [...new Set(codes)];
+  return Array.from(new Set(codes));
 }
 
 function extractEstimatedValue(raw: SamApiOpportunity): string | null {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ArrowUpRight,
   ClipboardCheck,
   Database,
   FileSearch,
@@ -20,7 +21,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/helpers";
-import { LogoMark } from "@/components/ui/LogoMark";
 
 interface SidebarProps {
   variant?: "dashboard" | "admin";
@@ -50,67 +50,92 @@ const adminItems: SidebarItem[] = [
   { href: "/admin/review", label: "Review", icon: ClipboardCheck },
 ];
 
+function isItemActive(pathname: string, href: string) {
+  return (
+    pathname === href ||
+    (href !== "/dashboard" && href !== "/admin" && pathname.startsWith(href))
+  );
+}
+
 export function Sidebar({ variant = "dashboard" }: SidebarProps) {
   const pathname = usePathname();
   const items = variant === "admin" ? adminItems : dashboardItems;
   const sectionLabel = variant === "admin" ? "Admin Console" : "Command Center";
+  const footerHref = variant === "admin" ? "/preferences" : "/";
+  const footerLabel = variant === "admin" ? "Settings" : "View site";
+  const FooterIcon = variant === "admin" ? Settings2 : Home;
 
   return (
     <aside className="sidebar-rail">
-      <div className="border-b border-emerald-500/10 px-4 py-4">
-        <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
-          <LogoMark />
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-text-primary">DataTello</p>
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-dim">
-              {sectionLabel}
-            </p>
-          </div>
-        </Link>
+      <div className="sidebar-spine" aria-hidden="true">
+        <span className="sidebar-spine-glow" />
       </div>
 
-      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
-        <p className="label-text mb-2 px-2">
-          {variant === "admin" ? "Workspace" : "Navigation"}
-        </p>
-        {items.map((item) => {
-          const isActive =
-            pathname === item.href ||
-            (item.href !== "/dashboard" &&
-              item.href !== "/admin" &&
-              pathname.startsWith(item.href));
+      <div className="sidebar-panel">
+        <div className="sidebar-ambient" aria-hidden="true" />
 
-          const Icon = item.icon;
-
-          return (
-            <Link
-              key={`${item.href}-${item.label}`}
-              href={item.href}
-              className={cn(isActive ? "sidebar-link-active" : "sidebar-link")}
-            >
-              <span className="sidebar-link-icon">
-                <Icon className="h-4 w-4" strokeWidth={1.75} />
+        <header className="sidebar-header">
+          <Link href="/" className="sidebar-brand group">
+            <span className="sidebar-monogram" aria-hidden="true">
+              DT
+            </span>
+            <span className="min-w-0">
+              <span className="block truncate text-sm font-semibold tracking-tight text-text-primary transition-colors group-hover:text-accent-brand">
+                DataTello
               </span>
-              <span className="truncate">{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
+              <span className="mt-0.5 flex items-center gap-1.5">
+                <span className="sidebar-live-dot" aria-hidden="true" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim">
+                  {sectionLabel}
+                </span>
+              </span>
+            </span>
+          </Link>
+        </header>
 
-      <div className="border-t border-emerald-500/10 p-3">
-        <Link
-          href={variant === "admin" ? "/preferences" : "/"}
-          className="sidebar-link text-xs"
-        >
-          <span className="sidebar-link-icon !h-7 !w-7">
-            {variant === "admin" ? (
-              <Settings2 className="h-3.5 w-3.5" strokeWidth={1.75} />
-            ) : (
-              <Home className="h-3.5 w-3.5" strokeWidth={1.75} />
-            )}
-          </span>
-          <span>{variant === "admin" ? "Settings" : "View site"}</span>
-        </Link>
+        <nav className="sidebar-nav" aria-label={sectionLabel}>
+          <p className="sidebar-nav-label">
+            {variant === "admin" ? "Workspace" : "Navigate"}
+          </p>
+          <ul className="flex flex-col gap-0.5">
+            {items.map((item, index) => {
+              const isActive = isItemActive(pathname, item.href);
+              const Icon = item.icon;
+              const indexLabel = String(index + 1).padStart(2, "0");
+
+              return (
+                <li key={`${item.href}-${item.label}`}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      isActive ? "sidebar-link-active" : "sidebar-link"
+                    )}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    <span className="sidebar-link-index">{indexLabel}</span>
+                    <Icon className="sidebar-link-icon-svg" strokeWidth={1.75} />
+                    <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                    <ArrowUpRight
+                      className="sidebar-link-arrow"
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <footer className="sidebar-footer">
+          <Link href={footerHref} className="sidebar-exit">
+            <span className="sidebar-exit-icon">
+              <FooterIcon className="h-3.5 w-3.5" strokeWidth={1.75} />
+            </span>
+            <span className="flex-1 truncate">{footerLabel}</span>
+            <ArrowUpRight className="h-3 w-3 opacity-40" strokeWidth={1.75} />
+          </Link>
+        </footer>
       </div>
     </aside>
   );

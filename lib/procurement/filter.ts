@@ -188,7 +188,7 @@ export function filterProcurementOpportunity(
     return { keep: false, reason: "vague_language", matched_keywords: matched };
   }
 
-  return { keep: true, matched_keywords: [...new Set(matched)] };
+  return { keep: true, matched_keywords: Array.from(new Set(matched)) };
 }
 
 /** Filter a batch; returns only kept opportunities. */
