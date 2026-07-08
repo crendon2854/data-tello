@@ -89,14 +89,25 @@ See [MED.md](./MED.md) for engineering workflow.
 
 - [ ] Connector adapters, repair logs, approval queue
 
-## Phase 13 — ICP Onboarding & Targeting
+## Phase 13 — ICP Onboarding & Targeting (partial ✅)
 
-- [ ] `user_preferences` table
-- [ ] `/onboarding` flow (3–5 steps)
-- [ ] `/preferences` page
-- [ ] Default dashboard filters from onboarding
-- [ ] Explore Mode toggle
-- [ ] ICP default lens in persona-lens (venture studio)
+- [x] `user_preferences` table
+- [x] `/onboarding` flow (3–5 steps)
+- [x] `/preferences` page
+- [x] Default dashboard filters from onboarding
+- [x] Explore Mode — focus / adjacent / all industries
+- [x] ICP default lens in persona-lens (venture studio, persona dossier content)
+- [x] Persona-aware dossier rendering + signal pref scoring + general multi-lens
+- [ ] Feed “why you’re seeing this” transparency
+
+## Phase 17 — Investor Watchlists + Alert Triggers
+
+- [ ] `watchlists`, `watchlist_matches` tables
+- [ ] `/watchlists` page, sidebar link, Save to Watchlist action
+- [ ] Match scoring + `match_reasons` display
+- [ ] Role-specific watchlist defaults (investor, venture_studio, agency)
+
+Spec: [current-task.md](./current-task.md)
 
 ## Phase 14 — Complaint & Incident Signals
 
@@ -131,3 +142,4 @@ Separate from Core.
 - Full AI autopilot publishing
 - Complex user personalization beyond onboarding targeting
 - Full CRM, affiliate marketplace, advanced BI, multi-admin permissions
+- **Builder Fit Strategy** — removed from MVP; future optional layer (Build Strategy / Asset Strategy remains active)

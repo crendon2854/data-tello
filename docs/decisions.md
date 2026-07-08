@@ -100,7 +100,7 @@ Every ADR must include all five fields:
 
 **Alternatives:** Continue builder/indie-hacker positioning — rejected. Add DAO/compliance/grants sub-modules — rejected.
 
-**Consequences:** Landing copy, docs, and dossier framing updated. Implementation of new signal workspaces phased in roadmap Phases 14–15. Builder Fit Strategy retained as internal admin only.
+**Consequences:** Landing copy, docs, and dossier framing updated. Implementation of new signal workspaces phased in roadmap Phases 14–15. Builder Fit Strategy removed from MVP (future optional layer); Build Strategy / Asset Strategy remains in seven-section dossier.
 
 ### 2026-07-07 Positioning: build opportunities, not trend ideas
 

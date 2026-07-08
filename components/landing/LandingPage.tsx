@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogoMark } from "@/components/ui/LogoMark";
 import {
   Check,
   ChevronRight,
@@ -769,9 +770,7 @@ export function LandingPage() {
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <Link href="/" className="mb-4 flex items-center gap-2.5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-glow text-sm font-bold text-white">
-                  D
-                </span>
+                <LogoMark />
                 <span className="text-base font-bold text-text-primary">DataTello</span>
               </Link>
               <p className="text-sm leading-relaxed">

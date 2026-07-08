@@ -62,6 +62,10 @@ const config: Config = {
         "glow-crimson": "0 0 0 1px rgba(239, 68, 68, 0.25)",
         "glow-green": "0 0 6px rgba(0, 197, 115, 0.4)",
       },
+      dropShadow: {
+        "logo-glow":
+          "0 0 8px rgba(62, 207, 142, 0.55), 0 0 18px rgba(62, 207, 142, 0.28)",
+      },
       animation: {
         "slide-in": "slide-in 0.4s ease-out forwards",
         "fade-up": "fade-up 0.7s ease-out forwards",

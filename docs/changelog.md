@@ -13,6 +13,14 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 ---
 
+## 2026-07-08 — Decision engine + planning update
+
+- Persona-aware dossier rendering shipped (`lib/dossier-content.ts`)
+- Signal preferences affect scoring weights, not just feed filter
+- General multi-lens output; explore mode: focus / adjacent / all
+- **Builder Fit Strategy** marked removed from MVP — future optional layer; Build Strategy / Asset Strategy remains active
+- Next feature locked: **Investor Watchlists + Alert Triggers** ([current-task.md](./current-task.md))
+
 ## 2026-07-08 — Layered validation architecture and ICP documentation rewrite
 
 - Locked layered validation: five core layers form Base Opportunity Confidence; digital infrastructure amplifies only

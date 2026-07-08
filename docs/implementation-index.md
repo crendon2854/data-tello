@@ -18,6 +18,9 @@ See [MED.md](./MED.md) for workflow. See [project-state.md](./project-state.md) 
 | Landing page (homepage — messaging deferred) | `app/page.tsx`, `components/landing/*` |
 | Dashboard | `app/dashboard/page.tsx` |
 | Opportunity detail | `app/opportunity/[id]/page.tsx` |
+| Onboarding | `app/onboarding/page.tsx`, `components/onboarding/OnboardingFlow.tsx` |
+| Preferences | `app/preferences/page.tsx` |
+| Watchlists (planned) | `/watchlists` — see [current-task.md](./current-task.md) |
 | Newsletter capture | `app/newsletter/page.tsx` |
 | Root layout | `app/layout.tsx`, `styles/globals.css`, `styles/landing.css` |
 | Admin layout | `app/admin/layout.tsx` |
@@ -33,8 +36,6 @@ See [MED.md](./MED.md) for workflow. See [project-state.md](./project-state.md) 
 | Create opportunity | `app/admin/opportunities/new/page.tsx` |
 | Edit opportunity | `app/admin/opportunities/[id]/page.tsx` |
 | Review queue | `app/admin/review/page.tsx` |
-
-| Onboarding & ICP targeting (planned) | `docs/onboarding.md` → `/onboarding`, `/preferences` (not built) |
 
 ---
 
@@ -73,6 +74,7 @@ See [MED.md](./MED.md) for workflow. See [project-state.md](./project-state.md) 
 | ExecutionAngle | 5. Execution Angle | `components/sections/ExecutionAngle.tsx` |
 | CompetitiveAngle | 6. Competitive Differentiator Strategy | `components/sections/CompetitiveAngle.tsx` |
 | WhyThisMatters | 7. Why This Matters | `components/sections/WhyThisMatters.tsx` |
+| GeneralMultiLens | — (general role only) | `components/sections/GeneralMultiLens.tsx` |
 | DashboardContent | — | `components/sections/DashboardContent.tsx` |
 | OpportunityDetailContent | — | `components/sections/OpportunityDetailContent.tsx` |
 
@@ -99,6 +101,12 @@ Full inventory: [components.md](./components.md)
 | Mock data | `lib/mock-data.ts` |
 | Helpers | `lib/helpers.ts` |
 | Persona execution lens | `lib/persona-lens.ts` |
+| Persona dossier content | `lib/dossier-content.ts` |
+| Persona angle copy | `lib/persona-angles.ts` |
+| Scoring + persona scores | `lib/scoring.ts` |
+| Feed filters + explore mode | `lib/feed-filters.ts` |
+| User preferences client | `lib/user-preferences-client.ts` |
+| User preference types | `types/user-preferences.ts` |
 | DB types | `types/database.ts` |
 | Opportunity types | `types/opportunity.ts` |
 | Schema | `supabase/schema.sql` |
@@ -114,6 +122,7 @@ Full inventory: [components.md](./components.md)
 | useOpportunities | `hooks/useOpportunities.ts` |
 | useFilters | `hooks/useFilters.ts` |
 | usePersonaLens | `hooks/usePersonaLens.ts` |
+| useUserPreferences | `hooks/useUserPreferences.ts` |
 
 ---
 

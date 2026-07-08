@@ -5,6 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/helpers";
+import { LogoMark } from "@/components/ui/LogoMark";
 import { PrimaryButton } from "./landing-ui";
 
 const landingLinks = [
@@ -30,10 +31,8 @@ export function LandingNavbar() {
     return (
       <header className="glass-nav">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-6">
-          <Link href="/" className="flex shrink-0 items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-glow text-sm font-bold text-white">
-              D
-            </span>
+          <Link href="/" className="flex shrink-0 items-center gap-2.5">
+            <LogoMark />
             <span className="text-sm font-bold tracking-wide text-text-primary">DataTello</span>
           </Link>
           <nav className="hidden items-center gap-1 md:flex">
@@ -65,10 +64,8 @@ export function LandingNavbar() {
   return (
     <header className="glass-nav">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-5 sm:px-6 lg:px-8">
-        <Link href="/" className="flex shrink-0 items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-glow text-sm font-bold text-white">
-            D
-          </span>
+        <Link href="/" className="flex shrink-0 items-center gap-2.5">
+          <LogoMark />
           <span className="text-sm font-bold tracking-wide text-text-primary">DataTello</span>
         </Link>
 

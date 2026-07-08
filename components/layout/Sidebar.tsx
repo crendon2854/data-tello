@@ -20,6 +20,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/helpers";
+import { LogoMark } from "@/components/ui/LogoMark";
 
 interface SidebarProps {
   variant?: "dashboard" | "admin";
@@ -57,10 +58,8 @@ export function Sidebar({ variant = "dashboard" }: SidebarProps) {
   return (
     <aside className="sidebar-rail">
       <div className="border-b border-emerald-500/10 px-4 py-4">
-        <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-90">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-glow text-sm font-bold text-[#020704] shadow-subtle-glow">
-            D
-          </span>
+        <Link href="/" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
+          <LogoMark />
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-text-primary">DataTello</p>
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-dim">

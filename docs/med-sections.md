@@ -274,7 +274,15 @@ Mirror the seven-section dossier structure:
 
 - Monetization paths (`monetization_paths`)
 - Opportunity risks (`opportunity_risks`)
-- Delivery fit by organization type (`builder_fit_strategy`) — internal admin only
+
+## Removed from MVP — Future Optional Layer
+
+**Builder Fit Strategy** (`builder_fit_strategy` / delivery fit by organization type and tool stack):
+
+- **Removed from MVP** — not active as its own feature in the app.
+- **Not rendered** in the seven-section paid dossier or dashboard brief.
+- **Build Strategy / Asset Strategy remains active** (section 4) — asset paths, reason, expansion ladder.
+- May return as an optional admin/research layer when org-type delivery fit is prioritized.
 
 ---
 

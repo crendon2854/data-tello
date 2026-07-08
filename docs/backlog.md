@@ -57,18 +57,37 @@ When an item ships: update [backlog.md](./backlog.md), [project-state.md](./proj
 
 ---
 
-## Phase 13 — ICP Onboarding & Targeting
+## Phase 13 — ICP Onboarding & Targeting (partial ✅)
 
-- [ ] `user_preferences` table + types + queries
-- [ ] `/onboarding` (user type, industries, buyer focus, signal prefs, confirm)
-- [ ] `/preferences` edit page
-- [ ] Default dashboard filters from onboarding
-- [ ] Explore Mode — opportunities outside selected industries
-- [ ] Rename legacy `product_studio` to `venture_studio` in stored persona preferences
-- [x] Venture studio persona in `lib/persona-lens.ts` (`venture_studio`; legacy `product_studio` alias)
-- [ ] ICP-specific default lens (agency, consultant, investor, venture studio)
+- [x] `user_preferences` table + types + queries
+- [x] `/onboarding` flow
+- [x] `/preferences` edit page
+- [x] Default dashboard filters from onboarding
+- [x] Explore Mode — focus / adjacent / all industries
+- [x] Venture studio persona in `lib/persona-lens.ts`
+- [x] Persona-aware dossier rendering (`lib/dossier-content.ts`)
+- [x] Signal preferences → scoring weights
+- [x] General multi-lens output
+- [ ] “Why you’re seeing this” feed transparency
 
 Spec: [onboarding.md](./onboarding.md)
+
+---
+
+## Phase 17 — Investor Watchlists + Alert Triggers (next)
+
+Highest-retention feature for micro-VCs, venture studios, holdcos.
+
+- [ ] `watchlists` + `watchlist_matches` tables
+- [ ] Types in `types/database.ts`
+- [ ] Query helpers + `computeWatchlistMatches()`
+- [ ] `/watchlists` page + sidebar link
+- [ ] Create Watchlist form
+- [ ] Matched opportunities with `match_reasons`
+- [ ] “Save to Watchlist” on opportunity detail
+- [ ] Role-specific defaults (investor, venture_studio, agency)
+
+Spec: [current-task.md](./current-task.md)
 
 ---
 
@@ -100,6 +119,7 @@ Spec: [onboarding.md](./onboarding.md)
 ## Out of Scope (V1)
 
 - DAO, grants, standalone onchain compliance modules
+- **Builder Fit Strategy** — removed from MVP; future optional layer (Build Strategy / Asset Strategy stays)
 - Builder/vibe-coder positioning (homepage exempt until updated)
 - Full workflow builder, AI autopilot publishing, full CRM
 - Advanced BI, multi-admin permissions

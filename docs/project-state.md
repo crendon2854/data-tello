@@ -1,6 +1,6 @@
 # Project State — Current Snapshot
 
-Documentation Version: 1.1  
+Documentation Version: 1.2  
 Last Updated: 2026-07-08  
 Status: Active  
 Owner: DataTello Engineering
@@ -13,22 +13,35 @@ Living snapshot of where DataTello is right now.
 
 ## Current Phase
 
-**Phase 6 — Supabase Integration** ✅ complete
+**Phase 13 (partial) — ICP Onboarding & Decision Engine** ✅ core shipped
 
-**Phase 5c — Layered Validation & ICP Expansion (docs)** ✅ complete
-
-**Next:** Phase 7 — Research OS Data Foundation (`opportunity_scores`, `review_queue`, `watchlist_items`)
+**Phase 17 — Investor Watchlists + Alert Triggers** ← next
 
 ---
 
-## Product Model (Documented)
+## Product Model (Documented + Partially Shipped)
 
 - Layered validation: Pressure → Demand → Wedge → Friction → Complaints → Base Opportunity → Digital Infrastructure amplification
-- ICPs: agencies, consultants, investors, venture studios / product studios
-- Onboarding flow documented; implementation planned Phase 13
+- ICPs: agencies, consultants, investors, venture studios
+- Onboarding + preferences: `/onboarding`, `/preferences` shipped
+- Persona decision engine: scoring + dossier interpretation (not just ranking)
 - Guardrails: four rules locked in docs
 
 Full spec: [architecture.md](./architecture.md), [onboarding.md](./onboarding.md)
+
+---
+
+## Dossier MVP Scope
+
+### Active (seven sections)
+
+Snapshot → Why This Exists → Signal Breakdown → **Build Strategy / Asset Strategy** → Execution Angle → Competitive Angle → Why This Matters
+
+`BuildStrategy` renders asset paths, asset reason, expansion ladder only.
+
+### Removed from MVP
+
+**Builder Fit Strategy** — not active; future optional layer. No builder-fit / tool-stack logic in user-facing output. Schema reference (`builder_fit_strategy`) may remain in docs/database for future use.
 
 ---
 
@@ -38,10 +51,25 @@ Full spec: [architecture.md](./architecture.md), [onboarding.md](./onboarding.md
 |------|--------|
 | Mock mode | Active when Supabase env vars unset |
 | Live Supabase | MVP tables wired via `lib/queries.ts` |
-| Persona execution lens | Active (agency, consultant, investor; venture_studio lens in code as `product_studio` — rename/align pending) |
-| Onboarding targeting | Documented only — not yet implemented |
+| Persona execution lens | Active — agency, consultant, investor, venture_studio, general (multi-lens) |
+| Persona dossier interpretation | Active — `lib/dossier-content.ts`, section order/labels/emphasis |
+| Signal preference scoring | Active — weights + feed filter |
+| Onboarding targeting | Active — `/onboarding`, `/preferences`, feed filters |
+| Explore mode | Active — focus / adjacent / all |
 | Dev port | 3001 |
 | Build | Passing |
+
+---
+
+## Scoring Model (Shipped)
+
+| Layer | Field | Role |
+|-------|-------|------|
+| Truth | `overall_score` | Never mutated by persona or watchlists |
+| Persona | `persona_score` | Feed sort; persona-specific weights + signal prefs |
+| Modifiers | friction, complaints | Evidence boosts in `applyEvidenceModifiers()` |
+
+Feed filtering uses trusted `industry_tags` / `buyer_tags` — not competitor copy fields.
 
 ---
 
@@ -49,40 +77,28 @@ Full spec: [architecture.md](./architecture.md), [onboarding.md](./onboarding.md
 
 ### Built
 
-`/`, `/dashboard`, `/opportunity/[id]`, `/newsletter`, `/admin/*` (sources, signals, problem-zones, keywords, market-proof, friction, opportunities, review)
+`/`, `/dashboard`, `/opportunity/[id]`, `/onboarding`, `/preferences`, `/newsletter`, `/admin/*`
 
-### Planned
+### Planned (next)
 
-`/onboarding`, `/preferences`, `/admin/complaint-incidents`, `/admin/digital-infrastructure`, `/admin/dossiers`, `/admin/newsletter`, `/admin/system-health`
+`/watchlists`
+
+### Planned (later)
+
+`/admin/complaint-incidents`, `/admin/digital-infrastructure`, `/admin/dossiers`, `/admin/newsletter`, `/admin/system-health`
 
 Full spec: [routes.md](./routes.md)
 
 ---
 
-## MED Sections — Rendered vs Planned
-
-### Rendered (V1)
-
-Seven-section dossier with persona lens on dashboard and detail.
-
-### Documented, not fully rendered
-
-- Digital Infrastructure Evidence ratings in Signal Breakdown
-- `build_difficulty` in Asset Strategy
-- `digital_infrastructure_boost` in scoring
-- Full competitive differentiator fields
-
-Spec: [med-sections.md](./med-sections.md)
-
----
-
 ## Known Gaps
 
-- Onboarding and default feed filters not implemented
-- Complaint & Incident and Digital Infrastructure workspaces not built
+- Investor Watchlists + Alert Triggers not built
+- “Why you’re seeing this” transparency on feed cards (deferred)
+- Complaint & Incident and Digital Infrastructure admin workspaces not built
 - Newsletter backend not wired
-- Venture studio persona lens not in code
-- Homepage/landing messaging not updated (deferred)
+- Digital Infrastructure Evidence ratings not in Signal Breakdown UI
+- `build_difficulty`, full competitive differentiator field parity in admin
 - Production RLS not locked
 
 ---
