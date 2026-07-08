@@ -72,7 +72,53 @@ Expected stack:
 
 Hard rule: n8n is for marketing/growth automation only. It should not run core ingestion, clustering, scoring, or dashboard logic.
 
-## Signal Lanes
+---
+
+## Product Structure
+
+DataTello intelligence is organized in three layers:
+
+### 1. Core Engine
+
+The scoring and decision backbone. Unchanged.
+
+### 2. Complaint & Incident Signals (core expansion)
+
+**Where real users repeatedly experience failure.**
+
+- Detects repeated real-world failures across operational and regulated industries
+- Reveals operational pain before demand spikes
+- Surfaces incident patterns, complaint clusters, and failure recurrence
+- Used heavily in regulated and operational industries (healthcare, construction, environmental compliance, public sector)
+
+This layer is a major discovery input. It feeds problem zone clustering and human review. It does not bypass scoring.
+
+### 3. Emerging Digital Infrastructure Signals (secondary expansion)
+
+Analytical views of infrastructure shifts. **Four sub-modules only:**
+
+| Sub-module | Purpose |
+|------------|---------|
+| **Agent Commerce Signals** | Patterns in agent-mediated commerce and transaction flows |
+| **Stablecoin Workflow Signals** | Operational friction and adoption patterns in stablecoin-based workflows |
+| **Onchain Developer Tool Friction** | Repeated failure and workaround patterns in onchain development tooling |
+| **Tokenized Data / Pay-Per-Use Data Signals** | Emerging patterns in tokenized and metered data access |
+
+Do not add DAO signals, compliance signals, grants, or other sub-modules without an ADR.
+
+---
+
+## Signal Layer Architecture Rule
+
+Complaint & Incident Signals and Emerging Digital Infrastructure Signals are **visual and analytical only**. They show charts, patterns, and trends in the dashboard and dossier analytical panels.
+
+**Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
+
+Expansion layers inform analysts and reviewers. They do not autonomously promote candidates or override Core Engine scores.
+
+---
+
+## Core Engine Signal Lanes
 
 DataTello Core uses four lanes:
 
@@ -91,7 +137,6 @@ Examples:
 - Federal Register
 - Regulations.gov
 - USAspending
-- Grants.gov where relevant
 - CMS where healthcare is in scope
 
 ### Demand Validation
@@ -138,11 +183,15 @@ MVP sources:
 
 Friction is an internal modifier. It can boost pressure, wedge, and buildability when repeated workflow failure is visible.
 
+---
+
 ## Data Flow
 
 ```text
 Source Sync → Raw Signals → Normalize/Classify → Problem Zones → Keyword Enrichment → Market/Friction Proof → Candidate Opportunity → Guardrails → Human Review → Publish → PDF Dossier
 ```
+
+Complaint & Incident Signals and Emerging Digital Infrastructure Signals feed parallel analytical views. They merge into human review context but do not replace the Core Engine scoring path.
 
 ## Freshness Rules
 
@@ -251,3 +300,4 @@ Human approval is required for:
 4. Paid PDF Dossiers are generated from templates, not manually made one by one.
 5. AI can draft and assist, but human review controls publish decisions.
 6. System Health can repair mechanical connector issues, not business logic.
+7. Expansion signal layers are analytical — they do not determine final opportunities.

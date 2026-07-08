@@ -6,7 +6,7 @@ Command-center dark theme. Source of truth for colors, typography, and UI patter
 
 ## Theme Character
 
-- **Aesthetic**: Command center, high-velocity, precision-focused
+- **Aesthetic**: Command center, strategic intelligence, precision-focused
 - **Mood**: Serious, premium, data-dense but uncluttered
 - **Depth**: Glass layers, ambient glows, grid texture
 

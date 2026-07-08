@@ -50,6 +50,15 @@ See [MED.md](./MED.md) for the engineering workflow and Definition of Done.
 - [x] Add expanded database target schema
 - [x] Add expanded admin route map
 
+## Phase 5b — Strategic Repositioning ✅
+
+- [x] Reframe ICP: agencies, consultants, investors
+- [x] Document Complaint & Incident Signals as core expansion layer
+- [x] Document Emerging Digital Infrastructure Signals (four sub-modules)
+- [x] Add signal layer architecture rule (analytical only; scoring engine determines final opportunities)
+- [x] Reframe as premium intelligence / decision-support product
+- [x] Remove low-tier and builder-focused messaging from docs
+
 ## Phase 6 — Supabase Integration ✅
 
 - [x] Wire Source Registry to live Supabase (mock fallback preserved)
@@ -148,6 +157,25 @@ This is separate from DataTello Core.
 - [ ] Add reply classification
 - [ ] Add suppression/unsubscribe handling
 - [ ] Require human approval before outbound sending
+
+## Phase 14 — Complaint & Incident Signals
+
+- [ ] Build `complaint_incident_signals` table
+- [ ] Build `/admin/complaint-incidents` workspace
+- [ ] Add analytical panels to dossier SignalBreakdown
+- [ ] Wire incident clustering to problem zones
+- [ ] Document source connectors for regulated/operational industries
+
+## Phase 15 — Emerging Digital Infrastructure Signals
+
+- [ ] Build `emerging_digital_infrastructure_signals` table
+- [ ] Build `/admin/digital-infrastructure` workspace
+- [ ] Implement four sub-modules only:
+  - Agent Commerce Signals
+  - Stablecoin Workflow Signals
+  - Onchain Developer Tool Friction
+  - Tokenized Data / Pay-Per-Use Data Signals
+- [ ] Add analytical chart panels (visual only; no scoring override)
 
 ## Explicitly Out of Scope for V1
 

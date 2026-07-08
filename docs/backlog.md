@@ -103,9 +103,28 @@ Separate from DataTello Core.
 - [ ] Oracle VPS / cloud setup
 - [ ] n8n marketing automation suite
 - [ ] `growth_prospects`, `outreach_runs` tables
-- [ ] ICP finder, lead enrichment, outbound sequences
+- [ ] ICP finder (agencies, consultants, investors)
+- [ ] Lead enrichment, outbound sequences
 - [ ] Reply classification, suppression handling
 - [ ] Human approval before outbound sending
+
+---
+
+## Phase 14 — Complaint & Incident Signals
+
+- [ ] `complaint_incident_signals` table
+- [ ] `/admin/complaint-incidents` workspace
+- [ ] Analytical panels in dossier SignalBreakdown
+- [ ] Incident clustering linked to problem zones
+
+---
+
+## Phase 15 — Emerging Digital Infrastructure Signals
+
+- [ ] `emerging_digital_infrastructure_signals` table
+- [ ] `/admin/digital-infrastructure` workspace
+- [ ] Four sub-modules: Agent Commerce, Stablecoin Workflow, Onchain Developer Tool Friction, Tokenized Data / Pay-Per-Use Data
+- [ ] Analytical chart panels (visual only)
 
 ---
 

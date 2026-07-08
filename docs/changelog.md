@@ -13,6 +13,16 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 ---
 
+## 2026-07-08 — Strategic repositioning and signal layer expansion
+
+- Reframed ICP: agencies, consultants, investors
+- Updated all docs to evidence-backed build opportunities using structured signals, scoring, and guardrails
+- Added Complaint & Incident Signals as core expansion layer
+- Added Emerging Digital Infrastructure Signals (four sub-modules only)
+- Documented architecture rule: expansion layers are visual/analytical; scoring engine + guardrails + human review determine final opportunities
+- Removed builder/indie-hacker/low-tier pricing messaging from docs and landing copy
+- Reframed as premium intelligence / decision-support product
+
 ## 2026-07-07 — Phase 6 Supabase Integration and RLS cleanup
 
 - Verified all MVP tables wired in `lib/queries.ts` with Supabase + mock fallback

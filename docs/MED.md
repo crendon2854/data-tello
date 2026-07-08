@@ -1,7 +1,7 @@
 # MED — Master Engineering Document
 
-Documentation Version: 1.0  
-Last Updated: 2026-07-07  
+Documentation Version: 1.1  
+Last Updated: 2026-07-08  
 Status: Active  
 Owner: DataTello Engineering
 
@@ -42,7 +42,17 @@ docs/
 
 ## Project Overview
 
-DataTello is **evidence-backed build-opportunity intelligence**. It finds public, market, and workflow-friction signals, turns them into candidate build opportunities, and recommends the best first asset to create: software, template, tracker, dashboard, workflow pack, internal tool, or service + tool hybrid.
+DataTello delivers **evidence-backed build opportunities** using structured signals, scoring, and guardrails.
+
+It is a premium opportunity intelligence product for agencies, consultants, and investors. DataTello finds operational pain, market wedge, and source-backed evidence, turns them into scored build opportunities, and recommends the best first asset to create.
+
+Product structure:
+
+1. **Core Engine** — Pressure Discovery, Demand Validation, Market Wedge Validation, Workflow Friction Signals, scoring, guardrails, human review
+2. **Complaint & Incident Signals** — where real users repeatedly experience failure (core expansion)
+3. **Emerging Digital Infrastructure Signals** — four analytical sub-modules (secondary expansion)
+
+Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.
 
 For product positioning, principles, and constraints, see [vision.md](./vision.md).
 
@@ -54,8 +64,8 @@ For stable truths that rarely change, see [context.md](./context.md).
 
 ## Product Philosophy
 
-1. **Clarity over features** — every screen and dossier section should drive a decision.
-2. **Speed over perfection** — ship usable slices; refine after validation.
+1. **Clarity over features** — every screen and dossier section should drive a strategic decision.
+2. **Evidence over hype** — source-backed signals, operational pain, and market wedge beat attention metrics.
 3. **Section-driven, card-based UI** — one component per MED section; pages compose sections.
 4. **Human review controls publish** — AI assists; humans approve buyer, asset fit, and publish-worthiness.
 5. **Docs before code** — the documentation is the single source of truth; code follows the spec.

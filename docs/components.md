@@ -8,7 +8,7 @@ See [MED.md](./MED.md) for documentation governance. Section components follow [
 |-----------|---------|
 | `Card` | Section wrapper — rounded, padding, shadow, optional title |
 | `FilterBar` | Asset type, min score, tag filters |
-| `PersonaSelector` | Execution lens picker (7 personas) |
+| `PersonaSelector` | Execution lens picker (agency, consultant, investor) |
 
 ## Layout (`/components/layout`)
 

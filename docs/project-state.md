@@ -29,7 +29,7 @@ Phases 1–6 complete. See [roadmap.md](./roadmap.md).
 |------|--------|
 | Mock mode | Active when `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` are unset |
 | Live Supabase | All MVP wired tables read/write via `lib/queries.ts` with mock fallback |
-| Persona execution lens | Active on dashboard and opportunity detail (7 personas; presentation only) |
+| Persona execution lens | Active on dashboard and opportunity detail (agency, consultant, investor primary; presentation only) |
 | Dev port | 3001 |
 | Build | Passing (`npm run build`) |
 
@@ -118,7 +118,7 @@ Full live-table matrix: [database.md](./database.md) § Live Table Support
 
 ### Target tables (schema defined, not wired)
 
-Research OS tables in `supabase/schema.sql` including `opportunity_scores`, `review_queue`, etc.
+Research OS tables in `supabase/schema.sql` including `opportunity_scores`, `review_queue`, `complaint_incident_signals`, `emerging_digital_infrastructure_signals`, etc.
 
 Full schema: [database.md](./database.md)
 

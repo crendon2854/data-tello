@@ -1,6 +1,8 @@
 # DataTello
 
-Market opportunity intelligence — scored opportunities with build strategy, signal breakdown, and execution angles.
+Evidence-backed build opportunities using structured signals, scoring, and guardrails.
+
+Decision-support intelligence for agencies, consultants, and investors — scored opportunities with source-backed evidence, market wedge analysis, and asset strategy.
 
 ## Quick Start
 

@@ -70,10 +70,20 @@ Every ADR must include all five fields:
 **Decision:** Living markdown docs indexed from `docs/README.md`.
 **Alternatives:** Wiki or Notion — rejected for co-location with code.
 
+### 2026-07-08 Strategic repositioning and signal layer expansion
+
+**Context:** DataTello repositioned from builder-focused messaging to premium opportunity intelligence for agencies, consultants, and investors. Two expansion signal layers were added to the product architecture.
+
+**Decision:** Reframe all documentation and product messaging around evidence-backed build opportunities using structured signals, scoring, and guardrails. Primary ICP: agencies, consultants, investors. Add Complaint & Incident Signals as core expansion and Emerging Digital Infrastructure Signals as secondary expansion (four sub-modules only). Expansion layers are visual/analytical only — final opportunities determined by scoring engine, guardrails, and human review.
+
+**Alternatives:** Continue builder/indie-hacker positioning — rejected. Add DAO/compliance/grants sub-modules — rejected.
+
+**Consequences:** Landing copy, docs, and dossier framing updated. Implementation of new signal workspaces phased in roadmap Phases 14–15. Builder Fit Strategy retained as dossier section but reframed for organization/delivery fit.
+
 ### 2026-07-07 Positioning: build opportunities, not trend ideas
 
-**Context:** DataTello could be misread as a generic trend or SaaS idea finder.
-**Decision:** Position the product as evidence-backed build-opportunity intelligence.
+**Context:** DataTello could be misread as a generic trend or idea finder.
+**Decision:** Position the product as evidence-backed build-opportunity intelligence for agencies, consultants, and investors.
 **Alternatives:** Trend ideas, startup ideas, or software-only ideas — rejected because they are either too broad or too narrow.
 
 ### 2026-07-07 Output names: briefs and dossiers
@@ -132,14 +142,14 @@ Every ADR must include all five fields:
 
 ### 2026-07-07 Add Builder Fit Strategy
 
-**Context:** A vibe coder, template seller, no-code operator, automation builder, and technical founder should not all receive the same tool recommendation.
-**Decision:** Add Builder Fit Strategy by builder type and tool stack.
+**Context:** Agencies, advisory practices, and investment firms need different delivery recommendations for the same opportunity.
+**Decision:** Add Builder Fit Strategy by organization type and tool stack.
 **Alternatives:** One universal tech stack — rejected.
 
 ### 2026-07-07 Add Competitive Differentiator Strategy
 
 **Context:** Competitor count alone is weak and can be misread.
-**Decision:** Add a qualitative competitive strategy covering complaints, underserved segment, differentiation, avoid-first guidance, entry path, and small-builder right-to-win.
+**Decision:** Add a qualitative competitive strategy covering complaints, underserved segment, differentiation, avoid-first guidance, entry path, and small-operator right-to-win.
 **Alternatives:** Numeric competitor score — rejected for false precision.
 
 ### 2026-07-07 Add System Health / Connector Repair
@@ -158,12 +168,16 @@ Every ADR must include all five fields:
 
 Freeze for V1:
 
-- Product positioning as build-opportunity intelligence
+- Product positioning as evidence-backed opportunity intelligence for agencies, consultants, and investors
+- Core Engine signal lanes and scoring model
+- Complaint & Incident Signals (documented; implementation phased)
+- Emerging Digital Infrastructure Signals (four sub-modules only)
 - Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
 - Asset Strategy and Builder Fit Strategy
 - Human review before publishing
+- Expansion signal layers are analytical only
 
 Revisit after V1:
 

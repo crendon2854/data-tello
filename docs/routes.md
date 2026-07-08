@@ -24,6 +24,8 @@ See [MED.md](./MED.md) for documentation governance. **This file is the single s
 | `/admin/keywords` | Admin | Keyword Intelligence / DataForSEO enrichment |
 | `/admin/market-proof` | Admin | Market Wedge Validation workspace |
 | `/admin/friction` | Admin | Workflow Friction Signals workspace |
+| `/admin/complaint-incidents` | Admin | Complaint & Incident Signals workspace |
+| `/admin/digital-infrastructure` | Admin | Emerging Digital Infrastructure Signals workspace |
 | `/admin/opportunities` | Admin | Candidate and published opportunities list |
 | `/admin/opportunities/new` | Admin | Create opportunity manually |
 | `/admin/opportunities/[id]` | Admin | Edit full Opportunity Dossier form |
@@ -70,13 +72,12 @@ These may exist during transition:
 
 ### Next admin routes to add
 
-1. `/admin/keywords`
-4. `/admin/market-proof`
-5. `/admin/friction`
-6. `/admin/dossiers`
-7. `/admin/newsletter`
-8. `/admin/system-health`
-9. `/admin/settings`
+1. `/admin/complaint-incidents`
+2. `/admin/digital-infrastructure`
+3. `/admin/dossiers`
+4. `/admin/newsletter`
+5. `/admin/system-health`
+6. `/admin/settings`
 
 ## Route Rules
 

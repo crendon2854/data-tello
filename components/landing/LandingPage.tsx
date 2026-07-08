@@ -62,12 +62,12 @@ export function LandingPage() {
               </div>
 
               <h1 className="landing-h1 mt-6">
-                Discover evidence-backed build opportunities before everyone else does.
+                Evidence-backed build opportunities for agencies, consultants, and investors.
               </h1>
 
               <p className="landing-lead mx-auto mt-5 max-w-xl lg:mx-0">
-                DataTello turns real-world market signals into clear opportunities to build SaaS,
-                automations, templates, dashboards, and workflow tools.
+                DataTello delivers source-backed opportunity intelligence using structured signals,
+                scoring, and guardrails — operational pain, market wedge, and asset strategy in every dossier.
               </p>
 
               <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
@@ -138,11 +138,11 @@ export function LandingPage() {
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Clarity first</SectionLabel>
             <SectionHeading>
-              Not trends. Not guesswork. Real opportunities worth building for.
+              Not trends. Not guesswork. Evidence-backed opportunities worth acting on.
             </SectionHeading>
             <SectionSubheading className="mx-auto">
-              DataTello helps you move from raw market signal to clear build direction—so
-              you&apos;re not guessing what to make next.
+              DataTello helps you move from raw market signal to clear strategic direction — so
+              you can package offers, advise clients, or evaluate markets with confidence.
             </SectionSubheading>
           </div>
 
@@ -169,7 +169,7 @@ export function LandingPage() {
             <SectionLabel>Product output</SectionLabel>
             <SectionHeading>See what an opportunity looks like</SectionHeading>
             <SectionSubheading className="mx-auto">
-              Every opportunity is turned into a clear, actionable brief—not just an idea.
+              Every opportunity becomes a source-backed dossier — not a generic idea list.
             </SectionSubheading>
           </div>
 
@@ -280,7 +280,7 @@ export function LandingPage() {
           </div>
 
           <p className="mt-12 text-center text-sm text-text-muted">
-            The result is a build opportunity with a clear entry angle—not just another idea list.
+            The result is a scored opportunity with a clear entry angle — determined by structured scoring, guardrails, and human review.
           </p>
         </LandingContainer>
       </section>
@@ -298,7 +298,7 @@ export function LandingPage() {
             </SectionSubheading>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {signalSources.map(({ title, bullets, icon: Icon }) => (
               <LandingCard key={title} className="flex flex-col">
                 <IconBox variant="blue">
@@ -402,14 +402,13 @@ export function LandingPage() {
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Audience</SectionLabel>
-            <SectionHeading>Built for different types of builders</SectionHeading>
+            <SectionHeading>Built for agencies, consultants, and investors</SectionHeading>
             <SectionSubheading className="mx-auto">
-              The same opportunity can lead to different execution paths depending on who you are
-              and what you want to build.
+              The same evidence-backed opportunity answers different strategic questions depending on your role.
             </SectionSubheading>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {builtForCards.map(({ title, body, icon: Icon, accent }) => (
               <LandingCard key={title}>
                 <IconBox variant={accentToIconVariant(accent)}>
@@ -461,11 +460,11 @@ export function LandingPage() {
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Why DataTello</SectionLabel>
             <SectionHeading>
-              Why builders use DataTello instead of random idea lists
+              Why decision-makers use DataTello instead of random idea lists
             </SectionHeading>
             <SectionSubheading className="mx-auto">
-              Most idea tools stop at attention. DataTello goes further—showing whether there&apos;s
-              a real problem, a real buyer, a realistic wedge, and a better starting point.
+              Most research tools stop at attention. DataTello goes further — operational pain, a
+              defensible buyer, a realistic market wedge, and a scored path to action.
             </SectionSubheading>
           </div>
 
@@ -681,10 +680,10 @@ export function LandingPage() {
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Pricing</SectionLabel>
-            <SectionHeading>Choose the right plan for how you build</SectionHeading>
+            <SectionHeading>Premium intelligence for strategic decisions</SectionHeading>
             <SectionSubheading className="mx-auto">
-              From solo builders to teams, DataTello gives you the opportunity intelligence depth
-              that fits your workflow.
+              Plans designed for advisors, service firms, and investment teams who need
+              source-backed opportunity depth.
             </SectionSubheading>
           </div>
 
@@ -747,11 +746,11 @@ export function LandingPage() {
         <LandingContainer className="relative text-center">
           <Sparkles className="mx-auto mb-4 h-8 w-8 text-accent-blue" />
           <SectionHeading className="mx-auto max-w-2xl">
-            Find your next build opportunity with real signal behind it
+            Opportunity intelligence with real signal behind it
           </SectionHeading>
           <SectionSubheading className="mx-auto">
-            Stop guessing what to build. Start with a market showing pressure, demand, a real wedge,
-            and a smarter path to execution.
+            Stop relying on idea lists. Start with operational pain, source-backed evidence, a
+            scored market wedge, and a defensible path to action.
           </SectionSubheading>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <PrimaryButton href="/dashboard" className="px-10 py-3.5">
@@ -776,7 +775,7 @@ export function LandingPage() {
                 <span className="text-base font-bold text-text-primary">DataTello</span>
               </Link>
               <p className="text-sm leading-relaxed">
-                Evidence-backed build opportunities for builders, agencies, and product teams.
+                Evidence-backed build opportunities for agencies, consultants, and investors.
               </p>
             </div>
             <div>

@@ -20,18 +20,20 @@ The human makes the final calls on buyer, buildability, asset fit, differentiati
 4. Keyword Intelligence
 5. Market Proof Workspace
 6. Workflow Friction Workspace
-7. Candidate Opportunity Scoring
-8. Guardrail Engine
-9. Human Review Queue
-10. Asset Strategy Admin
-11. Builder Fit Strategy Admin
-12. Competitive Differentiator Admin
-13. Watchlist Admin
-14. Paid Dashboard Publishing
-15. Dossier Builder
-16. Newsletter Engine
-17. System Health
-18. Settings / Rules
+7. Complaint & Incident Signals Workspace
+8. Emerging Digital Infrastructure Signals Workspace
+9. Candidate Opportunity Scoring
+10. Guardrail Engine
+11. Human Review Queue
+12. Asset Strategy Admin
+13. Builder Fit Strategy Admin
+14. Competitive Differentiator Admin
+15. Watchlist Admin
+16. Paid Dashboard Publishing
+17. Dossier Builder
+18. Newsletter Engine
+19. System Health
+20. Settings / Rules
 
 ## Opportunity Lifecycle
 
@@ -39,9 +41,11 @@ The human makes the final calls on buyer, buildability, asset fit, differentiati
 Collect → Normalize → Cluster → Enrich → Market/Friction Proof → Score → Guardrails → Human Review → Publish → Generate PDF Dossier
 ```
 
+Complaint & Incident Signals and Emerging Digital Infrastructure Signals feed analytical context in parallel. They do not bypass scoring or human review.
+
 ## Step 1 — Source Registry
 
-Admin manages every source used by Pressure Discovery, Demand Validation, Market Wedge Validation, and Workflow Friction Signals.
+Admin manages every source used by Core Engine lanes and expansion layers.
 
 Track:
 
@@ -148,11 +152,51 @@ Track:
 
 Friction is internal. It modifies pressure, wedge, and buildability. It is not the main public score.
 
-Reject friction records that are hobby/dev-only, vague complaints, consumer frustration, crypto/AI hype, or one-off feature requests.
+Reject friction records that are hobby/dev-only, vague complaints, consumer frustration, or one-off feature requests.
 
-## Step 7 — Candidate Opportunity Scoring
+## Step 7 — Complaint & Incident Signals Workspace
 
-Candidate opportunities combine the signal lanes.
+**Where real users repeatedly experience failure.**
+
+Purpose:
+
+- detect repeated real-world failures
+- reveal operational pain before demand spikes
+- support regulated and operational industries
+
+Admin tracks:
+
+- incident type and recurrence
+- complaint cluster patterns
+- failure frequency and geography
+- industry and buyer impact
+- source diversity
+- linkage to problem zones
+
+This is a core expansion layer. It feeds human review and analytical panels. It does not autonomously determine final opportunities.
+
+Reject records that are isolated incidents, unverified complaints, or lacking operational specificity.
+
+## Step 8 — Emerging Digital Infrastructure Signals Workspace
+
+Secondary expansion. **Four sub-modules only:**
+
+| Sub-module | Tracks |
+|------------|--------|
+| Agent Commerce Signals | Agent-mediated commerce patterns and friction |
+| Stablecoin Workflow Signals | Stablecoin workflow adoption and operational pain |
+| Onchain Developer Tool Friction | Repeated failure in onchain development tooling |
+| Tokenized Data / Pay-Per-Use Data Signals | Tokenized and metered data access patterns |
+
+Admin manages analytical records, trend charts, and pattern summaries per sub-module.
+
+**Rule:** Visual and analytical only. These signals show charts, patterns, and trends. They do not determine final opportunities.
+
+Do not add DAO signals, compliance signals, grants, or other sub-modules without an ADR.
+
+## Step 9 — Candidate Opportunity Scoring
+
+Candidate opportunities combine Core Engine signal lanes.
 
 Visible score buckets:
 
@@ -174,7 +218,9 @@ Verdicts:
 - `watchlist`
 - `reject`
 
-## Step 8 — Guardrail Engine
+Complaint & Incident and Emerging Digital Infrastructure data appear in analytical context. They do not override these scores.
+
+## Step 10 — Guardrail Engine
 
 Hard checks before review:
 
@@ -189,14 +235,14 @@ Hard checks before review:
 
 Do not weaken guardrails automatically.
 
-## Step 9 — Human Review Queue
+## Step 11 — Human Review Queue
 
 Reviewer must answer:
 
 1. What exactly is the painful workflow?
 2. Who is the actual buyer?
 3. Why now?
-4. What should be built first?
+4. What should be built or offered first?
 5. Why this asset format?
 6. Should software come now, later, or not at all?
 7. Where is the competitive entry path?
@@ -211,7 +257,7 @@ Statuses:
 - `rework`
 - `rejected`
 
-## Step 10 — Asset Strategy Admin
+## Step 12 — Asset Strategy Admin
 
 Admin defines:
 
@@ -223,25 +269,24 @@ Admin defines:
 - Build Difficulty
 - Recommended AI Build Stack
 - Why Not Full Software Yet
-- When to Upgrade to SaaS
+- When to Upgrade to Full Product
 - Maintenance Burden
 - Support Burden
 
-## Step 11 — Builder Fit Strategy Admin
+## Step 13 — Builder Fit Strategy Admin
 
-Admin maps the opportunity to builder types:
+Admin maps the opportunity to organization types:
 
-- vibe coder
-- no-code operator
-- automation builder
-- template seller
-- technical founder
-- agency/productizer
-- product studio / advanced SaaS builder
+- agency / service firm
+- advisory practice
+- investment firm
+- operations leader
+- product organization
+- implementation partner
 
-Output should recommend the best fit, not the most powerful tool.
+Output should recommend the best delivery path for the target ICP, not the most complex tooling.
 
-## Step 12 — Competitive Differentiator Admin
+## Step 14 — Competitive Differentiator Admin
 
 Admin defines:
 
@@ -253,13 +298,13 @@ Admin defines:
 - differentiation angle
 - what not to compete on
 - competitive entry path
-- small builder right-to-win
+- small operator right-to-win
 
 This is qualitative, not a score.
 
-## Step 13 — Watchlist Admin
+## Step 15 — Watchlist Admin
 
-Use watchlist for promising but incomplete ideas.
+Use watchlist for promising but incomplete opportunities.
 
 Reasons:
 
@@ -273,7 +318,7 @@ Reasons:
 
 Track next review date and recheck trigger.
 
-## Step 14 — Dossier Builder
+## Step 16 — Dossier Builder
 
 The Dossier Builder creates full paid Opportunity Dossiers and PDF Dossiers from structured opportunity data.
 
@@ -291,7 +336,7 @@ It handles:
 
 It does not create newsletters or manage subscribers.
 
-## Step 15 — Newsletter Engine
+## Step 17 — Newsletter Engine
 
 Newsletter Engine is separate.
 
@@ -306,7 +351,7 @@ It handles:
 
 The Weekly Signal Brief is watered down and should not include the full paid dossier.
 
-## Step 16 — System Health
+## Step 18 — System Health
 
 Admin monitors:
 
@@ -359,5 +404,5 @@ Every candidate screen should answer five questions quickly:
 1. What is the painful workflow?
 2. Who is the buyer?
 3. Why now?
-4. What should be built first?
+4. What should be offered or built first?
 5. Should this be published?

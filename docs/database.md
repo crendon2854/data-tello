@@ -131,6 +131,56 @@ RLS: `MVP dev all workflow_friction_signals` (TEMPORARY dev-open; replace before
 
 Seed data: `supabase/seed.sql` (linked to problem zones by name).
 
+### Complaint & Incident Signals (target)
+
+Core expansion layer. Where real users repeatedly experience failure.
+
+Fields (target):
+
+- `id`
+- `problem_zone_id`
+- `incident_type`
+- `title`
+- `summary`
+- `source`
+- `source_url`
+- `recurrence_score`
+- `geography`
+- `industry`
+- `buyer_impact`
+- `source_diversity_score`
+- `accepted_for_scoring_context`
+- `notes`
+
+Visual and analytical in dashboard. Does not alone determine final opportunity scores.
+
+Not yet wired. Planned: `/admin/complaint-incidents`.
+
+### Emerging Digital Infrastructure Signals (target)
+
+Secondary expansion. Four sub-modules only:
+
+- `agent_commerce`
+- `stablecoin_workflow`
+- `onchain_dev_tool_friction`
+- `tokenized_data_pay_per_use`
+
+Fields (target):
+
+- `id`
+- `sub_module`
+- `title`
+- `summary`
+- `pattern_type`
+- `trend_direction`
+- `evidence_count`
+- `chart_data`
+- `notes`
+
+Visual and analytical only. Does not determine final opportunities.
+
+Not yet wired. Planned: `/admin/digital-infrastructure`.
+
 ## Live Table Support (Phase 6)
 
 All MVP tables below are wired in `lib/queries.ts` with Supabase + mock fallback via `getSupabase()` / `isSupabaseConfigured`.
@@ -698,6 +748,8 @@ Future query groups should be organized by module:
 - keyword sets
 - market proof
 - friction signals
+- complaint incident signals
+- emerging digital infrastructure signals
 - scoring
 - review queue
 - dossiers

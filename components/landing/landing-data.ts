@@ -15,12 +15,10 @@ import {
   HeartPulse,
   Layers,
   LayoutDashboard,
-  Lightbulb,
   LineChart,
   Radar,
   Search,
   Shield,
-  Sparkles,
   Target,
   TrendingUp,
   Users,
@@ -29,9 +27,9 @@ import {
 } from "lucide-react";
 
 export const heroBullets = [
-  "Real-world signals, not recycled idea lists",
-  "Clear buyer, wedge, and best first asset",
-  "Built for builders, agencies, consultants, and product teams",
+  "Source-backed signals, not recycled idea lists",
+  "Operational pain, market wedge, and evidence in every dossier",
+  "Built for agencies, consultants, and investors",
 ];
 
 export const credibilitySignals = [
@@ -44,26 +42,26 @@ export const credibilitySignals = [
 export const credibilityStats = [
   { value: "12,400+", label: "Signals reviewed" },
   { value: "480+", label: "Candidates analyzed" },
-  { value: "4", label: "Signal pipelines" },
-  { value: "Weekly", label: "New briefs" },
+  { value: "6", label: "Signal layers" },
+  { value: "Weekly", label: "Intelligence briefs" },
 ];
 
 export const valueProps = [
   {
-    title: "Spot the problem",
-    body: "We detect real-world pressure across markets where pain is forming—not just where attention is loud.",
+    title: "Surface operational pain",
+    body: "Detect real-world pressure and repeated failures across regulated and operational industries — before demand spikes.",
     icon: Radar,
     accent: "blue" as const,
   },
   {
     title: "Validate the opportunity",
-    body: "We check whether demand, competitive gaps, and workflow friction support a real product opportunity.",
+    body: "Structured scoring across demand, competitive gaps, and workflow friction — with guardrails and human review.",
     icon: Gauge,
     accent: "cyan" as const,
   },
   {
-    title: "Know what to build first",
-    body: "Every opportunity includes a buyer, wedge, and recommended best first asset—whether that's software, an automation, a template, a dashboard, or a workflow tool.",
+    title: "Know what to offer first",
+    body: "Every dossier includes buyer context, market wedge, and a recommended best first asset — software, service package, template, dashboard, or workflow tool.",
     icon: Layers,
     accent: "green" as const,
   },
@@ -117,13 +115,13 @@ export const engineSteps = [
   {
     step: 1,
     title: "Pressure Discovery",
-    caption: "Where real-world pain is increasing",
+    caption: "Where real-world operational pain is increasing",
     icon: Activity,
   },
   {
     step: 2,
     title: "Demand Validation",
-    caption: "Whether buyers are actively looking for solutions",
+    caption: "Whether buyers are actively seeking solutions",
     icon: Search,
   },
   {
@@ -135,8 +133,23 @@ export const engineSteps = [
   {
     step: 4,
     title: "Workflow Friction Signals",
-    caption: "Where people are still struggling to execute",
+    caption: "Where execution still breaks down",
     icon: Workflow,
+  },
+];
+
+export const expansionSignalLayers = [
+  {
+    step: 5,
+    title: "Complaint & Incident Signals",
+    caption: "Where real users repeatedly experience failure",
+    icon: Shield,
+  },
+  {
+    step: 6,
+    title: "Emerging Digital Infrastructure",
+    caption: "Infrastructure shift patterns and friction",
+    icon: LineChart,
   },
 ];
 
@@ -181,6 +194,26 @@ export const signalSources = [
     ],
     icon: ClipboardList,
   },
+  {
+    title: "Complaint & Incident Signals",
+    bullets: [
+      "Repeated real-world failures",
+      "Operational pain before demand spikes",
+      "Incident and complaint clusters",
+      "Regulated industry patterns",
+    ],
+    icon: Shield,
+  },
+  {
+    title: "Emerging Digital Infrastructure",
+    bullets: [
+      "Agent Commerce Signals",
+      "Stablecoin Workflow Signals",
+      "Onchain Developer Tool Friction",
+      "Tokenized Data / Pay-Per-Use Data",
+    ],
+    icon: Bot,
+  },
 ];
 
 export const focusedMarkets = [
@@ -193,35 +226,29 @@ export const focusedMarkets = [
 
 export const builtForCards = [
   {
-    title: "Builders",
-    body: "Find your next SaaS, internal tool, template, or workflow product. Great for indie hackers, technical founders, and vibe coders.",
-    icon: Lightbulb,
+    title: "Agencies",
+    body: "Identify new services and productized offers backed by source evidence. Package repeatable client engagements from scored opportunities.",
+    icon: Briefcase,
     accent: "blue" as const,
   },
   {
-    title: "Agencies",
-    body: "Turn opportunities into repeatable client offers, automations, dashboards, and productized services.",
-    icon: Briefcase,
+    title: "Consultants",
+    body: "Advise clients with source-backed opportunity dossiers. Spot underserved markets and operational pain earlier than generic research.",
+    icon: Users,
     accent: "cyan" as const,
   },
   {
-    title: "Consultants",
-    body: "Use source-backed opportunity dossiers to advise clients and spot underserved markets earlier.",
-    icon: Users,
+    title: "Investors",
+    body: "Evaluate where new markets and opportunities are forming. Use structured scoring, guardrails, and evidence stacks for diligence.",
+    icon: TrendingUp,
     accent: "green" as const,
-  },
-  {
-    title: "Product Studios",
-    body: "Track opportunity spaces, compare bets, and identify niches with strong build potential.",
-    icon: Sparkles,
-    accent: "amber" as const,
   },
 ];
 
 export const buildPaths = [
-  { title: "SaaS", description: "Full product when recurring value is clear", icon: Layers },
-  { title: "Automation workflow", description: "n8n, Zapier, or custom pipelines", icon: Zap },
-  { title: "Template / ZIP product", description: "Spreadsheets, Notion, downloadable kits", icon: FileText },
+  { title: "Software product", description: "When recurring value and market wedge are clear", icon: Layers },
+  { title: "Automation workflow", description: "Operational pipelines and integrations", icon: Zap },
+  { title: "Template / toolkit", description: "Spreadsheets, documentation kits, audit-ready packs", icon: FileText },
   { title: "Dashboard / internal tool", description: "Ops visibility without full product scope", icon: LayoutDashboard },
   { title: "Service + tool hybrid", description: "Productized service backed by lightweight tooling", icon: Bot },
 ];
@@ -229,22 +256,22 @@ export const buildPaths = [
 export const comparisonCards = [
   {
     title: "Generic idea lists",
-    body: "Broad, recycled, and rarely tied to real market pressure.",
+    body: "Broad, recycled, and rarely tied to operational pain or source evidence.",
     highlight: false,
   },
   {
     title: "Trend tools",
-    body: "Useful for attention, but weak on buyer, wedge, and execution clarity.",
+    body: "Useful for attention, but weak on buyer context, market wedge, and defensible evidence.",
     highlight: false,
   },
   {
     title: "Asking AI for ideas",
-    body: "Great for possibilities. Weak for filtering signal from noise.",
+    body: "Strong for exploration. Weak for structured scoring, guardrails, and source traceability.",
     highlight: false,
   },
   {
     title: "DataTello",
-    body: "Combines multiple signal layers to surface clearer, more actionable build opportunities.",
+    body: "Combines structured signal layers, scoring, and human review to surface evidence-backed build opportunities.",
     highlight: true,
   },
 ];
@@ -254,7 +281,9 @@ export const platformFeatures = [
   "Full opportunity dossiers",
   "Asset strategy",
   "Competitive differentiator strategy",
-  "Builder-fit recommendations",
+  "Delivery fit recommendations",
+  "Complaint & incident analytical panels",
+  "Emerging infrastructure signal views",
   "Watchlists and monitoring",
   "PDF dossier export",
   "Saved opportunities",
@@ -265,55 +294,60 @@ export const monitoringUpdates = [
   "New signals appear",
   "Competitor pricing changes",
   "Workflow friction increases",
-  "Market conditions shift",
+  "Incident patterns shift",
+  "Market conditions change",
 ];
 
 export const pricingPlans = [
   {
-    name: "Builder",
-    price: 19,
-    description: "For solo builders and indie makers",
+    name: "Professional",
+    price: 299,
+    description: "Individual advisors and analysts",
     features: [
-      "Weekly signal briefs",
-      "Opportunity snapshots",
-      "Bookmarks",
-      "Basic monitoring",
+      "Weekly intelligence briefs",
+      "Full opportunity dossiers",
+      "PDF export",
+      "Source-backed evidence stacks",
+      "Watchlists",
     ],
     popular: false,
   },
   {
-    name: "Consultant",
-    price: 49,
-    description: "For advisors and specialists",
+    name: "Advisory",
+    price: 599,
+    description: "Consultants and specialist practices",
     features: [
-      "Full dossiers",
-      "PDF export",
-      "Source-backed insight",
+      "Everything in Professional",
       "Client-ready summary mode",
+      "Complaint & incident panels",
+      "Priority dossier access",
+      "Advanced monitoring",
     ],
     popular: true,
   },
   {
-    name: "Agency / Automation",
-    price: 79,
-    description: "For service businesses and operators",
+    name: "Agency",
+    price: 999,
+    description: "Service firms and delivery teams",
     features: [
-      "Full dossiers",
+      "Everything in Advisory",
       "White-label exports",
       "Team sharing",
       "Execution-oriented defaults",
+      "Offer packaging templates",
     ],
     popular: false,
   },
   {
-    name: "Product Studio",
-    price: 99,
-    description: "For teams evaluating multiple bets",
+    name: "Investor",
+    price: 1499,
+    description: "Investment teams and market analysts",
     features: [
-      "Compare opportunities",
-      "Shared workspace",
+      "Everything in Agency",
       "Portfolio watchlists",
-      "Team notes and evaluation flow",
+      "Market formation tracking",
+      "Infrastructure signal views",
+      "Team evaluation workspace",
     ],
     popular: false,
   },
@@ -322,19 +356,19 @@ export const pricingPlans = [
 export const faqs = [
   {
     q: "What makes DataTello different from trend tools?",
-    a: "Trend tools mostly show attention. DataTello combines pressure, demand, market wedge, and workflow friction to surface more actionable build opportunities.",
+    a: "Trend tools show attention. DataTello combines operational pain, demand, market wedge, workflow friction, and structured scoring with guardrails and human review to produce evidence-backed build opportunities.",
   },
   {
-    q: "Are these only SaaS ideas?",
-    a: "No. DataTello recommends the best first asset for each opportunity, which could be software, an automation, a template, a dashboard, or a service-assisted tool.",
+    q: "Is this only for software opportunities?",
+    a: "No. DataTello recommends the best first asset for each opportunity — which may be a service package, template, dashboard, workflow tool, or software product depending on asset fit.",
   },
   {
     q: "Who is this for?",
-    a: "Builders, agencies, consultants, automation operators, and product teams who want clearer opportunities and better starting points.",
+    a: "Agencies evaluating new offers, consultants advising clients, and investors tracking where markets and opportunities are forming.",
   },
   {
-    q: "How often are opportunities updated?",
-    a: "New signals and opportunity updates are added regularly, with monitoring features that help you track changes over time.",
+    q: "How do Complaint & Incident Signals work?",
+    a: "They detect where real users repeatedly experience failure — revealing operational pain before demand spikes. They appear as analytical panels and inform review; final opportunities are determined by the scoring engine and human review.",
   },
   {
     q: "Can I download dossiers as PDFs?",
@@ -342,7 +376,7 @@ export const faqs = [
   },
   {
     q: "Can I just use AI instead?",
-    a: "AI is great for exploring possibilities. DataTello is built to filter structured market signal from noise and turn it into more actionable opportunities.",
+    a: "AI is useful for exploration. DataTello is built to apply structured signals, scoring, guardrails, and source traceability — producing decision-ready intelligence, not idea lists.",
   },
 ];
 

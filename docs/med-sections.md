@@ -4,25 +4,21 @@ See [MED.md](./MED.md) for documentation governance. **This file is the single s
 
 Source of truth for opportunity display, paid Opportunity Dossiers, and admin form structure.
 
-DataTello does not sell generic trend ideas. It sells **evidence-backed build opportunities**. Each opportunity should tell the user what problem is forming, who the buyer is, why it matters now, and what the best first asset is.
+DataTello delivers evidence-backed build opportunities using structured signals, scoring, and guardrails. Each opportunity should tell the user what operational pain is forming, who the buyer is, why it matters now, what the market wedge is, and what the best first asset is.
 
 ## Build Opportunity Definition
 
-A **Build Opportunity** is a validated way to create value in a market.
+A **Build Opportunity** is a validated way to create value in a market, backed by source-backed evidence and operational pain.
 
 The same opportunity data is shown to every persona. Scores, signals, evidence, buyer context, competitive reality, and risks are the **truth layer** — they never change by persona.
 
 Personas change only the **execution lens**: section emphasis, CTA wording, asset path labels, dashboard copy, and section ordering.
 
-| Persona | Role label | Primary CTA |
-|---------|------------|-------------|
-| Builder | Build it | Start building |
-| Agency | Sell it | Package this offer |
-| Consultant | Advise it | Advise on this opportunity |
-| Investor | Fund or acquire | Evaluate this market |
-| Operator | Implement it | Implement this workflow |
-| Automation builder | Automate it | Automate this process |
-| Product studio | Prioritize it | Prioritize this bet |
+| Persona | Role label | Primary CTA | Core question |
+|---------|------------|-------------|---------------|
+| Agency | Sell it | Package this offer | What new services or offers can we sell? |
+| Consultant | Advise it | Advise on this opportunity | What should we advise clients to do? |
+| Investor | Fund or acquire | Evaluate this market | Where are new markets and opportunities forming? |
 
 Implementation: `lib/persona-lens.ts`, `hooks/usePersonaLens.ts`, `components/ui/PersonaSelector.tsx`.
 
@@ -51,6 +47,31 @@ Implementation: `lib/persona-lens.ts`, `hooks/usePersonaLens.ts`, `components/ui
 - Asset path step labels
 - Dashboard and detail intro copy
 - Signal helper text tone
+
+## Signal Layers in Dossiers
+
+### Core Engine (scoring)
+
+Pressure Discovery, Demand Validation, Market Wedge Validation, Workflow Friction Signals — these feed the structured scoring engine.
+
+### Complaint & Incident Signals (analytical panel)
+
+Where real users repeatedly experience failure. Shown as charts, incident patterns, and complaint clusters. Reveals operational pain before demand spikes. Strong in regulated and operational industries.
+
+**Rule:** Visual and analytical only. Does not determine final opportunity scores.
+
+### Emerging Digital Infrastructure Signals (analytical panel)
+
+Secondary expansion. Four sub-modules only:
+
+- Agent Commerce Signals
+- Stablecoin Workflow Signals
+- Onchain Developer Tool Friction
+- Tokenized Data / Pay-Per-Use Data Signals
+
+**Rule:** Visual and analytical only — patterns and trends. Does not determine final opportunity scores.
+
+**Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
 
 ## Naming Rules
 
@@ -115,9 +136,14 @@ Internal modifier:
 
 Friction should not appear as a main public score. It modifies Pain/Pressure, Wedge, and Buildability when repeated workflow failure is visible.
 
+Analytical panels (non-scoring):
+
+- Complaint & Incident Signals summary
+- Emerging Digital Infrastructure Signals summary (when in scope)
+
 ### 4. BuildStrategy
 
-Purpose: this is DataTello's core edge.
+Purpose: this is DataTello's core edge — asset strategy for the opportunity.
 
 Fields:
 
@@ -132,12 +158,12 @@ Fields:
 - `revenue_ceiling`
 - `recommended_ai_build_stack`
 - `why_not_full_software_yet`
-- `when_to_upgrade_to_saas`
+- `when_to_upgrade_to_full_product`
 
 Supported asset types:
 
 - Full software
-- Lightweight SaaS
+- Lightweight product
 - Internal tool
 - Spreadsheet/template
 - Tracker/log
@@ -147,17 +173,16 @@ Supported asset types:
 
 ### 5. BuilderFitStrategy
 
-Purpose: recommend the right build path by builder type, not just the most powerful tool.
+Purpose: recommend the right delivery path by organization type — who can best execute or monetize this opportunity.
 
-Builder types:
+Organization types:
 
-- Vibe coder
-- No-code operator
-- Automation builder
-- Template seller
-- Technical founder
-- Agency/productizer
-- Product studio / advanced SaaS builder
+- Agency / service firm
+- Advisory practice
+- Investment firm
+- Operations leader
+- Product organization
+- Implementation partner
 
 Fields:
 
@@ -176,7 +201,7 @@ Fields:
 
 ### 6. ExecutionAngle
 
-Purpose: tell the user exactly how to start.
+Purpose: tell the user exactly how to act on this opportunity.
 
 Fields:
 
@@ -209,7 +234,7 @@ Fields:
 - `ux_gap`
 - `distribution_gap`
 - `service_gap`
-- `small_builder_right_to_win`
+- `small_operator_right_to_win`
 
 This section is qualitative. Do not reduce it to a fake precision score.
 
@@ -271,7 +296,7 @@ Mirror the dossier structure. Group as:
 2. **Why This Exists** — problem, evidence, key pain drivers, why now
 3. **Scores** — pressure, demand, wedge, freshness, buildability, asset fit, internal friction
 4. **Build Strategy** — asset paths, format rationale, expansion ladder, revenue ceiling
-5. **Builder Fit** — builder types, tool stack, avoid-first guidance, support burden
+5. **Delivery Fit** — organization types, tool stack, avoid-first guidance, support burden
 6. **Execution** — buyer, workflow, wedge, MVP, time to value
 7. **Competition** — segment, competitors, complaints, differentiation, avoid, entry strategy
 8. **Monetization** — first asset, pricing, upgrade path, recurring potential
