@@ -1,6 +1,6 @@
 # Context — Long-Term Architectural Truths
 
-Documentation Version: 1.2  
+Documentation Version: 1.3  
 Last Updated: 2026-07-08  
 Status: Active  
 Owner: DataTello Engineering
@@ -13,7 +13,7 @@ See [MED.md](./MED.md) for documentation governance.
 
 ## Product Identity
 
-- DataTello delivers **evidence-backed build opportunities** using structured signals, scoring, and guardrails.
+- DataTello does **not** discover opportunities from a single signal. It **validates opportunities through layered evidence**.
 - DataTello is **not** a trend idea finder, startup idea list, or generic market scanner.
 - A **Build Opportunity** is a validated way to create value in a market, backed by source-backed evidence and operational pain.
 - Output names are fixed: **Weekly Signal Brief**, **Opportunity Dossier**, **Dashboard Brief View**, **PDF Dossier**.
@@ -24,27 +24,44 @@ Full positioning: [vision.md](./vision.md)
 
 ---
 
-## Target ICP
+## Layered Validation Architecture
 
-| Persona | Core question |
-|---------|---------------|
-| **Agencies** | What services or products can we offer clients? |
-| **Consultants** | What should we advise clients to do? |
-| **Investors** | Where are new opportunities forming? |
+Each layer answers a different question:
 
-All product messaging, dossier framing, and dashboard copy should answer these questions.
+| Layer | Question |
+|-------|----------|
+| Pressure | Is the problem forming? |
+| Demand | Are people looking for it? |
+| Wedge | Can you sell into it? |
+| Friction | Are people failing to solve it? |
+| Complaints | Are real users repeatedly affected? |
+| Digital Infrastructure | Is new infrastructure accelerating this? |
+
+Steps 1–5 (Pressure through Complaints) form **Base Opportunity Confidence**. Step 6 (Digital Infrastructure) amplifies confidence — it does not replace base validation.
 
 ---
 
-## Persona Execution Lens
+## Target ICP
 
-Same opportunity → same truth layer → different execution lens.
+| ICP | Core question |
+|-----|---------------|
+| **Agencies** | What can we sell, implement, or productize for clients? |
+| **Consultants** | What should we recommend, advise on, or turn into client-facing memos? |
+| **Investors** | What should we fund, validate, monitor, or compare as a thesis/deal opportunity? |
+| **Venture Studios / Product Studios** | What opportunities are worth validating, matching to operators, and prioritizing across repeated bets? |
 
-**Truth layer (everyone sees):** signals, scores, problem, buyer, evidence, competitive reality, risks.
+Onboarding, default lens, and feed rules: [onboarding.md](./onboarding.md).
 
-**Persona lens (presentation only):** section emphasis, CTA wording, asset path ordering/labels, dashboard copy, labels and helper text.
+---
 
-Primary personas: **agency**, **consultant**, **investor**.
+## Same Engine, Different Default Lens
+
+Same opportunity engine for everyone. Different by ICP:
+
+- default lens
+- execution outputs
+- collaboration level
+- monitoring depth
 
 Persona lens must **never** alter opportunity data, scores, signals, or evidence. See [med-sections.md](./med-sections.md).
 
@@ -65,29 +82,41 @@ Full boundaries: [architecture.md](./architecture.md)
 
 ---
 
-## Core Signal Layers
+## Core Engine (Five Layers)
 
-All four lanes are required in the Core Engine:
+All five layers are required for Base Opportunity Confidence:
 
 1. **Pressure Discovery** — real-world operational pressure
 2. **Demand Validation** — search behavior, buyer language, CPC (DataForSEO)
 3. **Market Wedge Validation** — category gaps, competition, spend
-4. **Workflow Friction Signals** — repeated execution failure where people struggle to operationalize workflows
+4. **Workflow Friction Signals** — repeated execution failure
+5. **Complaint & Incident Signals** — repeated real-world failure clusters
 
 ### Workflow Friction Rule
 
-Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows.
+Workflow Friction = repeated execution failure.
 
-- Modifies scoring: **Pain/Pressure**, **Market Wedge**, **Buildability**
+- Modifies scoring: **Pain**, **Market Wedge**, **Buildability**
 - Internal modifier only — not a standalone public score
 - Does **not** act as a standalone decision engine
-- Does not bypass guardrails, scoring, or human review
 
-### Expansion Layers
+### Complaint & Incident Rule
 
-**Complaint & Incident Signals** — where real-world failures repeatedly occur. Core expansion. Feeds review and analytical panels.
+- Strongest realism layer for operational breakdown
+- Focuses on **clusters**, not individual complaints
+- Strengthens Pain confidence, buyer specificity, urgency
+- Source categories include CFPB, FDA/MAUDE, NHTSA, FCC
 
-**Emerging Digital Infrastructure Signals** — four sub-modules only: Agent Commerce, Stablecoin Workflow, Onchain Developer Tool Friction, Tokenized Data / Pay-Per-Use Data. Visual signal layers only.
+### Digital Infrastructure Rule
+
+Four modules only — **validation amplifiers**, not discovery layers:
+
+- Agent Commerce Signals
+- Stablecoin Workflow Signals
+- Onchain Developer Tool Friction
+- Tokenized Data / Pay-Per-Use Data Signals
+
+Do **not** add DAO, grants, onchain compliance as a standalone user-facing module, or other sub-modules without an ADR.
 
 **Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
 
@@ -95,18 +124,32 @@ Workflow Friction Signals detect repeated execution failure — where people are
 
 ## Scoring Model (V1)
 
-Software Likelihood is replaced by:
+Public scores:
 
-- **Buildability Score**
-- **Asset Fit Decision**
+- **Pain** (Pressure)
+- **Demand**
+- **Market** (Wedge)
+- **Freshness**
+- **Buildability**
+- **Asset Fit**
 
-Public scores: pressure, demand, wedge, buildability, asset fit.
+Internal modifiers:
+
+- **Friction** — modifies Pain, Market, Buildability
+- **Digital Infrastructure Boost** (0–10) — increases confidence, breaks ties, prioritizes; **not** a primary score
 
 **Asset Strategy** and **Competitive Differentiator Strategy** are required dossier sections.
 
-Competitor count alone is insufficient — qualitative differentiation required.
-
 Full spec: [med-sections.md](./med-sections.md)
+
+---
+
+## Guardrail System
+
+1. **No signal stands alone** — reject if only onchain/digital infrastructure signals exist without pressure, demand, or friction.
+2. **Must map to buyer + workflow** — reject if no clear buyer or repeatable workflow.
+3. **Must improve decision** — keep only if it helps decide what to build, how to win, or what to sell, recommend, validate, or fund.
+4. **Reject noise** — crypto hype, token speculation, creator monetization, experimental novelty, non-B2B use cases.
 
 ---
 
@@ -133,20 +176,20 @@ Seven sections, in order:
 5. **Section-driven, card-based UI** — one component per MED section.
 6. **Mock mode must always work** — dev without Supabase env vars.
 7. **Docs before code** — plan in docs, implement second.
-8. **Expansion signal layers are visual** — they inform review; they do not override scoring.
+8. **Digital infrastructure amplifies** — it does not replace base validation.
 9. **Friction modifies scoring** — it does not decide opportunities alone.
+10. **Complaints validate clusters** — not isolated incidents.
 
 ---
 
 ## Data Flow
 
 ```text
-Source Sync → Raw Signals → Normalize/Classify → Problem Zones → Keyword Enrichment → Market/Friction Proof → Candidate Opportunity → Guardrails → Human Review → Publish → PDF Dossier
+Source Sync → Normalize → Cluster → Enrich (Demand, Wedge, Friction, Complaints)
+→ Base Opportunity → Digital Infrastructure Amplification → Guardrails → Human Review → Publish → PDF Dossier
 ```
 
-Complaint & Incident Signals and Emerging Digital Infrastructure Signals feed analytical views in parallel; they do not bypass the scoring engine.
-
-Full flow and freshness rules: [architecture.md](./architecture.md)
+Full flow: [architecture.md](./architecture.md)
 
 ---
 
@@ -154,11 +197,11 @@ Full flow and freshness rules: [architecture.md](./architecture.md)
 
 **Frozen for V1:**
 
-- Product positioning as evidence-backed opportunity intelligence for agencies, consultants, and investors
-- Four Core Engine signal lanes and scoring model (Buildability + Asset Fit)
+- Layered validation architecture (five core layers + four digital infrastructure amplifiers)
+- ICP: agencies, consultants, investors, venture studios / product studios
 - Seven-section Opportunity Dossier output structure
-- Complaint & Incident Signals as core expansion layer
-- Emerging Digital Infrastructure Signals (four sub-modules only)
+- Guardrail system (four rules)
+- Onboarding flow and ICP default lens model
 - Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
@@ -166,7 +209,7 @@ Full flow and freshness rules: [architecture.md](./architecture.md)
 
 **Revisit after V1:**
 
-- Deeper personalization, full workflow builder, social-listening sources
+- Deeper personalization, social-listening sources
 - Affiliate marketplace, advanced BI, multi-admin permissions
 
 Full ADR list: [decisions.md](./decisions.md)

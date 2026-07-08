@@ -70,6 +70,16 @@ Every ADR must include all five fields:
 **Decision:** Living markdown docs indexed from `docs/README.md`.
 **Alternatives:** Wiki or Notion — rejected for co-location with code.
 
+### 2026-07-08 Layered validation architecture and ICP expansion
+
+**Context:** Documentation and product messaging needed to reflect that DataTello validates through layered evidence, not single-signal discovery. Complaint & Incident Signals elevated to core Engine layer 5. Venture Studio / Product Studio added as fourth ICP. Onboarding flow and guardrail system required formal documentation.
+
+**Decision:** Lock layered validation architecture: Pressure → Demand → Wedge → Friction → Complaints → Base Opportunity → Digital Infrastructure amplification. Complaint & Incident Signals are mandatory core validation (clusters; CFPB, FDA/MAUDE, NHTSA, FCC). Emerging Digital Infrastructure Signals remain four amplifiers only. Add guardrail rules (no signal alone, buyer+workflow, improve decision, reject noise). Add Digital Infrastructure Boost (0–10) as internal confidence amplifier. Add ICP onboarding docs with shared flow and distinct default lens per agency/consultant/investor/venture studio. Remove builder/vibe-coder language from all docs (homepage deferred).
+
+**Alternatives:** Keep Complaint & Incident as optional expansion — rejected. Add DAO/grants/compliance modules — rejected. Treat digital infrastructure as discovery layer — rejected.
+
+**Consequences:** New [onboarding.md](./onboarding.md). [architecture.md](./architecture.md), [med-sections.md](./med-sections.md), [context.md](./context.md) rewritten. Phase 13 onboarding implementation added to roadmap. `persona-lens.ts` venture studio alignment pending in code.
+
 ### 2026-07-08 Canonical seven-section Opportunity Dossier
 
 **Context:** Dossier output needed a single canonical structure aligned with premium ICP positioning and Asset Strategy emphasis.
@@ -150,10 +160,12 @@ Every ADR must include all five fields:
 **Decision:** Every paid Opportunity Dossier includes Best First Asset, Top 3 Asset Paths, Expansion Ladder, Zip-Ready Fit, Revenue Ceiling, and Recommended AI Build Stack.
 **Alternatives:** Generic recommended build — rejected as too shallow.
 
-### 2026-07-07 Add Builder Fit Strategy
+### 2026-07-07 Add Delivery Fit Strategy (internal)
 
 **Context:** Different organization types need different delivery recommendations for the same opportunity.
-**Decision:** Add Builder Fit Strategy by organization type and tool stack. Retained as internal admin only — not in seven-section paid dossier output.
+
+**Decision:** Add delivery fit by organization type and tool stack (`builder_fit_strategy` table). Retained as internal admin only — not in seven-section paid dossier output.
+
 **Alternatives:** One universal tech stack — rejected.
 
 ### 2026-07-07 Add Competitive Differentiator Strategy
@@ -178,10 +190,12 @@ Every ADR must include all five fields:
 
 Freeze for V1:
 
-- Product positioning as evidence-backed opportunity intelligence for agencies, consultants, and investors
-- Core Engine signal lanes and scoring model
-- Complaint & Incident Signals (documented; implementation phased)
-- Emerging Digital Infrastructure Signals (four sub-modules only)
+- Layered validation architecture (five core layers + four digital infrastructure amplifiers)
+- ICP: agencies, consultants, investors, venture studios / product studios
+- Guardrail system (four rules)
+- Onboarding flow and ICP default lens model
+- Complaint & Incident Signals as core Engine layer 5
+- Emerging Digital Infrastructure Signals (four sub-modules only; amplifiers not discovery)
 - Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack

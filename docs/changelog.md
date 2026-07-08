@@ -13,6 +13,17 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 ---
 
+## 2026-07-08 — Layered validation architecture and ICP documentation rewrite
+
+- Locked layered validation: five core layers form Base Opportunity Confidence; digital infrastructure amplifies only
+- Elevated Complaint & Incident Signals to core Engine layer 5 (clusters; CFPB, FDA/MAUDE, NHTSA, FCC)
+- Documented four guardrail rules and Digital Infrastructure Boost (0–10)
+- Added Venture Studio / Product Studio as fourth ICP
+- Created [onboarding.md](./onboarding.md) — shared flow, distinct default lens per ICP
+- Updated dossier spec: Digital Infrastructure Evidence ratings, build difficulty in Asset Strategy
+- Removed builder/vibe-coder language from all docs (homepage deferred)
+- Rewrote architecture, context, vision, med-sections, admin-workflow, routes, components, ai-rules, roadmap, backlog
+
 ## 2026-07-08 — Dossier structure and scoring model alignment
 
 - Canonical seven-section Opportunity Dossier output locked
@@ -47,7 +58,7 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 - Defined Build Opportunity as a validated way to create value in a market
 - Added persona execution lens model: same truth layer, different presentation by persona
-- Added `lib/persona-lens.ts` with 7 personas (builder, agency, consultant, investor, operator, automation_builder, product_studio)
+- Added persona execution lens model (agency, consultant, investor primary; venture studio pending; legacy personas in code to be aligned)
 - Added `hooks/usePersonaLens.ts` and `components/ui/PersonaSelector.tsx`
 - Updated dashboard and opportunity detail with persona-aware CTAs, labels, section ordering, and emphasis
 - Persona lens does not alter opportunity data, scores, signals, or evidence

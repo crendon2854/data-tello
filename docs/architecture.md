@@ -21,9 +21,11 @@ Handles:
 - source ingestion
 - raw signal normalization
 - clustering into problem zones
-- scoring and guardrails
+- layered validation and scoring
+- guardrails
 - human review
 - paid dashboard publishing
+- user targeting / onboarding preferences (planned)
 
 Built in Next.js + Supabase.
 
@@ -74,148 +76,216 @@ Hard rule: n8n is for marketing/growth automation only. It should not run core i
 
 ---
 
+## Core Principle: Layered Validation
+
+DataTello does **not** discover opportunities from a single signal. It validates opportunities through layered evidence.
+
+| Layer | Question |
+|-------|----------|
+| Pressure | Is the problem forming? |
+| Demand | Are people looking for it? |
+| Wedge | Can you sell into it? |
+| Friction | Are people failing to solve it? |
+| Complaints | Are real users repeatedly affected? |
+| Digital Infrastructure | Is new infrastructure accelerating this? |
+
+This is the system's authentication layer.
+
+---
+
 ## Product Structure
 
-DataTello intelligence is organized in three layers:
+### 1. Core Engine (five validation layers)
 
-### 1. Core Engine
-
-The scoring and decision backbone. Four required signal lanes:
+The scoring and decision backbone:
 
 1. **Pressure Discovery** — real-world operational pressure
 2. **Demand Validation** — search behavior, buyer language, commercial intent
 3. **Market Wedge Validation** — category gaps, competition, spend proof
-4. **Workflow Friction Signals** — repeated execution failure where people struggle to operationalize workflows
+4. **Workflow Friction Signals** — repeated execution failure
+5. **Complaint & Incident Signals** — repeated real-world failure clusters
+
+These create → **Base Opportunity Confidence**
 
 Plus Buildability Score, Asset Fit Decision, guardrails, and human review.
 
-Workflow Friction modifies Pain/Pressure, Market Wedge, and Buildability. It does not act as a standalone decision engine.
+### 2. Emerging Digital Infrastructure Signals (validation amplifiers)
 
-### 2. Complaint & Incident Signals (core expansion)
+**Not discovery layers.** Applied only after a base opportunity is formed.
 
-**Where real-world failures repeatedly occur.**
+Four modules only:
 
-- Detects repeated real-world failures across operational and regulated industries
-- Reveals operational pain before demand spikes
-- Surfaces incident patterns, complaint clusters, and failure recurrence
-- Used heavily in regulated and operational industries (healthcare, construction, environmental compliance, public sector)
+| Module | Validates | Strengthens |
+|--------|-----------|-------------|
+| **Agent Commerce Signals** | Are machines already paying in this category? | Market Wedge, Early Demand |
+| **Stablecoin Workflow Signals** | Are real businesses struggling with new payment workflows? | Pain, Friction |
+| **Onchain Developer Tool Friction** | Are people repeatedly failing to implement this? | Workflow Friction, Buildability clarity |
+| **Tokenized Data / Pay-Per-Use Data Signals** | Is a new infrastructure layer forming around paid data/services? | Market Wedge, Asset Strategy |
 
-This layer is a major discovery input. It feeds problem zone clustering and human review. It does not bypass scoring.
-
-### 3. Emerging Digital Infrastructure Signals (secondary expansion)
-
-Analytical views of infrastructure shifts. **Four sub-modules only:**
-
-| Sub-module | Purpose |
-|------------|---------|
-| **Agent Commerce Signals** | Patterns in agent-mediated commerce and transaction flows |
-| **Stablecoin Workflow Signals** | Operational friction and adoption patterns in stablecoin-based workflows |
-| **Onchain Developer Tool Friction** | Repeated failure and workaround patterns in onchain development tooling |
-| **Tokenized Data / Pay-Per-Use Data Signals** | Emerging patterns in tokenized and metered data access |
-
-Do not add DAO signals, compliance signals, grants, or other sub-modules without an ADR.
+Do **not** add DAO signals, grants, onchain compliance as a standalone user-facing module, or other sub-modules without an ADR.
 
 ---
 
-## Signal Layer Architecture Rule
+## System Flow
 
-Complaint & Incident Signals and Emerging Digital Infrastructure Signals are **visual and analytical only**. They show charts, patterns, and trends in the dashboard and dossier analytical panels.
-
-**Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
-
-Expansion layers inform analysts and reviewers. They do not autonomously promote candidates or override Core Engine scores.
+```text
+Step 1 → Pressure
+Step 2 → Demand
+Step 3 → Wedge
+Step 4 → Friction
+Step 5 → Complaints
+         ↓
+    BASE OPPORTUNITY FORMED
+         ↓
+Step 6 → Digital Infrastructure Signals
+         ↓
+    strengthen: confidence, urgency, asset decisions, wedge clarity
+         ↓
+    Guardrails → Human Review → Publish → PDF Dossier
+```
 
 ---
 
 ## Core Engine Signal Lanes
 
-DataTello Core uses four lanes:
-
 ### Pressure Discovery
 
-Finds real-world pressure.
+Finds real-world pressure forming.
 
-Examples:
-
-- OSHA
-- EPA ECHO
-- BLS
-- Census permits
-- SAM.gov
-- CISA KEV
-- Federal Register
-- Regulations.gov
-- USAspending
-- CMS where healthcare is in scope
+Examples: OSHA, EPA ECHO, BLS, Census permits, SAM.gov, CISA KEV, Federal Register, Regulations.gov, USAspending, CMS (healthcare scope).
 
 ### Demand Validation
 
 Checks attention, buyer language, and commercial intent.
 
-Primary source:
+Primary source: DataForSEO v3.
 
-- DataForSEO v3
-
-Use:
-
-- historical search volume
-- related keywords
-- trends/popularity
-- CPC
-- competition
-- internal keyword memory
+Use: historical search volume, related keywords, trends, CPC, competition, internal keyword memory.
 
 ### Market Wedge Validation
 
 Checks whether there is a sellable product/category gap.
 
-Sources/checks:
-
-- competitor sites
-- pricing pages
-- review directories
-- job postings
-- SEC EDGAR
-- USAspending where relevant
-- manual market proof review
+Sources: competitor sites, pricing pages, review directories, job postings, SEC EDGAR, USAspending, manual market proof review.
 
 ### Workflow Friction Signals
 
-Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows.
+**Workflow Friction = repeated execution failure.**
 
-MVP sources:
+Impacts: Pain, Market Wedge, Buildability.
 
-- GitHub issues / feature requests
-- Stack Exchange questions / workarounds
-- Greenhouse job postings
-- Lever job postings
-
-**Friction rule:**
-
-- Modifies scoring: Pain/Pressure, Market Wedge, and Buildability
 - Internal modifier only — not a standalone public score
 - Does **not** act as a standalone decision engine
 - Does not bypass guardrails, scoring, or human review
+
+MVP sources: GitHub issues, Stack Exchange, Greenhouse, Lever job postings.
+
+### Complaint & Incident Signals
+
+**Mandatory core layer.**
+
+- Detects repeated real-world failure
+- Strongest realism layer for operational breakdown
+- Validates operational breakdown through **clusters**, not individual complaints
+- Strengthens: Pain confidence, buyer specificity, urgency
+
+Source categories:
+
+| Source | Domain |
+|--------|--------|
+| CFPB | Consumer financial complaints |
+| FDA / MAUDE | Medical device adverse events |
+| NHTSA | Vehicle safety incidents |
+| FCC | Telecom / communications complaints |
+
+Feeds problem zone clustering and human review. Does not bypass scoring.
+
+---
+
+## Guardrail System
+
+### Rule 1 — No Signal Stands Alone
+
+Reject if:
+
+- only onchain/digital infrastructure signals exist
+- no pressure, demand, or friction evidence
+
+### Rule 2 — Must Map to Buyer + Workflow
+
+Reject if:
+
+- no clear buyer
+- no repeatable workflow
+
+### Rule 3 — Must Improve Decision
+
+Keep only if it helps decide:
+
+- what to build
+- how to win
+- what to sell, recommend, validate, or fund
+
+### Rule 4 — Reject Noise
+
+Reject:
+
+- crypto hype
+- token speculation
+- creator monetization
+- experimental novelty
+- non-B2B use cases
+
+Hard checks before review also include: at least two independent source types, at least one pressure source, at least one demand or spend signal, freshness label assigned, buildability threshold met, best first asset selected, no obvious duplicate.
+
+---
+
+## Scoring System
+
+### Public scores
+
+| Score | Source layer |
+|-------|--------------|
+| Pain | Pressure (+ friction modifier) |
+| Demand | Demand Validation |
+| Market | Market Wedge Validation |
+| Freshness | Timing / mixed signal label |
+| Buildability | Delivery feasibility |
+| Asset Fit | Best first asset alignment |
+
+### Internal modifiers
+
+| Modifier | Role |
+|----------|------|
+| Friction | Modifies Pain, Market, Buildability |
+| Digital Infrastructure Boost (0–10) | Increases confidence, breaks ties, prioritizes — **not** a primary score |
+
+Digital Infrastructure Boost is used **only** to increase confidence, break ties, and prioritize. It must not override weak base validation.
+
+---
+
+## ICP & Onboarding
+
+One engine. Different post-login defaults and views.
+
+Target ICPs: Agencies, Consultants, Investors, Venture Studios / Product Studios.
+
+Onboarding captures `user_type`, `industries[]`, `buyer_types[]`, `signal_types[]` and applies them as default filters on dashboard queries.
+
+Full spec: [onboarding.md](./onboarding.md)
 
 ---
 
 ## Data Flow
 
 ```text
-Source Sync → Raw Signals → Normalize/Classify → Problem Zones → Keyword Enrichment → Market/Friction Proof → Candidate Opportunity → Guardrails → Human Review → Publish → PDF Dossier
+Source Sync → Raw Signals → Normalize/Classify → Problem Zones
+→ Keyword Enrichment → Market/Friction/Complaint Proof
+→ Candidate Opportunity (Base Confidence) → Digital Infrastructure Amplification
+→ Guardrails → Human Review → Publish → PDF Dossier
 ```
 
-Complaint & Incident Signals and Emerging Digital Infrastructure Signals feed parallel analytical views. They merge into human review context but do not replace the Core Engine scoring path.
-
 ## Freshness Rules
-
-Do not treat all sources as moving on the same clock.
-
-Examples:
-
-- daily/weekly sources can support trigger timing
-- monthly/quarterly/annual sources usually support structural pressure
-- mixed signals require a mixed timing label
 
 Every opportunity must have one timing/freshness label:
 
@@ -225,60 +295,15 @@ Every opportunity must have one timing/freshness label:
 
 ## AI Automation Boundary
 
-AI may assist with:
+AI may assist with: summarization, classification, keyword generation, clustering suggestions, first-pass scoring, first-pass dossier drafting, chart suggestions, connector repair proposals.
 
-- source summarization
-- classification
-- keyword generation
-- clustering suggestions
-- first-pass scoring
-- first-pass dossier drafting
-- chart/graphic suggestions
-- connector repair proposals
-
-AI must not autonomously decide:
-
-- final buyer
-- final build recommendation
-- whether software beats service
-- competitive right-to-win
-- scoring weight changes
-- publish approval
+AI must not autonomously decide: final buyer, final build recommendation, whether software beats service, competitive right-to-win, scoring weight changes, publish approval.
 
 ## Connector Health + Repair
 
-Each connector should have an adapter layer:
+Each connector should have an adapter layer with source name, base URL, auth type, rate limits, field mapping, freshness cadence, last sync, failure reason, repair status.
 
-- source name
-- base URL
-- auth type
-- rate limits
-- expected schema
-- field mapping
-- freshness cadence
-- last successful sync
-- failure reason
-- repair status
-
-AI may auto-fix mechanical issues only:
-
-- renamed fields
-- changed pagination
-- endpoint path changes
-- date format changes
-- minor response shape changes
-- optional null fields
-- CSV header changes
-- parser updates
-
-Human approval is required for:
-
-- source meaning changes
-- discontinued datasets
-- metric definition changes
-- new API terms/commercial restrictions
-- scoring impact changes
-- buyer/category interpretation changes
+AI may auto-fix mechanical issues only. Human approval required for source meaning changes, metric definition changes, scoring impact, API terms, buyer/category interpretation changes.
 
 ## Folder Structure
 
@@ -290,9 +315,9 @@ Human approval is required for:
   /cards                # OpportunityCard
   /sections             # MED/Dossier section components
   /admin                # Admin forms and actions
-/lib                    # supabase.ts, queries.ts, helpers.ts
+/lib                    # supabase.ts, queries.ts, helpers.ts, persona-lens.ts
 /types                  # database.ts, opportunity.ts
-/hooks                  # useOpportunities, useFilters
+/hooks                  # useOpportunities, useFilters, usePersonaLens
 /styles                 # globals.css
 /docs                   # This documentation
 /supabase               # schema.sql
@@ -303,8 +328,9 @@ Human approval is required for:
 - `PageContainer` wraps all page content
 - `Card` wraps every dossier/admin section
 - Section components accept typed `opportunity` slices
-- Admin pages should preserve source traceability
-- Dashboard pages should simplify internal scoring into decision-ready output
+- Admin pages preserve source traceability
+- Dashboard pages simplify internal scoring into decision-ready output
+- Onboarding preferences apply as default query filters (when implemented)
 
 ## Non-Negotiable Architecture Rules
 
@@ -313,5 +339,6 @@ Human approval is required for:
 3. Newsletter Engine and Dossier Builder are separate.
 4. Paid PDF Dossiers are generated from templates, not manually made one by one.
 5. AI can draft and assist, but human review controls publish decisions.
-6. System Health can repair mechanical connector issues, not business logic.
-7. Expansion signal layers are analytical — they do not determine final opportunities.
+6. Five core layers form base opportunity confidence before digital infrastructure amplification.
+7. Digital infrastructure signals are amplifiers — they do not determine final opportunities alone.
+8. Complaint & Incident Signals are core validation, not optional add-ons.

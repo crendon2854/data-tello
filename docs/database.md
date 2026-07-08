@@ -133,7 +133,11 @@ Seed data: `supabase/seed.sql` (linked to problem zones by name).
 
 ### Complaint & Incident Signals (target)
 
-Core expansion layer. Where real users repeatedly experience failure.
+**Core Engine layer 5** — mandatory validation layer. Detects repeated real-world failure through **clusters**, not individual complaints.
+
+Strongest realism layer. Strengthens Pain confidence, buyer specificity, urgency.
+
+Source categories: CFPB, FDA/MAUDE, NHTSA, FCC.
 
 Fields (target):
 
@@ -144,6 +148,7 @@ Fields (target):
 - `summary`
 - `source`
 - `source_url`
+- `cluster_id` — complaint cluster reference
 - `recurrence_score`
 - `geography`
 - `industry`
@@ -152,13 +157,13 @@ Fields (target):
 - `accepted_for_scoring_context`
 - `notes`
 
-Visual and analytical in dashboard. Does not alone determine final opportunity scores.
+Feeds Base Opportunity Confidence. Does not alone determine final opportunity scores.
 
 Not yet wired. Planned: `/admin/complaint-incidents`.
 
 ### Emerging Digital Infrastructure Signals (target)
 
-Secondary expansion. Four sub-modules only:
+**Validation amplifiers only** — applied after base opportunity formed. Four sub-modules only:
 
 - `agent_commerce`
 - `stablecoin_workflow`
@@ -174,10 +179,11 @@ Fields (target):
 - `pattern_type`
 - `trend_direction`
 - `evidence_count`
+- `strength_rating` — `weak` | `moderate` | `strong`
 - `chart_data`
 - `notes`
 
-Visual and analytical only. Does not determine final opportunities.
+Amplifies confidence only. Does not determine final opportunities alone.
 
 Not yet wired. Planned: `/admin/digital-infrastructure`.
 
@@ -460,13 +466,14 @@ Fields:
 
 - `id`
 - `opportunity_id`
-- `pressure_score`
+- `pressure_score` — displayed as **Pain** in dossier
 - `demand_score`
-- `wedge_score`
+- `wedge_score` — displayed as **Market** in dossier
 - `freshness_score`
 - `buildability_score`
 - `asset_fit_score`
-- `friction_score_internal`
+- `friction_score_internal` — modifies Pain, Market, Buildability
+- `digital_infrastructure_boost` — 0–10; confidence amplifier, not primary score
 - `total_score`
 - `hard_gates_passed`
 - `score_notes`
@@ -483,16 +490,16 @@ Fields:
 - `top_asset_path_1`
 - `top_asset_path_2`
 - `top_asset_path_3`
-- `why_this_format_wins_first`
-- `expansion_ladder` — Expansion Path (Template → Tool → SaaS)
-- `zip_ready_fit`
+- `why_this_format_wins_first` — Why This Wins First
+- `expansion_ladder` — Expansion Ladder
 - `revenue_ceiling`
+- `build_difficulty`
 
-Not all opportunities should start as software.
+Do not default to SaaS.
 
-#### `builder_fit_strategy`
+#### `delivery_fit_strategy` (table: `builder_fit_strategy`)
 
-Internal admin only — not part of the seven-section paid dossier output.
+Internal admin only — delivery fit by organization type. Not part of seven-section paid dossier output.
 
 Fields:
 
@@ -524,8 +531,8 @@ Fields:
 - `review_complaint_themes` — Review Complaint Patterns
 - `underserved_segment`
 - `differentiation_angle`
-- `what_not_to_compete_on` — What NOT to Build
-- `competitive_entry_path`
+- `what_not_to_compete_on` — What NOT to Compete On
+- `competitive_entry_path` — Entry Strategy
 - `feature_gap`
 - `pricing_gap`
 - `ux_gap`
@@ -620,6 +627,24 @@ Fields:
 - `created_at`
 - `created_by`
 - `version_snapshot`
+
+### User Targeting (planned)
+
+Stores onboarding preferences applied as default dashboard filters. Spec: [onboarding.md](./onboarding.md).
+
+#### `user_preferences`
+
+Fields:
+
+- `id`
+- `user_id`
+- `user_type` — investor | agency | consultant | venture_studio | other
+- `industries` — text[] (multi-select)
+- `buyer_types` — text[] (SMB, mid-market, enterprise, public_sector, no_preference)
+- `signal_types` — text[] (pressure, demand, wedge, friction, complaints, digital_infrastructure)
+- `explore_mode_default` — boolean
+- `onboarding_completed_at`
+- `updated_at`
 
 ### Newsletter Engine
 
@@ -750,6 +775,7 @@ Future query groups should be organized by module:
 - emerging digital infrastructure signals
 - scoring
 - review queue
+- user targeting preferences (onboarding)
 - dossiers
 - newsletter
 - system health

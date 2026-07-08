@@ -1,6 +1,8 @@
 # Supabase Setup
 
-DataTello uses Supabase (Postgres) for live data. The app falls back to in-memory mock data when env vars are unset.
+DataTello validates build opportunities through layered evidence. Uses Supabase (Postgres) for live data; falls back to mock data when env vars are unset.
+
+Product docs: [docs/MED.md](../docs/MED.md) · Onboarding: [docs/onboarding.md](../docs/onboarding.md)
 
 Full schema reference: [docs/database.md](../docs/database.md)
 

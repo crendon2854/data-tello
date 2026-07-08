@@ -1,8 +1,8 @@
 # DataTello
 
-Evidence-backed build opportunities using structured signals, scoring, and guardrails.
+Validates build opportunities through layered evidence — structured signals, scoring, and guardrails.
 
-Premium opportunity intelligence platform and decision-support system for agencies, consultants, and investors.
+Premium opportunity intelligence for agencies, consultants, investors, and venture studios / product studios.
 
 ## Quick Start
 
@@ -15,7 +15,7 @@ Open [http://localhost:3001](http://localhost:3001)
 
 ## Documentation
 
-See [`docs/MED.md`](./docs/MED.md) — the Master Engineering Document and canonical entry point for architecture, workflow, and governance.
+See [`docs/MED.md`](./docs/MED.md) — canonical entry point for architecture, layered validation, ICP onboarding, and governance.
 
 ## Stack
 

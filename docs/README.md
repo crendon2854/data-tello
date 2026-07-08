@@ -1,10 +1,8 @@
 # DataTello Docs
 
-**Start here:** [MED.md](./MED.md) — Master Engineering Document (canonical entry point)
+**Start here:** [MED.md](./MED.md) — Master Engineering Document
 
 ## Implementation Read Order
-
-Before implementing any feature, read in order:
 
 1. [ai-rules.md](./ai-rules.md)
 2. [context.md](./context.md)
@@ -13,7 +11,7 @@ Before implementing any feature, read in order:
 5. [implementation-index.md](./implementation-index.md)
 6. [MED.md](./MED.md)
 
-Then read only the feature-specific topic docs that apply.
+Then read feature-specific topic docs.
 
 ---
 
@@ -21,11 +19,12 @@ Then read only the feature-specific topic docs that apply.
 
 | Doc | Purpose |
 |-----|---------|
-| [MED.md](./MED.md) | Governance, workflow, DoD, ADR policy |
-| [ai-rules.md](./ai-rules.md) | AI/Cursor development playbook + mandatory startup procedure |
+| [MED.md](./MED.md) | Governance, workflow, DoD |
+| [ai-rules.md](./ai-rules.md) | AI development playbook |
 | [context.md](./context.md) | Long-term architectural truths |
-| [project-state.md](./project-state.md) | Current project snapshot (status, routes, gaps) |
-| [current-task.md](./current-task.md) | Active implementation task (what is being built right now) |
+| [onboarding.md](./onboarding.md) | ICP onboarding, default lens, feed rules |
+| [project-state.md](./project-state.md) | Current snapshot |
+| [current-task.md](./current-task.md) | Active implementation task |
 | [implementation-index.md](./implementation-index.md) | Feature → file map |
 | [backlog.md](./backlog.md) | Remaining work |
 | [changelog.md](./changelog.md) | Project history |
@@ -34,14 +33,14 @@ Then read only the feature-specific topic docs that apply.
 
 | Doc | Purpose |
 |-----|---------|
-| [vision.md](./vision.md) | Product goal, principles, constraints |
-| [architecture.md](./architecture.md) | System boundaries, signal lanes, app structure |
-| [med-sections.md](./med-sections.md) | Seven-section Opportunity Dossier spec (Asset Strategy, Competitive Differentiator Strategy) |
-| [database.md](./database.md) | Supabase schema, target tables, query layer |
-| [routes.md](./routes.md) | Public, dashboard, and admin routes |
-| [components.md](./components.md) | Component inventory and reuse rules |
+| [vision.md](./vision.md) | Product goal, layered validation, ICP |
+| [architecture.md](./architecture.md) | System boundaries, signal lanes, guardrails |
+| [med-sections.md](./med-sections.md) | Seven-section Opportunity Dossier spec |
+| [database.md](./database.md) | Supabase schema |
+| [routes.md](./routes.md) | Public, dashboard, admin, onboarding routes |
+| [components.md](./components.md) | Component inventory |
 | [admin-workflow.md](./admin-workflow.md) | Research OS workflow |
-| [design-system.md](./design-system.md) | Visual theme, colors, typography |
-| [dev-setup.md](./dev-setup.md) | Local dev, env vars, port config |
-| [roadmap.md](./roadmap.md) | Strategic build phases |
-| [decisions.md](./decisions.md) | Architecture Decision Records |
+| [design-system.md](./design-system.md) | Visual theme |
+| [dev-setup.md](./dev-setup.md) | Local dev |
+| [roadmap.md](./roadmap.md) | Strategic phases |
+| [decisions.md](./decisions.md) | ADRs |

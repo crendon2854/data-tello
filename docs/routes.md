@@ -7,11 +7,29 @@ See [MED.md](./MED.md) for documentation governance. **This file is the single s
 | Route | Type | Purpose |
 |-------|------|---------|
 | `/` | Public | Landing — hero, CTA, sample opportunity card |
-| `/dashboard` | App | Paid opportunity library with filters and cards |
+| `/onboarding` | App | ICP targeting flow (3–5 steps) — planned |
+| `/preferences` | App | Edit user_type, industries, buyer_types, signal_types — planned |
+| `/dashboard` | App | Paid opportunity library with default filters from onboarding |
 | `/opportunity/[id]` | App | Full Dashboard Brief View / Opportunity Dossier |
 | `/opportunity/[id]/pdf` | App | Download or regenerate PDF Dossier |
 | `/newsletter` | Public | Free subscriber capture for Weekly Signal Brief |
 | `/unsubscribe` | Public | Newsletter unsubscribe handling |
+
+## Onboarding Routes (Planned)
+
+Onboarding spec: [onboarding.md](./onboarding.md).
+
+| Step | Route (proposed) | Captures |
+|------|------------------|----------|
+| 1 | `/onboarding/type` | `user_type` |
+| 2 | `/onboarding/industries` | `industries[]` |
+| 3 | `/onboarding/buyer` | `buyer_types[]` |
+| 4 | `/onboarding/signals` | `signal_types[]` |
+| 5 | `/onboarding/confirm` | Summary + save |
+
+After completion, redirect to `/dashboard` with default filters applied.
+
+`/preferences` allows editing targeting without repeating full onboarding.
 
 ## Admin Routes
 
@@ -32,57 +50,56 @@ See [MED.md](./MED.md) for documentation governance. **This file is the single s
 | `/admin/review` | Admin | Human Review Queue |
 | `/admin/watchlist` | Admin | Watchlist Admin |
 | `/admin/dossiers` | Admin | Dossier Builder / PDF templates / export history |
-| `/admin/newsletter` | Admin | Newsletter Engine — subscribers, Signal Briefs, events |
+| `/admin/newsletter` | Admin | Newsletter Engine |
 | `/admin/system-health` | Admin | Connector status, failed syncs, repair logs |
 | `/admin/settings` | Admin | Rules, thresholds, defaults, affiliate settings |
 
-## Existing Legacy Aliases
-
-These may exist during transition:
+## Legacy Aliases
 
 | Route | Replace With |
 |-------|--------------|
 | `/admin/zones` | `/admin/problem-zones` |
-| `/admin/signals` | keep, but evolve to Raw Signal Explorer |
 
 ## Layout Rules
 
 - **Root layout** — Navbar on public pages
-- **Dashboard layout** — Sidebar/filter panel for paid user workspace
+- **Dashboard layout** — Sidebar/filter panel; default filters from onboarding preferences (when implemented)
 - **Admin layout** — Admin sidebar on all `/admin/*` routes
-- **Dossier pages** — Section-driven cards matching `docs/med-sections.md`
+- **Dossier pages** — Section-driven cards matching [med-sections.md](./med-sections.md)
+
+## Dashboard Filter Rules
+
+Default opportunity queries apply:
+
+- `industries[]` from onboarding
+- `buyer_types[]` from onboarding
+- `signal_types[]` from onboarding
+
+Always allow manual override. **Explore Mode** — show opportunities outside selected industries — especially for Investors, Agencies, Venture Studios.
 
 ## Route Build Priority
 
-### Already built / current MVP
+### Built (MVP)
 
-- `/`
-- `/dashboard`
-- `/opportunity/[id]`
-- `/newsletter`
-- `/admin`
-- `/admin/sources`
-- `/admin/opportunities`
-- `/admin/opportunities/new`
-- `/admin/opportunities/[id]`
-- `/admin/review`
-- `/admin/signals`
-- `/admin/problem-zones`
-- `/admin/zones` (redirect alias)
+- `/`, `/dashboard`, `/opportunity/[id]`, `/newsletter`
+- `/admin`, `/admin/sources`, `/admin/signals`, `/admin/problem-zones`
+- `/admin/keywords`, `/admin/market-proof`, `/admin/friction`
+- `/admin/opportunities`, `/admin/opportunities/new`, `/admin/opportunities/[id]`
+- `/admin/review`, `/admin/zones` (redirect)
 
-### Next admin routes to add
+### Next routes
 
-1. `/admin/complaint-incidents`
-2. `/admin/digital-infrastructure`
-3. `/admin/dossiers`
-4. `/admin/newsletter`
-5. `/admin/system-health`
-6. `/admin/settings`
+1. `/onboarding` + `/preferences`
+2. `/admin/complaint-incidents`
+3. `/admin/digital-infrastructure`
+4. `/admin/dossiers`, `/admin/newsletter`, `/admin/system-health`, `/admin/settings`
+5. `/opportunity/[id]/pdf`, `/unsubscribe`
 
 ## Route Rules
 
 1. Newsletter routes do not generate full paid dossiers.
 2. Dossier routes do not manage subscribers.
 3. Admin routes preserve source traceability.
-4. Public dashboard routes show simplified decision-ready output, not every internal field.
-5. PDF export route uses a selected/default template and structured data, not manually assembled PDFs.
+4. Public dashboard shows decision-ready output, not every internal field.
+5. PDF export uses templates and structured data.
+6. Onboarding preferences act as default query filters on dashboard views.

@@ -1,6 +1,6 @@
 # Admin Workflow
 
-See [MED.md](./MED.md) for documentation governance. For route URLs, see [routes.md](./routes.md). For schema backing each step, see [database.md](./database.md).
+See [MED.md](./MED.md) for documentation governance. Routes: [routes.md](./routes.md). Schema: [database.md](./database.md). Layered validation: [architecture.md](./architecture.md).
 
 The admin backend is the internal research operating system for DataTello.
 
@@ -8,9 +8,16 @@ It should behave like a Notion-style research CMS: linked records, filters, stat
 
 ## Core Principle
 
-The software handles collection, normalization, clustering, enrichment, scoring, drafting, and publishing mechanics.
+The software handles collection, normalization, clustering, enrichment, layered validation, scoring, drafting, and publishing mechanics.
 
 The human makes the final calls on buyer, buildability, asset fit, differentiation, and publish-worthiness.
+
+DataTello validates opportunities through layered evidence. Admin workflow must reflect the system flow:
+
+```text
+Pressure → Demand → Wedge → Friction → Complaints → BASE OPPORTUNITY
+→ Digital Infrastructure Amplification → Guardrails → Human Review → Publish
+```
 
 ## Main Admin Tools
 
@@ -34,211 +41,143 @@ The human makes the final calls on buyer, buildability, asset fit, differentiati
 18. System Health
 19. Settings / Rules
 
-Internal admin only (not in seven-section dossier output): Builder Fit Strategy Admin, Monetization Admin, Risks Admin
+Internal admin only (not in seven-section dossier output): Delivery Fit Admin, Monetization Admin, Risks Admin
 
 ## Opportunity Lifecycle
 
 ```text
-Collect → Normalize → Cluster → Enrich → Market/Friction Proof → Score → Guardrails → Human Review → Publish → Generate PDF Dossier
+Collect → Normalize → Cluster → Enrich → Layered Validation → Score → Guardrails → Human Review → Publish → Generate PDF Dossier
 ```
-
-Complaint & Incident Signals and Emerging Digital Infrastructure Signals feed analytical context in parallel. They do not bypass scoring or human review.
 
 ## Step 1 — Source Registry
 
-Admin manages every source used by Core Engine lanes and expansion layers.
+Track every source used by Core Engine lanes and complaint/incident connectors.
 
-Track:
-
-- source name
-- source type
-- workflow lane
-- cadence
-- geography
-- reliability
-- API status
-- last sync
-- freshness window
-- notes
+Fields: source name, type, workflow lane, cadence, geography, reliability, API status, last sync, freshness window, notes.
 
 ## Step 2 — Raw Signal Explorer
 
-Incoming records land here first.
-
-Admin can:
-
-- filter by source, date, geography, vertical, and freshness
-- inspect source trails
-- mark bad records
-- approve records for clustering
-- see unclustered records
-
-Nothing here is a published opportunity yet.
+Incoming records land here first. Filter, inspect trails, mark bad records, approve for clustering. Nothing here is a published opportunity yet.
 
 ## Step 3 — Problem Zone Workspace
 
-Problem zones are grouped pain patterns, not final product ideas.
+Grouped pain patterns, not final product ideas.
 
-A problem zone should answer:
+Answer: what pain is recurring? where? who is affected? structural, trigger-driven, or mixed? what source mix supports it?
 
-- what pain is recurring?
-- where is it happening?
-- who is affected?
-- is it structural, trigger-driven, or mixed?
-- what source mix supports it?
-
-Statuses:
-
-- `new`
-- `reviewing`
-- `enriching`
-- `ready_for_market_proof`
-- `ready_for_scoring`
-- `watchlist`
-- `rejected`
-- `promoted`
+Statuses: `new`, `reviewing`, `enriching`, `ready_for_market_proof`, `ready_for_scoring`, `watchlist`, `rejected`, `promoted`
 
 ## Step 4 — Keyword Intelligence
 
-Used for Demand Validation.
-
-Admin manages:
-
-- seed keywords
-- buyer-aware keyword families
-- expanded keywords
-- rejected keywords
-- DataForSEO enrichment
-- CPC, volume, competition, trend direction
-- internal keyword memory and false positives
-
-Rule: keywords validate demand and buyer language. They do not create opportunities by themselves.
+Demand Validation. Keywords validate demand and buyer language — they do not create opportunities alone.
 
 ## Step 5 — Market Proof Workspace
 
-Used for Market Wedge Validation.
+Market Wedge Validation. Competitor sites, pricing, reviews, job postings, SEC EDGAR, USAspending, complaint themes, underserved segments.
 
-Admin checks:
-
-- competitor sites
-- pricing pages
-- review directories
-- job postings
-- SEC EDGAR mentions
-- USAspending proof
-- hidden-market risk
-- review complaint themes
-- underserved segments
-
-Human review is required before deciding that competition is weak or a wedge is real.
+Human review required before deciding competition is weak or wedge is real.
 
 ## Step 6 — Workflow Friction Workspace
 
-Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows.
+**Workflow Friction = repeated execution failure.**
 
-MVP sources:
+MVP sources: GitHub issues, Stack Exchange, Greenhouse, Lever.
 
-- GitHub issues / feature requests
-- Stack Exchange questions / workarounds
-- Greenhouse job postings
-- Lever job postings
-
-Track:
-
-- friction score 0-10
-- friction type
-- friction evidence count
-- friction sources
-- manual workaround detected
-
-**Friction rule:**
-
-- Modifies scoring: Pain/Pressure, Market Wedge, Buildability
+- Modifies Pain, Market Wedge, Buildability
 - Internal modifier only — not a standalone public score
 - Does **not** act as a standalone decision engine
 
-Reject friction records that are hobby/dev-only, vague complaints, consumer frustration, or one-off feature requests.
+Reject: hobby/dev-only, vague complaints, consumer frustration, one-off feature requests.
 
 ## Step 7 — Complaint & Incident Signals Workspace
 
-**Where real-world failures repeatedly occur.**
+**Mandatory core validation layer.**
 
 Purpose:
 
-- detect repeated real-world failures
-- reveal operational pain before demand spikes
-- support regulated and operational industries
+- Detect repeated real-world failure
+- Strongest realism layer for operational breakdown
+- Validate through **clusters**, not individual complaints
+- Strengthen Pain confidence, buyer specificity, urgency
 
-Admin tracks:
+Source categories:
 
-- incident type and recurrence
-- complaint cluster patterns
-- failure frequency and geography
-- industry and buyer impact
-- source diversity
-- linkage to problem zones
+| Source | Use |
+|--------|-----|
+| CFPB | Consumer financial complaint clusters |
+| FDA / MAUDE | Medical device adverse event patterns |
+| NHTSA | Vehicle safety incident recurrence |
+| FCC | Telecom / communications complaint clusters |
 
-This is a core expansion layer. It feeds human review and analytical panels. It does not autonomously determine final opportunities.
+Admin tracks: incident type, recurrence, cluster patterns, geography, industry impact, source diversity, problem zone linkage.
 
-Reject records that are isolated incidents, unverified complaints, or lacking operational specificity.
+Reject: isolated incidents, unverified single complaints, lacking operational specificity.
+
+This layer feeds Base Opportunity Confidence. It does not bypass scoring or guardrails.
 
 ## Step 8 — Emerging Digital Infrastructure Signals Workspace
 
-Secondary expansion. **Four sub-modules only:**
+**Validation amplifiers only — not discovery layers.** Applied after base opportunity formed.
 
-| Sub-module | Tracks |
-|------------|--------|
-| Agent Commerce Signals | Agent-mediated commerce patterns and friction |
-| Stablecoin Workflow Signals | Stablecoin workflow adoption and operational pain |
-| Onchain Developer Tool Friction | Repeated failure in onchain development tooling |
-| Tokenized Data / Pay-Per-Use Data Signals | Tokenized and metered data access patterns |
+Four sub-modules only:
 
-Admin manages analytical records, trend charts, and pattern summaries per sub-module.
+### Agent Commerce Signals
 
-**Rule:** Visual and analytical only. These signals show charts, patterns, and trends. They do not determine final opportunities.
+Validates: Are machines already paying in this category?  
+Strengthens: Market Wedge, Early Demand
 
-Do not add DAO signals, compliance signals, grants, or other sub-modules without an ADR.
+### Stablecoin Workflow Signals
+
+Validates: Are real businesses struggling with new payment workflows?  
+Strengthens: Pain, Friction
+
+### Onchain Developer Tool Friction
+
+Validates: Are people repeatedly failing to implement this?  
+Strengthens: Workflow Friction, Buildability clarity
+
+### Tokenized Data / Pay-Per-Use Data Signals
+
+Validates: Is a new infrastructure layer forming around paid data/services?  
+Strengthens: Market Wedge, Asset Strategy
+
+Admin manages analytical records, trend summaries, and Weak/Moderate/Strong ratings per module.
+
+**Rule:** Amplifies confidence only. Does not determine final opportunities alone.
+
+Do not add DAO, grants, onchain compliance as standalone user-facing modules without an ADR.
 
 ## Step 9 — Candidate Opportunity Scoring
 
-Candidate opportunities combine Core Engine signal lanes.
+Combines five core validation layers into Base Opportunity Confidence.
 
-Visible score buckets:
+Public scores: Pain, Demand, Market, Freshness, Buildability, Asset Fit.
 
-- Pressure
-- Demand
-- Wedge
-- Freshness
-- Buildability
-- Asset Fit
+Internal modifiers: Friction, Digital Infrastructure Boost (0–10).
 
-Internal modifier:
+Digital Infrastructure Boost: increases confidence, breaks ties, prioritizes — **not** a primary score.
 
-- Friction
-
-Verdicts:
-
-- `publish_software_first`
-- `publish_asset_first`
-- `watchlist`
-- `reject`
-
-Complaint & Incident and Emerging Digital Infrastructure data appear in analytical context. They do not override these scores.
+Verdicts: `publish_software_first`, `publish_asset_first`, `watchlist`, `reject`
 
 ## Step 10 — Guardrail Engine
 
-Hard checks before review:
+### Rule 1 — No Signal Stands Alone
 
-- at least two independent source types
-- at least one pressure source
-- at least one demand or spend signal
-- identifiable buyer
-- freshness label assigned
-- buildability threshold met
-- best first asset selected
-- no obvious duplicate
+Reject if only digital infrastructure signals exist without pressure, demand, or friction.
 
-Do not weaken guardrails automatically.
+### Rule 2 — Must Map to Buyer + Workflow
+
+Reject if no clear buyer or repeatable workflow.
+
+### Rule 3 — Must Improve Decision
+
+Keep only if it helps decide what to build, how to win, or what to sell, recommend, validate, or fund.
+
+### Rule 4 — Reject Noise
+
+Reject: crypto hype, token speculation, creator monetization, experimental novelty, non-B2B use cases.
+
+Hard checks: ≥2 independent source types, ≥1 pressure source, ≥1 demand/spend signal, freshness label, buildability threshold, best first asset, no duplicate.
 
 ## Step 11 — Human Review Queue
 
@@ -254,148 +193,64 @@ Reviewer must answer:
 8. Is the timing label honest?
 9. Is this publish-worthy?
 
-Statuses:
-
-- `pending`
-- `in_review`
-- `approved`
-- `rework`
-- `rejected`
+Statuses: `pending`, `in_review`, `approved`, `rework`, `rejected`
 
 ## Step 12 — Asset Strategy Admin
 
-Required for every published opportunity. **Not all opportunities should start as software.**
-
-Admin defines:
+Required for every published opportunity. **Do not default to SaaS.**
 
 - Best First Asset
 - Top 3 Asset Paths
-- Why This Format Wins First
-- Expansion Path (Template → Tool → SaaS)
-- Zip-Ready Fit
+- Why This Wins First
+- Expansion Ladder
 - Revenue Ceiling
+- Build Difficulty
 
 ## Step 13 — Competitive Differentiator Admin
 
-Required for every published opportunity. Qualitative — not a fake precision score.
-
-Admin defines:
+Required for every published opportunity.
 
 - Competitor Landscape
 - Review Complaint Patterns
 - Underserved Segment
 - Differentiation Angle
-- What NOT to Build
-- Competitive Entry Path
+- What NOT to Compete On
+- Entry Strategy
 
 ## Step 14 — Watchlist Admin
 
-Use watchlist for promising but incomplete opportunities.
-
-Reasons:
-
-- weak buyer signal
-- weak demand
-- weak buildability
-- stale timing
-- unclear wedge
-- too crowded
-- not enough proof yet
-
-Track next review date and recheck trigger.
+For promising but incomplete opportunities. Track next review date and recheck trigger.
 
 ## Step 15 — Dossier Builder
 
-The Dossier Builder creates full paid Opportunity Dossiers and PDF Dossiers from structured opportunity data.
+Creates full paid Opportunity Dossiers and PDF Dossiers. Seven-section output per [med-sections.md](./med-sections.md).
 
-Seven-section output:
-
-1. Opportunity Snapshot
-2. Why This Exists
-3. Signal Breakdown
-4. Asset Strategy
-5. Execution Angle
-6. Competitive Differentiator Strategy
-7. Why This Matters
-
-It handles:
-
-- default PDF template
-- section toggles
-- suggested charts/graphics
-- evidence tables
-- affiliate link insertion
-- branding
-- regeneration when data changes
-- template versioning
-- export history
-
-It does not create newsletters or manage subscribers.
+Does not create newsletters or manage subscribers.
 
 ## Step 16 — Newsletter Engine
 
-Newsletter Engine is separate.
-
-It handles:
-
-- free subscribers
-- weekly Signal Briefs
-- basic autoresponder functionality
-- unsubscribe handling
-- open/click tracking
-- free-to-paid CTA tracking
-
-The Weekly Signal Brief is watered down and should not include the full paid dossier.
+Separate. Free subscribers, weekly Signal Briefs, autoresponder, tracking. Weekly brief is watered down — not the full paid dossier.
 
 ## Step 17 — System Health
 
-Admin monitors:
-
-- connector status
-- failed syncs
-- schema changes
-- auto-repair logs
-- human approval queue
-- source reliability
-- data quality alerts
-
-AI can auto-fix mechanical connector issues only. Human approval is required for source meaning changes, metric definition changes, scoring impact, API terms, or buyer/category interpretation.
+Connector status, failed syncs, schema changes, auto-repair logs, human approval queue.
 
 ## Status Values
 
 ### Opportunities
 
-| Status | Meaning | Visible on Dashboard |
-|--------|---------|---------------------|
-| `draft` | Created, not reviewed | No |
-| `in_review` | Human review active | No |
-| `watchlist` | Interesting but incomplete | No |
-| `published` | Paid dashboard visible | Yes |
-| `rejected` | Not useful enough | No |
-| `archived` | Previously published but retired | Optional |
-
-### Publishing Targets
-
-- dashboard only
-- PDF dossier
-- weekly signal brief teaser
-- both dashboard and PDF
+| Status | Visible on Dashboard |
+|--------|---------------------|
+| `draft` | No |
+| `in_review` | No |
+| `watchlist` | No |
+| `published` | Yes |
+| `rejected` | No |
+| `archived` | Optional |
 
 ## Implementation Rule
 
-Do not build this like generic CRUD.
-
-Build it like a research operating system:
-
-- linked records
-- fast filters
-- status movement
-- source traceability
-- review buttons
-- score visibility
-- dossier generation
-
-Every candidate screen should answer five questions quickly:
+Build like a research operating system — not generic CRUD. Every candidate screen should answer:
 
 1. What is the painful workflow?
 2. Who is the buyer?

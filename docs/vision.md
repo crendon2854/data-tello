@@ -4,43 +4,63 @@ See [MED.md](./MED.md) for documentation governance. Current status: [project-st
 
 ## What DataTello Is
 
-DataTello delivers evidence-backed build opportunities using structured signals, scoring, and guardrails.
+DataTello validates build opportunities through **layered evidence** — not from a single signal.
 
-It is a premium opportunity intelligence platform and decision-support system — not a trend feed, not a startup idea list, not a generic market scanner. Users receive source-backed dossiers grounded in operational pain, market wedge, and asset strategy.
+It is a premium opportunity intelligence platform and decision-support system for agencies, consultants, investors, and venture studios / product studios. Users receive source-backed dossiers grounded in operational pain, market wedge, complaint clusters, and asset strategy.
+
+DataTello is **not** a trend feed, a startup idea list, or a generic market scanner.
+
+## Core Principle (Locked)
+
+Each validation layer answers a different question:
+
+| Layer | Question |
+|-------|----------|
+| Pressure | Is the problem forming? |
+| Demand | Are people looking for it? |
+| Wedge | Can you sell into it? |
+| Friction | Are people failing to solve it? |
+| Complaints | Are real users repeatedly affected? |
+| Digital Infrastructure | Is new infrastructure accelerating this? |
+
+This layered architecture is the system's authentication layer. No single signal stands alone.
 
 ## Target Users
 
-| Persona | Core question |
-|---------|---------------|
-| **Agencies** | What services or products can we offer clients? |
-| **Consultants** | What should we advise clients to do? |
-| **Investors** | Where are new opportunities forming? |
+| ICP | Core question |
+|-----|---------------|
+| **Agencies** | What can we sell, implement, or productize for clients? |
+| **Consultants** | What should we recommend, advise on, or turn into client-facing memos? |
+| **Investors** | What should we fund, validate, monitor, or compare as a thesis/deal opportunity? |
+| **Venture Studios / Product Studios** | What opportunities are worth validating, matching to operators, and prioritizing across repeated bets? |
 
-## Core Principle
-
-> Everything is section-driven and card-based.
-
-Each MED section = one reusable component. Pages compose sections; admin forms mirror the same sections.
+Onboarding and default lens: [onboarding.md](./onboarding.md).
 
 ## Product Structure
 
-### Core Engine (four signal lanes)
+### Core Engine (five validation layers)
 
 1. Pressure Discovery
 2. Demand Validation
 3. Market Wedge Validation
 4. Workflow Friction Signals
+5. Complaint & Incident Signals
+
+These create **Base Opportunity Confidence**.
 
 Plus scoring, guardrails, and human review.
 
-Workflow Friction Signals detect repeated execution failure — where people are struggling to operationalize workflows. Friction modifies scoring (Pain, Market Wedge, Buildability). It does not act as a standalone decision engine.
+### Validation amplifiers (after base opportunity formed)
 
-### Expansion layers
+**Emerging Digital Infrastructure Signals** — four modules only. These are **not** discovery layers. They strengthen confidence, urgency, asset decisions, and wedge clarity.
 
-- **Complaint & Incident Signals** — where real-world failures repeatedly occur (core expansion)
-- **Emerging Digital Infrastructure Signals** — four analytical sub-modules (secondary expansion)
+### System flow
 
-Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.
+```text
+Pressure → Demand → Wedge → Friction → Complaints → BASE OPPORTUNITY FORMED
+→ Digital Infrastructure Signals → confidence / urgency / asset / wedge amplification
+→ Guardrails → Human Review → Publish
+```
 
 ## Opportunity Output Structure
 
@@ -56,6 +76,17 @@ Every paid opportunity follows seven sections:
 
 Not all opportunities should start as software. Asset Strategy defines the best first asset and expansion path.
 
+Full spec: [med-sections.md](./med-sections.md).
+
+## Guardrails (Summary)
+
+1. **No signal stands alone** — reject if only digital infrastructure signals exist without pressure, demand, or friction.
+2. **Must map to buyer + workflow** — reject if no clear buyer or repeatable workflow.
+3. **Must improve decision** — keep only if it helps decide what to build, how to win, or what to sell, recommend, validate, or fund.
+4. **Reject noise** — crypto hype, token speculation, creator monetization, experimental novelty, non-B2B use cases.
+
+Full rules: [architecture.md](./architecture.md) § Guardrail System.
+
 ## Constraints (Do Not Build Yet)
 
 - No AI generation
@@ -65,8 +96,9 @@ Not all opportunities should start as software. Asset Strategy defines the best 
 
 ## Success Criteria
 
-- Opportunities can be created via admin
+- Opportunities can be created via admin with layered validation evidence
 - Opportunities display correctly on dashboard and detail pages
 - Structure matches MED spec (seven-section dossier)
 - Admin review workflow is usable
-- Messaging reflects agency, consultant, and investor use cases
+- Messaging reflects agency, consultant, investor, and venture studio use cases
+- Onboarding captures targeting and applies default filters (when implemented)

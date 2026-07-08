@@ -24,7 +24,7 @@ Command-center dark theme. Source of truth for colors, typography, and UI patter
 |-------|-------|
 | `glass-card` | Card containers with blur |
 | `glass-nav` | Navbar background |
-| `btn-primary` | Primary CTA with blue glow |
+| `btn-primary` | Primary CTA (brand mint) |
 | `btn-secondary` | Secondary actions |
 | `input-field` | Form inputs |
 | `badge-blue` / `badge-orange` / `badge-green` | Status and tag badges |

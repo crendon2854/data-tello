@@ -1,7 +1,7 @@
 # Implementation Index — Feature → File Map
 
-Documentation Version: 1.0  
-Last Updated: 2026-07-07  
+Documentation Version: 1.1  
+Last Updated: 2026-07-08  
 Status: Active  
 Owner: DataTello Engineering
 
@@ -15,7 +15,7 @@ See [MED.md](./MED.md) for workflow. See [project-state.md](./project-state.md) 
 
 | Feature | Files |
 |---------|-------|
-| Landing page | `app/page.tsx` |
+| Landing page (homepage — messaging deferred) | `app/page.tsx`, `components/landing/*` |
 | Dashboard | `app/dashboard/page.tsx` |
 | Opportunity detail | `app/opportunity/[id]/page.tsx` |
 | Newsletter capture | `app/newsletter/page.tsx` |
@@ -34,7 +34,7 @@ See [MED.md](./MED.md) for workflow. See [project-state.md](./project-state.md) 
 | Edit opportunity | `app/admin/opportunities/[id]/page.tsx` |
 | Review queue | `app/admin/review/page.tsx` |
 
-Route spec: [routes.md](./routes.md)
+| Onboarding & ICP targeting (planned) | `docs/onboarding.md` → `/onboarding`, `/preferences` (not built) |
 
 ---
 
@@ -136,6 +136,7 @@ Design tokens: [design-system.md](./design-system.md)
 | Master Engineering Document | `docs/MED.md` |
 | AI playbook + startup procedure | `docs/ai-rules.md` |
 | Architectural truths | `docs/context.md` |
+| ICP onboarding spec | `docs/onboarding.md` |
 | Current snapshot | `docs/project-state.md` |
 | Active implementation task | `docs/current-task.md` |
 | Feature → file map | `docs/implementation-index.md` |
