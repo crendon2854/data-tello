@@ -1,28 +1,30 @@
-import { applyPersonaScoring } from "@/lib/persona-lens";
+import { computePersonaScore } from "@/lib/scoring";
+import type { OpportunityFeedItem } from "@/types/opportunity";
 import type { Opportunity } from "@/types/opportunity";
 import type {
   SignalPreferences,
   UserPreferences,
 } from "@/types/user-preferences";
 import { createDefaultUserPreferences } from "@/types/user-preferences";
+import { getSignalPreferenceStrength } from "@/lib/scoring";
 
 const SIGNAL_SCORE_THRESHOLD = 50;
 
 const BUYER_KEYWORDS: Record<string, string[]> = {
-  smb: ["small", "smb", "local", "contractor", "5–50", "5-50", "startup"],
+  smb: ["smb", "small business", "local", "contractor", "startup"],
   mid_market: ["mid-market", "mid market", "regional", "growing"],
   enterprise: ["enterprise", "director", "vp", "fortune", "large"],
-  public_sector: ["government", "public sector", "municipal", "federal", "agency"],
+  public_sector: ["government", "public sector", "municipal", "federal"],
 };
 
 const INDUSTRY_KEYWORDS: Record<string, string[]> = {
-  healthcare: ["healthcare", "hospital", "clinical", "medical", "health"],
+  healthcare: ["healthcare", "hospital", "clinical", "medical"],
   financial_services: ["financial", "fintech", "banking", "crypto", "finance"],
-  compliance: ["compliance", "regulatory", "osha", "audit", "risk"],
+  compliance: ["compliance", "regulatory", "osha", "audit"],
   hr: ["hr", "people", "policy", "hiring", "workforce"],
-  construction: ["construction", "contractor", "trades", "safety", "osha"],
-  developer_tools: ["developer", "devops", "api", "engineering", "saas"],
-  logistics: ["logistics", "supply chain", "shipping", "warehouse", "freight"],
+  construction: ["construction", "contractor", "trades", "safety"],
+  developer_tools: ["developer", "devops", "api", "engineering"],
+  logistics: ["logistics", "supply chain", "shipping", "warehouse"],
   public_sector: ["government", "public sector", "municipal", "federal"],
 };
 
@@ -57,14 +59,26 @@ export function getEffectivePreferences(
   return preferences;
 }
 
-function opportunityHaystack(opportunity: Opportunity): string {
+function buyerHaystack(opportunity: Opportunity): string {
   return [
-    opportunity.title,
-    opportunity.short_summary,
+    opportunity.primary_buyer,
     opportunity.target_buyer,
-    opportunity.underserved_segment,
-    opportunity.problem_summary,
+    opportunity.asset_strategy,
+    opportunity.best_first_asset,
+    ...(opportunity.secondary_buyers ?? []),
+    ...(opportunity.buyer_tags ?? []),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+}
+
+function industryHaystack(opportunity: Opportunity): string {
+  return [
+    ...(opportunity.industry_tags ?? []),
     ...(opportunity.tags ?? []),
+    opportunity.asset_strategy,
+    opportunity.best_first_asset,
   ]
     .filter(Boolean)
     .join(" ")
@@ -84,7 +98,7 @@ export function matchesIndustry(
     return true;
   }
 
-  const haystack = opportunityHaystack(opportunity);
+  const haystack = industryHaystack(opportunity);
 
   return industries.some((industry) => {
     const keywords = INDUSTRY_KEYWORDS[industry] ?? [industry.replace(/_/g, " ")];
@@ -100,34 +114,12 @@ export function matchesBuyerType(
     return true;
   }
 
-  const haystack = opportunityHaystack(opportunity);
+  const haystack = buyerHaystack(opportunity);
 
   return buyerTypes.some((buyerType) => {
     const keywords = BUYER_KEYWORDS[buyerType] ?? [buyerType.replace(/_/g, " ")];
     return keywords.some((keyword) => haystack.includes(keyword));
   });
-}
-
-function signalScore(
-  opportunity: Opportunity,
-  signal: keyof SignalPreferences
-): number | null {
-  switch (signal) {
-    case "pressure":
-      return opportunity.pressure_score;
-    case "demand":
-      return opportunity.demand_score;
-    case "wedge":
-      return opportunity.wedge_score;
-    case "friction":
-      return opportunity.buildability_score;
-    case "complaints":
-      return opportunity.pressure_score;
-    case "digital_infrastructure":
-      return opportunity.asset_fit_score;
-    default:
-      return null;
-  }
 }
 
 export function matchesSignalPreferences(
@@ -147,8 +139,8 @@ export function matchesSignalPreferences(
   }
 
   return enabledSignals.some(([signal]) => {
-    const score = signalScore(opportunity, signal);
-    return score != null && score >= SIGNAL_SCORE_THRESHOLD;
+    const strength = getSignalPreferenceStrength(opportunity, signal);
+    return strength >= SIGNAL_SCORE_THRESHOLD;
   });
 }
 
@@ -156,7 +148,7 @@ export function filterOpportunitiesByPreferences(
   opportunities: Opportunity[],
   preferences: UserPreferences | null,
   options: FeedFilterOptions = {}
-): Opportunity[] {
+): OpportunityFeedItem[] {
   const effective = getEffectivePreferences(preferences);
   const exploreOutsideFocus = options.exploreOutsideFocus ?? false;
 
@@ -172,17 +164,7 @@ export function filterOpportunitiesByPreferences(
     )
     .map((opportunity) => ({
       ...opportunity,
-      overall_score: applyPersonaScoring(
-        opportunity.overall_score,
-        effective.role,
-        {
-          pain: opportunity.pressure_score ?? 0,
-          demand: opportunity.demand_score ?? 0,
-          market: opportunity.wedge_score ?? 0,
-          buildability: opportunity.buildability_score ?? 0,
-          assetFit: opportunity.asset_fit_score ?? 0,
-        }
-      ),
+      ...computePersonaScore(opportunity, effective.role),
     }))
-    .sort((a, b) => b.overall_score - a.overall_score);
+    .sort((a, b) => b.persona_score - a.persona_score);
 }

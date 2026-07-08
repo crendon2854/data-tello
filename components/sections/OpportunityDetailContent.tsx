@@ -124,7 +124,7 @@ export function OpportunityDetailContent({
       </Link>
 
       <div className="mb-5 rounded-lg border border-border-subtle bg-bg-elevated/50 p-4">
-        <PersonaSelector value={personaId} onChange={setPersonaId} />
+        <PersonaSelector value={personaId} onChange={(id) => void setPersonaId(id)} />
       </div>
 
       {ready && (

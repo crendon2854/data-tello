@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { FilterBar } from "@/components/ui/FilterBar";
@@ -28,15 +28,7 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
   );
   const { personaId, lens, setPersonaId, ready } = usePersonaLens();
 
-  useEffect(() => {
-    if (prefsReady && preferences?.onboarding_completed) {
-      setPersonaId(preferences.role);
-    }
-  }, [prefsReady, preferences, setPersonaId]);
-
-  const personaConfig = getPersonaConfig(
-    preferences?.onboarding_completed ? preferences.role : "general"
-  );
+  const personaConfig = getPersonaConfig(personaId);
 
   const showExploreToggle =
     prefsReady &&
@@ -69,7 +61,11 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
         </div>
 
         <div className="mb-6 max-w-md">
-          <PersonaSelector value={personaId} onChange={setPersonaId} compact />
+          <PersonaSelector
+            value={personaId}
+            onChange={(id) => void setPersonaId(id)}
+            compact
+          />
         </div>
 
         {showExploreToggle && (
@@ -110,6 +106,7 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
                 opportunity={opportunity}
                 index={index}
                 cardAssetLabel={lens.cardAssetLabel}
+                personaScoreDelta={opportunity.persona_score_delta}
               />
             ))
           )}

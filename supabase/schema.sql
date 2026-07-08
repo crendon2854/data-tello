@@ -27,8 +27,16 @@ create table if not exists opportunities (
   pressure_score integer,
   demand_score integer,
   wedge_score integer,
+  freshness_score integer,
   buildability_score integer,
   asset_fit_score integer,
+  friction_score integer,
+  complaint_signal_strength integer,
+  primary_buyer text,
+  secondary_buyers text[] default '{}',
+  buyer_tags text[] default '{}',
+  industry_tags text[] default '{}',
+  asset_strategy text,
 
   -- Build strategy
   asset_path_1 text,

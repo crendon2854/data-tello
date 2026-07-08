@@ -37,8 +37,16 @@ export interface OpportunityRow {
   pressure_score: number | null;
   demand_score: number | null;
   wedge_score: number | null;
+  freshness_score: number | null;
   buildability_score: number | null;
   asset_fit_score: number | null;
+  friction_score: number | null;
+  complaint_signal_strength: number | null;
+  primary_buyer: string | null;
+  secondary_buyers: string[] | null;
+  buyer_tags: string[] | null;
+  industry_tags: string[] | null;
+  asset_strategy: string | null;
   asset_path_1: string | null;
   asset_path_2: string | null;
   asset_path_3: string | null;

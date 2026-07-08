@@ -11,6 +11,7 @@ interface SidebarProps {
 const dashboardItems = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/dashboard", label: "Opportunities" },
+  { href: "/preferences", label: "Preferences" },
 ];
 
 const adminItems = [

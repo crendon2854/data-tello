@@ -6,12 +6,14 @@ interface OpportunityCardProps {
   opportunity: Opportunity;
   index?: number;
   cardAssetLabel?: string;
+  personaScoreDelta?: number;
 }
 
 export function OpportunityCard({
   opportunity,
   index = 0,
   cardAssetLabel = "Start with",
+  personaScoreDelta,
 }: OpportunityCardProps) {
   const staggerClass =
     index === 1 ? "stagger-1" : index === 2 ? "stagger-2" : index >= 3 ? "stagger-3" : "";
@@ -39,6 +41,14 @@ export function OpportunityCard({
               Ready
             </span>
           </div>
+
+          {personaScoreDelta != null && personaScoreDelta !== 0 && (
+            <p className="mb-2 text-xs text-text-muted">
+              Lens rank adjustment: {personaScoreDelta > 0 ? "+" : ""}
+              {personaScoreDelta} (score {formatScore(opportunity.overall_score)}{" "}
+              unchanged)
+            </p>
+          )}
 
           {opportunity.best_first_asset && (
             <p className="mb-2 text-body">

@@ -28,6 +28,32 @@ function migratePreferences(raw: UserPreferences): UserPreferences {
   };
 }
 
+export function mergeUserPreferences(
+  local: UserPreferences,
+  remote: UserPreferences | null
+): UserPreferences {
+  if (!remote) {
+    return migratePreferences(local);
+  }
+
+  const localTime = Date.parse(local.updated_at);
+  const remoteTime = Date.parse(remote.updated_at);
+
+  if (Number.isNaN(remoteTime) || localTime >= remoteTime) {
+    return migratePreferences({
+      ...remote,
+      ...local,
+      user_id: local.user_id,
+    });
+  }
+
+  return migratePreferences({
+    ...local,
+    ...remote,
+    user_id: local.user_id,
+  });
+}
+
 export function loadLocalUserPreferences(): UserPreferences {
   const userId = getOrCreateUserId();
 

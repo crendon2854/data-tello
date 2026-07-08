@@ -24,26 +24,51 @@ type OnboardingDraft = {
   signal_preferences: UserPreferences["signal_preferences"];
 };
 
-interface OnboardingFlowProps {
-  onComplete: (preferences: UserPreferences) => Promise<void>;
-}
-
 function toggleValue(values: string[], value: string): string[] {
   return values.includes(value)
     ? values.filter((item) => item !== value)
     : [...values, value];
 }
 
-export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
+interface OnboardingFlowProps {
+  onComplete: (preferences: UserPreferences) => Promise<void>;
+  initialPreferences?: UserPreferences | null;
+  mode?: "onboarding" | "preferences";
+  redirectTo?: string;
+}
+
+function draftFromPreferences(
+  preferences?: UserPreferences | null
+): OnboardingDraft {
+  if (!preferences) {
+    return {
+      role: "general",
+      industries: [],
+      buyer_types: [],
+      signal_preferences: { ...DEFAULT_SIGNAL_PREFERENCES },
+    };
+  }
+
+  return {
+    role: preferences.role,
+    industries: preferences.industries,
+    buyer_types: preferences.buyer_types,
+    signal_preferences: { ...preferences.signal_preferences },
+  };
+}
+
+export function OnboardingFlow({
+  onComplete,
+  initialPreferences = null,
+  mode = "onboarding",
+  redirectTo = "/dashboard",
+}: OnboardingFlowProps) {
   const router = useRouter();
   const [step, setStep] = useState<OnboardingStep>(1);
   const [saving, setSaving] = useState(false);
-  const [draft, setDraft] = useState<OnboardingDraft>({
-    role: "general",
-    industries: [],
-    buyer_types: [],
-    signal_preferences: { ...DEFAULT_SIGNAL_PREFERENCES },
-  });
+  const [draft, setDraft] = useState<OnboardingDraft>(() =>
+    draftFromPreferences(initialPreferences)
+  );
 
   const canContinue = useMemo(() => {
     switch (step) {
@@ -70,19 +95,23 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
       buyer_types: draft.buyer_types,
       signal_preferences: draft.signal_preferences,
       onboarding_completed: true,
-      created_at: now,
+      created_at: initialPreferences?.created_at ?? now,
       updated_at: now,
     });
 
-    router.push("/dashboard");
+    router.push(redirectTo);
     setSaving(false);
   };
+
+  const title = mode === "preferences" ? "Update your preferences" : "Set up your focus";
+  const finishLabel =
+    mode === "preferences" ? "Save preferences" : "Show me opportunities";
 
   return (
     <PageContainer className="mx-auto max-w-2xl py-12">
       <div className="mb-8">
         <p className="command-meta mb-2">Personalization</p>
-        <h1 className="page-title">Set up your focus</h1>
+        <h1 className="page-title">{title}</h1>
         <p className="mt-2 text-body text-text-muted">
           Step {step} of 5 — same opportunity engine, tuned to how you work.
         </p>
@@ -291,7 +320,7 @@ export function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               disabled={saving}
               className="btn-primary disabled:opacity-40"
             >
-              {saving ? "Saving…" : "Show me opportunities"}
+              {saving ? "Saving…" : finishLabel}
             </button>
           )}
         </div>

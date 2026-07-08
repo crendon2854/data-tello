@@ -324,7 +324,9 @@ export const ICP_PERSONA_IDS: Role[] = [
   "venture_studio",
 ];
 
-export const PERSONA_LIST = ICP_PERSONA_IDS.map((id) => PERSONA_LENSES[id]);
+export const SELECTABLE_PERSONA_IDS: Role[] = [...ICP_PERSONA_IDS, "general"];
+
+export const PERSONA_LIST = SELECTABLE_PERSONA_IDS.map((id) => PERSONA_LENSES[id]);
 
 /** @deprecated Use PERSONA_LIST */
 export const ICP_PERSONA_LIST = PERSONA_LIST;

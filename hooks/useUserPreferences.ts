@@ -4,9 +4,10 @@ import { useCallback, useEffect, useState } from "react";
 import {
   getOrCreateUserId,
   loadLocalUserPreferences,
+  mergeUserPreferences,
   saveLocalUserPreferences,
 } from "@/lib/user-preferences-client";
-import { saveUserPreferences } from "@/lib/queries";
+import { getUserPreferences, saveUserPreferences } from "@/lib/queries";
 import { normalizeRole } from "@/lib/persona-lens";
 import {
   createDefaultUserPreferences,
@@ -18,15 +19,39 @@ export function useUserPreferences() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const local = loadLocalUserPreferences();
-    setPreferences(local);
-    setReady(true);
+    let cancelled = false;
+
+    async function hydrate() {
+      const userId = getOrCreateUserId();
+      const local = loadLocalUserPreferences();
+      let remote: UserPreferences | null = null;
+
+      try {
+        remote = await getUserPreferences(userId);
+      } catch (error) {
+        console.error("Failed to load remote user preferences:", error);
+      }
+
+      const merged = mergeUserPreferences(local, remote);
+      if (!cancelled) {
+        setPreferences(merged);
+        saveLocalUserPreferences(merged);
+        setReady(true);
+      }
+    }
+
+    void hydrate();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const updatePreferences = useCallback(
     async (next: UserPreferences) => {
       const migrated: UserPreferences = {
         ...next,
+        user_id: getOrCreateUserId(),
         role: normalizeRole(next.role),
         updated_at: new Date().toISOString(),
       };
@@ -35,7 +60,9 @@ export function useUserPreferences() {
       saveLocalUserPreferences(migrated);
 
       try {
-        await saveUserPreferences(migrated);
+        const saved = await saveUserPreferences(migrated);
+        setPreferences(saved);
+        saveLocalUserPreferences(saved);
       } catch (error) {
         console.error("Failed to sync user preferences:", error);
       }

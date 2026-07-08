@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { filterOpportunitiesByPreferences } from "@/lib/feed-filters";
 import { getDefaultFilters } from "@/lib/persona-lens";
-import type { Opportunity } from "@/types/opportunity";
+import type { Opportunity, OpportunityFeedItem } from "@/types/opportunity";
 import {
   DEFAULT_FILTERS,
   type OpportunityFilters,
@@ -37,7 +37,7 @@ export function useFilters(
   }, [opportunities, preferences, exploreOutsideFocus]);
 
   const filtered = useMemo(() => {
-    return preferenceFiltered.filter((opportunity) => {
+    return preferenceFiltered.filter((opportunity: OpportunityFeedItem) => {
       if (
         filters.assetType &&
         !opportunity.best_first_asset

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 import {
   DEFAULT_PERSONA_ID,
   getPersonaLens,
@@ -8,27 +8,7 @@ import {
   type PersonaId,
   type PersonaLens,
 } from "@/lib/persona-lens";
-import { loadLocalUserPreferences } from "@/lib/user-preferences-client";
-
-const STORAGE_KEY = "datatello-persona-lens";
-
-function readStoredPersonaId(): PersonaId {
-  if (typeof window === "undefined") {
-    return DEFAULT_PERSONA_ID;
-  }
-
-  const preferences = loadLocalUserPreferences();
-  if (preferences.onboarding_completed) {
-    return normalizeRole(preferences.role);
-  }
-
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return normalizeRole(stored);
-}
-
-function persistPersonaId(id: PersonaId) {
-  localStorage.setItem(STORAGE_KEY, id);
-}
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 export function loadPersonaPreference(
   storedValue?: string | null
@@ -37,26 +17,29 @@ export function loadPersonaPreference(
 }
 
 export function usePersonaLens() {
-  const [personaId, setPersonaIdState] = useState<PersonaId>(DEFAULT_PERSONA_ID);
-  const [ready, setReady] = useState(false);
+  const { preferences, ready, updatePreferences } = useUserPreferences();
 
-  useEffect(() => {
-    const normalized = readStoredPersonaId();
-    setPersonaIdState(normalized);
-
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && stored !== normalized) {
-      persistPersonaId(normalized);
+  const personaId: PersonaId = useMemo(() => {
+    if (!preferences) {
+      return DEFAULT_PERSONA_ID;
     }
+    return normalizeRole(preferences.role);
+  }, [preferences]);
 
-    setReady(true);
-  }, []);
+  const setPersonaId = useCallback(
+    async (id: PersonaId) => {
+      if (!preferences) {
+        return;
+      }
 
-  const setPersonaId = useCallback((id: PersonaId) => {
-    const normalized = normalizeRole(id);
-    setPersonaIdState(normalized);
-    persistPersonaId(normalized);
-  }, []);
+      const role = normalizeRole(id);
+      await updatePreferences({
+        ...preferences,
+        role,
+      });
+    },
+    [preferences, updatePreferences]
+  );
 
   const lens: PersonaLens = getPersonaLens(personaId);
 
