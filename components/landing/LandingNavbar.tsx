@@ -31,7 +31,7 @@ export function LandingNavbar() {
       <header className="glass-nav">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-6">
           <Link href="/" className="flex shrink-0 items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-blue-600 text-sm font-bold text-white shadow-glow-blue">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-glow text-sm font-bold text-white">
               D
             </span>
             <span className="text-sm font-bold tracking-wide text-text-primary">DataTello</span>
@@ -66,13 +66,10 @@ export function LandingNavbar() {
     <header className="glass-nav">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-5 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-blue-600 text-sm font-bold text-white shadow-glow-blue">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-glow text-sm font-bold text-white">
             D
           </span>
-          <div>
-            <span className="text-sm font-bold tracking-wide text-text-primary">DataTello</span>
-            <span className="ml-1 font-mono text-xs text-text-muted">INTELLIGENCE</span>
-          </div>
+          <span className="text-sm font-bold tracking-wide text-text-primary">DataTello</span>
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">

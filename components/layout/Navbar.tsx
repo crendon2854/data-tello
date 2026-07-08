@@ -25,7 +25,7 @@ export function Navbar() {
     <header className="glass-nav">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-6">
         <Link href="/" className="flex shrink-0 items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent-blue to-blue-600 text-sm font-bold text-white shadow-glow-blue">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-accent-blue to-accent-blue-glow text-sm font-bold text-white">
             D
           </span>
           <span className="text-sm font-bold tracking-wide text-text-primary">
