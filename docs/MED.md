@@ -59,7 +59,7 @@ It is a premium opportunity intelligence platform and decision-support system fo
 
 ### Validation amplifiers (after base opportunity formed)
 
-**Emerging Digital Infrastructure Signals** — four modules only. Strengthen confidence, urgency, asset decisions, and wedge clarity.
+**Emerging Digital Infrastructure Signals** — four modules only. Confidence amplifiers — not discovery layers, not standalone opportunity engines. Strengthen confidence, urgency, asset decisions, and wedge clarity after base validation.
 
 Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review.
 

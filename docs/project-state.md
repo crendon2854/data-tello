@@ -38,7 +38,7 @@ Full spec: [architecture.md](./architecture.md), [onboarding.md](./onboarding.md
 |------|--------|
 | Mock mode | Active when Supabase env vars unset |
 | Live Supabase | MVP tables wired via `lib/queries.ts` |
-| Persona execution lens | Active (agency, consultant, investor; venture studio pending in code) |
+| Persona execution lens | Active (agency, consultant, investor; venture_studio lens in code as `product_studio` — rename/align pending) |
 | Onboarding targeting | Documented only — not yet implemented |
 | Dev port | 3001 |
 | Build | Passing |

@@ -5,7 +5,8 @@ export type PersonaId =
   | "investor"
   | "operator"
   | "automation_builder"
-  | "product_studio";
+  | "product_studio"
+  | "venture_studio";
 
 export type SectionId =
   | "snapshot"
@@ -237,36 +238,83 @@ export const PERSONA_LENSES: Record<PersonaId, PersonaLens> = {
     id: "product_studio",
     label: "Product Studio",
     roleLabel: "Prioritize it",
-    description: "Compare bets, asset paths, and competitive entry for portfolio decisions.",
+    description:
+      "Legacy alias — use Venture Studio lens. Compare bets, operator fit, and repeated venture prioritization.",
     primaryCta: "Prioritize this bet",
     snapshotAssetLabel: "Prioritize this bet",
-    cardAssetLabel: "Best bet",
+    cardAssetLabel: "Venture bet",
     dashboardSubtitle:
-      "Pick an opportunity — each dossier supports portfolio prioritization and bet sizing.",
+      "Pick an opportunity — each dossier supports venture validation and operator matching.",
     detailIntro:
-      "Portfolio brief — same evidence, organized for bet comparison and strategic prioritization.",
+      "Venture brief — same evidence, organized for validation, operator fit, and repeated-bet prioritization.",
     signalHelperText:
-      "Higher scores mean stronger opportunity signal. Use these to rank bets against your portfolio.",
+      "Higher scores mean stronger underlying validation. Use these to rank bets against your studio portfolio.",
     sectionOrder: [
       "snapshot",
-      "signalBreakdown",
+      "whyThisExists",
+      "executionAngle",
       "buildStrategy",
       "competitiveAngle",
-      "executionAngle",
-      "whyThisExists",
+      "signalBreakdown",
       "whyThisMatters",
     ],
-    emphasizedSections: ["signalBreakdown", "buildStrategy", "competitiveAngle"],
+    emphasizedSections: ["whyThisExists", "executionAngle", "buildStrategy"],
     sectionTitles: {
       ...DEFAULT_SECTION_TITLES,
+      whyThisExists: "Validation Case",
+      executionAngle: "Operator / Venture Fit",
       buildStrategy: "Asset Bet Paths",
       competitiveAngle: "Right to Win",
     },
-    assetPathLabels: ["MVP bet", "Growth path", "Platform play"],
+    assetPathLabels: ["Validate first", "Operator match", "Scale venture"],
+  },
+  venture_studio: {
+    id: "venture_studio",
+    label: "Venture Studio",
+    roleLabel: "Validate it",
+    description:
+      "Validate concepts, match operators, and prioritize repeated venture bets — distinct from investor deal evaluation.",
+    primaryCta: "Prioritize this bet",
+    snapshotAssetLabel: "Prioritize this bet",
+    cardAssetLabel: "Venture bet",
+    dashboardSubtitle:
+      "Pick an opportunity — each dossier supports venture validation and operator matching.",
+    detailIntro:
+      "Venture brief — same evidence, organized for validation, operator fit, and repeated-bet prioritization.",
+    signalHelperText:
+      "Higher scores mean stronger underlying validation. Use these to rank bets against your studio portfolio.",
+    sectionOrder: [
+      "snapshot",
+      "whyThisExists",
+      "executionAngle",
+      "buildStrategy",
+      "competitiveAngle",
+      "signalBreakdown",
+      "whyThisMatters",
+    ],
+    emphasizedSections: ["whyThisExists", "executionAngle", "buildStrategy"],
+    sectionTitles: {
+      ...DEFAULT_SECTION_TITLES,
+      whyThisExists: "Validation Case",
+      executionAngle: "Operator / Venture Fit",
+      buildStrategy: "Asset Bet Paths",
+      competitiveAngle: "Right to Win",
+    },
+    assetPathLabels: ["Validate first", "Operator match", "Scale venture"],
   },
 };
 
 export const PERSONA_LIST = Object.values(PERSONA_LENSES);
+
+/** ICP execution lenses shown in product UI (excludes legacy builder/operator personas). */
+export const ICP_PERSONA_IDS: PersonaId[] = [
+  "agency",
+  "consultant",
+  "investor",
+  "venture_studio",
+];
+
+export const ICP_PERSONA_LIST = ICP_PERSONA_IDS.map((id) => PERSONA_LENSES[id]);
 
 export function getPersonaLens(id: PersonaId): PersonaLens {
   return PERSONA_LENSES[id] ?? PERSONA_LENSES[DEFAULT_PERSONA_ID];

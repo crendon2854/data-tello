@@ -17,9 +17,16 @@ Premium opportunity intelligence for agencies, consultants, investors, and ventu
 | Wedge | Can you sell into it? |
 | Friction | Are people failing to solve it? |
 | Complaints | Are real users repeatedly affected? |
-| Digital Infrastructure | Is new infrastructure accelerating this? |
 
-Steps 1–5 → Base Opportunity Confidence. Step 6 → confidence amplification.
+Steps 1–5 → Base Opportunity Confidence.
+
+### Confidence amplification (Step 6)
+
+| Amplifier | Question |
+|-----------|----------|
+| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? |
+
+Step 6 → confidence amplification only. Not a discovery layer. Not a standalone opportunity engine.
 
 ## Target ICP
 
@@ -36,16 +43,16 @@ Steps 1–5 → Base Opportunity Confidence. Step 6 → confidence amplification
 2. Demand Validation
 3. Market Wedge Validation
 4. Workflow Friction Signals — repeated execution failure; modifies Pain, Market, Buildability
-5. Complaint & Incident Signals — cluster-based; CFPB, FDA/MAUDE, NHTSA, FCC
+5. Complaint & Incident Signals — cluster-based realism layer; CFPB, FDA/MAUDE, NHTSA, FCC
 
-## Digital Infrastructure (four amplifiers only)
+## Digital Infrastructure (four confidence amplifiers only)
 
 - Agent Commerce Signals
 - Stablecoin Workflow Signals
 - Onchain Developer Tool Friction
 - Tokenized Data / Pay-Per-Use Data Signals
 
-Not discovery layers. Applied after base opportunity formed.
+Not discovery layers. Not standalone opportunity engines. Applied after base opportunity formed.
 
 ## Guardrails
 

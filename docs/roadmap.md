@@ -35,7 +35,7 @@ See [MED.md](./MED.md) for engineering workflow.
 
 ## Phase 5b — Strategic Repositioning ✅
 
-- [x] ICP: agencies, consultants, investors
+- [x] ICP: agencies, consultants, investors, venture studios / product studios
 - [x] Complaint & Incident and Digital Infrastructure documented
 - [x] Signal layer architecture rules
 - [x] Premium intelligence positioning

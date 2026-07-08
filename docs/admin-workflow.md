@@ -91,7 +91,7 @@ Reject: hobby/dev-only, vague complaints, consumer frustration, one-off feature 
 
 ## Step 7 — Complaint & Incident Signals Workspace
 
-**Mandatory core validation layer.**
+**Mandatory core validation layer — first-class realism layer.**
 
 Purpose:
 
@@ -117,29 +117,29 @@ This layer feeds Base Opportunity Confidence. It does not bypass scoring or guar
 
 ## Step 8 — Emerging Digital Infrastructure Signals Workspace
 
-**Validation amplifiers only — not discovery layers.** Applied after base opportunity formed.
+**Confidence amplifiers only — not discovery layers, not standalone opportunity engines.** Applied after base opportunity formed.
 
-Four sub-modules only:
+Four sub-modules only. Each answers a confidence question about an existing candidate — none surface new opportunities by themselves.
 
 ### Agent Commerce Signals
 
-Validates: Are machines already paying in this category?  
-Strengthens: Market Wedge, Early Demand
+Confidence question: Are machines already paying in this category?  
+Strengthens: Market Wedge, Early Demand confidence
 
 ### Stablecoin Workflow Signals
 
-Validates: Are real businesses struggling with new payment workflows?  
-Strengthens: Pain, Friction
+Confidence question: Are real businesses struggling with new payment workflows?  
+Strengthens: Pain, Friction confidence
 
 ### Onchain Developer Tool Friction
 
-Validates: Are people repeatedly failing to implement this?  
+Confidence question: Are people repeatedly failing to implement this?  
 Strengthens: Workflow Friction, Buildability clarity
 
 ### Tokenized Data / Pay-Per-Use Data Signals
 
-Validates: Is a new infrastructure layer forming around paid data/services?  
-Strengthens: Market Wedge, Asset Strategy
+Confidence question: Is a new infrastructure layer forming around paid data/services?  
+Strengthens: Market Wedge, Asset Strategy confidence
 
 Admin manages analytical records, trend summaries, and Weak/Moderate/Strong ratings per module.
 

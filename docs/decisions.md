@@ -92,9 +92,11 @@ Every ADR must include all five fields:
 
 ### 2026-07-08 Strategic repositioning and signal layer expansion
 
-**Context:** DataTello repositioned from builder-focused messaging to premium opportunity intelligence for agencies, consultants, and investors. Two expansion signal layers were added to the product architecture.
+> **Superseded in part** by [2026-07-08 Layered validation architecture and ICP expansion](#2026-07-08-layered-validation-architecture-and-icp-expansion). Complaint & Incident Signals are now **core Engine layer 5**, not an optional expansion layer. Venture Studio / Product Studio is a fourth ICP. Digital Infrastructure signals are confidence amplifiers only.
 
-**Decision:** Reframe all documentation and product messaging around evidence-backed build opportunities using structured signals, scoring, and guardrails. Primary ICP: agencies, consultants, investors. Add Complaint & Incident Signals as core expansion and Emerging Digital Infrastructure Signals as secondary expansion (four sub-modules only). Expansion layers are visual/analytical only — final opportunities determined by scoring engine, guardrails, and human review.
+**Context:** DataTello repositioned from builder-focused messaging to premium opportunity intelligence for agencies, consultants, and investors. Two signal layers were added to the product architecture.
+
+**Decision:** Reframe all documentation and product messaging around evidence-backed build opportunities using structured signals, scoring, and guardrails. Primary ICP: agencies, consultants, investors. Add Complaint & Incident Signals and Emerging Digital Infrastructure Signals (four sub-modules only). Signal layers are visual/analytical only — final opportunities determined by scoring engine, guardrails, and human review.
 
 **Alternatives:** Continue builder/indie-hacker positioning — rejected. Add DAO/compliance/grants sub-modules — rejected.
 
@@ -195,13 +197,12 @@ Freeze for V1:
 - Guardrail system (four rules)
 - Onboarding flow and ICP default lens model
 - Complaint & Incident Signals as core Engine layer 5
-- Emerging Digital Infrastructure Signals (four sub-modules only; amplifiers not discovery)
+- Emerging Digital Infrastructure Signals (four sub-modules only; confidence amplifiers — not discovery, not standalone opportunity engines)
 - Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
 - Asset Strategy and Competitive Differentiator Strategy (seven-section dossier)
 - Human review before publishing
-- Expansion signal layers are analytical only
 
 Revisit after V1:
 

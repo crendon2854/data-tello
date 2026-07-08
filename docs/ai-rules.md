@@ -27,9 +27,9 @@ Before implementing **ANY** feature:
 1. **Layered validation** — five core layers form Base Opportunity Confidence; digital infrastructure amplifies only.
 2. **No signal stands alone** — guardrails reject single-layer or infrastructure-only opportunities.
 3. **Friction modifies scoring** — not a standalone decision engine.
-4. **Complaints validate clusters** — CFPB, FDA/MAUDE, NHTSA, FCC; not isolated incidents.
-5. **Four digital infrastructure modules only** — no DAO, grants, or standalone onchain compliance modules.
-6. **ICP lens is presentation only** — never alter scores, signals, or evidence.
+4. **Complaints validate clusters** — first-class realism layer (core Engine layer 5); CFPB, FDA/MAUDE, NHTSA, FCC; not isolated incidents.
+5. **Four digital infrastructure modules only** — confidence amplifiers, not discovery layers or standalone opportunity engines; no DAO, grants, or standalone onchain compliance modules.
+6. **ICP lens is presentation only** — never alter scores, signals, or evidence. Consultant ≠ Agency default lens. Venture Studio ≠ Investor-only ICP.
 7. **Mock mode must always work**.
 8. **n8n is marketing automation only**.
 9. **Newsletter Engine and Dossier Builder are separate**.
@@ -78,5 +78,5 @@ Update: [current-task.md](./current-task.md), [project-state.md](./project-state
 - Do not build features marked out of scope in [roadmap.md](./roadmap.md)
 - Do not add charts, AI generation, analytics, or complex auth without explicit request
 - Do not merge Newsletter Engine and Dossier Builder responsibilities
-- Do not treat digital infrastructure signals as discovery layers
+- Do not treat digital infrastructure signals as discovery layers or standalone opportunity engines
 - Do not skip mock data updates when schema changes

@@ -37,7 +37,7 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 - Reframed ICP: agencies, consultants, investors
 - Updated all docs to evidence-backed build opportunities using structured signals, scoring, and guardrails
-- Added Complaint & Incident Signals as core expansion layer
+- Added Complaint & Incident Signals as core Engine layer 5 (realism layer; clusters; CFPB, FDA/MAUDE, NHTSA, FCC)
 - Added Emerging Digital Infrastructure Signals (four sub-modules only)
 - Documented architecture rule: expansion layers are visual/analytical; scoring engine + guardrails + human review determine final opportunities
 - Removed builder/indie-hacker/low-tier pricing messaging from docs and landing copy

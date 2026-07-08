@@ -64,7 +64,8 @@ When an item ships: update [backlog.md](./backlog.md), [project-state.md](./proj
 - [ ] `/preferences` edit page
 - [ ] Default dashboard filters from onboarding
 - [ ] Explore Mode — opportunities outside selected industries
-- [ ] Venture studio persona in `lib/persona-lens.ts`
+- [ ] Rename legacy `product_studio` to `venture_studio` in stored persona preferences
+- [x] Venture studio persona in `lib/persona-lens.ts` (`venture_studio`; legacy `product_studio` alias)
 - [ ] ICP-specific default lens (agency, consultant, investor, venture studio)
 
 Spec: [onboarding.md](./onboarding.md)

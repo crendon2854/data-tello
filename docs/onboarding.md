@@ -29,7 +29,9 @@ Same engine. Different post-login defaults and views.
 | **Investors** | What should we fund, validate, monitor, or compare as a thesis/deal opportunity? |
 | **Venture Studios / Product Studios** | What opportunities are worth validating, matching to operators, and prioritizing across repeated bets? |
 
-Venture Studios are **not** described as product consultants, fractional PMs, or idea validators alone. They are organizations that create ventures, validate concepts, recruit or match operators, and run repeated venture bets.
+Venture Studios are a **distinct ICP** — not a subtype of Investor. They are organizations that create ventures, validate concepts, recruit or match operators, and run repeated venture bets. They are **not** product consultants, fractional PMs, idea validators alone, or investor-only users.
+
+Consultants are a **distinct ICP** from Agencies. Same onboarding flow; **not** the same default lens. Consultants get advisory, memo, and recommendation framing — not packaging, white-label, or delivery-first emphasis.
 
 ---
 
@@ -98,6 +100,8 @@ The onboarding **flow** is shared. The **default lens** is not.
 
 **Default language:** recommendations, clients, advisory, memo / brief
 
+**Not Agency:** advisory and client-memo framing — not packaging, white-label exports, or delivery-first execution.
+
 **Post-login emphasis:**
 
 - Full dossier
@@ -110,6 +114,8 @@ The onboarding **flow** is shared. The **default lens** is not.
 ### Agency
 
 **Default language:** offers, clients, implementation, service + tool hybrid, delivery
+
+**Not Consultant:** packaging, implementation, and sellable offer framing — not standalone advisory or memo-first workflows.
 
 **Post-login emphasis:**
 
@@ -135,18 +141,17 @@ The onboarding **flow** is shared. The **default lens** is not.
 
 ### Venture Studio / Product Studio
 
-**Default language:** ventures, operators, validation, portfolio, repeated bets
+**Default language:** ventures, operators, validation, repeated bets, venture fit
 
 **Post-login emphasis:**
 
-- Opportunity validation
-- Operator/venture fit
-- Repeated-bet prioritization
-- Compare opportunities
-- Portfolio board / watchlist orientation
-- Team workflow and internal decision support
+- Venture validation and concept proof
+- Operator / venture fit and matching
+- Repeated-bet prioritization across a studio portfolio
+- Team workflow and internal venture decision support
+- Asset bet paths and what is worth spinning up next
 
-Shares investor-style evaluation lens for compare/monitor; distinct on operator matching and repeated-bet prioritization.
+**Distinct from Investor:** studios prioritize operator matching, repeated venture bets, and internal venture creation — not deal funding, thesis monitoring, or capital allocation alone. Compare / watchlist tools may overlap with investor workflows, but the default lens stays venture-studio-first.
 
 ---
 

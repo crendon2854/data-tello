@@ -17,9 +17,9 @@ Personas change only the **execution lens**: section emphasis, CTA wording, asse
 | Agency | Package it | Package this offer | What can we sell, implement, or productize for clients? |
 | Consultant | Advise it | Advise on this opportunity | What should we recommend or turn into a client memo? |
 | Investor | Evaluate it | Evaluate this market | What should we fund, validate, monitor, or compare? |
-| Venture Studio | Validate it | Prioritize this bet | What is worth validating and matching to operators? |
+| Venture Studio / Product Studio | Validate it | Prioritize this bet | What is worth validating, matching to operators, and prioritizing across repeated bets? |
 
-Implementation: `lib/persona-lens.ts`, `hooks/usePersonaLens.ts`, `components/ui/PersonaSelector.tsx`. Onboarding defaults: [onboarding.md](./onboarding.md).
+Implementation: `lib/persona-lens.ts` (`venture_studio`; legacy `product_studio` alias), `hooks/usePersonaLens.ts`, `components/ui/PersonaSelector.tsx`. Onboarding defaults: [onboarding.md](./onboarding.md).
 
 ### Persona Lens Rules
 
@@ -36,6 +36,8 @@ Implementation: `lib/persona-lens.ts`, `hooks/usePersonaLens.ts`, `components/ui
 
 DataTello does not discover opportunities from a single signal.
 
+### Base validation (Steps 1–5) → Base Opportunity Confidence
+
 | Layer | Question |
 |-------|----------|
 | Pressure | Is the problem forming? |
@@ -43,9 +45,14 @@ DataTello does not discover opportunities from a single signal.
 | Wedge | Can you sell into it? |
 | Friction | Are people failing to solve it? |
 | Complaints | Are real users repeatedly affected? |
-| Digital Infrastructure | Is new infrastructure accelerating this? |
 
-Steps 1–5 form **Base Opportunity Confidence**. Step 6 amplifies confidence after base validation.
+### Confidence amplification (Step 6) — after base opportunity formed
+
+| Amplifier | Question |
+|-----------|----------|
+| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? |
+
+Steps 1–5 form **Base Opportunity Confidence**. Step 6 amplifies confidence after base validation — it does **not** discover or create opportunities on its own.
 
 ### Core Engine (five layers)
 
@@ -55,14 +62,14 @@ Steps 1–5 form **Base Opportunity Confidence**. Step 6 amplifies confidence af
 4. **Workflow Friction Signals** — repeated execution failure; modifies Pain, Market, Buildability; not a standalone score or decision engine
 5. **Complaint & Incident Signals** — cluster-based real-world failure; strongest realism layer; strengthens Pain confidence, buyer specificity, urgency. Sources: CFPB, FDA/MAUDE, NHTSA, FCC
 
-### Digital Infrastructure (four amplifiers only)
+### Digital Infrastructure (four confidence amplifiers only)
 
-Not discovery layers. Applied after base opportunity formed:
+**Not discovery layers. Not standalone opportunity engines.** Applied only after base opportunity formed. Each module answers a confidence question about an existing candidate — it does not surface new opportunities by itself.
 
-- Agent Commerce Signals
-- Stablecoin Workflow Signals
-- Onchain Developer Tool Friction
-- Tokenized Data / Pay-Per-Use Data Signals
+- **Agent Commerce Signals** — strengthens Market Wedge and Early Demand confidence
+- **Stablecoin Workflow Signals** — strengthens Pain and Friction confidence
+- **Onchain Developer Tool Friction** — strengthens Workflow Friction and Buildability clarity
+- **Tokenized Data / Pay-Per-Use Data Signals** — strengthens Market Wedge and Asset Strategy confidence
 
 **Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
 
@@ -145,9 +152,16 @@ Visible scores: Pain, Demand, Market, Freshness, Buildability, Asset Fit.
 
 Internal modifiers: friction (not primary public score), digital infrastructure boost (confidence amplifier only).
 
-**Complaint & Incident summary** (when in scope): cluster patterns, recurrence, buyer impact.
+**Complaint & Incident realism layer** (required when complaint evidence exists — core Engine layer 5):
 
-**Digital Infrastructure Evidence** (when in scope):
+- cluster patterns and recurrence
+- buyer / user impact
+- operational breakdown confirmation
+- source mix (CFPB, FDA/MAUDE, NHTSA, FCC)
+
+This is a **first-class realism layer**, not an optional sidebar. It strengthens Pain confidence, buyer specificity, and urgency.
+
+**Digital Infrastructure Evidence** (confidence amplification only — shown when module ratings exist):
 
 | Module | Rating |
 |--------|--------|

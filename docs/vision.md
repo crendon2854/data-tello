@@ -12,7 +12,7 @@ DataTello is **not** a trend feed, a startup idea list, or a generic market scan
 
 ## Core Principle (Locked)
 
-Each validation layer answers a different question:
+Each base validation layer answers a different question:
 
 | Layer | Question |
 |-------|----------|
@@ -21,7 +21,10 @@ Each validation layer answers a different question:
 | Wedge | Can you sell into it? |
 | Friction | Are people failing to solve it? |
 | Complaints | Are real users repeatedly affected? |
-| Digital Infrastructure | Is new infrastructure accelerating this? |
+
+Steps 1–5 form **Base Opportunity Confidence**.
+
+**Confidence amplification (Step 6):** Digital Infrastructure signals strengthen confidence in an already-validated opportunity. They do **not** discover or create opportunities on their own.
 
 This layered architecture is the system's authentication layer. No single signal stands alone.
 
@@ -44,15 +47,15 @@ Onboarding and default lens: [onboarding.md](./onboarding.md).
 2. Demand Validation
 3. Market Wedge Validation
 4. Workflow Friction Signals
-5. Complaint & Incident Signals
+5. Complaint & Incident Signals — **mandatory core realism layer**
 
 These create **Base Opportunity Confidence**.
 
 Plus scoring, guardrails, and human review.
 
-### Validation amplifiers (after base opportunity formed)
+### Confidence amplifiers (after base opportunity formed)
 
-**Emerging Digital Infrastructure Signals** — four modules only. These are **not** discovery layers. They strengthen confidence, urgency, asset decisions, and wedge clarity.
+**Emerging Digital Infrastructure Signals** — four modules only. These are **not** discovery layers and **not** standalone opportunity engines. They strengthen confidence, urgency, asset decisions, and wedge clarity for opportunities already validated through Steps 1–5.
 
 ### System flow
 

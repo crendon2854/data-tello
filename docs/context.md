@@ -35,9 +35,16 @@ Each layer answers a different question:
 | Wedge | Can you sell into it? |
 | Friction | Are people failing to solve it? |
 | Complaints | Are real users repeatedly affected? |
-| Digital Infrastructure | Is new infrastructure accelerating this? |
 
-Steps 1–5 (Pressure through Complaints) form **Base Opportunity Confidence**. Step 6 (Digital Infrastructure) amplifies confidence — it does not replace base validation.
+Steps 1–5 (Pressure through Complaints) form **Base Opportunity Confidence**.
+
+### Confidence amplification (Step 6)
+
+| Amplifier | Question |
+|-----------|----------|
+| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? |
+
+Step 6 (Digital Infrastructure) amplifies confidence — it does not replace base validation and does not discover opportunities on its own.
 
 ---
 
@@ -102,6 +109,7 @@ Workflow Friction = repeated execution failure.
 
 ### Complaint & Incident Rule
 
+- **Mandatory core Engine layer 5** — first-class realism layer, not an optional add-on
 - Strongest realism layer for operational breakdown
 - Focuses on **clusters**, not individual complaints
 - Strengthens Pain confidence, buyer specificity, urgency
@@ -109,7 +117,7 @@ Workflow Friction = repeated execution failure.
 
 ### Digital Infrastructure Rule
 
-Four modules only — **validation amplifiers**, not discovery layers:
+Four modules only — **confidence amplifiers**, not discovery layers and not standalone opportunity engines:
 
 - Agent Commerce Signals
 - Stablecoin Workflow Signals

@@ -87,9 +87,16 @@ DataTello does **not** discover opportunities from a single signal. It validates
 | Wedge | Can you sell into it? |
 | Friction | Are people failing to solve it? |
 | Complaints | Are real users repeatedly affected? |
-| Digital Infrastructure | Is new infrastructure accelerating this? |
 
-This is the system's authentication layer.
+**Base Opportunity Confidence** is formed from Steps 1–5 only.
+
+### Confidence amplification (Step 6)
+
+| Amplifier | Question |
+|-----------|----------|
+| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? |
+
+Step 6 amplifies confidence after base validation. It does **not** discover or create opportunities on its own.
 
 ---
 
@@ -109,18 +116,18 @@ These create → **Base Opportunity Confidence**
 
 Plus Buildability Score, Asset Fit Decision, guardrails, and human review.
 
-### 2. Emerging Digital Infrastructure Signals (validation amplifiers)
+### 2. Emerging Digital Infrastructure Signals (confidence amplifiers)
 
-**Not discovery layers.** Applied only after a base opportunity is formed.
+**Not discovery layers. Not standalone opportunity engines.** Applied only after a base opportunity is formed. Each module strengthens confidence in an existing candidate — it does not surface new opportunities by itself.
 
 Four modules only:
 
-| Module | Validates | Strengthens |
-|--------|-----------|-------------|
-| **Agent Commerce Signals** | Are machines already paying in this category? | Market Wedge, Early Demand |
-| **Stablecoin Workflow Signals** | Are real businesses struggling with new payment workflows? | Pain, Friction |
+| Module | Confidence question | Strengthens |
+|--------|---------------------|-------------|
+| **Agent Commerce Signals** | Are machines already paying in this category? | Market Wedge, Early Demand confidence |
+| **Stablecoin Workflow Signals** | Are real businesses struggling with new payment workflows? | Pain, Friction confidence |
 | **Onchain Developer Tool Friction** | Are people repeatedly failing to implement this? | Workflow Friction, Buildability clarity |
-| **Tokenized Data / Pay-Per-Use Data Signals** | Is a new infrastructure layer forming around paid data/services? | Market Wedge, Asset Strategy |
+| **Tokenized Data / Pay-Per-Use Data Signals** | Is a new infrastructure layer forming around paid data/services? | Market Wedge, Asset Strategy confidence |
 
 Do **not** add DAO signals, grants, onchain compliance as a standalone user-facing module, or other sub-modules without an ADR.
 
@@ -182,7 +189,7 @@ MVP sources: GitHub issues, Stack Exchange, Greenhouse, Lever job postings.
 
 ### Complaint & Incident Signals
 
-**Mandatory core layer.**
+**Mandatory core layer — first-class realism layer.**
 
 - Detects repeated real-world failure
 - Strongest realism layer for operational breakdown

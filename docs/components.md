@@ -8,7 +8,7 @@ See [MED.md](./MED.md) for documentation governance. Section components follow [
 |-----------|---------|
 | `Card` | Section wrapper — rounded, padding, shadow, optional title |
 | `FilterBar` | Industry, buyer, signal type, asset type, min score, tag filters |
-| `PersonaSelector` | ICP execution lens picker (agency, consultant, investor, venture studio) |
+| `PersonaSelector` | ICP execution lens picker (agency, consultant, investor, venture studio) — uses `ICP_PERSONA_LIST` |
 
 ## Layout (`/components/layout`)
 
