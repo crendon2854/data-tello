@@ -4,10 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import {
   DEFAULT_PERSONA_ID,
   getPersonaLens,
-  normalizePersonaId,
+  normalizeRole,
   type PersonaId,
   type PersonaLens,
 } from "@/lib/persona-lens";
+import { loadLocalUserPreferences } from "@/lib/user-preferences-client";
 
 const STORAGE_KEY = "datatello-persona-lens";
 
@@ -16,8 +17,13 @@ function readStoredPersonaId(): PersonaId {
     return DEFAULT_PERSONA_ID;
   }
 
+  const preferences = loadLocalUserPreferences();
+  if (preferences.onboarding_completed) {
+    return normalizeRole(preferences.role);
+  }
+
   const stored = localStorage.getItem(STORAGE_KEY);
-  return normalizePersonaId(stored);
+  return normalizeRole(stored);
 }
 
 function persistPersonaId(id: PersonaId) {
@@ -27,7 +33,7 @@ function persistPersonaId(id: PersonaId) {
 export function loadPersonaPreference(
   storedValue?: string | null
 ): PersonaId {
-  return normalizePersonaId(storedValue);
+  return normalizeRole(storedValue);
 }
 
 export function usePersonaLens() {
@@ -47,8 +53,9 @@ export function usePersonaLens() {
   }, []);
 
   const setPersonaId = useCallback((id: PersonaId) => {
-    setPersonaIdState(id);
-    persistPersonaId(id);
+    const normalized = normalizeRole(id);
+    setPersonaIdState(normalized);
+    persistPersonaId(normalized);
   }, []);
 
   const lens: PersonaLens = getPersonaLens(personaId);

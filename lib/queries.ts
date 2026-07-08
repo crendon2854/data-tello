@@ -42,6 +42,8 @@ import type {
   WorkflowFrictionSignalWithProblemZone,
   ZoneRow,
 } from "@/types/database";
+import type { UserPreferences } from "@/types/user-preferences";
+import { normalizeRole } from "@/lib/persona-lens";
 
 let mockStore = [...mockOpportunities];
 let mockSourceStore = [...mockSources];
@@ -52,6 +54,108 @@ let mockKeywordSetStore = [...mockKeywordSets];
 let mockKeywordMetricStore = [...mockKeywordMetrics];
 let mockMarketProofStore = [...mockMarketProofRecords];
 let mockWorkflowFrictionStore = [...mockWorkflowFrictionSignals];
+const mockUserPreferencesStore = new Map<string, UserPreferences>();
+
+function rowToUserPreferences(row: {
+  user_id: string;
+  role: string;
+  industries: string[] | null;
+  buyer_types: string[] | null;
+  signal_preferences: UserPreferences["signal_preferences"] | null;
+  onboarding_completed: boolean;
+  created_at: string;
+  updated_at: string;
+}): UserPreferences {
+  return {
+    user_id: row.user_id,
+    role: normalizeRole(row.role),
+    industries: row.industries ?? [],
+    buyer_types: row.buyer_types ?? [],
+    signal_preferences: row.signal_preferences ?? {
+      pressure: true,
+      demand: true,
+      wedge: true,
+      friction: true,
+      complaints: true,
+      digital_infrastructure: true,
+    },
+    onboarding_completed: row.onboarding_completed,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+  };
+}
+
+export async function getUserPreferences(
+  userId: string
+): Promise<UserPreferences | null> {
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("user_preferences")
+      .select("*")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    if (error) {
+      console.error(
+        "Supabase getUserPreferences failed, using mock fallback:",
+        error.message
+      );
+      return mockUserPreferencesStore.get(userId) ?? null;
+    }
+
+    return data ? rowToUserPreferences(data) : null;
+  }
+
+  return mockUserPreferencesStore.get(userId) ?? null;
+}
+
+export async function saveUserPreferences(
+  preferences: UserPreferences
+): Promise<UserPreferences> {
+  const payload = {
+    user_id: preferences.user_id,
+    role: normalizeRole(preferences.role),
+    industries: preferences.industries,
+    buyer_types: preferences.buyer_types,
+    signal_preferences: preferences.signal_preferences,
+    onboarding_completed: preferences.onboarding_completed,
+    updated_at: new Date().toISOString(),
+  };
+
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("user_preferences")
+      .upsert(
+        {
+          ...payload,
+          created_at: preferences.created_at,
+        },
+        { onConflict: "user_id" }
+      )
+      .select("*")
+      .single();
+
+    if (error) {
+      console.error(
+        "Supabase saveUserPreferences failed, using mock fallback:",
+        error.message
+      );
+      const saved = { ...preferences, ...payload };
+      mockUserPreferencesStore.set(preferences.user_id, saved);
+      return saved;
+    }
+
+    return rowToUserPreferences(data);
+  }
+
+  const saved = { ...preferences, ...payload };
+  mockUserPreferencesStore.set(preferences.user_id, saved);
+  return saved;
+}
 
 export async function getOpportunities(): Promise<OpportunityRow[]> {
   const supabase = getSupabase();

@@ -1,17 +1,43 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { filterOpportunitiesByPreferences } from "@/lib/feed-filters";
+import { getDefaultFilters } from "@/lib/persona-lens";
 import type { Opportunity } from "@/types/opportunity";
 import {
   DEFAULT_FILTERS,
   type OpportunityFilters,
 } from "@/types/opportunity";
+import type { UserPreferences } from "@/types/user-preferences";
 
-export function useFilters(opportunities: Opportunity[]) {
-  const [filters, setFilters] = useState<OpportunityFilters>(DEFAULT_FILTERS);
+type UseFiltersOptions = {
+  preferences?: UserPreferences | null;
+  exploreOutsideFocus?: boolean;
+};
+
+export function useFilters(
+  opportunities: Opportunity[],
+  options: UseFiltersOptions = {}
+) {
+  const { preferences = null, exploreOutsideFocus = false } = options;
+
+  const initialFilters = useMemo(() => {
+    if (preferences?.onboarding_completed) {
+      return getDefaultFilters(preferences.role);
+    }
+    return DEFAULT_FILTERS;
+  }, [preferences]);
+
+  const [filters, setFilters] = useState<OpportunityFilters>(initialFilters);
+
+  const preferenceFiltered = useMemo(() => {
+    return filterOpportunitiesByPreferences(opportunities, preferences, {
+      exploreOutsideFocus,
+    });
+  }, [opportunities, preferences, exploreOutsideFocus]);
 
   const filtered = useMemo(() => {
-    return opportunities.filter((opportunity) => {
+    return preferenceFiltered.filter((opportunity) => {
       if (
         filters.assetType &&
         !opportunity.best_first_asset
@@ -36,7 +62,7 @@ export function useFilters(opportunities: Opportunity[]) {
 
       return true;
     });
-  }, [opportunities, filters]);
+  }, [preferenceFiltered, filters]);
 
   const updateFilter = <K extends keyof OpportunityFilters>(
     key: K,
@@ -45,7 +71,7 @@ export function useFilters(opportunities: Opportunity[]) {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  const resetFilters = () => setFilters(DEFAULT_FILTERS);
+  const resetFilters = () => setFilters(initialFilters);
 
   return { filters, filtered, updateFilter, resetFilters };
 }
