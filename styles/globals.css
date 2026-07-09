@@ -172,145 +172,27 @@
   }
 
   .sidebar-rail {
-    @apply relative sticky top-[calc(3.5rem+1rem)] ml-4 mr-0 flex h-[calc(100vh-3.5rem-2rem)] w-[15.5rem] shrink-0;
-  }
-
-  .sidebar-spine {
-    @apply pointer-events-none absolute bottom-4 left-0 top-4 w-px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(62, 207, 142, 0.45) 18%,
-      rgba(62, 207, 142, 0.75) 50%,
-      rgba(62, 207, 142, 0.45) 82%,
-      transparent 100%
-    );
-  }
-
-  .sidebar-spine-glow {
-    @apply absolute inset-y-6 -left-1 w-2 rounded-full blur-md;
-    background: rgba(62, 207, 142, 0.22);
-    animation: pulse-glow 3s ease-in-out infinite;
-  }
-
-  .sidebar-panel {
-    @apply relative ml-3 flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-500/10 shadow-subtle-glow ring-1 ring-emerald-500/5 backdrop-blur-xl;
-    background: linear-gradient(
-      165deg,
-      rgba(6, 24, 16, 0.92) 0%,
-      rgba(4, 15, 9, 0.78) 48%,
-      rgba(3, 10, 6, 0.88) 100%
-    );
-  }
-
-  .sidebar-ambient {
-    @apply pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full blur-3xl;
-    background: radial-gradient(
-      circle,
-      rgba(62, 207, 142, 0.14) 0%,
-      transparent 70%
-    );
+    @apply flex w-52 shrink-0 flex-col border-r border-border bg-bg-secondary;
   }
 
   .sidebar-header {
-    @apply relative border-b border-emerald-500/10 px-4 pb-4 pt-5;
-  }
-
-  .sidebar-brand {
-    @apply flex items-center gap-3 transition-opacity duration-300 hover:opacity-90;
-  }
-
-  .sidebar-monogram {
-    @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-mono text-[11px] font-bold tracking-tight text-[#020704];
-    background: linear-gradient(135deg, #3ecf8e 0%, #2eb574 55%, #5eead4 100%);
-    box-shadow:
-      0 0 0 1px rgba(62, 207, 142, 0.35),
-      0 0 24px rgba(62, 207, 142, 0.18);
-  }
-
-  .sidebar-live-dot {
-    @apply h-1.5 w-1.5 shrink-0 rounded-full bg-accent-success;
-    box-shadow: 0 0 8px rgba(0, 197, 115, 0.55);
-    animation: pulse-glow 2s ease-in-out infinite;
+    @apply border-b border-border px-4 py-4;
   }
 
   .sidebar-nav {
-    @apply relative flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4;
-  }
-
-  .sidebar-nav-label {
-    @apply mb-3 px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-text-dim;
+    @apply flex flex-1 flex-col gap-0.5 overflow-y-auto p-3;
   }
 
   .sidebar-link {
-    @apply group relative flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium text-text-secondary transition-all duration-300;
-  }
-
-  .sidebar-link:hover {
-    @apply translate-x-0.5 bg-bg-elevated/50 text-text-primary;
+    @apply flex items-center gap-3 rounded-md px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-bg-elevated hover:text-text-primary;
   }
 
   .sidebar-link-active {
-    @apply relative flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-[13px] font-medium text-accent-brand transition-all duration-300;
-    background: linear-gradient(
-      90deg,
-      rgba(62, 207, 142, 0.14) 0%,
-      rgba(62, 207, 142, 0.04) 100%
-    );
-    box-shadow:
-      inset 0 0 0 1px rgba(62, 207, 142, 0.12),
-      0 0 20px rgba(62, 207, 142, 0.06);
-  }
-
-  .sidebar-link-index {
-    @apply w-5 shrink-0 font-mono text-[10px] tracking-wider text-text-dim transition-colors duration-300;
-  }
-
-  .sidebar-link:hover .sidebar-link-index {
-    @apply text-text-muted;
-  }
-
-  .sidebar-link-active .sidebar-link-index {
-    @apply text-accent-brand;
-  }
-
-  .sidebar-link-icon-svg {
-    @apply h-4 w-4 shrink-0 text-text-muted transition-all duration-300;
-  }
-
-  .sidebar-link:hover .sidebar-link-icon-svg {
-    @apply text-text-secondary;
-  }
-
-  .sidebar-link-active .sidebar-link-icon-svg {
-    @apply text-accent-brand;
-  }
-
-  .sidebar-link-arrow {
-    @apply h-3 w-3 shrink-0 text-accent-brand opacity-0 transition-all duration-300;
-    transform: translate(-4px, 4px);
-  }
-
-  .sidebar-link:hover .sidebar-link-arrow,
-  .sidebar-link-active .sidebar-link-arrow {
-    @apply opacity-60;
-    transform: translate(0, 0);
+    @apply flex items-center gap-3 rounded-md bg-emerald-500/5 px-3 py-2 text-sm text-accent-brand;
   }
 
   .sidebar-footer {
-    @apply relative border-t border-emerald-500/10 p-3;
-  }
-
-  .sidebar-exit {
-    @apply flex items-center gap-2.5 rounded-xl border border-emerald-500/10 bg-bg-elevated/40 px-3 py-2.5 text-xs font-medium text-text-secondary transition-all duration-300 hover:border-emerald-500/20 hover:bg-bg-elevated/70 hover:text-text-primary;
-  }
-
-  .sidebar-exit-icon {
-    @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-bg-surface text-text-muted transition-colors duration-300;
-  }
-
-  .sidebar-exit:hover .sidebar-exit-icon {
-    @apply text-accent-brand;
+    @apply mt-auto border-t border-border p-3;
   }
 
   .command-meta {

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogoMark } from "@/components/ui/LogoMark";
 import { cn } from "@/lib/helpers";
 
 const appLinks = [
@@ -25,11 +24,8 @@ export function Navbar() {
   return (
     <header className="glass-nav">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-6">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <LogoMark />
-          <span className="text-sm font-bold tracking-wide text-text-primary">
-            DataTello
-          </span>
+        <Link href="/" className="shrink-0 text-sm font-bold tracking-wide text-text-primary">
+          DataTello
         </Link>
 
         {isLanding ? (
