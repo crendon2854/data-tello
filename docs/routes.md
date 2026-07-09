@@ -9,7 +9,7 @@ See [MED.md](./MED.md) for documentation governance. **This file is the single s
 | `/` | Public | Landing — hero, CTA, sample opportunity card |
 | `/onboarding` | App | ICP targeting flow (3–5 steps) — planned |
 | `/preferences` | App | Edit user_type, industries, buyer_types, signal_types — planned |
-| `/dashboard` | App | Paid opportunity library with default filters from onboarding |
+| `/dashboard` | App | Decision engine home — **Recommended for You**, **Top Opportunities This Week**, filtered library |
 | `/opportunity/[id]` | App | Full Dashboard Brief View / Opportunity Dossier |
 | `/opportunity/[id]/pdf` | App | Download or regenerate PDF Dossier |
 | `/newsletter` | Public | Free subscriber capture for Weekly Signal Brief |
@@ -21,7 +21,7 @@ Onboarding spec: [onboarding.md](./onboarding.md).
 
 | Step | Route (proposed) | Captures |
 |------|------------------|----------|
-| 1 | `/onboarding/type` | `user_type` |
+| 1 | `/onboarding/type` | `user_type` (role: agency, consultant, investor, venture_studio, general) |
 | 2 | `/onboarding/industries` | `industries[]` |
 | 3 | `/onboarding/buyer` | `buyer_types[]` |
 | 4 | `/onboarding/signals` | `signal_types[]` |
@@ -50,7 +50,7 @@ After completion, redirect to `/dashboard` with default filters applied.
 | `/admin/review` | Admin | Human Review Queue |
 | `/admin/watchlist` | Admin | Watchlist Admin |
 | `/admin/dossiers` | Admin | Dossier Builder / PDF templates / export history |
-| `/admin/newsletter` | Admin | Newsletter Engine |
+| `/admin/newsletter` | Admin | Newsletter Engine — Weekly Signal Brief composer |
 | `/admin/system-health` | Admin | Connector status, failed syncs, repair logs |
 | `/admin/settings` | Admin | Rules, thresholds, defaults, affiliate settings |
 
@@ -66,6 +66,17 @@ After completion, redirect to `/dashboard` with default filters applied.
 - **Dashboard layout** — Sidebar/filter panel; default filters from onboarding preferences (when implemented)
 - **Admin layout** — Admin sidebar on all `/admin/*` routes
 - **Dossier pages** — Section-driven cards matching [med-sections.md](./med-sections.md)
+
+## Dashboard Layout Rules
+
+Dashboard renders in this order:
+
+1. **Recommended for You** — Decision Layer top pick
+2. **Top Opportunities This Week** — ranked secondary list
+3. Filtered opportunity grid — default filters from onboarding
+4. FilterBar — manual override always available
+
+**Start Here** CTA anchor-scrolls to Build Strategy (agency/consultant) or Asset Thesis (investor/venture_studio) on detail page.
 
 ## Dashboard Filter Rules
 

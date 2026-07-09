@@ -1,6 +1,6 @@
 # Current Task
 
-Documentation Version: 1.3  
+Documentation Version: 1.4  
 Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
@@ -13,63 +13,58 @@ Overall status: [project-state.md](./project-state.md)
 
 ## Milestone
 
-**Phase 5c — MVP Architecture Separation** ✅ complete (docs locked)
+**Phase 5d — Decision Layer & Role-Aware Output** ✅ complete (docs locked)
 
-**Phase 7–9 — MVP Source Stack Code Alignment** ← active now
+**Phase 18 — Decision Layer Implementation** ← active now
 
-Align runtime code, admin UI, seed data, and scoring with the locked MVP architecture in [architecture.md](./architecture.md). Prove the compliance + contractor + public-sector wedge in software — not just in docs.
+Implement the Decision Layer and dashboard surfaces documented in [architecture.md](./architecture.md). Core validation engine (Pressure, Demand, Wedge, Friction, Procurement, scoring, guardrails, dossier structure) stays **unchanged**.
 
 ---
 
 ## Current Objective
 
-Close the gap between **documented MVP** and **shipped code**. The app still references GitHub friction, investor ICPs, complaint modifiers, and digital infrastructure scoring that are explicitly out of MVP scope.
+Ship `getRecommendedOpportunity()` and dashboard UI so DataTello answers:
 
-Success = admin, mock data, scoring, and onboarding all reflect the MVP source stack and target customer (builders, agencies, consultants).
+> For **this** user → what should they build or act on **first**?
+
+Success = dashboard leads with **Recommended for You**, shows **Top Opportunities This Week**, and generates 3 "why this fits" bullets per recommendation.
 
 ---
 
 ## Task Breakdown
 
-### 1. Source registry + seed alignment
+### 1. Decision Layer core
 
-- [ ] `supabase/seed.sql` — MVP sources only: OSHA, EPA ECHO, Federal Register, DataForSEO, SAM.gov, USAspending
-- [ ] `lib/mock-data.ts` — mock sources and signals match MVP wedge (no GitHub as active friction source)
-- [ ] `app/admin/sources/page.tsx` — phase labels on sources (MVP vs Phase 2 vs Future)
-- [ ] Register SAM.gov in `sources` table (currently lives only in `lib/procurement/*`)
+- [ ] `lib/decision-layer.ts` — `getRecommendedOpportunity(userPreferences, opportunities[])`
+- [ ] Ranking: role + industries + buyer types + signal prefs + scores + friction/procurement modifiers
+- [ ] Return `{ topRecommendation, rankedTop3 }`
+- [ ] Recommendation guardrails: skip if buildability unclear, buyer unclear, <2 evidence layers, confidence Low
+- [ ] Generate `recommended_reason[]` — 3 personalization bullets
 
-### 2. Workflow friction admin (MVP sources)
+### 2. Confidence + speed metrics
 
-- [ ] `app/admin/friction/page.tsx` — replace GitHub/Stack Exchange/Greenhouse/Lever with:
-  - Targeted job postings
-  - Procurement language
-  - RFP language
-- [ ] Mark developer friction sources as Phase 2 (disabled or labeled, not removed from architecture)
+- [ ] Calculate `confidence_level` (Low / Medium / High) from evidence layers, buyer clarity, buildability
+- [ ] Calculate `time_to_value` (Fast / Medium / Slow) from friction, procurement, asset type, build complexity
+- [ ] Schema + types: `recommended_rank_score`, `recommended_reason`, `confidence_level`, `role_visibility_config`
 
-### 3. Procurement validation (first-class MVP step)
+### 3. Dashboard UI
 
-- [ ] Admin workspace for procurement validation (upgrade market-proof or dedicated route)
-- [ ] Wire `lib/procurement/*` into opportunity scoring path
-- [ ] `procurement_score` as hidden modifier in `lib/scoring.ts` (alongside friction)
-- [ ] Remove or gate complaint / digital infrastructure modifiers from MVP scoring path
+- [ ] `components/dashboard/RecommendedCard.tsx` — title, asset, 3 bullets, confidence, TTV, CTAs
+- [ ] `components/dashboard/TopOpportunities.tsx` — sort by score, freshness, procurement strength
+- [ ] Wire into `components/sections/DashboardContent.tsx` — Recommended → Top Opportunities → grid
+- [ ] "View Opportunity" + "Start Here" (anchor to Build Strategy / Asset Thesis)
 
-### 4. Scoring + dossier UI
+### 4. Role-Aware Output (Phase 19 — may follow Phase 18)
 
-- [ ] `components/sections/SignalBreakdown.tsx` — procurement evidence panel (MVP)
-- [ ] Do not render complaint or digital infrastructure panels in MVP dossiers
-- [ ] `components/admin/OpportunityForm.tsx` — procurement_score field; remove digital_infrastructure_boost from MVP admin
-- [ ] `types/opportunity.ts` / `types/database.ts` — `procurement_score` field parity
+- [ ] `components/sections/AssetThesis.tsx` — investor / venture_studio
+- [ ] `components/sections/BuilderFitStrategy.tsx` — agency / consultant only
+- [ ] `lib/dossier-content.ts` — `role_visibility_config` gating
+- [ ] Hide tool stack / build paths for investor / venture_studio
 
-### 5. Onboarding + ICP (MVP customer)
+### 5. Newsletter engine (Phase 11 overlap)
 
-- [ ] `app/onboarding/page.tsx` / `components/onboarding/OnboardingFlow.tsx` — Builder as primary user type
-- [ ] `lib/persona-lens.ts` — MVP defaults for builder, agency, consultant; investor/studio deprioritized (future segment)
-- [ ] `types/user-preferences.ts` — `builder` user type if missing
-- [ ] Signal preferences — MVP layers only (hide complaint/digital infra as "coming soon")
-
-### 6. Landing + messaging verification
-
-- [ ] Confirm `components/landing/landing-data.ts` matches [vision.md](./vision.md) (done in prior pass — verify only)
+- [ ] `lib/newsletter-engine/` — Weekly Signal Brief composer
+- [ ] 3 signals, 1 featured opportunity, asset teaser, dashboard CTA — no full dossier
 
 ---
 
@@ -77,16 +72,13 @@ Success = admin, mock data, scoring, and onboarding all reflect the MVP source s
 
 | Area | Files |
 |------|-------|
-| Schema + seed | `supabase/schema.sql`, `supabase/seed.sql` |
-| Types | `types/database.ts`, `types/opportunity.ts`, `types/user-preferences.ts`, `types/procurement.ts` |
-| Data + queries | `lib/mock-data.ts`, `lib/mock-opportunities.ts`, `lib/queries.ts` |
-| Scoring | `lib/scoring.ts`, `lib/procurement/scoring.ts`, `lib/procurement/integration.ts` |
-| Admin UI | `app/admin/sources/page.tsx`, `app/admin/friction/page.tsx`, `app/admin/market-proof/page.tsx`, `components/admin/OpportunityForm.tsx` |
-| Dossier UI | `components/sections/SignalBreakdown.tsx`, `lib/dossier-content.ts` |
-| Onboarding | `app/onboarding/page.tsx`, `components/onboarding/OnboardingFlow.tsx`, `lib/persona-lens.ts` |
-| Docs (on completion) | `docs/project-state.md`, `docs/backlog.md`, `docs/implementation-index.md`, `docs/changelog.md` |
-
-Full map: [implementation-index.md](./implementation-index.md)
+| Decision Layer | `lib/decision-layer.ts` (new) |
+| Schema + types | `supabase/schema.sql`, `types/database.ts`, `types/opportunity.ts`, `types/user-preferences.ts` |
+| Dashboard UI | `components/dashboard/RecommendedCard.tsx`, `TopOpportunities.tsx`, `components/sections/DashboardContent.tsx` |
+| Dossier role output | `lib/dossier-content.ts`, `components/sections/AssetThesis.tsx`, `BuilderFitStrategy.tsx` |
+| Newsletter | `lib/newsletter-engine/*` (new) |
+| Mock data | `lib/mock-opportunities.ts` — sample `recommended_reason`, `confidence_level` |
+| Docs (on completion) | `project-state.md`, `backlog.md`, `implementation-index.md`, `changelog.md` |
 
 ---
 
@@ -94,57 +86,23 @@ Full map: [implementation-index.md](./implementation-index.md)
 
 | Dependency | Status | Notes |
 |------------|--------|-------|
-| Phase 5c docs locked | ✅ | [architecture.md](./architecture.md), [roadmap.md](./roadmap.md) |
-| Phase 6 Supabase + mock fallback | ✅ | `lib/queries.ts` |
-| SAM.gov procurement pipeline | ✅ partial | `lib/procurement/*` exists — needs registry + admin + scoring wire-up |
-| DataForSEO connector | ⚠️ partial | Admin keywords page is placeholder |
-| Persona scoring + preferences | ✅ | `lib/scoring.ts`, `lib/feed-filters.ts` |
-| Seven-section dossier components | ✅ | `components/sections/*` |
-| Human review queue | ✅ basic | `/admin/review` — upgrade guardrail display in Phase 8 |
-
----
-
-## Risks
-
-| Risk | Mitigation |
-|------|------------|
-| **Doc vs code drift persists** | Treat `architecture.md` as acceptance spec; check each file against MVP source table |
-| **Breaking mock mode** | Every schema/type change must keep `lib/mock-data.ts` fallback working |
-| **Over-scoping into Phase 2** | Do not build complaint connectors or GitHub friction — label as future only |
-| **Scoring regression** | Keep `overall_score` truth layer; procurement modifier is hidden, not a new public score |
-| **Onboarding breakage** | Add `builder` type without removing existing types (investor/studio stay for future) |
-| **SAM.gov API dependency** | Procurement admin should work with mock data when API key absent |
+| Phase 5d docs locked | ✅ | [architecture.md](./architecture.md), [med-sections.md](./med-sections.md), [onboarding.md](./onboarding.md) |
+| Onboarding + preferences | ✅ | Feeds Decision Layer inputs |
+| Scoring + guardrails | ✅ | Unchanged — ranking consumes existing scores |
+| Seven-section dossier | ✅ | Unchanged — role visibility is presentation layer |
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] Source registry and seed reflect MVP stack only (future sources labeled, not deleted)
-- [ ] Friction admin shows job postings / procurement / RFP — not GitHub/Stack Exchange as active MVP sources
-- [ ] Procurement validation visible in admin and dossier Signal Breakdown
-- [ ] `procurement_score` wired as hidden modifier; complaint/digital infra modifiers gated off MVP path
-- [ ] Onboarding offers Builder, Agency, Consultant as primary types
+- [ ] `getRecommendedOpportunity()` returns defensible top 1 + top 3 per user preferences
+- [ ] Dashboard shows **Recommended for You** at top — not a flat opportunity list
+- [ ] 3 "why this fits" bullets render on Recommended card
+- [ ] Recommendation guardrails exclude low-confidence / unclear-buyer opportunities
+- [ ] `confidence_level` and `time_to_value` display on Recommended card and snapshot
 - [ ] Mock mode works without Supabase env vars
 - [ ] `npm run build` passes
-- [ ] No MVP UI promotes investor, healthcare, onchain, or complaint layers as active features
-
----
-
-## Recently Completed
-
-**Phase 5c — MVP Architecture Separation** ✅
-
-- Product positioning locked (build opportunities, not intelligence platform)
-- MVP wedge, pipeline, source stack, scoring, ICP documented
-- Future Expansion section preserves complaints, healthcare, onchain, BLS/Census (deferred)
-- Landing page messaging aligned
-- ADR in [decisions.md](./decisions.md)
-
-**Phase 13 (partial) — ICP onboarding & decision engine** ✅
-
-- `/onboarding`, `/preferences`, persona scoring, explore mode
-
-**Phase 6 — Supabase Integration** ✅
+- [ ] Core validation pipeline untouched (no changes to Pressure/Demand/Wedge scoring logic)
 
 ---
 
@@ -152,18 +110,13 @@ Full map: [implementation-index.md](./implementation-index.md)
 
 | Item | Phase | Why deferred |
 |------|-------|--------------|
-| Investor Watchlists | 17 | Future customer segment — not MVP positioning |
-| Complaint & Incident Signals | 14 | Phase 2 — after MVP quality bar |
-| Digital Infrastructure | 15 | Future Research — not in MVP |
-| BLS, Census | 2 | Deferred — valuable later, adds complexity before core engine proven |
-| Healthcare ingestion | 3 | Entire vertical post-MVP |
-| “Why you’re seeing this” feed transparency | 13 | Nice-to-have |
-| Builder Fit Strategy | Future | Optional layer |
-
-Watchlists spec preserved in [backlog.md](./backlog.md) § Phase 17.
+| MVP source stack code alignment | 7–9 | Parallel track — does not block Decision Layer |
+| Investor Watchlists | 17 | Enhancement after Decision Layer ships |
+| Complaint & Incident Signals | 14 | Phase 2 |
+| Digital Infrastructure | 15 | Future Research |
 
 ---
 
 ## After Completion
 
-Update: `project-state.md`, `implementation-index.md`, `changelog.md`, `backlog.md`, and this file with next task.
+Update: `project-state.md`, `implementation-index.md`, `changelog.md`, `backlog.md`, and this file with Phase 19 or next task.

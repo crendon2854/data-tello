@@ -184,6 +184,24 @@ Every ADR must include all five fields:
 **Decision:** Build System Health with connector status, failed syncs, schema changes, repair logs, and human approval.
 **Alternatives:** Manual debugging only — rejected. Fully autonomous AI repair of business logic — also rejected.
 
+### 2026-07-09 Decision Layer and Role-Aware Output System
+
+**Context:** DataTello was positioned as a build opportunity intelligence platform with a dashboard that lists opportunities. Users need a decision engine that answers "what should I build or act on first?" — not "here are some interesting opportunities." Different roles (agency, consultant, investor, venture_studio) need different output: execution detail vs Asset Thesis.
+
+**Decision:**
+- Transform product positioning from research dashboard to **decision engine**
+- Add **Decision Layer** — `getRecommendedOpportunity(userPreferences, opportunities[])` returns top 1 + top 3 ranked
+- Add dashboard surfaces: **Recommended for You** (top card) and **Top Opportunities This Week** (secondary list)
+- Add **Role-Aware Output System** — agency/consultant see full execution (Builder Fit, tool stack, how to build); investor/venture_studio see **Asset Thesis** (hide tool stack, builder fit, technical paths)
+- Add fields to candidate reports: `recommended_rank_score`, `recommended_reason[]`, `confidence_level`, `time_to_value`, `role_visibility_config`
+- Add **recommendation guardrails** — do not recommend if buildability unclear, buyer unclear, <2 evidence layers, or low confidence
+- Weekly Signal Brief via `lib/newsletter-engine/` — 3 signals, 1 featured opportunity, asset teaser, dashboard CTA; no full dossier in email
+- **Preserve unchanged:** Pressure Discovery, Demand Validation, Market Wedge Validation, scoring system, publish guardrails, seven-section Opportunity Dossier structure
+
+**Alternatives:** Keep undifferentiated opportunity feed — rejected; users need a single clear recommendation. Show same execution detail to all roles — rejected; investors need thesis, not tool stacks. Remove Builder Fit entirely — rejected for agency/consultant execution lens.
+
+**Consequences:** New roadmap Phases 18–19. `lib/decision-layer.ts`, `RecommendedCard`, `TopOpportunities`, `AssetThesis` components. Update all docs and landing copy. Prior ADRs demoting Builder Fit from MVP are superseded for agency/consultant role view only.
+
 ### 2026-07-09 MVP Architecture Separation — Compliance Wedge Focus
 
 **Context:** DataTello was documented as a broad intelligence platform with five core layers + digital infrastructure active in MVP. Launch requires extreme focus on compliance + contractor + public-sector workflows while preserving long-term architecture.
@@ -210,11 +228,13 @@ Freeze for MVP launch:
 
 - MVP wedge: environmental compliance + contractor safety + public-sector compliance
 - MVP source stack and pipeline (see architecture.md)
-- MVP target customer: builders, agencies, consultants
-- Guardrail system (four rules)
-- Onboarding flow and ICP default lens model
+- Five roles: agency, consultant, investor, venture_studio, general
+- Decision Layer + Role-Aware Output System (spec locked; implementation in Phases 18–19)
+- Guardrail system (four publish rules + recommendation guardrails)
+- Onboarding flow and role default lens model
 - Seven-section Opportunity Dossier (Build Strategy, Competitive Differentiator)
 - Newsletter Engine and Dossier Builder separation
+- Weekly Signal Brief: teaser only, no full dossier in email
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
 - Human review before publishing

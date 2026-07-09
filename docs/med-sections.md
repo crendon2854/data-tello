@@ -2,7 +2,42 @@
 
 See [MED.md](./MED.md) for documentation governance. **This file is the single source of truth for dossier section structure** — detail pages and admin forms must match it.
 
-DataTello validates opportunities through layered evidence. Each opportunity answers: what operational pain exists, who the buyer is, why it matters now, what the market wedge is, what complaint clusters confirm it, and what the best first asset is.
+DataTello validates opportunities through layered evidence, then the **Decision Layer** tells each user what to act on first. Each opportunity answers: what operational pain exists, who the buyer is, why it matters now, what the market wedge is, and what the best first asset is.
+
+## Role-Aware Output System
+
+The seven-section dossier structure is **locked**. Role changes **which fields and sub-sections render** — not the underlying data.
+
+### Roles
+
+`agency` · `consultant` · `investor` · `venture_studio` · `general`
+
+### Agency / Consultant view
+
+Show full execution detail in sections 4–5:
+
+- Best First Asset, Top 3 Asset Paths (Build Strategy)
+- Builder Fit Strategy, Recommended Tool Stack
+- Execution Angle (detailed), Time-to-value
+- "How to build this" subsection
+
+### Investor / Venture Studio view
+
+Replace Builder Fit Strategy with **Asset Thesis** (rendered in place of section 4 execution fields or as a role-specific card):
+
+| Field | DB / source |
+|-------|-------------|
+| Best First Asset | `best_first_asset` |
+| Why this is the correct entry point | `why_this_format_wins_first` |
+| Expansion Ladder | `expansion_ladder` |
+| Monetization logic | `monetization_paths` (admin) |
+| Market maturity | `market_maturity` — early / emerging / validated |
+| Procurement / buyer signals | procurement evidence + `target_buyer` |
+| Risk level | `opportunity_risks` (admin) |
+
+**Hide for investor / venture_studio:** tool stack, builder fit, technical build paths, "How to build this".
+
+Controlled by `role_visibility_config` on the opportunity record.
 
 ## Build Opportunity Definition
 
@@ -12,12 +47,13 @@ The same opportunity data is shown to every ICP. Scores, signals, evidence, buye
 
 Personas change only the **execution lens**: section emphasis, CTA wording, asset path labels, dashboard copy, and section ordering.
 
-| ICP | Role label | Primary CTA | Core question |
-|-----|------------|-------------|---------------|
-| Agency | Package it | Package this offer | What can we sell, implement, or productize for clients? |
-| Consultant | Advise it | Advise on this opportunity | What should we recommend or turn into a client memo? |
-| Investor | Evaluate it | Evaluate this market | What should we fund, validate, monitor, or compare? |
-| Venture Studio / Product Studio | Validate it | Prioritize this bet | What is worth validating, matching to operators, and prioritizing across repeated bets? |
+| ICP | Role key | Primary CTA | Core question | Output lens |
+|-----|----------|-------------|---------------|-------------|
+| Agency | `agency` | Start here | What can we sell, implement, or productize? | Full execution detail |
+| Consultant | `consultant` | Start here | What should we recommend or turn into a client memo? | Full execution detail |
+| Investor | `investor` | Evaluate thesis | What should we fund, validate, monitor, or compare? | Asset Thesis |
+| Venture Studio | `venture_studio` | Prioritize bet | What is worth validating and spinning up next? | Asset Thesis |
+| General | `general` | View opportunity | What should I act on first? | Balanced summary |
 
 Implementation: `lib/persona-lens.ts` (`venture_studio`; legacy `product_studio` alias), `hooks/usePersonaLens.ts`, `components/ui/PersonaSelector.tsx`. Onboarding defaults: [onboarding.md](./onboarding.md).
 
@@ -25,10 +61,11 @@ Implementation: `lib/persona-lens.ts` (`venture_studio`; legacy `product_studio`
 
 1. **Do not** generate different opportunities by persona.
 2. **Do not** change scores by persona.
-3. **Do not** hide core evidence.
-4. **Do** reorder and spotlight sections based on ICP lens.
-5. **Do** use persona-aware labels and helper text.
+3. **Do not** hide core evidence (signal breakdown, why this exists).
+4. **Do** show or hide execution vs thesis sections based on role (`role_visibility_config`).
+5. **Do** use persona-aware labels, CTAs, and helper text.
 6. **Do** relabel asset path steps without changing path data.
+7. **Do** anchor-scroll "Start Here" to Build Strategy (agency/consultant) or Asset Thesis (investor/venture_studio).
 
 ---
 
@@ -124,7 +161,9 @@ Fields:
 - `best_first_asset`
 - `complexity`
 - `freshness_label`
-- `confidence_label`
+- `confidence_label` — legacy display label; prefer `confidence_level` (Low / Medium / High)
+- `confidence_level` — Low / Medium / High (calculated)
+- `time_to_value` — Fast / Medium / Slow (time to first revenue; calculated)
 - `tags`
 - `short_summary`
 
@@ -240,6 +279,36 @@ Keep to 2–3 lines.
 
 ---
 
+## Dashboard — Recommended for You
+
+Top-of-dashboard card from Decision Layer. Not a separate dossier section.
+
+| Field | Source |
+|-------|--------|
+| Opportunity Title | `title` |
+| Best First Asset | `best_first_asset` |
+| Why it fits (3 bullets) | `recommended_reason[]` |
+| Confidence level | `confidence_level` |
+| Time-to-value | `time_to_value` |
+
+CTAs: **View Opportunity** (detail page), **Start Here** (anchor to Build Strategy or Asset Thesis).
+
+---
+
+## Dashboard — Top Opportunities This Week
+
+Secondary ranked list. Sort by: total score, freshness, procurement strength.
+
+| Field | Source |
+|-------|--------|
+| Title | `title` |
+| Score | `overall_score` |
+| Asset type | `best_first_asset` |
+| Buyer | `target_buyer` |
+| Short summary | `short_summary` |
+
+---
+
 ## Dashboard Card (`OpportunityCard`)
 
 | Field | DB Column |
@@ -248,7 +317,8 @@ Keep to 2–3 lines.
 | Score | `overall_score` |
 | Best First Asset | `best_first_asset` |
 | Complexity | `complexity` |
-| Freshness | `freshness_label` |
+| Confidence | `confidence_level` |
+| Time to revenue | `time_to_value` |
 | Short Summary | `short_summary` |
 | Tags | `tags` |
 
@@ -273,14 +343,19 @@ Mirror the seven-section dossier structure:
 - Monetization paths (`monetization_paths`)
 - Opportunity risks (`opportunity_risks`)
 
-## Removed from MVP — Future Optional Layer
+## Builder Fit Strategy (Agency / Consultant only)
 
-**Builder Fit Strategy** (`builder_fit_strategy` / delivery fit by organization type and tool stack):
+Rendered for `agency` and `consultant` roles only. Hidden for `investor`, `venture_studio`, and `general` (unless general shows abbreviated execution).
 
-- **Removed from MVP** — not active as its own feature in the app.
-- **Not rendered** in the seven-section paid dossier or dashboard brief.
-- **Build Strategy / Asset Strategy remains active** (section 4) — asset paths, reason, expansion ladder.
-- May return as an optional admin/research layer when org-type delivery fit is prioritized.
+Fields:
+
+- Builder Fit Strategy (org-type delivery fit)
+- Recommended Tool Stack
+- "How to build this" guidance
+
+Source: `builder_fit_strategy` table + `recommended_tool_stack` on asset strategy.
+
+Investor / venture_studio users see **Asset Thesis** instead (see Role-Aware Output System above).
 
 ---
 
@@ -288,10 +363,11 @@ Mirror the seven-section dossier structure:
 
 Include only:
 
-- 1–3 short signals
-- compressed explanation
-- light evidence
-- teaser of best first asset
-- CTA to unlock full dashboard dossier
+- **3 signals** (short)
+- **1 featured opportunity**
+- Best First Asset (**teaser only**)
+- CTA to dashboard
 
-Do not include full evidence stack, full asset strategy, full competitive differentiator strategy, or full PDF.
+Do **not** include: full evidence stack, full asset strategy, full competitive differentiator, full PDF, or full dossier.
+
+Composer lives in `lib/newsletter-engine/`. Admin: `/admin/newsletter`.

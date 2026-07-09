@@ -1,6 +1,6 @@
 # Context — Long-Term Architectural Truths
 
-Documentation Version: 1.4  
+Documentation Version: 1.5  
 Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
@@ -13,12 +13,14 @@ See [MED.md](./MED.md) for documentation governance.
 
 ## Product Identity
 
-- DataTello is **not** a general market intelligence platform.
-- DataTello is an **evidence-backed build opportunity intelligence platform** that discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.
-- DataTello sells **build opportunities** — not intelligence feeds, trend alerts, or competitive monitoring.
-- DataTello does **not** discover opportunities from a single signal. It **validates opportunities through layered evidence**.
+- DataTello is **not** a research dashboard or general market intelligence platform.
+- DataTello is an **evidence-backed decision engine** for build opportunities.
+- DataTello tells each user **what to build or act on first** — not "here are some interesting opportunities."
+- DataTello validates opportunities through **layered evidence** — not from a single signal.
 - A **Build Opportunity** is a validated way to create value in a market, backed by source-backed evidence and operational pain.
-- Output names are fixed: **Weekly Signal Brief**, **Opportunity Dossier**, **Dashboard Brief View**, **PDF Dossier**.
+- The **Decision Layer** (`getRecommendedOpportunity`) ranks opportunities per user role and preferences.
+- The **Role-Aware Output System** changes presentation by role — agency/consultant see execution detail; investor/venture_studio see Asset Thesis.
+- Output names are fixed: **Weekly Signal Brief**, **Opportunity Dossier**, **Dashboard Brief View**, **PDF Dossier**, **Recommended for You**.
 - **Not all opportunities should start as software.** Every paid opportunity includes Build Strategy with a best first asset.
 
 Full positioning: [vision.md](./vision.md). MVP wedge and source stack: [architecture.md](./architecture.md).
@@ -72,30 +74,31 @@ Step 6 amplifies confidence — it does not replace base validation and does not
 
 ---
 
-## MVP Target Customer
+## MVP Target Roles
 
-| Segment | Core question |
-|---------|---------------|
-| **Builders** | What compliance- or procurement-backed workflow should I build first? |
-| **Agencies** (compliance-heavy industries) | What can we sell, implement, or productize for contractor and environmental clients? |
-| **Consultants** (contractor/environmental) | What should we recommend, advise on, or turn into client-facing memos? |
+| Role | Core question |
+|------|---------------|
+| **agency** | What can we sell, implement, or productize for clients? |
+| **consultant** | What should we recommend, advise on, or turn into client memos? |
+| **investor** | What should we fund, validate, monitor, or compare? |
+| **venture_studio** | What is worth validating and spinning up next? |
+| **general** | What should I act on first? (fallback) |
 
-Future segments (not MVP positioning): Investors, VCs, HoldCos, Product Studios, Enterprise.
-
-Onboarding: [onboarding.md](./onboarding.md).
+Onboarding + Decision Layer: [onboarding.md](./onboarding.md), [architecture.md](./architecture.md) § Decision Layer.
 
 ---
 
-## Same Engine, Different Default Lens
+## Same Engine, Role-Aware Output
 
-Same opportunity engine. Different by ICP:
+Same opportunity engine and validation layers. Different by role:
 
-- default lens
-- execution outputs
+- default lens and section visibility
+- execution vs Asset Thesis output
+- Decision Layer ranking and "why this fits" bullets
 - collaboration level
 - monitoring depth
 
-Persona lens must **never** alter opportunity data, scores, signals, or evidence. See [med-sections.md](./med-sections.md).
+Persona lens must **never** alter opportunity data, scores, signals, or evidence. See [med-sections.md](./med-sections.md) and [architecture.md](./architecture.md) § Role-Aware Output System.
 
 ---
 
@@ -106,7 +109,7 @@ Four separate systems. Do not merge responsibilities.
 | System | Owns | Does not own |
 |--------|------|--------------|
 | **DataTello Core** | Ingestion, scoring, review, dashboard publishing | Newsletter sends, PDF templates, outbound prospecting |
-| **Newsletter Engine** | Free subscribers, Weekly Signal Brief, autoresponder | Full paid dossiers, PDF generation |
+| **Newsletter Engine** | Free subscribers, Weekly Signal Brief (teaser only) | Full paid dossiers, PDF generation |
 | **Dossier Builder** | Paid dossiers, PDF export, templates | Newsletter subscriber management |
 | **Growth Automation Stack** | n8n, AI agents, outbound prospecting | Core ingestion, clustering, scoring |
 
@@ -133,9 +136,15 @@ Full boundaries: [architecture.md](./architecture.md)
 | **Procurement** | ✅ | ✅ |
 | **Digital Infrastructure Boost** | ❌ | Future Research |
 
-**Build Strategy** and **Competitive Differentiator** are required dossier sections.
+### Decision Layer fields (candidate reports)
 
-Full spec: [med-sections.md](./med-sections.md)
+- `recommended_rank_score`
+- `recommended_reason[]` — 3 personalization bullets
+- `confidence_level` — Low / Medium / High
+- `time_to_value` — Fast / Medium / Slow
+- `role_visibility_config` — per-role section visibility
+
+Full spec: [database.md](./database.md)
 
 ---
 
@@ -145,6 +154,10 @@ Full spec: [med-sections.md](./med-sections.md)
 2. **Must map to buyer + workflow** — reject if no clear buyer or repeatable workflow.
 3. **Must improve decision** — keep only if it helps decide what to build, how to win, or what to sell, recommend, validate, or fund.
 4. **Reject noise** — crypto hype, token speculation, creator monetization, experimental novelty, non-B2B use cases.
+
+### Recommendation guardrails (Decision Layer)
+
+Do **not** recommend if: buildability unclear, buyer unclear, fewer than 2 evidence layers, or `confidence_level` is Low.
 
 ---
 

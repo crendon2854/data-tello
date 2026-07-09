@@ -1,19 +1,42 @@
 # Backlog — Remaining Work
 
-Documentation Version: 1.2  
+Documentation Version: 1.3  
 Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
 
 Actionable items not yet shipped. See [roadmap.md](./roadmap.md).
 
-**Active task:** [current-task.md](./current-task.md) — MVP Source Stack Code Alignment (Phases 7–9)
+**Active task:** [current-task.md](./current-task.md) — Decision Layer Implementation (Phase 18)
 
 When an item ships: update [backlog.md](./backlog.md), [project-state.md](./project-state.md), [implementation-index.md](./implementation-index.md), [changelog.md](./changelog.md).
 
 ---
 
-## Phase 7–9 — MVP Source Stack Code Alignment (active)
+## Phase 18 — Decision Layer (active)
+
+- [ ] `lib/decision-layer.ts` — `getRecommendedOpportunity()`
+- [ ] Ranking: role, industries, buyer types, signal prefs, scores, friction/procurement modifiers
+- [ ] `recommended_reason[]` — 3 "why this fits" bullets
+- [ ] `confidence_level` calculation (Low / Medium / High)
+- [ ] `time_to_value` calculation (Fast / Medium / Slow)
+- [ ] Recommendation guardrails
+- [ ] `components/dashboard/RecommendedCard.tsx`
+- [ ] `components/dashboard/TopOpportunities.tsx`
+- [ ] Dashboard layout: Recommended → Top Opportunities → grid
+- [ ] Schema: `recommended_rank_score`, `recommended_reason`, `confidence_level`, `role_visibility_config`
+
+## Phase 19 — Role-Aware Output
+
+- [ ] `role_visibility_config` on opportunities
+- [ ] `components/sections/AssetThesis.tsx`
+- [ ] `components/sections/BuilderFitStrategy.tsx` (agency/consultant only)
+- [ ] Hide tool stack for investor/venture_studio
+- [ ] "Start Here" anchor scroll
+
+---
+
+## Phase 7–9 — MVP Source Stack Code Alignment (parallel)
 
 Align code with locked MVP architecture. Spec: [architecture.md](./architecture.md), [current-task.md](./current-task.md).
 
@@ -56,6 +79,9 @@ Align code with locked MVP architecture. Spec: [architecture.md](./architecture.
 
 ## Phase 11 — Newsletter Engine
 
+- [ ] `lib/newsletter-engine/` module
+- [ ] Weekly Signal Brief: 3 signals, 1 featured opportunity, Best First Asset teaser, dashboard CTA
+- [ ] No full dossier in email
 - [ ] Subscribers, events, composer, autoresponder, tracking
 
 ---

@@ -1,6 +1,8 @@
 # Supabase Setup
 
-DataTello validates build opportunities through layered evidence. Uses Supabase (Postgres) for live data; falls back to mock data when env vars are unset.
+DataTello is an **evidence-backed decision engine** for build opportunities. Uses Supabase (Postgres) for live data; falls back to mock data when env vars are unset.
+
+Decision Layer spec: [docs/architecture.md](../docs/architecture.md) § Decision Layer
 
 Product docs: [docs/MED.md](../docs/MED.md) · Onboarding: [docs/onboarding.md](../docs/onboarding.md)
 

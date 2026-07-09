@@ -2,7 +2,7 @@
 
 See [MED.md](./MED.md) for documentation governance. Routes: [routes.md](./routes.md). Schema: [database.md](./database.md). Layered validation: [architecture.md](./architecture.md).
 
-The admin backend is the internal research operating system for DataTello.
+The admin backend is the internal research operating system for DataTello. Published opportunities feed the **Decision Layer** on the paid dashboard.
 
 It should behave like a Notion-style research CMS: linked records, filters, statuses, review queues, source traceability, and one-click movement from raw signal to paid Opportunity Dossier.
 
@@ -48,7 +48,7 @@ Pressure → Demand → Wedge → Friction → Complaints → BASE OPPORTUNITY
 12. Competitive Differentiator Admin
 13. Paid Dashboard Publishing
 14. Dossier Builder
-15. Newsletter Engine
+15. Newsletter Engine (`lib/newsletter-engine/`) — Weekly Signal Brief, teaser only
 16. System Health
 17. Settings / Rules
 

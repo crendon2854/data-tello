@@ -29,10 +29,12 @@ Before implementing **ANY** feature:
 3. **Friction modifies scoring** — not a standalone decision engine.
 4. **Complaints validate clusters** — first-class realism layer (core Engine layer 5); CFPB, FDA/MAUDE, NHTSA, FCC; not isolated incidents.
 5. **Four digital infrastructure modules only** — confidence amplifiers, not discovery layers or standalone opportunity engines; no DAO, grants, or standalone onchain compliance modules.
-6. **ICP lens is presentation only** — never alter scores, signals, or evidence. Consultant ≠ Agency default lens. Venture Studio ≠ Investor-only ICP.
-7. **Mock mode must always work**.
-8. **n8n is marketing automation only**.
-9. **Newsletter Engine and Dossier Builder are separate**.
+6. **Decision Layer is presentation + ranking** — it consumes existing scores; it does not replace Pressure/Demand/Wedge validation or publish guardrails.
+7. **Role-aware output is visibility only** — agency/consultant see execution; investor/venture_studio see Asset Thesis. Never alter scores or evidence.
+8. **Newsletter emails are teasers** — Weekly Signal Brief never includes full dossiers.
+9. **Mock mode must always work**.
+10. **n8n is marketing automation only**.
+11. **Newsletter Engine and Dossier Builder are separate**.
 
 Full rules: [architecture.md](./architecture.md), [context.md](./context.md).
 
@@ -60,9 +62,9 @@ Schema → Types → Queries → UI → Components
 
 ## Messaging Rules (Docs & Non-Homepage Code)
 
-- Target ICPs: agencies, consultants, investors, venture studios / product studios
-- Do **not** use builder, vibe-coder, indie hacker, solo builder, SaaS idea seeker, or "build this app" language in docs or non-homepage UI
-- Homepage/landing files are exempt until explicitly updated
+- Position as a **decision engine** — always answer what this user should build or act on first
+- Target roles: agency, consultant, investor, venture_studio, general
+- Do **not** position as a research dashboard, opportunity list, or generic intelligence feed
 - Tone: sharp, analytical, structured, non-hype
 
 ---

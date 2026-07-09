@@ -26,9 +26,9 @@ import {
 } from "lucide-react";
 
 export const heroBullets = [
-  "Evidence-backed build opportunities — not intelligence feeds",
-  "Compliance pressure, procurement signals, and workflow friction in every dossier",
-  "Built for builders, agencies, and consultants in environmental & contractor compliance",
+  "A decision engine — not a research dashboard",
+  "Tells you what to build or act on first, backed by layered evidence",
+  "Role-aware output for agencies, consultants, investors, and venture studios",
 ];
 
 export const credibilitySignals = [
@@ -42,7 +42,7 @@ export const credibilityStats = [
   { value: "12,400+", label: "Signals reviewed" },
   { value: "480+", label: "Candidates analyzed" },
   { value: "5", label: "MVP validation layers" },
-  { value: "Weekly", label: "Opportunity briefs" },
+  { value: "Weekly", label: "Signal briefs + recommendations" },
 ];
 
 export const valueProps = [
@@ -53,14 +53,14 @@ export const valueProps = [
     accent: "blue" as const,
   },
   {
-    title: "Validate the build opportunity",
-    body: "Structured scoring across demand, competitive gaps, procurement signals, and workflow friction — with guardrails and human review.",
+    title: "Get your recommendation",
+    body: "The Decision Layer ranks opportunities for your role and preferences — surfacing one clear 'start here' move with confidence and time-to-value estimates.",
     icon: Gauge,
     accent: "cyan" as const,
   },
   {
     title: "Know what to offer first",
-    body: "Every dossier includes buyer context, market wedge, and a recommended best first asset — software, service package, template, dashboard, or workflow tool.",
+    body: "Agencies and consultants see full execution detail. Investors and studios see Asset Thesis — entry point, expansion ladder, and risk — without the noise.",
     icon: Layers,
     accent: "green" as const,
   },
@@ -219,22 +219,22 @@ export const focusedMarkets = [
 
 export const builtForCards = [
   {
-    title: "Builders",
-    body: "Find compliance- and procurement-backed workflows worth building first. Every dossier includes build strategy, wedge clarity, and a recommended first asset.",
-    icon: Layers,
-    accent: "green" as const,
-  },
-  {
     title: "Agencies",
-    body: "Identify new services and productized offers for contractor and environmental clients. Package repeatable engagements from scored build opportunities.",
+    body: "Get a ranked recommendation with full execution detail — build strategy, tool stack, and how to package the offer for contractor and environmental clients.",
     icon: Briefcase,
     accent: "blue" as const,
   },
   {
     title: "Consultants",
-    body: "Advise clients with source-backed opportunity dossiers. Spot underserved compliance markets and operational pain earlier than generic research.",
+    body: "See what to recommend first with source-backed dossiers and client-ready framing. The Decision Layer matches opportunities to your industries and buyer focus.",
     icon: Users,
     accent: "cyan" as const,
+  },
+  {
+    title: "Investors & Studios",
+    body: "Evaluate Asset Thesis — entry point, expansion ladder, monetization logic, and risk — without tool-stack noise. Compare and monitor validated opportunities.",
+    icon: Layers,
+    accent: "green" as const,
   },
 ];
 
@@ -264,20 +264,20 @@ export const comparisonCards = [
   },
   {
     title: "DataTello",
-    body: "Discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.",
+    body: "A decision engine that tells each user what to build or act on first — backed by compliance pressure, procurement proof, and layered validation.",
     highlight: true,
   },
 ];
 
 export const platformFeatures = [
-  "Opportunity snapshots",
+  "Recommended for You — personalized top pick",
+  "Top Opportunities This Week",
   "Full opportunity dossiers",
-  "Build strategy",
-  "Competitive differentiator",
+  "Role-aware output (execution vs Asset Thesis)",
+  "Build strategy & competitive differentiator",
   "Procurement validation evidence",
-  "SAM.gov and USAspending signals",
+  "Weekly Signal Brief",
   "PDF dossier export",
-  "Saved opportunities",
 ];
 
 export const monitoringUpdates = [
@@ -291,41 +291,41 @@ export const monitoringUpdates = [
 
 export const pricingPlans = [
   {
-    name: "Builder",
+    name: "Consultant",
     price: 299,
-    description: "Solo builders and indie operators",
+    description: "Advisors serving contractor and environmental clients",
     features: [
-      "Weekly opportunity briefs",
-      "Full opportunity dossiers",
+      "Recommended for You — top pick",
+      "Weekly Signal Brief",
+      "Full execution dossiers",
       "PDF export",
-      "Source-backed evidence stacks",
-      "Build strategy recommendations",
+      "Client advisory framing",
     ],
     popular: false,
   },
   {
-    name: "Consultant",
+    name: "Agency",
     price: 599,
-    description: "Advisors serving contractor and environmental clients",
+    description: "Service firms and delivery teams",
     features: [
-      "Everything in Builder",
-      "Client-ready summary mode",
+      "Everything in Consultant",
+      "Builder fit & tool stack detail",
+      "Offer packaging templates",
+      "Team sharing",
       "Procurement validation panels",
-      "Priority dossier access",
-      "Compliance wedge focus",
     ],
     popular: true,
   },
   {
-    name: "Agency",
+    name: "Investor / Studio",
     price: 999,
-    description: "Service firms and delivery teams",
+    description: "Investment teams and venture studios",
     features: [
-      "Everything in Consultant",
-      "Team sharing",
-      "Execution-oriented defaults",
-      "Offer packaging templates",
-      "Multi-client workflow views",
+      "Everything in Agency",
+      "Asset Thesis view",
+      "Compare & monitor tools",
+      "Venture bet prioritization",
+      "Multi-portfolio workflow views",
     ],
     popular: false,
   },
@@ -334,7 +334,7 @@ export const pricingPlans = [
 export const faqs = [
   {
     q: "What makes DataTello different from government intelligence tools?",
-    a: "HigherGov and GovSignals sell intelligence. DataTello validates build opportunities — what to build, how to win, and what asset to ship first — backed by compliance pressure, procurement signals, and structured scoring.",
+    a: "HigherGov and GovSignals sell intelligence. DataTello is a decision engine — it tells you what to build or act on first, with role-aware output and a personalized top recommendation.",
   },
   {
     q: "Is this only for software opportunities?",
@@ -342,7 +342,7 @@ export const faqs = [
   },
   {
     q: "Who is this for?",
-    a: "Builders, agencies serving compliance-heavy industries, and consultants serving contractor and environmental businesses. Not a general market intelligence platform.",
+    a: "Agencies, consultants, investors, and venture studios working in compliance-heavy industries. Each role sees tailored output — execution detail or Asset Thesis — plus a personalized recommendation.",
   },
   {
     q: "What industries does the MVP focus on?",

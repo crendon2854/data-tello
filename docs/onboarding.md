@@ -1,69 +1,52 @@
 # Onboarding & ICP Targeting
 
-See [MED.md](./MED.md) for documentation governance. Long-term truths: [context.md](./context.md). Routes: [routes.md](./routes.md).
+See [MED.md](./MED.md) for documentation governance. Long-term truths: [context.md](./context.md). Routes: [routes.md](./routes.md). Decision Layer: [architecture.md](./architecture.md) § Decision Layer.
 
-DataTello uses **one opportunity engine** for all users. Onboarding captures targeting preferences and applies them as **default filters** after login. The **default lens** (language, emphasis, collaboration depth) varies by ICP — not the underlying opportunity data.
+DataTello uses **one opportunity engine** for all users. Onboarding captures targeting preferences and user **role**. The **Decision Layer** (`getRecommendedOpportunity`) ranks opportunities per user; the **Role-Aware Output System** changes how dossiers render.
 
 ---
 
 ## Core Principle
 
-Same engine. Different post-login defaults and views.
+Same engine. Different post-login defaults, ranking, and views.
 
-| Layer | Shared across ICPs | Varies by ICP |
-|-------|-------------------|---------------|
+| Layer | Shared across roles | Varies by role |
+|-------|---------------------|----------------|
 | Signals, scores, evidence | Yes | No |
+| Decision Layer ranking | Computed per user | Yes |
+| `recommended_reason[]` bullets | Generated per user | Yes |
 | Default feed filters | Set from onboarding | Applied per user |
-| Section emphasis, CTA language | No | Yes |
+| Section visibility (execution vs Asset Thesis) | No | Yes |
+| CTA language ("Start Here" anchor) | No | Yes |
 | Collaboration depth | No | Yes |
-| Monitoring / compare tools | No | Yes |
 
 ---
 
-## MVP Target Customer (Locked)
+## Roles (Locked)
 
-The MVP positions around **three primary segments** only:
+Stored as `user_type` on `user_preferences`.
 
-| Segment | Job to be done |
-|---------|----------------|
-| **Builder** | What compliance- or procurement-backed workflow should I build first? |
-| **Agency** (compliance-heavy industries) | What can we sell, implement, or productize for contractor and environmental clients? |
-| **Consultant** (contractor/environmental) | What should we recommend, advise on, or turn into client-facing memos? |
-
-Consultants are a **distinct ICP** from Agencies. Same onboarding flow; **not** the same default lens. Consultants get advisory, memo, and recommendation framing — not packaging, white-label, or delivery-first emphasis.
-
-## Future Customer Segments (Not MVP Positioning)
-
-These segments are preserved in the long-term product vision but are **not** the MVP launch focus:
-
-| Segment | Status |
-|---------|--------|
-| Investors / VCs | Future |
-| HoldCos | Future |
-| Venture Studios / Product Studios | Future |
-| Enterprise buyers | Future |
-| White-label enterprise features | Future |
-
-Onboarding may still capture these user types for waitlist or future activation, but MVP messaging, defaults, and feed emphasis target builders, agencies, and consultants in the compliance wedge.
+| Role key | Label | Decision question |
+|----------|-------|-------------------|
+| `agency` | Agency | What can we sell, implement, or productize? |
+| `consultant` | Consultant | What should we recommend or advise on? |
+| `investor` | Investor | What should we fund, validate, or monitor? |
+| `venture_studio` | Venture Studio | What is worth validating and spinning up next? |
+| `general` | General | What should I act on first? (fallback) |
 
 ---
 
 ## Onboarding Flow (3–5 Steps)
 
-### Step 1 — Pick user type
+### Step 1 — Pick role
 
-**MVP options (primary):**
+Primary options:
 
-- Builder
 - Agency
 - Consultant
-
-**Future options (waitlist / later activation):**
-
 - Investor
-- Venture Studio / Product Studio
-- Enterprise
-- Other
+- Venture Studio
+- General / Not sure
 
 Stored as `user_type`.
 
@@ -105,109 +88,113 @@ Stored as `signal_types[]`.
 
 ### Step 5 — Confirm and save
 
-Summary shows: user type, industries, buyer/deal focus, signal preferences.
+Summary shows: role, industries, buyer/deal focus, signal preferences.
 
 Buttons:
 
-- **Looks right — show me opportunities**
+- **Looks right — show me my recommendation**
 - **Edit my choices**
+
+Redirect to `/dashboard` with **Recommended for You** at top.
 
 ---
 
-## Default Lens by ICP
+## Default Lens by Role
 
-The onboarding **flow** is shared. The **default lens** is not.
+The onboarding **flow** is shared. The **default lens** and **output system** are not.
 
-### Consultant
+### Agency / Consultant
 
-**Default language:** recommendations, clients, advisory, memo / brief
-
-**Not Agency:** advisory and client-memo framing — not packaging, white-label exports, or delivery-first execution.
+**Default language:** offers, clients, implementation, build, delivery
 
 **Post-login emphasis:**
 
-- Full dossier
-- Source trails
-- Why now
-- Buyer and risk framing
-- Client memo mode
-- Lighter collaboration
-
-### Agency
-
-**Default language:** offers, clients, implementation, service + tool hybrid, delivery
-
-**Not Consultant:** packaging, implementation, and sellable offer framing — not standalone advisory or memo-first workflows.
-
-**Post-login emphasis:**
-
-- Service + tool hybrid recommendations
-- Reusable offer angles
-- Client/project organization
-- White-label exports
-- Implementation-first execution framing
-- Light team collaboration
+- **Recommended for You** card with execution framing
+- Full dossier: Build Strategy, Builder Fit, tool stack, "How to build this"
+- Source trails, why now, buyer framing
+- CTA: **Start Here** → Build Strategy section
 
 ### Investor
 
-**Default language:** deals, theses, portfolio, opportunities, validation
+**Default language:** deals, theses, portfolio, validation, risk
 
 **Post-login emphasis:**
 
-- Investable opportunity lens
-- Wedge clarity
-- Why this matters
-- Compare / watchlist / monitor
-- Portfolio-style evaluation
-- Browse outside industry preferences more easily
+- **Recommended for You** card with thesis framing
+- Asset Thesis instead of Builder Fit / tool stack
+- Compare / watchlist / monitor (when shipped)
+- CTA: **Start Here** → Asset Thesis section
 
-### Venture Studio / Product Studio
+### Venture Studio
 
-**Default language:** ventures, operators, validation, repeated bets, venture fit
+**Default language:** ventures, operators, validation, repeated bets
 
 **Post-login emphasis:**
 
-- Venture validation and concept proof
-- Operator / venture fit and matching
-- Repeated-bet prioritization across a studio portfolio
-- Team workflow and internal venture decision support
-- Asset bet paths and what is worth spinning up next
+- **Recommended for You** with venture-fit framing
+- Asset Thesis, expansion ladder, operator matching angle
+- Repeated-bet prioritization across portfolio
+- CTA: **Start Here** → Asset Thesis section
 
-**Distinct from Investor:** studios prioritize operator matching, repeated venture bets, and internal venture creation — not deal funding, thesis monitoring, or capital allocation alone. Compare / watchlist tools may overlap with investor workflows, but the default lens stays venture-studio-first.
+**Distinct from Investor:** studios prioritize operator matching and internal venture creation — not capital allocation alone.
+
+### General
+
+**Default language:** neutral, action-oriented
+
+**Post-login emphasis:**
+
+- Balanced **Recommended for You**
+- Abbreviated execution summary
+- Full dossier available on detail page
+
+---
+
+## Why This Fits (Personalization)
+
+The Decision Layer generates **3 short bullets** per recommended opportunity. Examples:
+
+- Matches your selected industry: Construction
+- Strong procurement signals from government buyers
+- High workflow friction → fast monetization potential
+
+Stored as `recommended_reason[]` on the opportunity (computed at recommendation time; may be cached per user-opportunity pair).
 
 ---
 
 ## Default Feed & Dashboard Rules
 
-After onboarding, default opportunities shown match:
+After onboarding:
 
-- `industries[]`
-- `buyer_types[]`
-- `signal_types[]`
+1. **Recommended for You** — top 1 from `getRecommendedOpportunity()`
+2. **Top Opportunities This Week** — ranked by score, freshness, procurement strength
+3. Filtered opportunity list — respects `industries[]`, `buyer_types[]`, `signal_types[]`
 
-Always allow extra filters by industry, buyer, and signal type.
+Always allow manual filter override.
 
 ### Explore Mode
 
 **Show opportunities outside my selected industries**
 
-Especially available for: Investors, Agencies, Venture Studios / Product Studios.
+Especially available for: Investors, Agencies, Venture Studios.
 
 ### Preferences / Targeting Page
 
 Users can change at any time:
 
-- `user_type`
+- `user_type` (role)
 - `industries[]`
 - `buyer_types[]`
 - `signal_types[]`
 
-These values act as **default filters** on opportunity queries and dashboard views.
+Re-running preferences triggers Decision Layer recalculation on next dashboard load.
 
 ---
 
 ## Implementation Notes
 
-- Persona lens (`lib/persona-lens.ts`) aligns with ICP defaults; it must never alter scores, signals, or evidence.
-- Onboarding routes: see [routes.md](./routes.md) § Onboarding Routes (planned).
-- User preference storage: see [database.md](./database.md) § User Targeting (planned).
+- Decision Layer: `lib/decision-layer.ts` — `getRecommendedOpportunity(userPreferences, opportunities[])`
+- Persona lens: `lib/persona-lens.ts`, `lib/dossier-content.ts` — must never alter scores, signals, or evidence
+- Role visibility: `role_visibility_config` on opportunities
+- Onboarding routes: [routes.md](./routes.md)
+- User preference storage: [database.md](./database.md) § `user_preferences`

@@ -6,13 +6,13 @@ See [MED.md](./MED.md) for engineering workflow. Architecture phases: [architect
 
 ## MVP Launch Focus (Locked)
 
-DataTello launches as an **extremely focused** build opportunity intelligence platform for:
+DataTello launches as an **evidence-backed decision engine** — not a research dashboard.
 
 **Environmental Compliance** + **Contractor Safety** + **Public-sector compliance workflows**
 
-Target customer: **Builders**, **agencies serving compliance-heavy industries**, **consultants serving contractor/environmental businesses**.
+Target roles: **agency**, **consultant**, **investor**, **venture_studio**, **general**.
 
-MVP pipeline:
+MVP pipeline (unchanged):
 
 ```text
 Collect → Normalize → Cluster → Keyword Enrichment → Market Validation → Procurement Validation
@@ -76,6 +76,37 @@ Expansion into additional industries and evidence layers happens **only after** 
 - [x] Production RLS plan documented
 - [x] supabase/README.md
 
+## Phase 5d — Decision Layer & Role-Aware Output (docs) ✅
+
+- [x] Decision Layer spec (`getRecommendedOpportunity`)
+- [x] Role-Aware Output System (agency/consultant vs investor/venture_studio)
+- [x] Recommended for You + Top Opportunities This Week dashboard sections
+- [x] Why This Fits personalization bullets
+- [x] Confidence Level + Time to First Revenue fields
+- [x] Recommendation guardrails
+- [x] Weekly Signal Brief distribution loop spec
+- [x] Schema fields: `recommended_rank_score`, `recommended_reason[]`, `confidence_level`, `time_to_value`, `role_visibility_config`
+
+## Phase 18 — Decision Layer Implementation
+
+- [ ] `lib/decision-layer.ts` — `getRecommendedOpportunity()`
+- [ ] `recommended_reason[]` generation ("why this fits")
+- [ ] `confidence_level` + `time_to_value` calculation
+- [ ] Recommendation guardrails (no recommend if low confidence, unclear buyer, etc.)
+- [ ] `components/dashboard/RecommendedCard.tsx`
+- [ ] `components/dashboard/TopOpportunities.tsx`
+- [ ] Dashboard layout: Recommended → Top Opportunities → filtered grid
+- [ ] "Start Here" anchor scroll to Build Strategy / Asset Thesis
+- [ ] Schema migration for Decision Layer fields
+
+## Phase 19 — Role-Aware Output Implementation
+
+- [ ] `role_visibility_config` on opportunities
+- [ ] `components/sections/AssetThesis.tsx` (investor / venture_studio)
+- [ ] `components/sections/BuilderFitStrategy.tsx` (agency / consultant)
+- [ ] `lib/dossier-content.ts` — role-based section visibility
+- [ ] Hide tool stack / build paths for investor / venture_studio
+
 ## Phase 7 — Research OS Data Foundation
 
 - [x] sources, raw_signals, problem_zones, keyword_sets, market_proof, friction
@@ -103,21 +134,26 @@ Expansion into additional industries and evidence layers happens **only after** 
 
 ## Phase 11 — Newsletter Engine
 
-- [ ] Subscribers, events, composer, tracking
+- [ ] `lib/newsletter-engine/` module
+- [ ] Weekly Signal Brief: 3 signals, 1 featured opportunity, asset teaser, dashboard CTA
+- [ ] Subscribers, events, composer, autoresponder, tracking
+- [ ] Hard rule: no full dossier in email
 
 ## Phase 12 — System Health
 
 - [ ] Connector adapters, repair logs, approval queue
 
-## Phase 13 — ICP Onboarding & Targeting (partial ✅)
+## Phase 13 — ICP Onboarding & Decision Layer (partial ✅)
 
 - [x] `user_preferences` table
 - [x] `/onboarding` flow (3–5 steps)
 - [x] `/preferences` page
 - [x] Default dashboard filters from onboarding
 - [x] Explore Mode — focus / adjacent / all industries
-- [ ] MVP ICP defaults (builder, agency, consultant)
-- [ ] Feed “why you’re seeing this” transparency
+- [x] Persona-aware dossier rendering (`lib/dossier-content.ts`)
+- [ ] Role keys aligned: agency, consultant, investor, venture_studio, general
+- [ ] Decision Layer wired to dashboard
+- [ ] "Why this fits" bullets on Recommended card
 
 ## Phase 17 — Investor Watchlists + Alert Triggers — Future Segment
 
@@ -225,7 +261,8 @@ Full detail: [architecture.md](./architecture.md) § Future Expansion.
 - SEC EDGAR, broad review scraping, startup marketplaces
 - BLS, Census (deferred — not removed), CMS, Grants.gov, other agencies
 - State/local/global procurement expansion
-- Investor, VC, HoldCo, Product Studio, Enterprise positioning
+- Investor, VC, HoldCo, Enterprise positioning as **primary** (investor/venture_studio are active roles in Decision Layer — not deferred)
+- Undifferentiated opportunity list as primary dashboard (replaced by Recommended for You)
 - Full visual workflow builder
 - Newsletter workflow inside Dossier Builder
 - Manual PDF creation per signal
@@ -233,6 +270,6 @@ Full detail: [architecture.md](./architecture.md) § Future Expansion.
 - Full social-listening engine
 - DAO / grants / standalone onchain compliance modules
 - Full AI autopilot publishing
-- Complex user personalization beyond onboarding targeting
+- Complex user personalization beyond onboarding + Decision Layer
 - Full CRM, affiliate marketplace, advanced BI, multi-admin permissions
-- **Builder Fit Strategy** — removed from MVP; Build Strategy remains active
+- **Builder Fit Strategy** — agency/consultant role view only; hidden for investor/venture_studio (Asset Thesis replaces it)

@@ -22,7 +22,7 @@ Then read feature-specific topic docs.
 | [MED.md](./MED.md) | Governance, workflow, DoD |
 | [ai-rules.md](./ai-rules.md) | AI development playbook |
 | [context.md](./context.md) | Long-term architectural truths |
-| [onboarding.md](./onboarding.md) | ICP onboarding, default lens, feed rules |
+| [onboarding.md](./onboarding.md) | Roles, onboarding flow, Decision Layer inputs |
 | [project-state.md](./project-state.md) | Current snapshot |
 | [current-task.md](./current-task.md) | Active implementation task |
 | [implementation-index.md](./implementation-index.md) | Feature → file map |
@@ -33,8 +33,8 @@ Then read feature-specific topic docs.
 
 | Doc | Purpose |
 |-----|---------|
-| [vision.md](./vision.md) | Product goal, layered validation, ICP |
-| [architecture.md](./architecture.md) | System boundaries, signal lanes, guardrails |
+| [vision.md](./vision.md) | Product goal, Decision Layer, roles, constraints |
+| [architecture.md](./architecture.md) | System boundaries, Decision Layer, role-aware output, guardrails |
 | [med-sections.md](./med-sections.md) | Seven-section Opportunity Dossier spec |
 | [database.md](./database.md) | Supabase schema |
 | [routes.md](./routes.md) | Public, dashboard, admin, onboarding routes |

@@ -6,11 +6,11 @@ See [MED.md](./MED.md) for documentation governance. Long-term truths: [context.
 
 ## Product Positioning (Locked)
 
-DataTello is **not** a general market intelligence platform.
+DataTello is **not** a research dashboard or general market intelligence platform.
 
-DataTello is an **evidence-backed build opportunity intelligence platform** that discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.
+DataTello is an **evidence-backed decision engine** for build opportunities. It discovers overlooked compliance- and procurement-backed workflow problems, validates them through layered evidence, and tells each user **what to build or act on first**.
 
-DataTello sells **build opportunities** — not intelligence feeds, trend alerts, or competitive monitoring dashboards.
+DataTello sells **decisions** — not intelligence feeds, trend alerts, or undifferentiated opportunity lists.
 
 ### What DataTello is not
 
@@ -76,16 +76,18 @@ Handles:
 
 Built in Next.js + Supabase.
 
-### 2. Newsletter Engine
+### 2. Newsletter Engine (`/newsletter-engine`)
 
 Handles:
 
 - free subscribers
-- Weekly Signal Brief email
+- **Weekly Signal Brief** email (3 signals, 1 featured opportunity, Best First Asset teaser, dashboard CTA)
 - basic autoresponder functionality
 - unsubscribe handling
 - open/click tracking
 - free-to-paid CTA tracking
+
+**Hard rule:** No full dossier in email. Teaser only.
 
 Separate from the Dossier Builder.
 
@@ -120,6 +122,114 @@ Expected stack:
 - suppression/unsubscribe handling
 
 Hard rule: n8n is for marketing/growth automation only. It should not run core ingestion, clustering, scoring, or dashboard logic.
+
+---
+
+## Decision Layer (New Core Feature)
+
+The Decision Layer transforms DataTello from a research dashboard into a **decision engine**.
+
+### Function
+
+```typescript
+getRecommendedOpportunity(userPreferences, opportunities[])
+```
+
+**Returns:**
+
+- `topRecommendation` — single best opportunity for this user
+- `rankedTop3` — top 3 ranked opportunities
+
+### Ranking inputs
+
+| Input | Source |
+|-------|--------|
+| User role | `user_preferences.user_type` — agency, consultant, investor, venture_studio, general |
+| Industries | `user_preferences.industries[]` |
+| Buyer types | `user_preferences.buyer_types[]` |
+| Signal preferences | `user_preferences.signal_types[]` |
+| Scoring | Pain, Demand, Market, Buildability, Asset Fit |
+| Friction modifier | Hidden — modifies Pain, Market, Buildability |
+| Procurement modifier | Hidden — strengthens buyer intent and budget signal |
+
+### Output fields (per candidate)
+
+Stored on `opportunities` / candidate reports:
+
+- `recommended_rank_score` — computed ranking for this user context
+- `recommended_reason[]` — 3 short bullets explaining why it fits (personalization)
+- `confidence_level` — Low / Medium / High
+- `time_to_value` — Fast / Medium / Slow (time to first revenue)
+- `role_visibility_config` — which sections/fields to show per role
+
+### Recommendation guardrails
+
+Do **not** recommend if:
+
+- software/buildability is unclear
+- buyer is unclear
+- fewer than 2 evidence layers
+- `confidence_level` is Low
+
+### Dashboard surfaces
+
+1. **Recommended for You** (top of dashboard) — title, Best First Asset, 3 "why this fits" bullets, confidence, time-to-value, CTAs ("View Opportunity", "Start Here")
+2. **Top Opportunities This Week** (secondary) — sorted by total score, freshness, procurement strength; shows title, score, asset type, buyer, short summary
+
+Implementation target: `lib/decision-layer.ts`, `components/dashboard/RecommendedCard.tsx`, `components/dashboard/TopOpportunities.tsx`.
+
+---
+
+## Role-Aware Output System
+
+Opportunity rendering changes by user role. **Scores, signals, and evidence never change** — only which sections and fields are shown.
+
+### Roles
+
+`agency` · `consultant` · `investor` · `venture_studio` · `general` (fallback)
+
+### Agency / Consultant view
+
+Show full execution detail:
+
+- Best First Asset
+- Top 3 Asset Paths
+- Builder Fit Strategy
+- Recommended Tool Stack
+- Execution Angle (detailed)
+- Time-to-value
+- "How to build this" section
+
+### Investor / Venture Studio view
+
+Replace Builder Fit Strategy with **Asset Thesis**:
+
+| Field | Purpose |
+|-------|---------|
+| Best First Asset | Entry asset |
+| Why this is the correct entry point | Thesis anchor |
+| Expansion Ladder | Growth path |
+| Monetization logic | Revenue model |
+| Market maturity | early / emerging / validated |
+| Procurement / buyer signals | Budget and intent proof |
+| Risk level | Downside framing |
+
+**Hide:** tool stack, builder fit, technical build paths.
+
+Implementation: `lib/dossier-content.ts`, `lib/persona-lens.ts`, `role_visibility_config` on opportunities.
+
+---
+
+## Confidence + Speed Metrics
+
+Calculated per candidate report from friction score, procurement signals, asset type, and build complexity.
+
+| Field | Values | Derived from |
+|-------|--------|--------------|
+| `confidence_level` | Low / Medium / High | evidence layer count, buyer clarity, buildability threshold |
+| `time_to_value` | Fast / Medium / Slow | friction score, procurement signals, asset type, build complexity |
+
+Displayed on Recommended card, Opportunity Snapshot, and dashboard list items.
 
 ---
 
@@ -264,23 +374,19 @@ No other score categories in MVP. Digital Infrastructure Boost is **not** an MVP
 
 ---
 
-## MVP Target Customer (Locked)
+## MVP Target Customer & Roles (Locked)
 
-**Primary customer (MVP only):**
+DataTello serves five roles via the Role-Aware Output System:
 
-| Segment | Core question |
-|---------|---------------|
-| **Builders** | What compliance- or procurement-backed workflow should I build first? |
-| **Agencies serving compliance-heavy industries** | What can we sell, implement, or productize for contractor and environmental clients? |
-| **Consultants serving contractor/environmental businesses** | What should we recommend, advise on, or turn into client-facing memos? |
+| Role | Core question | Dashboard emphasis |
+|------|---------------|-------------------|
+| **agency** | What can we sell, implement, or productize? | Execution detail, tool stack, how to build |
+| **consultant** | What should we recommend or advise on? | Execution detail, client memo framing |
+| **investor** | What should we fund, validate, or monitor? | Asset Thesis, expansion ladder, risk |
+| **venture_studio** | What is worth spinning up next? | Asset Thesis, operator fit, repeated bets |
+| **general** | What should I act on first? | Balanced summary |
 
-**Not MVP positioning** (future customer segments):
-
-- VCs / Investors
-- HoldCos
-- Product Studios
-- Enterprise buyers
-- White-label enterprise features
+The Decision Layer personalizes ranking and "why this fits" bullets per role and onboarding preferences.
 
 ---
 
@@ -528,8 +634,17 @@ AI may auto-fix mechanical issues only. Human approval required for source meani
   /cards                # OpportunityCard
   /sections             # MED/Dossier section components
   /admin                # Admin forms and actions
-/lib                    # supabase.ts, queries.ts, helpers.ts, persona-lens.ts
+```text
+/lib
   /procurement          # SAM.gov pipeline, scoring, integration
+  /newsletter-engine    # Weekly Signal Brief composer + send logic
+  decision-layer.ts     # getRecommendedOpportunity()
+  dossier-content.ts    # Role-aware section visibility
+  persona-lens.ts       # ICP default lens
+/components
+  /dashboard
+    RecommendedCard.tsx
+    TopOpportunities.tsx
 /types                  # database.ts, opportunity.ts
 /hooks                  # useOpportunities, useFilters, usePersonaLens
 /styles                 # globals.css
@@ -543,8 +658,8 @@ AI may auto-fix mechanical issues only. Human approval required for source meani
 - `Card` wraps every dossier/admin section
 - Section components accept typed `opportunity` slices
 - Admin pages preserve source traceability
-- Dashboard pages simplify internal scoring into decision-ready output
-- Onboarding preferences apply as default query filters
+- Dashboard pages lead with Decision Layer output — Recommended for You, then Top Opportunities
+- Onboarding preferences feed `getRecommendedOpportunity()` and default query filters
 
 ## Non-Negotiable Architecture Rules
 
@@ -557,4 +672,6 @@ AI may auto-fix mechanical issues only. Human approval required for source meani
 7. Long-term layered validation is preserved — expansion adds layers, not replacements.
 8. Digital infrastructure signals are future research amplifiers — not MVP scoring or ingestion.
 9. Complaint signals are Phase 2 — preserved in architecture, not active in MVP.
-10. DataTello sells build opportunities, not intelligence feeds.
+10. DataTello is a decision engine — it always answers what this user should build or act on first.
+11. Role-aware output changes presentation only — never scores, signals, or evidence.
+12. Newsletter emails are teasers only — no full dossier in Weekly Signal Brief.

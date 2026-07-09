@@ -1,6 +1,6 @@
 # Implementation Index — Feature → File Map
 
-Documentation Version: 1.2  
+Documentation Version: 1.3  
 Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
@@ -13,8 +13,27 @@ See [MED.md](./MED.md) for workflow. See [project-state.md](./project-state.md) 
 
 ## Active Task → Files
 
+**Milestone:** Phase 18 — Decision Layer Implementation  
+**Spec:** [current-task.md](./current-task.md), [architecture.md](./architecture.md) § Decision Layer
+
+| Task area | Primary files | Status |
+|-----------|---------------|--------|
+| Decision Layer | `lib/decision-layer.ts` (planned) | ❌ not shipped |
+| Recommended card | `components/dashboard/RecommendedCard.tsx` (planned) | ❌ |
+| Top opportunities | `components/dashboard/TopOpportunities.tsx` (planned) | ❌ |
+| Dashboard wiring | `components/sections/DashboardContent.tsx`, `components/dashboard/DashboardClient.tsx` | ⚠️ no Recommended section |
+| Asset Thesis | `components/sections/AssetThesis.tsx` (planned) | ❌ |
+| Builder Fit (role-gated) | `components/sections/BuilderFitStrategy.tsx` (planned) | ❌ |
+| Role visibility | `lib/dossier-content.ts`, `role_visibility_config` | ⚠️ partial |
+| Newsletter engine | `lib/newsletter-engine/` (planned) | ❌ |
+| Schema fields | `supabase/schema.sql`, `types/database.ts` | ⚠️ Decision Layer fields documented only |
+
+---
+
+## Active Task → Files (Phase 7–9 parallel)
+
 **Milestone:** Phase 7–9 — MVP Source Stack Code Alignment  
-**Spec:** [current-task.md](./current-task.md), [architecture.md](./architecture.md)
+**Spec:** [architecture.md](./architecture.md)
 
 | Task area | Primary files | MVP gap |
 |-----------|---------------|---------|

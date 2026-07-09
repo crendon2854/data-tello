@@ -1,6 +1,6 @@
 # MED — Master Engineering Document
 
-Documentation Version: 1.4  
+Documentation Version: 1.5  
 Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
@@ -43,7 +43,7 @@ docs/
 
 ## Project Overview
 
-DataTello is an **evidence-backed build opportunity intelligence platform** — not a general market intelligence platform. It discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.
+DataTello is an **evidence-backed decision engine** for build opportunities — not a research dashboard or general market intelligence platform. It discovers overlooked compliance- and procurement-backed workflow problems, validates them through layered evidence, and tells each user **what to build or act on first**.
 
 It validates build opportunities through **layered evidence** — not from a single signal.
 
@@ -58,11 +58,17 @@ Collect → Normalize → Cluster → Keyword Enrichment → Market Validation �
 → Scoring → Asset Strategy → Human Review → Opportunity Brief → Publish
 ```
 
-### MVP target customer
+### MVP target roles
 
-**Builders**, **agencies serving compliance-heavy industries**, and **consultants serving contractor/environmental businesses**.
+**agency**, **consultant**, **investor**, **venture_studio**, and **general** (fallback). The Decision Layer and Role-Aware Output System personalize ranking and rendering per role.
 
-Investors, VCs, HoldCos, Product Studios, and Enterprise are future segments — not MVP positioning.
+### Decision Layer + Role-Aware Output
+
+- `getRecommendedOpportunity()` — top 1 + top 3 ranked per user
+- Dashboard: **Recommended for You** + **Top Opportunities This Week**
+- Agency/consultant: full execution detail; investor/venture_studio: Asset Thesis
+
+Full spec: [architecture.md](./architecture.md).
 
 ### Long-term architecture (preserved)
 
@@ -79,11 +85,13 @@ ICP onboarding: [onboarding.md](./onboarding.md). Architecture: [architecture.md
 ## Product Philosophy
 
 1. **Layered evidence over single signals** — each layer answers a different validation question.
-2. **Clarity over features** — every screen and dossier section drives a strategic decision.
-3. **Evidence over hype** — source-backed signals, operational pain, and market wedge beat attention metrics.
-4. **Section-driven, card-based UI** — one component per MED section.
-5. **Human review controls publish** — AI assists; humans approve buyer, asset fit, and publish-worthiness.
-6. **Docs before code** — documentation is the single source of truth.
+2. **Decisions over lists** — always answer what this user should build or act on first.
+3. **Clarity over features** — every screen and dossier section drives a strategic decision.
+4. **Evidence over hype** — source-backed signals, operational pain, and market wedge beat attention metrics.
+5. **Role-aware presentation** — same truth layer; different execution vs thesis output by role.
+6. **Section-driven, card-based UI** — one component per MED section.
+7. **Human review controls publish** — AI assists; humans approve buyer, asset fit, and publish-worthiness.
+8. **Docs before code** — documentation is the single source of truth.
 
 ---
 
@@ -141,6 +149,7 @@ Then read feature-specific topic docs.
 | I need to know… | Read |
 |-----------------|------|
 | Layered validation architecture | [architecture.md](./architecture.md), [context.md](./context.md) |
+| Decision Layer + role-aware output | [architecture.md](./architecture.md) § Decision Layer |
 | ICP onboarding and default lens | [onboarding.md](./onboarding.md) |
 | Dossier section fields | [med-sections.md](./med-sections.md) |
 | Guardrail rules | [architecture.md](./architecture.md) § Guardrail System |

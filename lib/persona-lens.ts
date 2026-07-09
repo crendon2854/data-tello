@@ -160,7 +160,7 @@ export const PERSONA_LENSES: Record<Role, PersonaLens> = {
     snapshotAssetLabel: "Package this offer",
     cardAssetLabel: "Offer angle",
     dashboardSubtitle:
-      "Pick an opportunity — each dossier shows how to package and sell the offer.",
+      "Your recommended starting point — full execution detail for packaging and delivery.",
     detailIntro:
       "Offer brief — same evidence, framed for packaging, positioning, and client delivery.",
     signalHelperText:
@@ -193,7 +193,7 @@ export const PERSONA_LENSES: Record<Role, PersonaLens> = {
     snapshotAssetLabel: "Advise on this",
     cardAssetLabel: "Advisory angle",
     dashboardSubtitle:
-      "Pick an opportunity — each dossier supports client advisory and strategy work.",
+      "Your recommended starting point — dossiers framed for client advisory and strategy.",
     detailIntro:
       "Advisory brief — same evidence, organized for diagnosis, recommendation, and client narrative.",
     signalHelperText:
@@ -231,7 +231,7 @@ export const PERSONA_LENSES: Record<Role, PersonaLens> = {
     snapshotAssetLabel: "Evaluate this market",
     cardAssetLabel: "Market angle",
     dashboardSubtitle:
-      "Pick an opportunity — each dossier supports market evaluation and thesis work.",
+      "Your recommended starting point — Asset Thesis and market evaluation, not tool-stack noise.",
     detailIntro:
       "Market brief — same evidence, organized for timing, wedge, and competitive reality.",
     signalHelperText:
@@ -264,7 +264,7 @@ export const PERSONA_LENSES: Record<Role, PersonaLens> = {
     snapshotAssetLabel: "Prioritize this bet",
     cardAssetLabel: "Venture bet",
     dashboardSubtitle:
-      "Pick an opportunity — each dossier supports venture validation and repeated-bet prioritization.",
+      "Your recommended starting point — venture validation and bet prioritization across the portfolio.",
     detailIntro:
       "Venture brief — same evidence, organized for validation, operator fit, and bet comparison.",
     signalHelperText:
@@ -297,7 +297,7 @@ export const PERSONA_LENSES: Record<Role, PersonaLens> = {
     snapshotAssetLabel: "View opportunity",
     cardAssetLabel: "Opportunity",
     dashboardSubtitle:
-      "Browse evidence-backed opportunities — each dossier shows how every role would read it.",
+      "Your recommended starting point — browse role-aware dossiers for every decision angle.",
     detailIntro:
       "Multi-lens brief — same evidence, interpreted through agency, consultant, investor, and venture studio angles.",
     signalHelperText:

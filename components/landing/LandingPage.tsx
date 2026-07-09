@@ -58,16 +58,16 @@ export function LandingPage() {
             <div className="landing-fade-up text-center lg:text-left">
               <div className="inline-flex items-center gap-2 rounded-full border border-accent-blue/20 bg-accent-blue/10 px-4 py-1.5 text-xs font-medium text-accent-blue">
                 <Radar className="h-3.5 w-3.5" />
-                Evidence-backed build intelligence
+                Evidence-backed decision engine
               </div>
 
               <h1 className="landing-h1 mt-6">
-                Evidence-backed build opportunities for agencies, consultants, and investors.
+                Know what to build or act on first — personalized for your role.
               </h1>
 
               <p className="landing-lead mx-auto mt-5 max-w-xl lg:mx-0">
-                DataTello delivers source-backed opportunity intelligence using structured signals,
-                scoring, and guardrails — operational pain, market wedge, and asset strategy in every dossier.
+                DataTello ranks validated opportunities for your industries and buyer focus,
+                then shows role-aware output — execution detail or Asset Thesis — backed by layered evidence.
               </p>
 
               <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
@@ -103,7 +103,7 @@ export function LandingPage() {
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-base">
               DataTello focuses on markets where operational, regulatory, demand, and workflow
-              signals are easier to detect — and more useful for evidence-backed opportunity decisions.
+              signals are easier to detect — and more useful when the Decision Layer tells you what to act on first.
             </p>
           </div>
 
@@ -593,7 +593,7 @@ export function LandingPage() {
           </div>
 
           <p className="mx-auto mt-8 max-w-xl text-center text-sm text-text-muted">
-            This helps turn one-time discovery into ongoing opportunity intelligence.
+            This helps turn one-time discovery into ongoing decision support — not another feed to scroll.
           </p>
         </LandingContainer>
       </section>
@@ -680,7 +680,7 @@ export function LandingPage() {
         <LandingContainer>
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>Pricing</SectionLabel>
-            <SectionHeading>Premium intelligence for strategic decisions</SectionHeading>
+            <SectionHeading>Decision engine pricing for strategic teams</SectionHeading>
             <SectionSubheading className="mx-auto">
               Plans designed for advisors, service firms, and investment teams who need
               source-backed opportunity depth.
@@ -746,11 +746,11 @@ export function LandingPage() {
         <LandingContainer className="relative text-center">
           <Sparkles className="mx-auto mb-4 h-8 w-8 text-accent-blue" />
           <SectionHeading className="mx-auto max-w-2xl">
-            Opportunity intelligence with real signal behind it
+            A decision engine with real signal behind every recommendation
           </SectionHeading>
           <SectionSubheading className="mx-auto">
-            Stop relying on generic lists. Start with operational pain, source-backed evidence, a
-            scored market wedge, and a defensible path to action.
+            Stop scrolling opportunity lists. Get a personalized top pick, role-aware dossiers, and a
+            clear answer to what you should build or act on first.
           </SectionSubheading>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <PrimaryButton href="/dashboard" className="px-10 py-3.5">

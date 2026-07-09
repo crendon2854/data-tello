@@ -427,7 +427,22 @@ Fields:
 
 #### `opportunities`
 
-Should expand to include the dossier fields.
+Should expand to include the dossier fields plus Decision Layer outputs.
+
+**Decision Layer fields (candidate reports):**
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `recommended_rank_score` | numeric | Ranking score for Decision Layer |
+| `recommended_reason` | text[] | 3 "why this fits" bullets |
+| `confidence_level` | text | Low / Medium / High |
+| `time_to_value` | text | Fast / Medium / Slow |
+| `role_visibility_config` | jsonb | Per-role section visibility |
+| `market_maturity` | text | early / emerging / validated (Asset Thesis) |
+
+`getRecommendedOpportunity()` reads published opportunities + `user_preferences`, applies recommendation guardrails, and returns top 1 + top 3.
+
+Implementation: `lib/decision-layer.ts`.
 
 Core fields:
 
@@ -440,7 +455,13 @@ Core fields:
 - `tags`
 - `complexity`
 - `freshness_label`
-- `confidence_label`
+- `confidence_label` — legacy display string
+- `confidence_level` — Low / Medium / High (calculated from evidence layers, buyer clarity, buildability)
+- `time_to_value` — Fast / Medium / Slow (time to first revenue; calculated from friction, procurement, asset type, build complexity)
+- `recommended_rank_score` — Decision Layer ranking score (per-user context; may be computed at query time or cached)
+- `recommended_reason` — text[] — 3 personalization bullets ("why this fits")
+- `role_visibility_config` — jsonb — per-role section/field visibility map
+- `market_maturity` — early / emerging / validated (Asset Thesis field)
 - `problem_zone_id`
 
 Dossier fields:

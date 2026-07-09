@@ -23,9 +23,9 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
-  title: "DataTello — Evidence-Backed Build Opportunities",
+  title: "DataTello — Build Opportunity Decision Engine",
   description:
-    "Premium opportunity intelligence platform for agencies, consultants, and investors. Evidence-backed build opportunities with structured signals, scoring, and guardrails.",
+    "Evidence-backed decision engine for agencies, consultants, investors, and venture studios. Tells you what to build or act on first — with layered validation, role-aware output, and personalized recommendations.",
 };
 
 export default function RootLayout({

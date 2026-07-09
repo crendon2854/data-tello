@@ -23,6 +23,8 @@ See [MED.md](./MED.md) for documentation governance. Section components follow [
 | Component | Purpose |
 |-----------|---------|
 | `OpportunityCard` | Dashboard list item |
+| `RecommendedCard` | Top-of-dashboard "Recommended for You" — Decision Layer output |
+| `TopOpportunities` | "Top Opportunities This Week" ranked list |
 
 ## Sections (`/components/sections`)
 
@@ -33,11 +35,13 @@ One component per MED section. Seven-section dossier order per [med-sections.md]
 | `OpportunitySnapshot` | 1. Opportunity Snapshot | Detail page |
 | `WhyThisExists` | 2. Why This Exists | Detail page |
 | `SignalBreakdown` | 3. Signal Breakdown (+ Digital Infrastructure Evidence) | Detail page |
-| `BuildStrategy` | 4. Asset Strategy | Detail page |
+| `BuildStrategy` | 4. Build Strategy (agency/consultant) | Detail page |
+| `AssetThesis` | 4. Asset Thesis (investor/venture_studio) | Detail page — planned |
+| `BuilderFitStrategy` | Builder Fit + tool stack (agency/consultant only) | Detail page — planned |
 | `ExecutionAngle` | 5. Execution Angle | Detail page |
 | `CompetitiveAngle` | 6. Competitive Differentiator Strategy | Detail page |
 | `WhyThisMatters` | 7. Why This Matters | Detail page |
-| `DashboardContent` | — | Dashboard page (client wrapper; default filters from onboarding when implemented) |
+| `DashboardContent` | — | Dashboard page — Recommended for You, Top Opportunities, filters |
 | `OpportunityDetailContent` | — | Detail page (ICP lens, section order) |
 
 Component names (`BuildStrategy`, `CompetitiveAngle`) predate canonical MED section names.
@@ -48,6 +52,14 @@ Component names (`BuildStrategy`, `CompetitiveAngle`) predate canonical MED sect
 |-----------|---------|
 | `OpportunityForm` | Create/edit — mirrors seven-section dossier groups |
 | `ReviewActions` | Approve / reject / publish buttons |
+
+## Dashboard (`/components/dashboard`)
+
+| Component | Purpose |
+|-----------|---------|
+| `DashboardClient` | Dashboard shell + filter state |
+| `RecommendedCard` | "Recommended for You" — title, asset, 3 bullets, confidence, TTV, CTAs |
+| `TopOpportunities` | Weekly ranked list — score, asset, buyer, summary |
 
 ## Planned Components
 

@@ -13,6 +13,19 @@ See [MED.md](./MED.md) for governance. See [roadmap.md](./roadmap.md) for phase 
 
 ---
 
+## 2026-07-09 — Decision Layer & Role-Aware Output (strategic repositioning)
+
+- Product repositioned from research dashboard to **decision engine**
+- Decision Layer spec: `getRecommendedOpportunity()` — top 1 + top 3 ranked per user
+- Role-Aware Output System: agency/consultant (execution) vs investor/venture_studio (Asset Thesis)
+- Dashboard surfaces: **Recommended for You**, **Top Opportunities This Week**
+- Fields: `recommended_rank_score`, `recommended_reason[]`, `confidence_level`, `time_to_value`, `role_visibility_config`
+- Recommendation guardrails documented
+- Weekly Signal Brief: teaser only via `lib/newsletter-engine/`
+- Builder Fit restored for agency/consultant role view
+- Core engine unchanged: Pressure, Demand, Wedge, Friction, Procurement, scoring, publish guardrails, seven-section dossier
+- ADR in [decisions.md](./decisions.md); Phases 18–19 added to [roadmap.md](./roadmap.md)
+
 ## 2026-07-08 — Decision engine + planning update
 
 - Persona-aware dossier rendering shipped (`lib/dossier-content.ts`)
