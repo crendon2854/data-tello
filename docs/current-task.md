@@ -1,7 +1,7 @@
 # Current Task
 
-Documentation Version: 1.2  
-Last Updated: 2026-07-08  
+Documentation Version: 1.3  
+Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
 
@@ -11,283 +11,159 @@ Overall status: [project-state.md](./project-state.md)
 
 ---
 
-## Current Phase
+## Milestone
 
-Phase 17 — Investor Watchlists + Alert Triggers (next)
+**Phase 5c — MVP Architecture Separation** ✅ complete (docs locked)
+
+**Phase 7–9 — MVP Source Stack Code Alignment** ← active now
+
+Align runtime code, admin UI, seed data, and scoring with the locked MVP architecture in [architecture.md](./architecture.md). Prove the compliance + contractor + public-sector wedge in software — not just in docs.
+
+---
 
 ## Current Objective
 
-Turn DataTello from “browse dossiers” into “track my thesis.” Let users save opportunity theses and get dashboard-visible matches when new opportunities fit their focus.
+Close the gap between **documented MVP** and **shipped code**. The app still references GitHub friction, investor ICPs, complaint modifiers, and digital infrastructure scoring that are explicitly out of MVP scope.
 
-Highest-retention feature for micro-VCs, venture studios, and holdcos.
-
----
-
-## Repo Re-check (2026-07-08)
-
-### Builder Fit Strategy — removed from MVP
-
-**Builder Fit Strategy = removed from MVP / future optional layer.**
-
-- **Not active** as its own feature in the app.
-- **Build Strategy / Asset Strategy remains active** — section 4 in the seven-section dossier.
-- `BuildStrategy` component uses only: `asset_path_1/2/3`, `asset_reason`, `expansion_ladder` — no builder-fit or tool-stack logic.
-- `builder_fit_strategy` table may exist in schema docs but is **not rendered** in user-facing dossier output.
-
-### Active dossier sections (V1)
-
-| # | Section | Component |
-|---|---------|-----------|
-| 1 | Opportunity Snapshot | `OpportunitySnapshot` |
-| 2 | Why This Exists | `WhyThisExists` |
-| 3 | Signal Breakdown | `SignalBreakdown` |
-| 4 | Build Strategy / Asset Strategy | `BuildStrategy` |
-| 5 | Execution Angle | `ExecutionAngle` |
-| 6 | Competitive Angle | `CompetitiveAngle` |
-| 7 | Why This Matters | `WhyThisMatters` |
-
-Orchestrator: `OpportunityDetailContent` — persona-aware section order, titles, labels, and emphasis via `lib/dossier-content.ts` + `lib/persona-lens.ts`.
-
-### Scoring & preferences (shipped)
-
-- **Truth layer:** `overall_score` on cards and snapshot (never mutated by persona or watchlists).
-- **Persona layer:** `persona_score` computed separately in `lib/scoring.ts`; feed sorted by `persona_score`.
-- **Friction / complaint modifiers** wired in `applyEvidenceModifiers()`.
-- **Signal preferences** affect scoring weights (not just UI filter) via `applySignalPreferenceWeights()`.
-- **General mode:** multi-lens blend + `GeneralMultiLens` dossier card.
-- **Explore mode:** focus / adjacent / all industries on dashboard.
-
-### Feed filtering
-
-- Industry match uses `industry_tags` + trusted keyword haystack — not competitor copy.
-- Buyer match uses `buyer_tags`, `primary_buyer`, `target_buyer` — not competitor fields.
-- Signal preferences filter feed inclusion (≥50 strength threshold) and adjust persona scoring weights.
+Success = admin, mock data, scoring, and onboarding all reflect the MVP source stack and target customer (builders, agencies, consultants).
 
 ---
 
-## Recently Completed
+## Task Breakdown
 
-**Phase 13 (partial) — ICP onboarding & decision engine**
+### 1. Source registry + seed alignment
 
-- `user_preferences` table + `/onboarding`, `/preferences`
-- Persona-aware dossier rendering (section order, labels, field order, signal display order)
-- Signal preferences → scoring integration
-- General multi-lens output
-- Explore mode: My industries / Adjacent / All
+- [ ] `supabase/seed.sql` — MVP sources only: OSHA, EPA ECHO, Federal Register, DataForSEO, SAM.gov, USAspending
+- [ ] `lib/mock-data.ts` — mock sources and signals match MVP wedge (no GitHub as active friction source)
+- [ ] `app/admin/sources/page.tsx` — phase labels on sources (MVP vs Phase 2 vs Future)
+- [ ] Register SAM.gov in `sources` table (currently lives only in `lib/procurement/*`)
 
-**Phase 5c — Layered validation & ICP documentation rewrite** ✅
+### 2. Workflow friction admin (MVP sources)
 
-**Phase 6 — Supabase Integration** ✅
+- [ ] `app/admin/friction/page.tsx` — replace GitHub/Stack Exchange/Greenhouse/Lever with:
+  - Targeted job postings
+  - Procurement language
+  - RFP language
+- [ ] Mark developer friction sources as Phase 2 (disabled or labeled, not removed from architecture)
 
----
+### 3. Procurement validation (first-class MVP step)
 
-## Next Build: Investor Watchlists + Alert Triggers
+- [ ] Admin workspace for procurement validation (upgrade market-proof or dedicated route)
+- [ ] Wire `lib/procurement/*` into opportunity scoring path
+- [ ] `procurement_score` as hidden modifier in `lib/scoring.ts` (alongside friction)
+- [ ] Remove or gate complaint / digital infrastructure modifiers from MVP scoring path
 
-### Goal
+### 4. Scoring + dossier UI
 
-Let users save opportunity theses and get dashboard-visible matches when new opportunities fit their focus.
+- [ ] `components/sections/SignalBreakdown.tsx` — procurement evidence panel (MVP)
+- [ ] Do not render complaint or digital infrastructure panels in MVP dossiers
+- [ ] `components/admin/OpportunityForm.tsx` — procurement_score field; remove digital_infrastructure_boost from MVP admin
+- [ ] `types/opportunity.ts` / `types/database.ts` — `procurement_score` field parity
 
-### 1. Supabase tables
+### 5. Onboarding + ICP (MVP customer)
 
-**`watchlists`**
+- [ ] `app/onboarding/page.tsx` / `components/onboarding/OnboardingFlow.tsx` — Builder as primary user type
+- [ ] `lib/persona-lens.ts` — MVP defaults for builder, agency, consultant; investor/studio deprioritized (future segment)
+- [ ] `types/user-preferences.ts` — `builder` user type if missing
+- [ ] Signal preferences — MVP layers only (hide complaint/digital infra as "coming soon")
 
-| Column | Type |
-|--------|------|
-| id | uuid PK |
-| user_id | text |
-| name | text |
-| description | text |
-| industries | text[] |
-| buyer_types | text[] |
-| asset_types | text[] |
-| min_overall_score | int |
-| min_persona_score | int |
-| required_signals | text[] |
-| created_at | timestamptz |
-| updated_at | timestamptz |
+### 6. Landing + messaging verification
 
-**`watchlist_matches`**
-
-| Column | Type |
-|--------|------|
-| id | uuid PK |
-| watchlist_id | uuid FK |
-| opportunity_id | uuid FK |
-| match_score | int |
-| match_reasons | text[] |
-| created_at | timestamptz |
-| dismissed | boolean default false |
-
-### 2. TypeScript types
-
-Add to `types/database.ts`.
-
-### 3. Query helpers (`lib/queries.ts`)
-
-- `getWatchlists(userId)`
-- `createWatchlist(input)`
-- `updateWatchlist(id, input)`
-- `deleteWatchlist(id)`
-- `getWatchlistMatches(userId)`
-- `computeWatchlistMatches(watchlist, opportunities)`
-
-### 4. Matching logic
-
-Score matches using:
-
-- `industry_tags` overlap
-- `buyer_tags` overlap
-- `best_first_asset` / `asset_strategy` match
-- `overall_score` threshold
-- `persona_score` threshold
-- Required signal strength: pressure, demand, wedge, friction, complaints, digital_infrastructure
-
-**Do not mutate `overall_score`.** Watchlist sorting may use `persona_score` without changing truth-layer scores.
-
-### 5. UI
-
-- Sidebar link: `/watchlists`
-- `/watchlists` page — saved watchlists + matched opportunities per watchlist
-- “Create Watchlist” form
-- Match reasons displayed under each match
-- “Save to Watchlist” action on opportunity detail page
-
-### 6. Role-specific defaults
-
-| Role | Defaults |
-|------|----------|
-| `investor` | min overall score 70; prioritize market/wedge, competitive angle, buildability |
-| `venture_studio` | prioritize buildability, asset paths, validation strength |
-| `agency` | prioritize asset fit, execution angle, friction/complaints |
-
-### Files Expected to Change
-
-- `supabase/schema.sql`
-- `types/database.ts`
-- `lib/queries.ts`
-- `lib/watchlist-matching.ts` (new)
-- `app/watchlists/page.tsx` (new)
-- `components/sections/WatchlistsContent.tsx` (new)
-- `components/layout/Sidebar.tsx`
-- `components/sections/OpportunityDetailContent.tsx`
-- `docs/*` as needed
-
-### Acceptance Criteria
-
-- [ ] User can create a watchlist
-- [ ] Matching opportunities appear under that watchlist
-- [ ] Matches explain why they matched (`match_reasons`)
-- [ ] Dashboard scores remain truth-layer scores (`overall_score` unchanged)
-- [ ] Watchlist sorting can use `persona_score` without changing `overall_score`
-- [ ] `npm run build` passes
+- [ ] Confirm `components/landing/landing-data.ts` matches [vision.md](./vision.md) (done in prior pass — verify only)
 
 ---
 
-## Cursor Prompt (copy-paste)
+## Files Expected to Change
 
-```text
-Implement Investor Watchlists + Alert Triggers for DataTello.
+| Area | Files |
+|------|-------|
+| Schema + seed | `supabase/schema.sql`, `supabase/seed.sql` |
+| Types | `types/database.ts`, `types/opportunity.ts`, `types/user-preferences.ts`, `types/procurement.ts` |
+| Data + queries | `lib/mock-data.ts`, `lib/mock-opportunities.ts`, `lib/queries.ts` |
+| Scoring | `lib/scoring.ts`, `lib/procurement/scoring.ts`, `lib/procurement/integration.ts` |
+| Admin UI | `app/admin/sources/page.tsx`, `app/admin/friction/page.tsx`, `app/admin/market-proof/page.tsx`, `components/admin/OpportunityForm.tsx` |
+| Dossier UI | `components/sections/SignalBreakdown.tsx`, `lib/dossier-content.ts` |
+| Onboarding | `app/onboarding/page.tsx`, `components/onboarding/OnboardingFlow.tsx`, `lib/persona-lens.ts` |
+| Docs (on completion) | `docs/project-state.md`, `docs/backlog.md`, `docs/implementation-index.md`, `docs/changelog.md` |
 
-Goal:
-Let users save opportunity theses and get dashboard-visible matches when new opportunities fit their focus.
-
-Build:
-1. Add Supabase tables:
-- watchlists
-  - id
-  - user_id
-  - name
-  - description
-  - industries text[]
-  - buyer_types text[]
-  - asset_types text[]
-  - min_overall_score int
-  - min_persona_score int
-  - required_signals text[]
-  - created_at
-  - updated_at
-
-- watchlist_matches
-  - id
-  - watchlist_id
-  - opportunity_id
-  - match_score int
-  - match_reasons text[]
-  - created_at
-  - dismissed boolean default false
-
-2. Add TypeScript types in `types/database.ts`.
-
-3. Add query helpers:
-- getWatchlists(userId)
-- createWatchlist(input)
-- updateWatchlist(id, input)
-- deleteWatchlist(id)
-- getWatchlistMatches(userId)
-- computeWatchlistMatches(watchlist, opportunities)
-
-4. Matching logic:
-Score matches using:
-- industry_tags overlap
-- buyer_tags overlap
-- best_first_asset / asset_strategy match
-- overall_score threshold
-- persona_score threshold
-- required signal strength:
-  - pressure
-  - demand
-  - wedge
-  - friction
-  - complaints
-  - digital_infrastructure
-
-Do not mutate `overall_score`.
-
-5. UI:
-- Add sidebar link: `/watchlists`
-- Create `/watchlists` page
-- Show saved watchlists
-- Add “Create Watchlist” form
-- Show matched opportunities under each watchlist
-- Add “Save to Watchlist” action on opportunity detail page
-
-6. Investor-specific defaults:
-For role `investor`:
-- default min overall score: 70
-- prioritize market/wedge, competitive angle, buildability
-For role `venture_studio`:
-- prioritize buildability, asset paths, validation strength
-For role `agency`:
-- prioritize asset fit, execution angle, friction/complaints
-
-Acceptance criteria:
-- User can create a watchlist.
-- Matching opportunities appear under that watchlist.
-- Matches explain why they matched.
-- Dashboard scores remain truth-layer scores.
-- Watchlist sorting can use persona_score without changing overall_score.
-- Build passes.
-```
+Full map: [implementation-index.md](./implementation-index.md)
 
 ---
 
 ## Dependencies
 
-- Phase 6 complete (Supabase + mock fallback)
-- Persona scoring + preferences shipped (`lib/scoring.ts`, `lib/feed-filters.ts`)
-- `user_preferences` with role field for role-specific watchlist defaults
+| Dependency | Status | Notes |
+|------------|--------|-------|
+| Phase 5c docs locked | ✅ | [architecture.md](./architecture.md), [roadmap.md](./roadmap.md) |
+| Phase 6 Supabase + mock fallback | ✅ | `lib/queries.ts` |
+| SAM.gov procurement pipeline | ✅ partial | `lib/procurement/*` exists — needs registry + admin + scoring wire-up |
+| DataForSEO connector | ⚠️ partial | Admin keywords page is placeholder |
+| Persona scoring + preferences | ✅ | `lib/scoring.ts`, `lib/feed-filters.ts` |
+| Seven-section dossier components | ✅ | `components/sections/*` |
+| Human review queue | ✅ basic | `/admin/review` — upgrade guardrail display in Phase 8 |
+
+---
 
 ## Risks
 
-- RLS on `watchlists` / `watchlist_matches` must scope by `user_id`
-- Match computation should run client-side or via server action until background jobs exist
-- Schema drift between SQL and TypeScript types
+| Risk | Mitigation |
+|------|------------|
+| **Doc vs code drift persists** | Treat `architecture.md` as acceptance spec; check each file against MVP source table |
+| **Breaking mock mode** | Every schema/type change must keep `lib/mock-data.ts` fallback working |
+| **Over-scoping into Phase 2** | Do not build complaint connectors or GitHub friction — label as future only |
+| **Scoring regression** | Keep `overall_score` truth layer; procurement modifier is hidden, not a new public score |
+| **Onboarding breakage** | Add `builder` type without removing existing types (investor/studio stay for future) |
+| **SAM.gov API dependency** | Procurement admin should work with mock data when API key absent |
+
+---
+
+## Acceptance Criteria
+
+- [ ] Source registry and seed reflect MVP stack only (future sources labeled, not deleted)
+- [ ] Friction admin shows job postings / procurement / RFP — not GitHub/Stack Exchange as active MVP sources
+- [ ] Procurement validation visible in admin and dossier Signal Breakdown
+- [ ] `procurement_score` wired as hidden modifier; complaint/digital infra modifiers gated off MVP path
+- [ ] Onboarding offers Builder, Agency, Consultant as primary types
+- [ ] Mock mode works without Supabase env vars
+- [ ] `npm run build` passes
+- [ ] No MVP UI promotes investor, healthcare, onchain, or complaint layers as active features
+
+---
+
+## Recently Completed
+
+**Phase 5c — MVP Architecture Separation** ✅
+
+- Product positioning locked (build opportunities, not intelligence platform)
+- MVP wedge, pipeline, source stack, scoring, ICP documented
+- Future Expansion section preserves complaints, healthcare, onchain, BLS/Census (deferred)
+- Landing page messaging aligned
+- ADR in [decisions.md](./decisions.md)
+
+**Phase 13 (partial) — ICP onboarding & decision engine** ✅
+
+- `/onboarding`, `/preferences`, persona scoring, explore mode
+
+**Phase 6 — Supabase Integration** ✅
+
+---
+
+## Deferred (not this task)
+
+| Item | Phase | Why deferred |
+|------|-------|--------------|
+| Investor Watchlists | 17 | Future customer segment — not MVP positioning |
+| Complaint & Incident Signals | 14 | Phase 2 — after MVP quality bar |
+| Digital Infrastructure | 15 | Future Research — not in MVP |
+| BLS, Census | 2 | Deferred — valuable later, adds complexity before core engine proven |
+| Healthcare ingestion | 3 | Entire vertical post-MVP |
+| “Why you’re seeing this” feed transparency | 13 | Nice-to-have |
+| Builder Fit Strategy | Future | Optional layer |
+
+Watchlists spec preserved in [backlog.md](./backlog.md) § Phase 17.
+
+---
 
 ## After Completion
 
-Update project-state, implementation-index, changelog, roadmap, backlog, current-task.
-
-## Deferred (not urgent)
-
-- “Why you’re seeing this” transparency on feed cards (`persona_score_reasons` computed but not surfaced)
-- Builder Fit Strategy as future optional layer (tool-stack / org-type delivery fit)
+Update: `project-state.md`, `implementation-index.md`, `changelog.md`, `backlog.md`, and this file with next task.

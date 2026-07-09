@@ -165,9 +165,13 @@ Procurement Validation is a first-class MVP step — not an afterthought. Constr
 | EPA ECHO | ✅ MVP |
 | Federal Register | ✅ MVP |
 
-**Removed from MVP** (documented under [Future Expansion](#future-expansion)):
+**Deferred from MVP** (preserved for Phase 2 — see [Future Expansion](#future-expansion)):
 
-- BLS, Census, CMS, Grants.gov, CISA KEV, Regulations.gov, and other agencies
+- **BLS** — employment trends and labor pressure (valuable once core engine is proven; not active now)
+- **Census** — construction permits and structural indicators (same deferral rationale)
+- CMS, Grants.gov, CISA KEV, Regulations.gov, and other agencies
+
+BLS and Census are **not permanently removed**. They add connector and interpretation complexity before the MVP has proven it consistently produces opportunities people will pay for. Revisit after the compliance wedge hits its quality bar.
 
 ### Demand Validation — MVP only
 
@@ -416,14 +420,16 @@ Mandatory in the long-term model; not active in MVP.
 
 ### Phase 2 — Additional Government Agencies
 
-| Source | Use |
-|--------|-----|
-| BLS | Labor and operational pressure |
-| Census | Permits, structural indicators |
-| CMS | Healthcare-adjacent pressure (full healthcare is Phase 3) |
-| Grants.gov | Funding signal |
-| CISA KEV | Security pressure |
-| Regulations.gov | Rulemaking signal |
+Deferred from MVP — not permanently removed. Activate after the core engine consistently produces paid-quality opportunities.
+
+| Source | Use | Deferral note |
+|--------|-----|---------------|
+| **BLS** | Employment trends, labor pressure, occupational safety staffing signals | Valuable for wedge depth; adds complexity before MVP is proven |
+| **Census** | Construction permits, housing starts, structural industry indicators | Strong fit for contractor wedge later; not needed to validate core engine today |
+| CMS | Healthcare-adjacent pressure (full healthcare is Phase 3) | Different vertical |
+| Grants.gov | Funding signal | Secondary to procurement proof |
+| CISA KEV | Security pressure | Adjacent to compliance wedge |
+| Regulations.gov | Rulemaking signal | Federal Register covers MVP pressure needs |
 
 ### Phase 2 — Market Wedge Expansion
 

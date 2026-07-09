@@ -190,6 +190,7 @@ Every ADR must include all five fields:
 **Decision:**
 - Lock MVP wedge: Environmental Compliance + Contractor Safety + Public-sector compliance workflows
 - Lock MVP source stack (OSHA, EPA ECHO, Federal Register, DataForSEO, SAM.gov, USAspending, job postings/procurement/RFP friction, manual/G2/Capterra wedge)
+- Defer BLS and Census from active MVP — preserved for Phase 2; employment trends and construction data add complexity before core engine is proven
 - Move complaints, developer friction, healthcare, onchain/x402, and additional agencies to phased Future Expansion
 - Lock MVP target customer: Builders, compliance-heavy agencies, contractor/environmental consultants
 - Lock MVP pipeline with Procurement Validation as first-class step

@@ -174,7 +174,16 @@ Reason: construction and environmental workflows are validated through hiring an
 
 ### Phase 2 — Additional Government Agencies
 
-BLS, Census, CMS, Grants.gov, CISA KEV, Regulations.gov, and other agencies.
+**Deferred from MVP — not permanently removed.** BLS employment trends and Census construction data are strong future additions for the contractor and environmental wedge, but they add connector and interpretation complexity before the core engine has proven it consistently produces opportunities people will pay for.
+
+| Source | Use |
+|--------|-----|
+| **BLS** | Employment trends, labor pressure, occupational staffing signals |
+| **Census** | Construction permits, housing starts, structural industry indicators |
+| CMS | Healthcare-adjacent pressure (full healthcare is Phase 3) |
+| Grants.gov | Funding signal |
+| CISA KEV | Security pressure |
+| Regulations.gov | Rulemaking signal |
 
 ### Phase 2 — Market Wedge Expansion
 
@@ -214,7 +223,7 @@ Full detail: [architecture.md](./architecture.md) § Future Expansion.
 - Digital Infrastructure Boost in scoring
 - GitHub / Stack Exchange friction sources
 - SEC EDGAR, broad review scraping, startup marketplaces
-- BLS, Census, CMS, Grants.gov, other agencies
+- BLS, Census (deferred — not removed), CMS, Grants.gov, other agencies
 - State/local/global procurement expansion
 - Investor, VC, HoldCo, Product Studio, Enterprise positioning
 - Full visual workflow builder
