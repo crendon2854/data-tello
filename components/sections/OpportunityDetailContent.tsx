@@ -12,6 +12,7 @@ import { ExecutionAngle } from "@/components/sections/ExecutionAngle";
 import { CompetitiveAngle } from "@/components/sections/CompetitiveAngle";
 import { WhyThisMatters } from "@/components/sections/WhyThisMatters";
 import { GeneralMultiLens } from "@/components/sections/GeneralMultiLens";
+import { SaveToWatchlist } from "@/components/watchlists/SaveToWatchlist";
 import { usePersonaLens } from "@/hooks/usePersonaLens";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import {
@@ -146,8 +147,9 @@ export function OpportunityDetailContent({
         &larr; Back to Dashboard
       </Link>
 
-      <div className="mb-5 rounded-lg border border-border-subtle bg-bg-elevated/50 p-4">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border-subtle bg-bg-elevated/50 p-4">
         <PersonaSelector value={personaId} onChange={(id) => void setPersonaId(id)} />
+        <SaveToWatchlist opportunity={opportunity} />
       </div>
 
       {ready && (

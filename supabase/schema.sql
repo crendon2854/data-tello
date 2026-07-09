@@ -406,6 +406,33 @@ create table if not exists watchlist_items (
   created_at timestamptz not null default now()
 );
 
+-- Investor watchlists: user-defined theses with computed opportunity matches.
+create table if not exists watchlists (
+  id uuid primary key default gen_random_uuid(),
+  user_id text not null,
+  name text not null,
+  description text,
+  industries text[] not null default '{}',
+  buyer_types text[] not null default '{}',
+  asset_types text[] not null default '{}',
+  min_overall_score integer not null default 0,
+  min_persona_score integer not null default 0,
+  required_signals text[] not null default '{}',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists watchlist_matches (
+  id uuid primary key default gen_random_uuid(),
+  watchlist_id uuid not null references watchlists(id) on delete cascade,
+  opportunity_id uuid not null references opportunities(id) on delete cascade,
+  match_score integer not null default 0,
+  match_reasons text[] not null default '{}',
+  created_at timestamptz not null default now(),
+  dismissed boolean not null default false,
+  unique (watchlist_id, opportunity_id)
+);
+
 create table if not exists dossier_templates (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -539,6 +566,8 @@ alter table monetization_paths enable row level security;
 alter table opportunity_risks enable row level security;
 alter table review_queue enable row level security;
 alter table watchlist_items enable row level security;
+alter table watchlists enable row level security;
+alter table watchlist_matches enable row level security;
 alter table dossier_templates enable row level security;
 alter table dossier_exports enable row level security;
 alter table newsletter_subscribers enable row level security;
@@ -602,5 +631,15 @@ create policy "MVP dev all workflow_friction_signals" on workflow_friction_signa
 drop policy if exists "MVP dev all user_preferences" on user_preferences;
 create policy "MVP dev all user_preferences"
   on user_preferences for all using (true) with check (true);
+
+-- TEMPORARY: MVP dev-open policy. Drop before production.
+drop policy if exists "MVP dev all watchlists" on watchlists;
+create policy "MVP dev all watchlists"
+  on watchlists for all using (true) with check (true);
+
+-- TEMPORARY: MVP dev-open policy. Drop before production.
+drop policy if exists "MVP dev all watchlist_matches" on watchlist_matches;
+create policy "MVP dev all watchlist_matches"
+  on watchlist_matches for all using (true) with check (true);
 
 -- Target tables: RLS enabled above but no policies yet. Keep closed until routes and auth exist.

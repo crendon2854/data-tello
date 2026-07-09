@@ -40,9 +40,18 @@ import type {
   WorkflowFrictionSignalRow,
   WorkflowFrictionSignalUpdate,
   WorkflowFrictionSignalWithProblemZone,
+  WatchlistInsert,
+  WatchlistMatchInsert,
+  WatchlistMatchRow,
+  WatchlistMatchWithOpportunity,
+  WatchlistRow,
+  WatchlistUpdate,
   ZoneRow,
 } from "@/types/database";
-import type { UserPreferences } from "@/types/user-preferences";
+import type { Opportunity } from "@/types/opportunity";
+import type { Role, UserPreferences } from "@/types/user-preferences";
+import { computeWatchlistMatches } from "@/lib/watchlist-matching";
+import { DEFAULT_SIGNAL_PREFERENCES } from "@/types/user-preferences";
 import { normalizeRole } from "@/lib/persona-lens";
 
 let mockStore = [...mockOpportunities];
@@ -55,6 +64,8 @@ let mockKeywordMetricStore = [...mockKeywordMetrics];
 let mockMarketProofStore = [...mockMarketProofRecords];
 let mockWorkflowFrictionStore = [...mockWorkflowFrictionSignals];
 const mockUserPreferencesStore = new Map<string, UserPreferences>();
+let mockWatchlistStore: WatchlistRow[] = [];
+let mockWatchlistMatchStore: WatchlistMatchRow[] = [];
 
 function rowToUserPreferences(row: {
   user_id: string;
@@ -1387,4 +1398,321 @@ export async function deleteWorkflowFrictionSignal(id: string): Promise<void> {
   );
 }
 
+// -----------------------------------------------------------------------------
+// Watchlists
+// -----------------------------------------------------------------------------
+
+export async function getWatchlists(userId: string): Promise<WatchlistRow[]> {
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("watchlists")
+      .select("*")
+      .eq("user_id", userId)
+      .order("updated_at", { ascending: false });
+
+    if (error) {
+      console.error("Supabase getWatchlists failed, using mock fallback:", error.message);
+      return mockWatchlistStore.filter((w) => w.user_id === userId);
+    }
+
+    return data ?? [];
+  }
+
+  return mockWatchlistStore.filter((w) => w.user_id === userId);
+}
+
+export async function createWatchlist(
+  input: WatchlistInsert
+): Promise<WatchlistRow> {
+  const now = new Date().toISOString();
+  const payload = {
+    user_id: input.user_id,
+    name: input.name,
+    description: input.description ?? null,
+    industries: input.industries ?? [],
+    buyer_types: input.buyer_types ?? [],
+    asset_types: input.asset_types ?? [],
+    min_overall_score: input.min_overall_score ?? 0,
+    min_persona_score: input.min_persona_score ?? 0,
+    required_signals: input.required_signals ?? [],
+    updated_at: now,
+  };
+
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("watchlists")
+      .insert({
+        ...payload,
+        created_at: input.created_at ?? now,
+      })
+      .select("*")
+      .single();
+
+    if (error) {
+      console.error("Supabase createWatchlist failed, using mock fallback:", error.message);
+    } else if (data) {
+      return data;
+    }
+  }
+
+  const row: WatchlistRow = {
+    id: input.id ?? crypto.randomUUID(),
+    ...payload,
+    created_at: input.created_at ?? now,
+  };
+  mockWatchlistStore = [row, ...mockWatchlistStore];
+  return row;
+}
+
+export async function updateWatchlist(
+  id: string,
+  input: WatchlistUpdate
+): Promise<WatchlistRow | null> {
+  const now = new Date().toISOString();
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("watchlists")
+      .update({ ...input, updated_at: now })
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    if (error) {
+      console.error("Supabase updateWatchlist failed, using mock fallback:", error.message);
+    } else if (data) {
+      return data;
+    }
+  }
+
+  const index = mockWatchlistStore.findIndex((w) => w.id === id);
+  if (index === -1) {
+    return null;
+  }
+
+  const updated: WatchlistRow = {
+    ...mockWatchlistStore[index],
+    ...input,
+    updated_at: now,
+  };
+  mockWatchlistStore[index] = updated;
+  return updated;
+}
+
+export async function deleteWatchlist(id: string): Promise<void> {
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { error } = await supabase.from("watchlists").delete().eq("id", id);
+    if (error) {
+      console.error("Supabase deleteWatchlist failed, using mock fallback:", error.message);
+    } else {
+      return;
+    }
+  }
+
+  mockWatchlistStore = mockWatchlistStore.filter((w) => w.id !== id);
+  mockWatchlistMatchStore = mockWatchlistMatchStore.filter(
+    (m) => m.watchlist_id !== id
+  );
+}
+
+export async function syncWatchlistMatches(
+  watchlist: WatchlistRow,
+  opportunities: Opportunity[],
+  options: { role?: Role; signalPreferences?: UserPreferences["signal_preferences"] } = {}
+): Promise<WatchlistMatchRow[]> {
+  const computed = computeWatchlistMatches(watchlist, opportunities, {
+    role: options.role,
+    signalPreferences: options.signalPreferences ?? DEFAULT_SIGNAL_PREFERENCES,
+  });
+
+  const supabase = getSupabase();
+  const now = new Date().toISOString();
+
+  let dismissedOpportunityIds = new Set<string>();
+
+  if (supabase) {
+    const { data: existing } = await supabase
+      .from("watchlist_matches")
+      .select("opportunity_id, dismissed")
+      .eq("watchlist_id", watchlist.id)
+      .eq("dismissed", true);
+
+    dismissedOpportunityIds = new Set(
+      (existing ?? []).map((row) => row.opportunity_id)
+    );
+  } else {
+    dismissedOpportunityIds = new Set(
+      mockWatchlistMatchStore
+        .filter((m) => m.watchlist_id === watchlist.id && m.dismissed)
+        .map((m) => m.opportunity_id)
+    );
+  }
+
+  const rows: WatchlistMatchInsert[] = computed
+    .filter((match) => !dismissedOpportunityIds.has(match.opportunity_id))
+    .map((match) => ({
+      watchlist_id: watchlist.id,
+      opportunity_id: match.opportunity_id,
+      match_score: match.match_score,
+      match_reasons: match.match_reasons,
+    }));
+
+  if (supabase) {
+    const { error: deleteError } = await supabase
+      .from("watchlist_matches")
+      .delete()
+      .eq("watchlist_id", watchlist.id)
+      .eq("dismissed", false);
+
+    if (deleteError) {
+      console.error(
+        "Supabase syncWatchlistMatches delete failed:",
+        deleteError.message
+      );
+    } else if (rows.length > 0) {
+      const { data, error } = await supabase
+        .from("watchlist_matches")
+        .insert(rows)
+        .select("*");
+
+      if (error) {
+        console.error("Supabase syncWatchlistMatches insert failed:", error.message);
+      } else {
+        const { data: dismissedRows } = await supabase
+          .from("watchlist_matches")
+          .select("*")
+          .eq("watchlist_id", watchlist.id);
+
+        return dismissedRows ?? data ?? [];
+      }
+    } else {
+      const { data: dismissedRows } = await supabase
+        .from("watchlist_matches")
+        .select("*")
+        .eq("watchlist_id", watchlist.id);
+
+      return dismissedRows ?? [];
+    }
+  }
+
+  mockWatchlistMatchStore = [
+    ...mockWatchlistMatchStore.filter(
+      (m) => m.watchlist_id !== watchlist.id || m.dismissed
+    ),
+  ];
+
+  const inserted = rows.map((row) => ({
+    id: crypto.randomUUID(),
+    watchlist_id: row.watchlist_id,
+    opportunity_id: row.opportunity_id,
+    match_score: row.match_score,
+    match_reasons: row.match_reasons,
+    created_at: now,
+    dismissed: false,
+  }));
+
+  mockWatchlistMatchStore = [...inserted, ...mockWatchlistMatchStore];
+  return [
+    ...inserted,
+    ...mockWatchlistMatchStore.filter(
+      (m) => m.watchlist_id === watchlist.id && m.dismissed
+    ),
+  ];
+}
+
+export async function getWatchlistMatches(
+  userId: string
+): Promise<WatchlistMatchWithOpportunity[]> {
+  const watchlists = await getWatchlists(userId);
+  if (watchlists.length === 0) {
+    return [];
+  }
+
+  const watchlistIds = watchlists.map((w) => w.id);
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { data, error } = await supabase
+      .from("watchlist_matches")
+      .select("*, opportunities(*)")
+      .in("watchlist_id", watchlistIds)
+      .eq("dismissed", false)
+      .order("match_score", { ascending: false });
+
+    if (error) {
+      console.error(
+        "Supabase getWatchlistMatches failed, using mock fallback:",
+        error.message
+      );
+    } else if (data) {
+      return data
+        .filter(
+          (row) =>
+            row.opportunities &&
+            (row.opportunities as Opportunity).status === "published"
+        )
+        .map((row) => ({
+          id: row.id,
+          watchlist_id: row.watchlist_id,
+          opportunity_id: row.opportunity_id,
+          match_score: row.match_score,
+          match_reasons: row.match_reasons,
+          created_at: row.created_at,
+          dismissed: row.dismissed,
+          opportunity: row.opportunities as Opportunity,
+        }));
+    }
+  }
+
+  const opportunitiesById = new Map(
+    mockStore.map((opportunity) => [opportunity.id, opportunity])
+  );
+
+  return mockWatchlistMatchStore
+    .filter(
+      (match) =>
+        watchlistIds.includes(match.watchlist_id) &&
+        !match.dismissed &&
+        opportunitiesById.get(match.opportunity_id)?.status === "published"
+    )
+    .map((match) => ({
+      ...match,
+      opportunity: opportunitiesById.get(match.opportunity_id)!,
+    }))
+    .filter((match) => match.opportunity)
+    .sort((a, b) => b.match_score - a.match_score);
+}
+
+export async function dismissWatchlistMatch(matchId: string): Promise<void> {
+  const supabase = getSupabase();
+
+  if (supabase) {
+    const { error } = await supabase
+      .from("watchlist_matches")
+      .update({ dismissed: true })
+      .eq("id", matchId);
+
+    if (error) {
+      console.error(
+        "Supabase dismissWatchlistMatch failed, using mock fallback:",
+        error.message
+      );
+    } else {
+      return;
+    }
+  }
+
+  mockWatchlistMatchStore = mockWatchlistMatchStore.map((match) =>
+    match.id === matchId ? { ...match, dismissed: true } : match
+  );
+}
+
 export { isSupabaseConfigured };
+export { computeWatchlistMatches } from "@/lib/watchlist-matching";

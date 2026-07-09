@@ -425,6 +425,76 @@ export type UserPreferencesUpdate = Partial<
   Omit<UserPreferencesRow, "user_id" | "created_at">
 >;
 
+export type WatchlistSignalId =
+  | "pressure"
+  | "demand"
+  | "wedge"
+  | "friction"
+  | "complaints"
+  | "digital_infrastructure";
+
+export interface WatchlistRow {
+  id: string;
+  user_id: string;
+  name: string;
+  description: string | null;
+  industries: string[];
+  buyer_types: string[];
+  asset_types: string[];
+  min_overall_score: number;
+  min_persona_score: number;
+  required_signals: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export type WatchlistInsert = {
+  user_id: string;
+  name: string;
+  description?: string | null;
+  industries?: string[];
+  buyer_types?: string[];
+  asset_types?: string[];
+  min_overall_score?: number;
+  min_persona_score?: number;
+  required_signals?: string[];
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+};
+
+export type WatchlistUpdate = Partial<
+  Omit<WatchlistRow, "id" | "user_id" | "created_at">
+>;
+
+export interface WatchlistMatchRow {
+  id: string;
+  watchlist_id: string;
+  opportunity_id: string;
+  match_score: number;
+  match_reasons: string[];
+  created_at: string;
+  dismissed: boolean;
+}
+
+export type WatchlistMatchInsert = {
+  watchlist_id: string;
+  opportunity_id: string;
+  match_score: number;
+  match_reasons: string[];
+  dismissed?: boolean;
+  id?: string;
+  created_at?: string;
+};
+
+export type WatchlistMatchUpdate = Partial<
+  Omit<WatchlistMatchRow, "id" | "watchlist_id" | "opportunity_id" | "created_at">
+>;
+
+export type WatchlistMatchWithOpportunity = WatchlistMatchRow & {
+  opportunity: OpportunityRow;
+};
+
 export interface SourceRow {
   id: string;
   name: string;
@@ -554,6 +624,18 @@ export interface Database {
         Row: UserPreferencesRow;
         Insert: UserPreferencesInsert;
         Update: UserPreferencesUpdate;
+        Relationships: [];
+      };
+      watchlists: {
+        Row: WatchlistRow;
+        Insert: WatchlistInsert;
+        Update: WatchlistUpdate;
+        Relationships: [];
+      };
+      watchlist_matches: {
+        Row: WatchlistMatchRow;
+        Insert: WatchlistMatchInsert;
+        Update: WatchlistMatchUpdate;
         Relationships: [];
       };
     };

@@ -403,6 +403,10 @@ export function applyPersonaScoring(
 }
 
 export function getDefaultFilters(role: Role): OpportunityFilters {
+  if (role === "investor") {
+    return { ...DEFAULT_FILTERS, minScore: 70 };
+  }
+
   if (role === "general") {
     return { ...DEFAULT_FILTERS };
   }
