@@ -184,6 +184,19 @@ Every ADR must include all five fields:
 **Decision:** Build System Health with connector status, failed syncs, schema changes, repair logs, and human approval.
 **Alternatives:** Manual debugging only — rejected. Fully autonomous AI repair of business logic — also rejected.
 
+### 2026-07-09 MVP Architecture Separation — Compliance Wedge Focus
+
+**Context:** DataTello was documented as a broad intelligence platform with five core layers + digital infrastructure active in MVP. Launch requires extreme focus on compliance + contractor + public-sector workflows while preserving long-term architecture.
+**Decision:**
+- Lock MVP wedge: Environmental Compliance + Contractor Safety + Public-sector compliance workflows
+- Lock MVP source stack (OSHA, EPA ECHO, Federal Register, DataForSEO, SAM.gov, USAspending, job postings/procurement/RFP friction, manual/G2/Capterra wedge)
+- Move complaints, developer friction, healthcare, onchain/x402, and additional agencies to phased Future Expansion
+- Lock MVP target customer: Builders, compliance-heavy agencies, contractor/environmental consultants
+- Lock MVP pipeline with Procurement Validation as first-class step
+- Lock scoring modifiers: Friction + Procurement only (no Digital Infrastructure Boost in MVP)
+- Preserve long-term five-layer + digital infrastructure model in docs under Future Expansion
+**Alternatives:** Ship full layered model at launch — rejected for focus and quality bar risk.
+
 ### 2026-07-07 Keep human review as final quality gate
 
 **Context:** AI can draft and score, but weak opportunities often come from bad buyer/wedge calls.
@@ -192,21 +205,29 @@ Every ADR must include all five fields:
 
 ## Freeze / Revisit Rules
 
-Freeze for V1:
+Freeze for MVP launch:
 
-- Layered validation architecture (five core layers + four digital infrastructure amplifiers)
-- ICP: agencies, consultants, investors, venture studios / product studios
+- MVP wedge: environmental compliance + contractor safety + public-sector compliance
+- MVP source stack and pipeline (see architecture.md)
+- MVP target customer: builders, agencies, consultants
 - Guardrail system (four rules)
 - Onboarding flow and ICP default lens model
-- Complaint & Incident Signals as core Engine layer 5
-- Emerging Digital Infrastructure Signals (four sub-modules only; confidence amplifiers — not discovery, not standalone opportunity engines)
+- Seven-section Opportunity Dossier (Build Strategy, Competitive Differentiator)
 - Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
-- Asset Strategy and Competitive Differentiator Strategy (seven-section dossier)
 - Human review before publishing
+- Scoring: Pain, Demand, Market, Freshness, Buildability, Asset Fit + Friction/Procurement modifiers
 
-Revisit after V1:
+Preserved for expansion (not MVP):
+
+- Full five-layer + digital infrastructure long-term model
+- Complaint & Incident Signals (Phase 2)
+- Healthcare vertical (Phase 3)
+- Onchain / x402 (Future Research)
+- Investor, enterprise, white-label customer segments
+
+Revisit after MVP quality bar met:
 
 - deeper personalization
 - full workflow builder

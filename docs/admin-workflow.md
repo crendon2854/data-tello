@@ -6,13 +6,24 @@ The admin backend is the internal research operating system for DataTello.
 
 It should behave like a Notion-style research CMS: linked records, filters, statuses, review queues, source traceability, and one-click movement from raw signal to paid Opportunity Dossier.
 
+## MVP Scope
+
+The MVP admin workflow supports the **compliance + contractor + public-sector wedge** only. Tools marked **Future** are documented and preserved in the long-term architecture but are not active in MVP ingestion or scoring.
+
 ## Core Principle
 
 The software handles collection, normalization, clustering, enrichment, layered validation, scoring, drafting, and publishing mechanics.
 
 The human makes the final calls on buyer, buildability, asset fit, differentiation, and publish-worthiness.
 
-DataTello validates opportunities through layered evidence. Admin workflow must reflect the system flow:
+### MVP system flow
+
+```text
+Pressure → Demand → Wedge → Friction → Procurement Validation
+→ Scoring → Asset Strategy → Guardrails → Human Review → Publish
+```
+
+### Long-term system flow (preserved)
 
 ```text
 Pressure → Demand → Wedge → Friction → Complaints → BASE OPPORTUNITY
@@ -21,39 +32,60 @@ Pressure → Demand → Wedge → Friction → Complaints → BASE OPPORTUNITY
 
 ## Main Admin Tools
 
+### MVP (active now)
+
 1. Source Registry
 2. Raw Signal Explorer
 3. Problem Zone Workspace
-4. Keyword Intelligence
+4. Keyword Intelligence (DataForSEO)
 5. Market Proof Workspace
-6. Workflow Friction Workspace
-7. Complaint & Incident Signals Workspace
-8. Emerging Digital Infrastructure Signals Workspace
-9. Candidate Opportunity Scoring
-10. Guardrail Engine
-11. Human Review Queue
-12. Asset Strategy Admin
-13. Competitive Differentiator Admin
-14. Watchlist Admin
-15. Paid Dashboard Publishing
-16. Dossier Builder
-17. Newsletter Engine
-18. System Health
-19. Settings / Rules
+6. Workflow Friction Workspace (job postings, procurement/RFP language)
+7. Procurement Validation Workspace (SAM.gov, USAspending)
+8. Candidate Opportunity Scoring
+9. Guardrail Engine
+10. Human Review Queue
+11. Build Strategy Admin
+12. Competitive Differentiator Admin
+13. Paid Dashboard Publishing
+14. Dossier Builder
+15. Newsletter Engine
+16. System Health
+17. Settings / Rules
 
-Internal admin only (not in seven-section dossier output): Delivery Fit Admin, Monetization Admin, Risks Admin
+### Future (preserved, not MVP)
+
+18. Complaint & Incident Signals Workspace — **Phase 2**
+19. Emerging Digital Infrastructure Signals Workspace — **Future Research**
+20. Watchlist Admin — future customer segment tooling
+21. Delivery Fit Admin — future optional layer
+22. Monetization Admin — internal only
 
 ## Opportunity Lifecycle
 
+### MVP
+
 ```text
-Collect → Normalize → Cluster → Enrich → Layered Validation → Score → Guardrails → Human Review → Publish → Generate PDF Dossier
+Collect → Normalize → Cluster → Keyword Enrichment → Market Validation → Procurement Validation
+→ Score → Guardrails → Human Review → Publish → Generate PDF Dossier
 ```
 
 ## Step 1 — Source Registry
 
-Track every source used by Core Engine lanes and complaint/incident connectors.
+Track every source used by Core Engine lanes.
+
+**MVP sources:**
+
+| Lane | Sources |
+|------|---------|
+| Pressure | OSHA, EPA ECHO, Federal Register |
+| Demand | DataForSEO |
+| Market Wedge | Manual research, G2, Capterra |
+| Friction | Job postings, procurement language, RFP language |
+| Procurement | SAM.gov, USAspending |
 
 Fields: source name, type, workflow lane, cadence, geography, reliability, API status, last sync, freshness window, notes.
+
+Future sources are documented in [architecture.md](./architecture.md) § Future Expansion.
 
 ## Step 2 — Raw Signal Explorer
 
@@ -69,11 +101,17 @@ Statuses: `new`, `reviewing`, `enriching`, `ready_for_market_proof`, `ready_for_
 
 ## Step 4 — Keyword Intelligence
 
-Demand Validation. Keywords validate demand and buyer language — they do not create opportunities alone.
+Demand Validation. DataForSEO only in MVP.
+
+Keywords validate demand and buyer language — they do not create opportunities alone.
 
 ## Step 5 — Market Proof Workspace
 
-Market Wedge Validation. Competitor sites, pricing, reviews, job postings, SEC EDGAR, USAspending, complaint themes, underserved segments.
+Market Wedge Validation.
+
+**MVP sources:** competitor sites, pricing pages, G2, Capterra (when relevant).
+
+**Not MVP:** SEC EDGAR, broad review scraping, startup marketplaces, broad ecosystem scraping.
 
 Human review required before deciding competition is weak or wedge is real.
 
@@ -81,7 +119,13 @@ Human review required before deciding competition is weak or wedge is real.
 
 **Workflow Friction = repeated execution failure.**
 
-MVP sources: GitHub issues, Stack Exchange, Greenhouse, Lever.
+**MVP sources:**
+
+- Targeted job postings
+- Procurement language
+- RFP language
+
+**Phase 2 (not MVP):** GitHub, GitLab, Stack Exchange, developer ecosystems.
 
 - Modifies Pain, Market Wedge, Buildability
 - Internal modifier only — not a standalone public score
@@ -89,81 +133,61 @@ MVP sources: GitHub issues, Stack Exchange, Greenhouse, Lever.
 
 Reject: hobby/dev-only, vague complaints, consumer frustration, one-off feature requests.
 
-## Step 7 — Complaint & Incident Signals Workspace
+## Step 7 — Procurement Validation Workspace
 
-**Mandatory core validation layer — first-class realism layer.**
+**MVP-first validation step.**
+
+Sources: SAM.gov, USAspending.
 
 Purpose:
 
+- Validate buyer intent and budget signal
+- Confirm workflow language in active procurement
+- Strengthen recurrence and structural pain
+- Feed procurement hidden modifier in scoring
+
+**Roadmap expansion:** state, city, county, utilities, global tenders — see [architecture.md](./architecture.md) § Future Expansion.
+
+## Step 8 — Complaint & Incident Signals Workspace — Phase 2
+
+**Not active in MVP.** Preserved in long-term architecture.
+
+Purpose when activated:
+
 - Detect repeated real-world failure
-- Strongest realism layer for operational breakdown
 - Validate through **clusters**, not individual complaints
 - Strengthen Pain confidence, buyer specificity, urgency
 
-Source categories:
+Source categories: CFPB, openFDA/MAUDE, NHTSA, FCC.
 
-| Source | Use |
-|--------|-----|
-| CFPB | Consumer financial complaint clusters |
-| FDA / MAUDE | Medical device adverse event patterns |
-| NHTSA | Vehicle safety incident recurrence |
-| FCC | Telecom / communications complaint clusters |
+## Step 9 — Emerging Digital Infrastructure Signals Workspace — Future Research
 
-Admin tracks: incident type, recurrence, cluster patterns, geography, industry impact, source diversity, problem zone linkage.
+**Not active in MVP.** Not in MVP scoring or ingestion.
 
-Reject: isolated incidents, unverified single complaints, lacking operational specificity.
+Four sub-modules preserved for future research:
 
-This layer feeds Base Opportunity Confidence. It does not bypass scoring or guardrails.
+- Agent Commerce Signals
+- Stablecoin Workflow Signals
+- Onchain Developer Tool Friction
+- Tokenized Data / Pay-Per-Use Data Signals
 
-## Step 8 — Emerging Digital Infrastructure Signals Workspace
+## Step 10 — Candidate Opportunity Scoring
 
-**Confidence amplifiers only — not discovery layers, not standalone opportunity engines.** Applied after base opportunity formed.
+Combines MVP validation layers into opportunity confidence.
 
-Four sub-modules only. Each answers a confidence question about an existing candidate — none surface new opportunities by themselves.
+**Public scores:** Pain, Demand, Market, Freshness, Buildability, Asset Fit.
 
-### Agent Commerce Signals
+**Hidden modifiers (MVP):** Friction, Procurement.
 
-Confidence question: Are machines already paying in this category?  
-Strengthens: Market Wedge, Early Demand confidence
-
-### Stablecoin Workflow Signals
-
-Confidence question: Are real businesses struggling with new payment workflows?  
-Strengthens: Pain, Friction confidence
-
-### Onchain Developer Tool Friction
-
-Confidence question: Are people repeatedly failing to implement this?  
-Strengthens: Workflow Friction, Buildability clarity
-
-### Tokenized Data / Pay-Per-Use Data Signals
-
-Confidence question: Is a new infrastructure layer forming around paid data/services?  
-Strengthens: Market Wedge, Asset Strategy confidence
-
-Admin manages analytical records, trend summaries, and Weak/Moderate/Strong ratings per module.
-
-**Rule:** Amplifies confidence only. Does not determine final opportunities alone.
-
-Do not add DAO, grants, onchain compliance as standalone user-facing modules without an ADR.
-
-## Step 9 — Candidate Opportunity Scoring
-
-Combines five core validation layers into Base Opportunity Confidence.
-
-Public scores: Pain, Demand, Market, Freshness, Buildability, Asset Fit.
-
-Internal modifiers: Friction, Digital Infrastructure Boost (0–10).
-
-Digital Infrastructure Boost: increases confidence, breaks ties, prioritizes — **not** a primary score.
+**Not MVP:** Digital Infrastructure Boost.
 
 Verdicts: `publish_software_first`, `publish_asset_first`, `watchlist`, `reject`
 
-## Step 10 — Guardrail Engine
+## Step 11 — Guardrail Engine
 
 ### Rule 1 — No Signal Stands Alone
 
-Reject if only digital infrastructure signals exist without pressure, demand, or friction.
+Reject if only one source type without pressure, demand, or friction.
 
 ### Rule 2 — Must Map to Buyer + Workflow
 
@@ -179,7 +203,7 @@ Reject: crypto hype, token speculation, creator monetization, experimental novel
 
 Hard checks: ≥2 independent source types, ≥1 pressure source, ≥1 demand/spend signal, freshness label, buildability threshold, best first asset, no duplicate.
 
-## Step 11 — Human Review Queue
+## Step 12 — Human Review Queue
 
 Reviewer must answer:
 
@@ -195,7 +219,7 @@ Reviewer must answer:
 
 Statuses: `pending`, `in_review`, `approved`, `rework`, `rejected`
 
-## Step 12 — Asset Strategy Admin
+## Step 13 — Build Strategy Admin
 
 Required for every published opportunity. **Do not default to SaaS.**
 
@@ -206,7 +230,7 @@ Required for every published opportunity. **Do not default to SaaS.**
 - Revenue Ceiling
 - Build Difficulty
 
-## Step 13 — Competitive Differentiator Admin
+## Step 14 — Competitive Differentiator Admin
 
 Required for every published opportunity.
 
@@ -217,21 +241,21 @@ Required for every published opportunity.
 - What NOT to Compete On
 - Entry Strategy
 
-## Step 14 — Watchlist Admin
+## Step 15 — Watchlist Admin — Future
 
-For promising but incomplete opportunities. Track next review date and recheck trigger.
+For promising but incomplete opportunities. Primarily serves future investor/studio segments.
 
-## Step 15 — Dossier Builder
+## Step 16 — Dossier Builder
 
 Creates full paid Opportunity Dossiers and PDF Dossiers. Seven-section output per [med-sections.md](./med-sections.md).
 
 Does not create newsletters or manage subscribers.
 
-## Step 16 — Newsletter Engine
+## Step 17 — Newsletter Engine
 
 Separate. Free subscribers, weekly Signal Briefs, autoresponder, tracking. Weekly brief is watered down — not the full paid dossier.
 
-## Step 17 — System Health
+## Step 18 — System Health
 
 Connector status, failed syncs, schema changes, auto-repair logs, human approval queue.
 

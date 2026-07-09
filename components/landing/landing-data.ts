@@ -12,7 +12,6 @@ import {
   FileText,
   Gauge,
   HardHat,
-  HeartPulse,
   Layers,
   LayoutDashboard,
   LineChart,
@@ -27,9 +26,9 @@ import {
 } from "lucide-react";
 
 export const heroBullets = [
-  "Source-backed signals, not recycled opportunity lists",
-  "Operational pain, market wedge, and evidence in every dossier",
-  "Built for agencies, consultants, and investors",
+  "Evidence-backed build opportunities — not intelligence feeds",
+  "Compliance pressure, procurement signals, and workflow friction in every dossier",
+  "Built for builders, agencies, and consultants in environmental & contractor compliance",
 ];
 
 export const credibilitySignals = [
@@ -42,8 +41,8 @@ export const credibilitySignals = [
 export const credibilityStats = [
   { value: "12,400+", label: "Signals reviewed" },
   { value: "480+", label: "Candidates analyzed" },
-  { value: "6", label: "Signal layers" },
-  { value: "Weekly", label: "Intelligence briefs" },
+  { value: "5", label: "MVP validation layers" },
+  { value: "Weekly", label: "Opportunity briefs" },
 ];
 
 export const valueProps = [
@@ -54,8 +53,8 @@ export const valueProps = [
     accent: "blue" as const,
   },
   {
-    title: "Validate the opportunity",
-    body: "Structured scoring across demand, competitive gaps, and workflow friction — with guardrails and human review.",
+    title: "Validate the build opportunity",
+    body: "Structured scoring across demand, competitive gaps, procurement signals, and workflow friction — with guardrails and human review.",
     icon: Gauge,
     accent: "cyan" as const,
   },
@@ -96,10 +95,10 @@ export const heroOpportunities = [
     featured: true,
   },
   {
-    title: "Vendor Risk Portal",
+    title: "EPA Stormwater Reporting",
     score: 76,
     asset: "Intake form + scorecard",
-    tags: ["Healthcare"],
+    tags: ["Environmental"],
     featured: false,
   },
   {
@@ -115,40 +114,46 @@ export const engineSteps = [
   {
     step: 1,
     title: "Pressure Discovery",
-    caption: "Where real-world operational pain is increasing",
+    caption: "OSHA, EPA ECHO, Federal Register — where compliance pressure is forming",
     icon: Activity,
   },
   {
     step: 2,
     title: "Demand Validation",
-    caption: "Whether buyers are actively seeking solutions",
+    caption: "DataForSEO — whether buyers are actively seeking solutions",
     icon: Search,
   },
   {
     step: 3,
     title: "Market Wedge Validation",
-    caption: "Where existing solutions fall short",
+    caption: "Competitor gaps, pricing pages, G2 and Capterra when relevant",
     icon: Target,
   },
   {
     step: 4,
-    title: "Workflow Friction Signals",
-    caption: "Where execution failure repeats in operational workflows",
+    title: "Workflow Friction",
+    caption: "Job postings, procurement language, and RFP patterns",
     icon: Workflow,
+  },
+  {
+    step: 5,
+    title: "Procurement Validation",
+    caption: "SAM.gov and USAspending — buyer intent and budget proof",
+    icon: Shield,
   },
 ];
 
 export const expansionSignalLayers = [
   {
-    step: 5,
+    step: 6,
     title: "Complaint & Incident Signals",
-    caption: "Where real-world failures repeatedly occur",
+    caption: "Phase 2 — real-world failure clusters across regulated industries",
     icon: Shield,
   },
   {
-    step: 6,
-    title: "Emerging Digital Infrastructure",
-    caption: "Infrastructure shift patterns and friction",
+    step: 7,
+    title: "Additional Verticals & Sources",
+    caption: "Healthcare, developer friction, expanded procurement — after MVP quality bar",
     icon: LineChart,
   },
 ];
@@ -157,18 +162,17 @@ export const signalSources = [
   {
     title: "Pressure Discovery",
     bullets: [
-      "Regulatory and compliance movement",
-      "Procurement and spending activity",
-      "Labor and operational pressure",
-      "Emerging structural pain",
+      "OSHA enforcement and safety pressure",
+      "EPA ECHO environmental compliance",
+      "Federal Register rulemaking",
     ],
     icon: Shield,
   },
   {
     title: "Demand Validation",
     bullets: [
-      "Search demand",
-      "Commercial intent",
+      "DataForSEO search demand",
+      "Commercial intent and CPC",
       "Keyword ecosystems",
       "Demand movement over time",
     ],
@@ -177,71 +181,60 @@ export const signalSources = [
   {
     title: "Market Wedge Validation",
     bullets: [
-      "Competitor landscape",
-      "Pricing gaps",
-      "Review complaint patterns",
+      "Manual competitor research",
+      "Pricing page gaps",
+      "G2 and Capterra reviews",
       "Underserved buyer segments",
     ],
     icon: BarChart3,
   },
   {
-    title: "Workflow Friction Signals",
+    title: "Workflow Friction",
     bullets: [
-      "Repeated workflow issues",
-      "Manual workarounds",
-      "Job posting patterns",
-      "Implementation questions",
+      "Targeted job postings",
+      "Procurement language patterns",
+      "RFP workflow gaps",
+      "Repeated manual workarounds",
     ],
     icon: ClipboardList,
   },
   {
-    title: "Complaint & Incident Signals",
+    title: "Procurement Validation",
     bullets: [
-      "Where real-world failures repeatedly occur",
-      "Operational pain before demand spikes",
-      "Incident and complaint clusters",
-      "Regulated industry patterns",
+      "SAM.gov active solicitations",
+      "USAspending budget signals",
+      "Buyer intent and recurrence",
+      "Public-sector workflow proof",
     ],
-    icon: Shield,
-  },
-  {
-    title: "Emerging Digital Infrastructure",
-    bullets: [
-      "Agent Commerce Signals",
-      "Stablecoin Workflow Signals",
-      "Onchain Developer Tool Friction",
-      "Tokenized Data / Pay-Per-Use Data",
-    ],
-    icon: Bot,
+    icon: Building2,
   },
 ];
 
 export const focusedMarkets = [
-  { name: "Construction & contractors", icon: HardHat },
   { name: "Environmental & compliance", icon: Shield },
-  { name: "Healthcare operations", icon: HeartPulse },
+  { name: "Construction & contractors", icon: HardHat },
   { name: "Public sector & infrastructure", icon: Building2 },
   { name: "Industrial & field services", icon: Factory },
 ];
 
 export const builtForCards = [
   {
+    title: "Builders",
+    body: "Find compliance- and procurement-backed workflows worth building first. Every dossier includes build strategy, wedge clarity, and a recommended first asset.",
+    icon: Layers,
+    accent: "green" as const,
+  },
+  {
     title: "Agencies",
-    body: "Identify new services and productized offers backed by source evidence. Package repeatable client engagements from scored opportunities.",
+    body: "Identify new services and productized offers for contractor and environmental clients. Package repeatable engagements from scored build opportunities.",
     icon: Briefcase,
     accent: "blue" as const,
   },
   {
     title: "Consultants",
-    body: "Advise clients with source-backed opportunity dossiers. Spot underserved markets and operational pain earlier than generic research.",
+    body: "Advise clients with source-backed opportunity dossiers. Spot underserved compliance markets and operational pain earlier than generic research.",
     icon: Users,
     accent: "cyan" as const,
-  },
-  {
-    title: "Investors",
-    body: "Where are new opportunities forming? Structured scoring, guardrails, and source-backed evidence stacks for market diligence.",
-    icon: TrendingUp,
-    accent: "green" as const,
   },
 ];
 
@@ -255,23 +248,23 @@ export const buildPaths = [
 
 export const comparisonCards = [
   {
-    title: "Generic opportunity lists",
-    body: "Broad, recycled, and rarely tied to operational pain or source evidence.",
+    title: "Government intelligence (HigherGov, GovSignals)",
+    body: "Useful for procurement awareness — but they sell intelligence, not validated build opportunities with asset fit.",
     highlight: false,
   },
   {
-    title: "Trend tools",
-    body: "Useful for attention, but weak on buyer context, market wedge, and defensible evidence.",
+    title: "Market monitoring (Contify, Crayon, Klue)",
+    body: "Strong for competitive tracking — weak on what to build, how to win, and what asset to ship first.",
     highlight: false,
   },
   {
-    title: "Asking AI for opportunities",
-    body: "Strong for exploration. Weak for structured scoring, guardrails, and source traceability.",
+    title: "Trend tools (Exploding Topics)",
+    body: "Useful for attention — but weak on compliance pressure, procurement proof, and buildable workflow evidence.",
     highlight: false,
   },
   {
     title: "DataTello",
-    body: "Combines structured signal layers, scoring, and human review to surface evidence-backed build opportunities.",
+    body: "Discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.",
     highlight: true,
   },
 ];
@@ -279,49 +272,47 @@ export const comparisonCards = [
 export const platformFeatures = [
   "Opportunity snapshots",
   "Full opportunity dossiers",
-  "Asset strategy",
-  "Competitive differentiator strategy",
-  "Delivery fit recommendations",
-  "Complaint & incident analytical panels",
-  "Emerging infrastructure signal views",
-  "Watchlists and monitoring",
+  "Build strategy",
+  "Competitive differentiator",
+  "Procurement validation evidence",
+  "SAM.gov and USAspending signals",
   "PDF dossier export",
   "Saved opportunities",
 ];
 
 export const monitoringUpdates = [
   "Demand moves",
-  "New signals appear",
+  "New compliance pressure signals",
+  "Procurement solicitations appear",
   "Competitor pricing changes",
   "Workflow friction increases",
-  "Incident patterns shift",
   "Market conditions change",
 ];
 
 export const pricingPlans = [
   {
-    name: "Professional",
+    name: "Builder",
     price: 299,
-    description: "Individual advisors and analysts",
+    description: "Solo builders and indie operators",
     features: [
-      "Weekly intelligence briefs",
+      "Weekly opportunity briefs",
       "Full opportunity dossiers",
       "PDF export",
       "Source-backed evidence stacks",
-      "Watchlists",
+      "Build strategy recommendations",
     ],
     popular: false,
   },
   {
-    name: "Advisory",
+    name: "Consultant",
     price: 599,
-    description: "Consultants and specialist practices",
+    description: "Advisors serving contractor and environmental clients",
     features: [
-      "Everything in Professional",
+      "Everything in Builder",
       "Client-ready summary mode",
-      "Complaint & incident panels",
+      "Procurement validation panels",
       "Priority dossier access",
-      "Advanced monitoring",
+      "Compliance wedge focus",
     ],
     popular: true,
   },
@@ -330,24 +321,11 @@ export const pricingPlans = [
     price: 999,
     description: "Service firms and delivery teams",
     features: [
-      "Everything in Advisory",
-      "White-label exports",
+      "Everything in Consultant",
       "Team sharing",
       "Execution-oriented defaults",
       "Offer packaging templates",
-    ],
-    popular: false,
-  },
-  {
-    name: "Investor",
-    price: 1499,
-    description: "Investment teams and market analysts",
-    features: [
-      "Everything in Agency",
-      "Portfolio watchlists",
-      "Market formation tracking",
-      "Infrastructure signal views",
-      "Team evaluation workspace",
+      "Multi-client workflow views",
     ],
     popular: false,
   },
@@ -355,28 +333,28 @@ export const pricingPlans = [
 
 export const faqs = [
   {
-    q: "What makes DataTello different from trend tools?",
-    a: "Trend tools show attention. DataTello combines operational pain, demand, market wedge, workflow friction, and structured scoring with guardrails and human review to produce evidence-backed build opportunities.",
+    q: "What makes DataTello different from government intelligence tools?",
+    a: "HigherGov and GovSignals sell intelligence. DataTello validates build opportunities — what to build, how to win, and what asset to ship first — backed by compliance pressure, procurement signals, and structured scoring.",
   },
   {
     q: "Is this only for software opportunities?",
-    a: "No. DataTello recommends the best first asset for each opportunity — which may be a service package, template, dashboard, workflow tool, or software product depending on asset fit.",
+    a: "No. DataTello recommends the best first asset for each opportunity — which may be a service package, template, dashboard, workflow tool, or software product depending on build strategy fit.",
   },
   {
     q: "Who is this for?",
-    a: "Agencies evaluating new offers, consultants advising clients, and investors tracking where markets and opportunities are forming.",
+    a: "Builders, agencies serving compliance-heavy industries, and consultants serving contractor and environmental businesses. Not a general market intelligence platform.",
   },
   {
-    q: "How do Complaint & Incident Signals work?",
-    a: "Where real-world failures repeatedly occur. They appear as analytical panels and inform review; final opportunities are determined by the scoring engine, guardrails, and human review.",
+    q: "What industries does the MVP focus on?",
+    a: "Environmental compliance, contractor safety, and public-sector compliance workflows. Additional verticals expand after the MVP consistently produces high-quality opportunities.",
   },
   {
     q: "Can I download dossiers as PDFs?",
     a: "Yes. Paid plans include downloadable Opportunity Dossiers built from structured opportunity data.",
   },
   {
-    q: "Can I just use AI instead?",
-    a: "AI is useful for exploration. DataTello applies structured signals, scoring, guardrails, and source traceability — producing decision-ready intelligence, not recycled lists.",
+    q: "How is this different from trend tools?",
+    a: "Trend tools show attention. DataTello combines compliance pressure, procurement validation, demand, market wedge, and workflow friction with guardrails and human review to produce buildable opportunities.",
   },
 ];
 

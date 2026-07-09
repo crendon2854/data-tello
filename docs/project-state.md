@@ -1,7 +1,7 @@
 # Project State — Current Snapshot
 
-Documentation Version: 1.2  
-Last Updated: 2026-07-08  
+Documentation Version: 1.3  
+Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
 
@@ -13,29 +13,34 @@ Living snapshot of where DataTello is right now.
 
 ## Current Phase
 
-**Phase 13 (partial) — ICP Onboarding & Decision Engine** ✅ core shipped
+**Phase 5c — MVP Architecture Separation** ✅ docs locked
 
-**Phase 17 — Investor Watchlists + Alert Triggers** ← next
+**Phase 7–9 — Research OS + Dossier Upgrade** ← next (MVP source stack alignment)
 
 ---
 
-## Product Model (Documented + Partially Shipped)
+## Product Model (MVP Locked)
 
-- Layered validation: Pressure → Demand → Wedge → Friction → Complaints → Base Opportunity → Digital Infrastructure amplification
-- ICPs: agencies, consultants, investors, venture studios
+- **Wedge:** Environmental Compliance + Contractor Safety + Public-sector compliance workflows
+- **Positioning:** Evidence-backed build opportunity intelligence — not general market intelligence
+- **MVP pipeline:** Collect → Normalize → Cluster → Keyword Enrichment → Market Validation → Procurement Validation → Scoring → Asset Strategy → Human Review → Publish
+- **MVP sources:** OSHA, EPA ECHO, Federal Register, DataForSEO, SAM.gov, USAspending, job postings/procurement/RFP friction, G2/Capterra
+- **MVP customer:** Builders, compliance-heavy agencies, contractor/environmental consultants
+- **Scoring:** Pain, Demand, Market, Freshness, Buildability, Asset Fit + Friction/Procurement modifiers
 - Onboarding + preferences: `/onboarding`, `/preferences` shipped
-- Persona decision engine: scoring + dossier interpretation (not just ranking)
 - Guardrails: four rules locked in docs
 
-Full spec: [architecture.md](./architecture.md), [onboarding.md](./onboarding.md)
+**Future Expansion (preserved, not MVP):** Complaints (Phase 2), Healthcare (Phase 3), Onchain/x402 (Future Research), investor/enterprise segments
+
+Full spec: [architecture.md](./architecture.md), [onboarding.md](./onboarding.md), [roadmap.md](./roadmap.md)
 
 ---
 
 ## Dossier MVP Scope
 
-### Active (seven sections)
+### Active (seven sections — locked)
 
-Snapshot → Why This Exists → Signal Breakdown → **Build Strategy / Asset Strategy** → Execution Angle → Competitive Angle → Why This Matters
+Opportunity Snapshot → Why This Exists → Signal Breakdown → **Build Strategy** → Execution Angle → Competitive Differentiator → Why This Matters
 
 `BuildStrategy` renders asset paths, asset reason, expansion ladder only.
 

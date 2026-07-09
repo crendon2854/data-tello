@@ -1,7 +1,7 @@
 # Context — Long-Term Architectural Truths
 
-Documentation Version: 1.3  
-Last Updated: 2026-07-08  
+Documentation Version: 1.4  
+Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
 
@@ -13,57 +13,82 @@ See [MED.md](./MED.md) for documentation governance.
 
 ## Product Identity
 
+- DataTello is **not** a general market intelligence platform.
+- DataTello is an **evidence-backed build opportunity intelligence platform** that discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.
+- DataTello sells **build opportunities** — not intelligence feeds, trend alerts, or competitive monitoring.
 - DataTello does **not** discover opportunities from a single signal. It **validates opportunities through layered evidence**.
-- DataTello is **not** a trend idea finder, startup idea list, or generic market scanner.
 - A **Build Opportunity** is a validated way to create value in a market, backed by source-backed evidence and operational pain.
 - Output names are fixed: **Weekly Signal Brief**, **Opportunity Dossier**, **Dashboard Brief View**, **PDF Dossier**.
-- **Not all opportunities should start as software.** Every paid opportunity includes Asset Strategy with a best first asset.
-- DataTello is a **premium intelligence product**, **decision-support system**, and **opportunity intelligence platform**.
+- **Not all opportunities should start as software.** Every paid opportunity includes Build Strategy with a best first asset.
 
-Full positioning: [vision.md](./vision.md)
+Full positioning: [vision.md](./vision.md). MVP wedge and source stack: [architecture.md](./architecture.md).
 
 ---
 
-## Layered Validation Architecture
+## MVP Wedge (Locked)
+
+**Environmental Compliance** + **Contractor Safety** + **Public-sector compliance workflows**
+
+Everything else is future expansion. Additional industries and evidence layers ship only after the MVP consistently produces high-quality opportunities.
+
+---
+
+## Architecture Phases
+
+| Phase | What ships |
+|-------|------------|
+| **MVP** | Compliance wedge, OSHA/EPA/Federal Register, DataForSEO, SAM.gov/USAspending, procurement + job-posting friction |
+| **Phase 2** | Complaint signals, developer friction, additional agencies, market wedge expansion |
+| **Phase 3** | Healthcare vertical |
+| **Future Research** | Onchain/x402, digital infrastructure amplifiers, investor/enterprise intelligence |
+
+The long-term layered validation model is **preserved**. MVP is a focused subset.
+
+---
+
+## Layered Validation Architecture (Long-Term)
 
 Each layer answers a different question:
 
-| Layer | Question |
-|-------|----------|
-| Pressure | Is the problem forming? |
-| Demand | Are people looking for it? |
-| Wedge | Can you sell into it? |
-| Friction | Are people failing to solve it? |
-| Complaints | Are real users repeatedly affected? |
+| Layer | Question | MVP |
+|-------|----------|-----|
+| Pressure | Is the problem forming? | ✅ |
+| Demand | Are people looking for it? | ✅ |
+| Wedge | Can you sell into it? | ✅ |
+| Friction | Are people failing to solve it? | ✅ |
+| Procurement | Is buyer intent and budget real? | ✅ |
+| Complaints | Are real users repeatedly affected? | Phase 2 |
+| Digital Infrastructure | Does emerging infra strengthen confidence? | Future Research |
 
-Steps 1–5 (Pressure through Complaints) form **Base Opportunity Confidence**.
+Steps 1–5 (Pressure through Complaints) form **Base Opportunity Confidence** in the long-term model. MVP forms confidence from Pressure, Demand, Wedge, Friction, and Procurement Validation.
 
-### Confidence amplification (Step 6)
+### Confidence amplification (long-term Step 6)
 
-| Amplifier | Question |
-|-----------|----------|
-| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? |
+| Amplifier | Question | Phase |
+|-----------|----------|-------|
+| Digital Infrastructure | Does emerging infrastructure strengthen confidence? | Future Research |
 
-Step 6 (Digital Infrastructure) amplifies confidence — it does not replace base validation and does not discover opportunities on its own.
+Step 6 amplifies confidence — it does not replace base validation and does not discover opportunities on its own. **Not in MVP scoring or ingestion.**
 
 ---
 
-## Target ICP
+## MVP Target Customer
 
-| ICP | Core question |
-|-----|---------------|
-| **Agencies** | What can we sell, implement, or productize for clients? |
-| **Consultants** | What should we recommend, advise on, or turn into client-facing memos? |
-| **Investors** | What should we fund, validate, monitor, or compare as a thesis/deal opportunity? |
-| **Venture Studios / Product Studios** | What opportunities are worth validating, matching to operators, and prioritizing across repeated bets? |
+| Segment | Core question |
+|---------|---------------|
+| **Builders** | What compliance- or procurement-backed workflow should I build first? |
+| **Agencies** (compliance-heavy industries) | What can we sell, implement, or productize for contractor and environmental clients? |
+| **Consultants** (contractor/environmental) | What should we recommend, advise on, or turn into client-facing memos? |
 
-Onboarding, default lens, and feed rules: [onboarding.md](./onboarding.md).
+Future segments (not MVP positioning): Investors, VCs, HoldCos, Product Studios, Enterprise.
+
+Onboarding: [onboarding.md](./onboarding.md).
 
 ---
 
 ## Same Engine, Different Default Lens
 
-Same opportunity engine for everyone. Different by ICP:
+Same opportunity engine. Different by ICP:
 
 - default lens
 - execution outputs
@@ -89,50 +114,9 @@ Full boundaries: [architecture.md](./architecture.md)
 
 ---
 
-## Core Engine (Five Layers)
+## Scoring Model
 
-All five layers are required for Base Opportunity Confidence:
-
-1. **Pressure Discovery** — real-world operational pressure
-2. **Demand Validation** — search behavior, buyer language, CPC (DataForSEO)
-3. **Market Wedge Validation** — category gaps, competition, spend
-4. **Workflow Friction Signals** — repeated execution failure
-5. **Complaint & Incident Signals** — repeated real-world failure clusters
-
-### Workflow Friction Rule
-
-Workflow Friction = repeated execution failure.
-
-- Modifies scoring: **Pain**, **Market Wedge**, **Buildability**
-- Internal modifier only — not a standalone public score
-- Does **not** act as a standalone decision engine
-
-### Complaint & Incident Rule
-
-- **Mandatory core Engine layer 5** — first-class realism layer, not an optional add-on
-- Strongest realism layer for operational breakdown
-- Focuses on **clusters**, not individual complaints
-- Strengthens Pain confidence, buyer specificity, urgency
-- Source categories include CFPB, FDA/MAUDE, NHTSA, FCC
-
-### Digital Infrastructure Rule
-
-Four modules only — **confidence amplifiers**, not discovery layers and not standalone opportunity engines:
-
-- Agent Commerce Signals
-- Stablecoin Workflow Signals
-- Onchain Developer Tool Friction
-- Tokenized Data / Pay-Per-Use Data Signals
-
-Do **not** add DAO, grants, onchain compliance as a standalone user-facing module, or other sub-modules without an ADR.
-
-**Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
-
----
-
-## Scoring Model (V1)
-
-Public scores:
+### Public scores (MVP and long-term)
 
 - **Pain** (Pressure)
 - **Demand**
@@ -141,12 +125,15 @@ Public scores:
 - **Buildability**
 - **Asset Fit**
 
-Internal modifiers:
+### Hidden modifiers
 
-- **Friction** — modifies Pain, Market, Buildability
-- **Digital Infrastructure Boost** (0–10) — increases confidence, breaks ties, prioritizes; **not** a primary score
+| Modifier | MVP | Long-term |
+|----------|-----|-----------|
+| **Friction** | ✅ | ✅ |
+| **Procurement** | ✅ | ✅ |
+| **Digital Infrastructure Boost** | ❌ | Future Research |
 
-**Asset Strategy** and **Competitive Differentiator Strategy** are required dossier sections.
+**Build Strategy** and **Competitive Differentiator** are required dossier sections.
 
 Full spec: [med-sections.md](./med-sections.md)
 
@@ -154,23 +141,23 @@ Full spec: [med-sections.md](./med-sections.md)
 
 ## Guardrail System
 
-1. **No signal stands alone** — reject if only onchain/digital infrastructure signals exist without pressure, demand, or friction.
+1. **No signal stands alone** — reject if only one source type without pressure, demand, or friction.
 2. **Must map to buyer + workflow** — reject if no clear buyer or repeatable workflow.
 3. **Must improve decision** — keep only if it helps decide what to build, how to win, or what to sell, recommend, validate, or fund.
 4. **Reject noise** — crypto hype, token speculation, creator monetization, experimental novelty, non-B2B use cases.
 
 ---
 
-## Opportunity Dossier Structure (V1)
+## Opportunity Dossier Structure (Locked)
 
 Seven sections, in order:
 
 1. Opportunity Snapshot
 2. Why This Exists
 3. Signal Breakdown
-4. Asset Strategy
+4. Build Strategy
 5. Execution Angle
-6. Competitive Differentiator Strategy
+6. Competitive Differentiator
 7. Why This Matters
 
 ---
@@ -184,13 +171,22 @@ Seven sections, in order:
 5. **Section-driven, card-based UI** — one component per MED section.
 6. **Mock mode must always work** — dev without Supabase env vars.
 7. **Docs before code** — plan in docs, implement second.
-8. **Digital infrastructure amplifies** — it does not replace base validation.
+8. **MVP proves the wedge** before expanding industries or evidence layers.
 9. **Friction modifies scoring** — it does not decide opportunities alone.
-10. **Complaints validate clusters** — not isolated incidents.
+10. **Complaints validate clusters** — Phase 2; not MVP ingestion.
 
 ---
 
 ## Data Flow
+
+### MVP
+
+```text
+Source Sync → Normalize → Cluster → Keyword Enrichment → Market Validation → Procurement Validation
+→ Scoring → Asset Strategy → Guardrails → Human Review → Publish → PDF Dossier
+```
+
+### Long-term
 
 ```text
 Source Sync → Normalize → Cluster → Enrich (Demand, Wedge, Friction, Complaints)
@@ -201,23 +197,26 @@ Full flow: [architecture.md](./architecture.md)
 
 ---
 
-## Freeze / Revisit (V1)
+## Freeze / Revisit
 
-**Frozen for V1:**
+**Frozen for MVP launch:**
 
-- Layered validation architecture (five core layers + four digital infrastructure amplifiers)
-- ICP: agencies, consultants, investors, venture studios / product studios
+- MVP wedge: environmental compliance + contractor safety + public-sector compliance
+- MVP source stack (see architecture.md)
+- MVP pipeline (Collect → Publish)
 - Seven-section Opportunity Dossier output structure
 - Guardrail system (four rules)
-- Onboarding flow and ICP default lens model
-- Newsletter Engine and Dossier Builder separation
 - Core app in Next.js + Supabase
 - n8n only for Growth Automation Stack
 - Human review before publishing
+- Scoring: Pain, Demand, Market, Freshness, Buildability, Asset Fit + Friction/Procurement modifiers
 
-**Revisit after V1:**
+**Preserved for expansion (not MVP):**
 
-- Deeper personalization, social-listening sources
-- Affiliate marketplace, advanced BI, multi-admin permissions
+- Full five-layer + digital infrastructure long-term model
+- Complaint & Incident Signals (Phase 2)
+- Healthcare vertical (Phase 3)
+- Onchain / x402 (Future Research)
+- Investor, enterprise, and white-label customer segments
 
-Full ADR list: [decisions.md](./decisions.md)
+Full ADR list: [decisions.md](./decisions.md). Future Expansion detail: [architecture.md](./architecture.md) § Future Expansion.

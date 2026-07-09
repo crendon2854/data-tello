@@ -2,6 +2,51 @@
 
 See [MED.md](./MED.md) for documentation governance. Long-term truths: [context.md](./context.md).
 
+---
+
+## Product Positioning (Locked)
+
+DataTello is **not** a general market intelligence platform.
+
+DataTello is an **evidence-backed build opportunity intelligence platform** that discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.
+
+DataTello sells **build opportunities** — not intelligence feeds, trend alerts, or competitive monitoring dashboards.
+
+### What DataTello is not
+
+Do not position DataTello like:
+
+| Product type | Examples | Why different |
+|--------------|----------|---------------|
+| Government intelligence | HigherGov, GovSignals | They sell intelligence; DataTello sells build opportunities |
+| Market monitoring | Contify, Crayon, Klue | They track competitors; DataTello validates what to build |
+| Trend discovery | Exploding Topics | They surface attention; DataTello validates operational pain + wedge + asset fit |
+
+---
+
+## MVP Wedge (Locked)
+
+The MVP focuses on **one narrow wedge**:
+
+**Environmental Compliance** + **Contractor Safety** + **Public-sector compliance workflows**
+
+Everything else is future expansion. Additional industries and evidence layers ship only after the MVP consistently produces high-quality opportunities.
+
+---
+
+## Architecture Phases
+
+| Phase | Scope | Status |
+|-------|-------|--------|
+| **MVP** | Environmental compliance, contractor safety, public-sector compliance workflows | Implemented now |
+| **Phase 2** | Complaint signals, developer friction, additional agencies | After MVP quality bar met |
+| **Phase 3** | Healthcare vertical | After Phase 2 |
+| **Future Research Layers** | Onchain / x402, global procurement, investor intelligence, enterprise features | Research only — not in MVP scoring, ingestion, or architecture |
+
+The long-term layered validation architecture is **preserved**. MVP is a focused subset of that architecture.
+
+---
+
 ## Stack
 
 - Next.js 14+ (App Router)
@@ -10,7 +55,9 @@ See [MED.md](./MED.md) for documentation governance. Long-term truths: [context.
 - Supabase (`@supabase/supabase-js`)
 - Postgres via Supabase
 
-## System Boundary
+---
+
+## System Boundaries
 
 DataTello has four separate systems.
 
@@ -25,7 +72,7 @@ Handles:
 - guardrails
 - human review
 - paid dashboard publishing
-- user targeting / onboarding preferences (planned)
+- user targeting / onboarding preferences
 
 Built in Next.js + Supabase.
 
@@ -76,136 +123,176 @@ Hard rule: n8n is for marketing/growth automation only. It should not run core i
 
 ---
 
-## Core Principle: Layered Validation
+## MVP Pipeline
 
-DataTello does **not** discover opportunities from a single signal. It validates opportunities through layered evidence.
-
-| Layer | Question |
-|-------|----------|
-| Pressure | Is the problem forming? |
-| Demand | Are people looking for it? |
-| Wedge | Can you sell into it? |
-| Friction | Are people failing to solve it? |
-| Complaints | Are real users repeatedly affected? |
-
-**Base Opportunity Confidence** is formed from Steps 1–5 only.
-
-### Confidence amplification (Step 6)
-
-| Amplifier | Question |
-|-----------|----------|
-| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? |
-
-Step 6 amplifies confidence after base validation. It does **not** discover or create opportunities on its own.
-
----
-
-## Product Structure
-
-### 1. Core Engine (five validation layers)
-
-The scoring and decision backbone:
-
-1. **Pressure Discovery** — real-world operational pressure
-2. **Demand Validation** — search behavior, buyer language, commercial intent
-3. **Market Wedge Validation** — category gaps, competition, spend proof
-4. **Workflow Friction Signals** — repeated execution failure
-5. **Complaint & Incident Signals** — repeated real-world failure clusters
-
-These create → **Base Opportunity Confidence**
-
-Plus Buildability Score, Asset Fit Decision, guardrails, and human review.
-
-### 2. Emerging Digital Infrastructure Signals (confidence amplifiers)
-
-**Not discovery layers. Not standalone opportunity engines.** Applied only after a base opportunity is formed. Each module strengthens confidence in an existing candidate — it does not surface new opportunities by itself.
-
-Four modules only:
-
-| Module | Confidence question | Strengthens |
-|--------|---------------------|-------------|
-| **Agent Commerce Signals** | Are machines already paying in this category? | Market Wedge, Early Demand confidence |
-| **Stablecoin Workflow Signals** | Are real businesses struggling with new payment workflows? | Pain, Friction confidence |
-| **Onchain Developer Tool Friction** | Are people repeatedly failing to implement this? | Workflow Friction, Buildability clarity |
-| **Tokenized Data / Pay-Per-Use Data Signals** | Is a new infrastructure layer forming around paid data/services? | Market Wedge, Asset Strategy confidence |
-
-Do **not** add DAO signals, grants, onchain compliance as a standalone user-facing module, or other sub-modules without an ADR.
-
----
-
-## System Flow
+The MVP ships this pipeline only:
 
 ```text
-Step 1 → Pressure
-Step 2 → Demand
-Step 3 → Wedge
-Step 4 → Friction
-Step 5 → Complaints
-         ↓
-    BASE OPPORTUNITY FORMED
-         ↓
-Step 6 → Digital Infrastructure Signals
-         ↓
-    strengthen: confidence, urgency, asset decisions, wedge clarity
-         ↓
-    Guardrails → Human Review → Publish → PDF Dossier
+Collect
+  ↓
+Normalize
+  ↓
+Cluster
+  ↓
+Keyword Enrichment
+  ↓
+Market Validation
+  ↓
+Procurement Validation
+  ↓
+Scoring
+  ↓
+Asset Strategy
+  ↓
+Human Review
+  ↓
+Opportunity Brief
+  ↓
+Publish
 ```
+
+Procurement Validation is a first-class MVP step — not an afterthought. Construction and environmental workflows are validated through hiring and procurement language as much as through regulatory pressure.
 
 ---
 
-## Core Engine Signal Lanes
+## MVP Source Stack (Locked)
 
-### Pressure Discovery
+### Pressure Discovery — MVP only
 
-Finds real-world pressure forming.
-
-Examples: OSHA, EPA ECHO, BLS, Census permits, SAM.gov, CISA KEV, Federal Register, Regulations.gov, USAspending, CMS (healthcare scope).
-
-### Demand Validation
-
-Checks attention, buyer language, and commercial intent.
-
-Primary source: DataForSEO v3.
-
-Use: historical search volume, related keywords, trends, CPC, competition, internal keyword memory.
-
-### Market Wedge Validation
-
-Checks whether there is a sellable product/category gap.
-
-Sources: competitor sites, pricing pages, review directories, job postings, SEC EDGAR, USAspending, manual market proof review.
-
-### Workflow Friction Signals
-
-**Workflow Friction = repeated execution failure.**
-
-Impacts: Pain, Market Wedge, Buildability.
-
-- Internal modifier only — not a standalone public score
-- Does **not** act as a standalone decision engine
-- Does not bypass guardrails, scoring, or human review
-
-MVP sources: GitHub issues, Stack Exchange, Greenhouse, Lever job postings.
-
-### Complaint & Incident Signals
-
-**Mandatory core layer — first-class realism layer.**
-
-- Detects repeated real-world failure
-- Strongest realism layer for operational breakdown
-- Validates operational breakdown through **clusters**, not individual complaints
-- Strengthens: Pain confidence, buyer specificity, urgency
-
-Source categories:
-
-| Source | Domain |
+| Source | Status |
 |--------|--------|
-| CFPB | Consumer financial complaints |
-| FDA / MAUDE | Medical device adverse events |
-| NHTSA | Vehicle safety incidents |
-| FCC | Telecom / communications complaints |
+| OSHA | ✅ MVP |
+| EPA ECHO | ✅ MVP |
+| Federal Register | ✅ MVP |
 
-Feeds problem zone clustering and human review. Does not bypass scoring.
+**Removed from MVP** (documented under [Future Expansion](#future-expansion)):
+
+- BLS, Census, CMS, Grants.gov, CISA KEV, Regulations.gov, and other agencies
+
+### Demand Validation — MVP only
+
+| Source | Status |
+|--------|--------|
+| DataForSEO | ✅ MVP |
+
+Do not add other keyword providers in MVP.
+
+### Market Wedge — MVP only
+
+| Source | Status |
+|--------|--------|
+| Manual competitor research | ✅ MVP |
+| Pricing pages | ✅ MVP |
+| G2 | ✅ MVP |
+| Capterra | ✅ MVP (when relevant) |
+
+**Removed from MVP:**
+
+- SEC EDGAR
+- Broad review scraping
+- Startup marketplaces
+- Broad ecosystem scraping
+
+### Workflow Friction — MVP only
+
+| Source | Status |
+|--------|--------|
+| Targeted job postings | ✅ MVP |
+| Procurement language | ✅ MVP |
+| RFP language | ✅ MVP |
+
+**Moved to Phase 2:**
+
+- GitHub, GitLab, Stack Exchange, developer ecosystems
+
+Reason: construction and environmental workflows are usually validated through hiring and procurement rather than GitHub issues.
+
+### Procurement — MVP only
+
+| Source | Status |
+|--------|--------|
+| SAM.gov | ✅ MVP |
+| USAspending | ✅ MVP |
+
+**Moved to roadmap** (see Future Expansion):
+
+- State, city, county procurement portals
+- Utilities procurement
+- Global tenders
+
+The MVP must prove procurement intelligence before expanding.
+
+### Complaint Signals — Phase 2 (not MVP)
+
+All complaint sources are **Phase 2**. None are active in MVP ingestion or scoring.
+
+### Healthcare — Phase 3 (not MVP)
+
+No healthcare ingestion in MVP.
+
+### Onchain / x402 — Future Research Layers
+
+Not mentioned in MVP architecture. Not included in scoring, ingestion, or dossier output.
+
+---
+
+## MVP Scoring
+
+### Public scores
+
+| Score | Source layer |
+|-------|--------------|
+| Pain | Pressure (+ friction modifier) |
+| Demand | Demand Validation |
+| Market | Market Wedge Validation |
+| Freshness | Timing / mixed signal label |
+| Buildability | Delivery feasibility |
+| Asset Fit | Best first asset alignment |
+
+### Hidden modifiers (MVP only)
+
+| Modifier | Role |
+|----------|------|
+| Friction | Modifies Pain, Market, Buildability |
+| Procurement | Strengthens buyer intent, budget signal, workflow clarity, recurrence |
+
+No other score categories in MVP. Digital Infrastructure Boost is **not** an MVP modifier — see Future Research Layers.
+
+---
+
+## MVP Target Customer (Locked)
+
+**Primary customer (MVP only):**
+
+| Segment | Core question |
+|---------|---------------|
+| **Builders** | What compliance- or procurement-backed workflow should I build first? |
+| **Agencies serving compliance-heavy industries** | What can we sell, implement, or productize for contractor and environmental clients? |
+| **Consultants serving contractor/environmental businesses** | What should we recommend, advise on, or turn into client-facing memos? |
+
+**Not MVP positioning** (future customer segments):
+
+- VCs / Investors
+- HoldCos
+- Product Studios
+- Enterprise buyers
+- White-label enterprise features
+
+---
+
+## Opportunity Output Structure (Locked)
+
+Every published opportunity follows **seven sections** in this exact order. Do not simplify.
+
+1. **Opportunity Snapshot**
+2. **Why This Exists**
+3. **Signal Breakdown**
+4. **Build Strategy**
+5. **Execution Angle**
+6. **Competitive Differentiator**
+7. **Why This Matters**
+
+Full field spec: [med-sections.md](./med-sections.md).
 
 ---
 
@@ -215,7 +302,7 @@ Feeds problem zone clustering and human review. Does not bypass scoring.
 
 Reject if:
 
-- only onchain/digital infrastructure signals exist
+- only one source type supports the opportunity
 - no pressure, demand, or friction evidence
 
 ### Rule 2 — Must Map to Buyer + Workflow
@@ -247,43 +334,156 @@ Hard checks before review also include: at least two independent source types, a
 
 ---
 
-## Scoring System
+## Long-Term Layered Validation Architecture
 
-### Public scores
+DataTello's full architecture validates opportunities through layered evidence. MVP implements a focused subset; the complete model is preserved for expansion.
 
-| Score | Source layer |
-|-------|--------------|
-| Pain | Pressure (+ friction modifier) |
-| Demand | Demand Validation |
-| Market | Market Wedge Validation |
-| Freshness | Timing / mixed signal label |
-| Buildability | Delivery feasibility |
-| Asset Fit | Best first asset alignment |
+| Layer | Question | MVP | Phase |
+|-------|----------|-----|-------|
+| Pressure | Is the problem forming? | OSHA, EPA ECHO, Federal Register | MVP |
+| Demand | Are people looking for it? | DataForSEO | MVP |
+| Wedge | Can you sell into it? | Manual research, G2, Capterra | MVP |
+| Friction | Are people failing to solve it? | Job postings, procurement/RFP language | MVP |
+| Procurement | Is buyer intent and budget real? | SAM.gov, USAspending | MVP |
+| Complaints | Are real users repeatedly affected? | — | Phase 2 |
+| Healthcare vertical | Regulated care workflows | — | Phase 3 |
+| Digital Infrastructure | Does emerging infra strengthen confidence? | — | Future Research |
 
-### Internal modifiers
+**Base Opportunity Confidence** in the long-term model is formed from Pressure through Complaints (Steps 1–5). MVP forms confidence from Pressure, Demand, Wedge, Friction, and Procurement Validation.
 
-| Modifier | Role |
-|----------|------|
-| Friction | Modifies Pain, Market, Buildability |
-| Digital Infrastructure Boost (0–10) | Increases confidence, breaks ties, prioritizes — **not** a primary score |
+### Confidence amplification (long-term Step 6)
 
-Digital Infrastructure Boost is used **only** to increase confidence, break ties, and prioritize. It must not override weak base validation.
+| Amplifier | Question | Phase |
+|-----------|----------|-------|
+| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? | Future Research |
+
+Four modules (preserved for future, not MVP):
+
+- Agent Commerce Signals
+- Stablecoin Workflow Signals
+- Onchain Developer Tool Friction
+- Tokenized Data / Pay-Per-Use Data Signals
+
+Step 6 amplifies confidence after base validation. It does **not** discover or create opportunities on its own.
+
+### Long-term system flow
+
+```text
+Step 1 → Pressure
+Step 2 → Demand
+Step 3 → Wedge
+Step 4 → Friction
+Step 5 → Complaints
+         ↓
+    BASE OPPORTUNITY FORMED
+         ↓
+Step 6 → Digital Infrastructure Signals
+         ↓
+    strengthen: confidence, urgency, asset decisions, wedge clarity
+         ↓
+    Guardrails → Human Review → Publish → PDF Dossier
+```
 
 ---
 
-## ICP & Onboarding
+## Future Expansion
 
-One engine. Different post-login defaults and views.
+All capabilities below are **preserved in the long-term architecture**. They are explicitly **out of MVP scope** until the wedge consistently produces high-quality opportunities.
 
-Target ICPs: Agencies, Consultants, Investors, Venture Studios / Product Studios.
+### Phase 2 — Complaint & Incident Signals
 
-Onboarding captures `user_type`, `industries[]`, `buyer_types[]`, `signal_types[]` and applies them as default filters on dashboard queries.
+Mandatory in the long-term model; not active in MVP.
 
-Full spec: [onboarding.md](./onboarding.md)
+| Source | Domain |
+|--------|--------|
+| CFPB | Consumer financial complaints |
+| openFDA / MAUDE | Medical device adverse events |
+| NHTSA | Vehicle safety incidents |
+| FCC | Telecom / communications complaints |
+
+- Detect repeated real-world failure through **clusters**, not individual complaints
+- Strengthen Pain confidence, buyer specificity, urgency
+- Admin workspace: `/admin/complaint-incidents` (planned)
+
+### Phase 2 — Developer Friction Sources
+
+| Source | Use |
+|--------|-----|
+| GitHub Issues | Repeated implementation failure |
+| GitLab | Same |
+| Stack Exchange | Same |
+| Developer ecosystems | Broader friction patterns |
+
+### Phase 2 — Additional Government Agencies
+
+| Source | Use |
+|--------|-----|
+| BLS | Labor and operational pressure |
+| Census | Permits, structural indicators |
+| CMS | Healthcare-adjacent pressure (full healthcare is Phase 3) |
+| Grants.gov | Funding signal |
+| CISA KEV | Security pressure |
+| Regulations.gov | Rulemaking signal |
+
+### Phase 2 — Market Wedge Expansion
+
+| Source | Use |
+|--------|-----|
+| SEC EDGAR | Public company spend signals |
+| Broad review scraping | Category complaint themes |
+| Startup marketplaces | Emerging competitor landscape |
+| Broad ecosystem scraping | Market formation signals |
+
+### Phase 3 — Healthcare
+
+Entire healthcare vertical:
+
+- CMS and healthcare-specific pressure sources
+- Healthcare procurement patterns
+- FDA/MAUDE as primary complaint layer for med devices
+- Healthcare operations as target industry
+
+No healthcare ingestion in MVP.
+
+### Roadmap — Procurement Expansion
+
+| Source | Scope |
+|--------|-------|
+| State procurement portals | Multi-state expansion |
+| City procurement | Municipal workflows |
+| County procurement | Local government |
+| Utilities procurement | Regulated utility buyers |
+| Global tenders | International expansion |
+
+### Future Research Layers
+
+| Capability | Notes |
+|------------|-------|
+| Onchain / x402 | Not in MVP architecture, scoring, or ingestion |
+| Agent Commerce Signals | Confidence amplifier only |
+| Stablecoin Workflow Signals | Confidence amplifier only |
+| Onchain Developer Tool Friction | Confidence amplifier only |
+| Tokenized Data / Pay-Per-Use Data | Confidence amplifier only |
+| Investor intelligence | Future customer segment |
+| Enterprise intelligence | Future customer segment |
+| White-label enterprise features | Future product tier |
+| Additional verticals | After wedge proven |
+
+Do **not** add DAO signals, grants, or onchain compliance as a standalone user-facing module without an ADR.
 
 ---
 
 ## Data Flow
+
+### MVP
+
+```text
+Source Sync → Raw Signals → Normalize/Classify → Problem Zones
+→ Keyword Enrichment → Market Validation → Procurement Validation
+→ Scoring → Asset Strategy → Guardrails → Human Review → Publish → PDF Dossier
+```
+
+### Long-term (full architecture)
 
 ```text
 Source Sync → Raw Signals → Normalize/Classify → Problem Zones
@@ -323,6 +523,7 @@ AI may auto-fix mechanical issues only. Human approval required for source meani
   /sections             # MED/Dossier section components
   /admin                # Admin forms and actions
 /lib                    # supabase.ts, queries.ts, helpers.ts, persona-lens.ts
+  /procurement          # SAM.gov pipeline, scoring, integration
 /types                  # database.ts, opportunity.ts
 /hooks                  # useOpportunities, useFilters, usePersonaLens
 /styles                 # globals.css
@@ -337,7 +538,7 @@ AI may auto-fix mechanical issues only. Human approval required for source meani
 - Section components accept typed `opportunity` slices
 - Admin pages preserve source traceability
 - Dashboard pages simplify internal scoring into decision-ready output
-- Onboarding preferences apply as default query filters (when implemented)
+- Onboarding preferences apply as default query filters
 
 ## Non-Negotiable Architecture Rules
 
@@ -346,6 +547,8 @@ AI may auto-fix mechanical issues only. Human approval required for source meani
 3. Newsletter Engine and Dossier Builder are separate.
 4. Paid PDF Dossiers are generated from templates, not manually made one by one.
 5. AI can draft and assist, but human review controls publish decisions.
-6. Five core layers form base opportunity confidence before digital infrastructure amplification.
-7. Digital infrastructure signals are amplifiers — they do not determine final opportunities alone.
-8. Complaint & Incident Signals are core validation, not optional add-ons.
+6. MVP proves the compliance + contractor + public-sector wedge before expanding.
+7. Long-term layered validation is preserved — expansion adds layers, not replacements.
+8. Digital infrastructure signals are future research amplifiers — not MVP scoring or ingestion.
+9. Complaint signals are Phase 2 — preserved in architecture, not active in MVP.
+10. DataTello sells build opportunities, not intelligence feeds.

@@ -20,18 +20,31 @@ Same engine. Different post-login defaults and views.
 
 ---
 
-## Target ICPs
+## MVP Target Customer (Locked)
 
-| ICP | Job to be done |
-|-----|----------------|
-| **Agencies** | What can we sell, implement, or productize for clients? |
-| **Consultants** | What should we recommend, advise on, or turn into client-facing memos? |
-| **Investors** | What should we fund, validate, monitor, or compare as a thesis/deal opportunity? |
-| **Venture Studios / Product Studios** | What opportunities are worth validating, matching to operators, and prioritizing across repeated bets? |
+The MVP positions around **three primary segments** only:
 
-Venture Studios are a **distinct ICP** — not a subtype of Investor. They are organizations that create ventures, validate concepts, recruit or match operators, and run repeated venture bets. They are **not** product consultants, fractional PMs, idea validators alone, or investor-only users.
+| Segment | Job to be done |
+|---------|----------------|
+| **Builder** | What compliance- or procurement-backed workflow should I build first? |
+| **Agency** (compliance-heavy industries) | What can we sell, implement, or productize for contractor and environmental clients? |
+| **Consultant** (contractor/environmental) | What should we recommend, advise on, or turn into client-facing memos? |
 
 Consultants are a **distinct ICP** from Agencies. Same onboarding flow; **not** the same default lens. Consultants get advisory, memo, and recommendation framing — not packaging, white-label, or delivery-first emphasis.
+
+## Future Customer Segments (Not MVP Positioning)
+
+These segments are preserved in the long-term product vision but are **not** the MVP launch focus:
+
+| Segment | Status |
+|---------|--------|
+| Investors / VCs | Future |
+| HoldCos | Future |
+| Venture Studios / Product Studios | Future |
+| Enterprise buyers | Future |
+| White-label enterprise features | Future |
+
+Onboarding may still capture these user types for waitlist or future activation, but MVP messaging, defaults, and feed emphasis target builders, agencies, and consultants in the compliance wedge.
 
 ---
 
@@ -39,12 +52,17 @@ Consultants are a **distinct ICP** from Agencies. Same onboarding flow; **not** 
 
 ### Step 1 — Pick user type
 
-Options:
+**MVP options (primary):**
 
-- Investor
+- Builder
 - Agency
 - Consultant
+
+**Future options (waitlist / later activation):**
+
+- Investor
 - Venture Studio / Product Studio
+- Enterprise
 - Other
 
 Stored as `user_type`.
@@ -70,12 +88,16 @@ Stored as `buyer_types[]`.
 
 ### Step 4 — Optional signal preferences
 
-Pre-check all; allow opt-out:
+Pre-check MVP layers; allow opt-out:
 
 - Regulatory / compliance pressure
 - Search demand & buyer language
 - Market gaps & competition
-- Workflow friction
+- Workflow friction (job postings, procurement/RFP language)
+- Procurement validation (SAM.gov, USAspending)
+
+**Phase 2 (not MVP — hide or show as "coming soon"):**
+
 - Complaint & incident patterns
 - Digital infrastructure signals
 

@@ -36,42 +36,37 @@ Implementation: `lib/persona-lens.ts` (`venture_studio`; legacy `product_studio`
 
 DataTello does not discover opportunities from a single signal.
 
-### Base validation (Steps 1–5) → Base Opportunity Confidence
+### MVP validation layers
 
-| Layer | Question |
-|-------|----------|
-| Pressure | Is the problem forming? |
-| Demand | Are people looking for it? |
-| Wedge | Can you sell into it? |
-| Friction | Are people failing to solve it? |
-| Complaints | Are real users repeatedly affected? |
+| Layer | Question | MVP sources |
+|-------|----------|-------------|
+| Pressure | Is the problem forming? | OSHA, EPA ECHO, Federal Register |
+| Demand | Are people looking for it? | DataForSEO |
+| Wedge | Can you sell into it? | Manual research, G2, Capterra |
+| Friction | Are people failing to solve it? | Job postings, procurement/RFP language |
+| Procurement | Is buyer intent and budget real? | SAM.gov, USAspending |
 
-### Confidence amplification (Step 6) — after base opportunity formed
+### Long-term layers (preserved, not MVP)
 
-| Amplifier | Question |
-|-----------|----------|
-| Digital Infrastructure | Does emerging infrastructure strengthen confidence in an already-validated opportunity? |
+| Layer | Phase |
+|-------|-------|
+| Complaint & Incident Signals | Phase 2 |
+| Healthcare vertical | Phase 3 |
+| Digital Infrastructure amplifiers | Future Research |
 
-Steps 1–5 form **Base Opportunity Confidence**. Step 6 amplifies confidence after base validation — it does **not** discover or create opportunities on its own.
+Steps 1–5 (Pressure through Complaints) form **Base Opportunity Confidence** in the long-term model. MVP forms confidence from Pressure, Demand, Wedge, Friction, and Procurement Validation.
 
-### Core Engine (five layers)
+### Long-term confidence amplification (Step 6)
 
-1. **Pressure Discovery**
-2. **Demand Validation**
-3. **Market Wedge Validation**
-4. **Workflow Friction Signals** — repeated execution failure; modifies Pain, Market, Buildability; not a standalone score or decision engine
-5. **Complaint & Incident Signals** — cluster-based real-world failure; strongest realism layer; strengthens Pain confidence, buyer specificity, urgency. Sources: CFPB, FDA/MAUDE, NHTSA, FCC
+| Amplifier | Question | Phase |
+|-----------|----------|-------|
+| Digital Infrastructure | Does emerging infrastructure strengthen confidence? | Future Research |
 
-### Digital Infrastructure (four confidence amplifiers only)
-
-**Not discovery layers. Not standalone opportunity engines.** Applied only after base opportunity formed. Each module answers a confidence question about an existing candidate — it does not surface new opportunities by itself.
-
-- **Agent Commerce Signals** — strengthens Market Wedge and Early Demand confidence
-- **Stablecoin Workflow Signals** — strengthens Pain and Friction confidence
-- **Onchain Developer Tool Friction** — strengthens Workflow Friction and Buildability clarity
-- **Tokenized Data / Pay-Per-Use Data Signals** — strengthens Market Wedge and Asset Strategy confidence
+Step 6 amplifies confidence after base validation — it does **not** discover or create opportunities on its own. **Not in MVP scoring or ingestion.**
 
 **Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review — not by any single signal layer.**
+
+Full expansion: [architecture.md](./architecture.md) § Future Expansion.
 
 ---
 
@@ -95,10 +90,11 @@ Software Likelihood is replaced by:
 
 ### Internal modifiers
 
-| Modifier | Role |
-|----------|------|
-| `friction_score` | Modifies Pain, Market, Buildability — not shown as primary public score |
-| `digital_infrastructure_boost` (0–10) | Increases confidence, breaks ties, prioritizes — not a primary score |
+| Modifier | Role | MVP |
+|----------|------|-----|
+| `friction_score` | Modifies Pain, Market, Buildability — not shown as primary public score | ✅ |
+| `procurement_score` | Strengthens buyer intent, budget, workflow clarity, recurrence | ✅ |
+| `digital_infrastructure_boost` (0–10) | Future Research only — not MVP | ❌ |
 
 ---
 
@@ -150,18 +146,18 @@ Purpose: show structured scoring judgment without exposing internal machinery.
 
 Visible scores: Pain, Demand, Market, Freshness, Buildability, Asset Fit.
 
-Internal modifiers: friction (not primary public score), digital infrastructure boost (confidence amplifier only).
+Internal modifiers (MVP): friction, procurement — not shown as primary public scores.
 
-**Complaint & Incident realism layer** (required when complaint evidence exists — core Engine layer 5):
+**Complaint & Incident realism layer** (Phase 2 — not MVP):
 
 - cluster patterns and recurrence
 - buyer / user impact
 - operational breakdown confirmation
-- source mix (CFPB, FDA/MAUDE, NHTSA, FCC)
+- source mix (CFPB, openFDA/MAUDE, NHTSA, FCC)
 
-This is a **first-class realism layer**, not an optional sidebar. It strengthens Pain confidence, buyer specificity, and urgency.
+When activated, this is a first-class realism layer. Not rendered in MVP dossiers.
 
-**Digital Infrastructure Evidence** (confidence amplification only — shown when module ratings exist):
+**Digital Infrastructure Evidence** (Future Research — not MVP):
 
 | Module | Rating |
 |--------|--------|
@@ -170,7 +166,9 @@ This is a **first-class realism layer**, not an optional sidebar. It strengthens
 | Onchain Developer Tool Friction | Weak / Moderate / Strong |
 | Tokenized Data | Weak / Moderate / Strong |
 
-### 4. Asset Strategy
+Not in MVP dossier output.
+
+### 4. Build Strategy
 
 Purpose: define what to create first and how to expand. **Do not default to SaaS.**
 
@@ -212,7 +210,7 @@ Fields:
 - `time_to_value`
 - `first_distribution_angle`
 
-### 6. Competitive Differentiator Strategy
+### 6. Competitive Differentiator
 
 Purpose: qualitative competitive entry analysis. Required for every opportunity.
 
@@ -262,8 +260,8 @@ Mirror the seven-section dossier structure:
 
 1. **Basic** — title, score, best_first_asset, complexity, tags, status, short_summary
 2. **Why This Exists** — problem, evidence, key pain drivers, why now
-3. **Scores** — pain, demand, market, freshness, buildability, asset fit, internal friction, digital infrastructure boost
-4. **Asset Strategy** — best first asset, top 3 paths, why wins first, expansion ladder, revenue ceiling, build difficulty
+3. **Scores** — pain, demand, market, freshness, buildability, asset fit, internal friction, procurement
+4. **Build Strategy** — best first asset, top 3 paths, why wins first, expansion ladder, revenue ceiling, build difficulty
 5. **Execution** — buyer, workflow, wedge, MVP, time to value, distribution
 6. **Competitive Differentiator** — landscape, complaint patterns, underserved segment, differentiation, what not to compete on, entry strategy
 7. **Final Verdict** — strategic importance, publish/watch/reject reasoning

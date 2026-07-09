@@ -1,7 +1,7 @@
 # MED — Master Engineering Document
 
-Documentation Version: 1.3  
-Last Updated: 2026-07-08  
+Documentation Version: 1.4  
+Last Updated: 2026-07-09  
 Status: Active  
 Owner: DataTello Engineering
 
@@ -43,23 +43,30 @@ docs/
 
 ## Project Overview
 
-DataTello validates build opportunities through **layered evidence** — not from a single signal.
+DataTello is an **evidence-backed build opportunity intelligence platform** — not a general market intelligence platform. It discovers overlooked compliance- and procurement-backed workflow problems and converts them into buildable assets.
 
-It is a premium opportunity intelligence platform and decision-support system for **agencies, consultants, investors, and venture studios / product studios**.
+It validates build opportunities through **layered evidence** — not from a single signal.
 
-### Core Engine (five validation layers)
+### MVP wedge (locked)
 
-1. Pressure Discovery
-2. Demand Validation
-3. Market Wedge Validation
-4. Workflow Friction Signals
-5. Complaint & Incident Signals
+**Environmental Compliance** + **Contractor Safety** + **Public-sector compliance workflows**
 
-→ **Base Opportunity Confidence**
+### MVP pipeline
 
-### Validation amplifiers (after base opportunity formed)
+```text
+Collect → Normalize → Cluster → Keyword Enrichment → Market Validation → Procurement Validation
+→ Scoring → Asset Strategy → Human Review → Opportunity Brief → Publish
+```
 
-**Emerging Digital Infrastructure Signals** — four modules only. Confidence amplifiers — not discovery layers, not standalone opportunity engines. Strengthen confidence, urgency, asset decisions, and wedge clarity after base validation.
+### MVP target customer
+
+**Builders**, **agencies serving compliance-heavy industries**, and **consultants serving contractor/environmental businesses**.
+
+Investors, VCs, HoldCos, Product Studios, and Enterprise are future segments — not MVP positioning.
+
+### Long-term architecture (preserved)
+
+Five core validation layers + digital infrastructure amplifiers. MVP implements a focused subset. Full model and Future Expansion: [architecture.md](./architecture.md).
 
 Final opportunities are determined by DataTello's structured scoring engine, guardrails, and human review.
 

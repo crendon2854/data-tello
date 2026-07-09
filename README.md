@@ -1,8 +1,10 @@
 # DataTello
 
-Validates build opportunities through layered evidence — structured signals, scoring, and guardrails.
+Evidence-backed build opportunity intelligence for compliance- and procurement-driven workflows.
 
-Premium opportunity intelligence for agencies, consultants, investors, and venture studios / product studios.
+Discovers overlooked environmental compliance, contractor safety, and public-sector workflow problems — and converts them into buildable assets.
+
+**Not** a general market intelligence platform. DataTello sells build opportunities.
 
 ## Quick Start
 
@@ -15,7 +17,9 @@ Open [http://localhost:3001](http://localhost:3001)
 
 ## Documentation
 
-See [`docs/MED.md`](./docs/MED.md) — canonical entry point for architecture, layered validation, ICP onboarding, and governance.
+See [`docs/MED.md`](./docs/MED.md) — canonical entry point for MVP architecture, source stack, ICP onboarding, and governance.
+
+Architecture phases: [`docs/architecture.md`](./docs/architecture.md)
 
 ## Stack
 
