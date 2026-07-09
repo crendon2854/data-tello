@@ -1,14 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { FilterBar } from "@/components/ui/FilterBar";
 import { PersonaSelector } from "@/components/ui/PersonaSelector";
 import { OpportunityCard } from "@/components/cards/OpportunityCard";
+import { RecommendedForYou } from "@/components/dashboard/RecommendedForYou";
+import { TopOpportunities } from "@/components/dashboard/TopOpportunities";
 import { useFilters } from "@/hooks/useFilters";
 import { usePersonaLens } from "@/hooks/usePersonaLens";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
+import {
+  getRecommendedOpportunities,
+  toScoredOpportunity,
+  type DecisionLayerOpportunity,
+} from "@/lib/decision-layer";
 import { getPersonaConfig } from "@/lib/persona-lens";
 import type { ExploreMode } from "@/lib/feed-filters";
 import type { Opportunity } from "@/types/opportunity";
@@ -36,6 +43,24 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
   const { personaId, lens, setPersonaId, ready } = usePersonaLens();
 
   const personaConfig = getPersonaConfig(personaId);
+
+  const recommendations = useMemo(() => {
+    const scored = opportunities.map(toScoredOpportunity);
+    return getRecommendedOpportunities(
+      prefsReady ? preferences : null,
+      scored
+    );
+  }, [opportunities, preferences, prefsReady]);
+
+  const top3Ids = useMemo(
+    () => new Set(recommendations.top3.map((item) => item.id as string)),
+    [recommendations.top3]
+  );
+
+  const libraryOpportunities = useMemo(
+    () => filtered.filter((opportunity) => !top3Ids.has(opportunity.id)),
+    [filtered, top3Ids]
+  );
 
   const showExploreSelector =
     prefsReady &&
@@ -66,6 +91,20 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
             </p>
           )}
         </div>
+
+        {recommendations.topOpportunity && (
+          <RecommendedForYou
+            opportunity={recommendations.topOpportunity as DecisionLayerOpportunity}
+            cardAssetLabel={lens.cardAssetLabel}
+          />
+        )}
+
+        {recommendations.top3.length > 0 && (
+          <TopOpportunities
+            opportunities={recommendations.top3 as DecisionLayerOpportunity[]}
+            cardAssetLabel={lens.cardAssetLabel}
+          />
+        )}
 
         <div className="mb-6 max-w-md">
           <PersonaSelector
@@ -99,6 +138,13 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
           </div>
         )}
 
+        <div className="mb-4">
+          <h2 className="section-title">Explore the Library</h2>
+          <p className="mt-1 text-body text-text-muted">
+            Filter and browse all matching opportunities
+          </p>
+        </div>
+
         <div className="mb-6">
           <FilterBar
             filters={filters}
@@ -108,10 +154,12 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
         </div>
 
         <div className="flex flex-col gap-4">
-          {filtered.length === 0 ? (
+          {libraryOpportunities.length === 0 ? (
             <p className="text-body text-text-muted">
-              No opportunities match your filters.
-              {showExploreSelector && exploreMode === "focus" && (
+              {filtered.length === 0
+                ? "No opportunities match your filters."
+                : "All matching opportunities are in your top picks above."}
+              {showExploreSelector && exploreMode === "focus" && filtered.length === 0 && (
                 <>
                   {" "}
                   Try expanding to adjacent or all industries.
@@ -119,13 +167,14 @@ export function DashboardContent({ opportunities }: DashboardContentProps) {
               )}
             </p>
           ) : (
-            filtered.map((opportunity, index) => (
+            libraryOpportunities.map((opportunity, index) => (
               <OpportunityCard
                 key={opportunity.id}
                 opportunity={opportunity}
                 index={index}
                 cardAssetLabel={lens.cardAssetLabel}
                 personaScoreDelta={opportunity.persona_score_delta}
+                showCta
               />
             ))
           )}

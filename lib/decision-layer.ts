@@ -1,5 +1,5 @@
-import { normalizeScore } from "@/lib/scoring";
 import type { Opportunity } from "@/types/opportunity";
+import { normalizeScore } from "@/lib/scoring";
 import type {
   Role,
   SignalPreferences,
@@ -44,6 +44,9 @@ export type EnrichedOpportunity<T extends ScoredOpportunity = ScoredOpportunity>
     confidence_level: ConfidenceLevel;
     time_to_value: TimeToValue;
   };
+
+export type DecisionLayerOpportunity = EnrichedOpportunity<ScoredOpportunity> &
+  Opportunity;
 
 export type DecisionLayerResult<T extends ScoredOpportunity = ScoredOpportunity> = {
   topOpportunity: EnrichedOpportunity<T> | null;
@@ -612,9 +615,11 @@ export function getRecommendedOpportunities<T extends ScoredOpportunity>(
     .filter((opportunity) => passesBaseGuardrails(opportunity))
     .sort(compareRankedOpportunities);
 
-  const enriched = ranked.map(
-    ({ _confidence_multiplier: _ignored, ...rest }) => rest as EnrichedOpportunity<T>
-  );
+  const enriched: EnrichedOpportunity<T>[] = ranked.map((item) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- strip internal rank tie-breaker
+    const { _confidence_multiplier, ...rest } = item;
+    return rest as EnrichedOpportunity<T>;
+  });
 
   const topOpportunity =
     enriched.find((opportunity) => opportunity.confidence_level !== "Low") ??
